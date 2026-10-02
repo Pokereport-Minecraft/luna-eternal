@@ -6,6 +6,8 @@ Continuación de cierre: [CLIENT_QA_BLOCKER.md](CLIENT_QA_BLOCKER.md) localiza y
 
 Avance manual posterior: EasyAuth aceptó el registro humano y se verificó entrada a Ciudadela en Survival. Usuario confirmó BREAK denegado y PLACE revertido: PASS manual de esos dos casos, con límites de evidencia en [prelaunch/manual-client-results.md](prelaunch/manual-client-results.md). El resto del QA y los gates de release siguen pendientes; no se certifica todo Client QA por este avance.
 
+Decisión posterior del usuario: omitir combate real de gimnasio. Su estado permanece NOT TESTED y OPEN-03 sigue abierto. Las pruebas manuales adicionales de protección, interacción y permisos están registradas con su alcance en manual-client-results.md; no sustituyen batallas ni multiplayer.
+
 Feature freeze vigente. Sin merge, despliegue del mod principal ni certificación de apertura. Se reutilizó `1e08`, preservando las implementaciones recientes del portal/economía/Lunita y los demás worktrees.
 
 ## P0 ACTUAL — OPEN-01
