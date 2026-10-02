@@ -20,6 +20,8 @@ ssh -i C:/Users/JUAN/.ssh/pokereport_node01_ed25519 -o BatchMode=yes -o ExitOnFo
 
 Si el túnel de QA ya existe, usarlo; no arrancar otro sobre el mismo puerto. Lanzar exclusivamente el cliente preparado:
 
+Verificar destino antes de probar: el último `Connecting to` del cliente debe apuntar a `127.0.0.1, 25590`, y `list` del backend QA debe incluir la cuenta. Registrarse en `play.pokereport.online:25565` no autentica la copia de staging ni valida el candidato. La lista `servers.dat` de la instancia QA se dejó con una única entrada de staging; su lista anterior quedó respaldada como `servers.before-staging-only.dat`, sin tocar la instancia principal.
+
 ```powershell
 & 'C:/Users/JUAN/AppData/Local/Programs/FreesmLauncher/freesmlauncher.exe' --dir 'C:/Users/JUAN/.codex/prelaunch-qa/client-20261002' --launch 'Prelaunch QA' --offline PR_QA_Player --server 127.0.0.1:25590
 ```
@@ -62,6 +64,8 @@ ESTADO DB / INVENTARIO / BLOQUES ANTES Y DESPUÉS:
 ```
 
 Sin ejecución humana y evidencia, conservar NOT TESTED. Al cerrar la sesión detener backend y proxy QA y terminar el túnel propio; preservar sus volúmenes. No desplegar ni certificar mientras sigan pendientes login, juego, multiplayer, staff y demás gates del candidato.
+
+Solicitud adicional del usuario: revisar después de las pruebas el aviso «¡Elige tu inicial!» que muestra `key.keyboard.` literalmente. No se modificó aún; no mezclar esa revisión con resultados PASS de protección.
 
 Estado inicial: NOT TESTED para los casos de juego. El cliente aislado arrancó, pero la primera conexión se cortó y la herramienta de captura falló dos veces; no se observaron sesiones jugables ni se certificaron interfaces. Ningún autotest sustituye los pasos siguientes.
 
