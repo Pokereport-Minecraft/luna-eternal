@@ -10,7 +10,10 @@ Candidato cliente: SHA256 `92bf8e95b6c6a3fc52fb1a022eff548d8d9a91a4d2fd9c28eaa8b
 | Player Survival PLACE | PASS manual | Usuario: al poner bloques el servidor los quita | Declaración directa del usuario, recibida antes de 18:19:26 UTC |
 | Player Creative BREAK | PASS manual | Usuario confirma la misma denegación que en Survival | Declaración directa; dimensión Ciudadela y modo 1 verificados 18:21:27 UTC |
 | Player Creative PLACE | PASS manual | Usuario confirma la misma reversión que en Survival | Declaración directa; sin elevación de OP ni grants |
+| Player Survival WATER | PASS manual | Ante la prueba de agua/lava/mechero, usuario confirma «no deja» | Declaración directa; no screenshot ni snapshot de fluidos |
+| Player Survival LAVA | PASS manual | Usuario confirma que no permite dejar lava | Mismo ensayo manual en Ciudadela |
+| Player Survival FIRE | PASS manual | Usuario confirma que no permite dejar fuego | Mismo ensayo manual en Ciudadela |
 
 La hora anotada corresponde al registro/verificación, no a una hora exacta de clic. Screenshot de BREAK/PLACE no aportado; no se comparó snapshot de bloques ni inventario para estos dos casos. No afirmar ausencia de consumo/desincronización tras reconnect hasta probarlo. No confundir colocación visible breve y posterior reversión con permiso de construcción persistente.
 
-Tras Creative se repuso Survival y se entregaron únicamente al fixture QA cubos de agua/lava y flint and steel para el siguiente ensayo. Fluidos/fuego, entidades/decoración, hambre/daño/PvP, interacciones, dimensiones/teleports, batallas y multiplayer siguen NOT TESTED. P0/P1 no se cierran por estas cuatro pruebas. Computer Use permanece detenido por Escape del usuario; pruebas físicas realizadas por la persona.
+Tras Creative se repuso Survival y se entregaron únicamente al fixture QA cubos de agua/lava y flint and steel. Denegación manual de esos tres usos confirmada por el usuario. Persistencia/desincronización tras reconexión, entidades/decoración, hambre/daño/PvP, interacciones, dimensiones/teleports, batallas y multiplayer siguen NOT TESTED. P0/P1 no se cierran por estas siete pruebas. Computer Use permanece detenido por Escape del usuario; pruebas físicas realizadas por la persona.
