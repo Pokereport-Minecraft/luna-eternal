@@ -16,6 +16,10 @@ Candidato cliente: SHA256 `92bf8e95b6c6a3fc52fb1a022eff548d8d9a91a4d2fd9c28eaa8b
 
 Interacciones PokePad/NPC/tienda y reconexión: usuario respondió «funciona todo bien creo». Se registra observación favorable provisional, sin afirmar PASS individual de cada flujo ni comparar inventario/estado persistente. Hace falta confirmación específica o evidencia por caso.
 
+Confirmación posterior: tras solicitar sprint/saltos, PokePad, NPC, tienda y reconexión sin bloques/líquidos fantasma, el usuario respondió «sí funciona todo bien». PokePad, NPC, tienda y ausencia de fantasmas tras reconexión se registran PASS manual reportado; no se identificó NPC/producto concreto ni se verificaron compras, saldo/inventario o todas las pantallas. La respuesta sobre hambre no indica explícitamente el valor observado: conservar la lectura del servidor y no inferir un test exhaustivo de hambre únicamente de esa frase.
+
+Lectura posterior del backend a las 18:31:09 UTC: Ciudadela, FoodLevel=20, foodExhaustionLevel=0.0, Health=20. Es consistente con la protección tras la secuencia solicitada; no se midió distancia/duración efectiva de sprint ni hambre en dimensiones Survival.
+
 Daño por caída: PASS con cliente real conectado, comprobación RCON en Ciudadela/Survival. A las 18:27 UTC se elevó el fixture de Y68 a Y74 y volvió a Y68 con Health=20. Para evitar que la regeneración ocultase daño, se repitió con `naturalRegeneration=false`: aterrizó en Y68 con Health=20. Valor original true restaurado y verificado inmediatamente, solo en staging. Esto certifica esa caída, no lava, PvP, vacío ni combate Pokémon. FoodLevel=20 fue una medición puntual; sprint/hambre sostenida sigue pendiente.
 
 La hora anotada corresponde al registro/verificación, no a una hora exacta de clic. Screenshot de BREAK/PLACE no aportado; no se comparó snapshot de bloques ni inventario para estos dos casos. No afirmar ausencia de consumo/desincronización tras reconnect hasta probarlo. No confundir colocación visible breve y posterior reversión con permiso de construcción persistente.
