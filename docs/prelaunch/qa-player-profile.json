@@ -1,0 +1,8 @@
+{
+  "name": "PR_QA_Player",
+  "uuid": "518899f0-7b05-332d-95e9-85416a628eb3",
+  "whitelisted": true,
+  "op": false,
+  "explicit_grant": false,
+  "method": "Exact case-sensitive offline UUID forwarded by QA Velocity"
+}

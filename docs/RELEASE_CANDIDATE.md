@@ -2,6 +2,8 @@
 
 2026-10-02 · `codex/prelaunch-world-hardening` · **BLOCKED**.
 
+Continuación de cierre: [CLIENT_QA_BLOCKER.md](CLIENT_QA_BLOCKER.md) localiza y corrige la ruta de conexión en staging mediante proxy QA y whitelist del fixture. Cliente ya conectó/cargó lobby; F2 funciona como alternativa al capturador. Registro EasyAuth humano y pruebas físicas siguen pendientes. La fila Client QA histórica abajo refleja el estado anterior; el estado actual jugable es NOT TESTED, pendiente de autenticación manual. Sin cambios de código Java ni despliegue en esta continuación.
+
 Feature freeze vigente. Sin merge, despliegue del mod principal ni certificación de apertura. Se reutilizó `1e08`, preservando las implementaciones recientes del portal/economía/Lunita y los demás worktrees.
 
 ## P0 ACTUAL — OPEN-01

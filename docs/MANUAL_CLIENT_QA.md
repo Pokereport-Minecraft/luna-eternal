@@ -1,5 +1,68 @@
 # QA manual con Minecraft — candidato de preapertura
 
+## Ejecución manual cuando falla la captura automática
+
+El rechazo directo identificado es `This server requires you to connect with Velocity`: FabricProxy-Lite requiere forwarding moderno. El acceso de QA se corrige mediante un Velocity separado, ligado a `127.0.0.1:25592`, hacia el backend `127.0.0.1:25590`, con secreto exclusivo de staging. No desactivar EasyAuth ni FabricProxy-Lite para simular un login. El capturador tiene un fallo independiente (`FrameArrived timed out` / `window capture timed out`); esto no equivale a crash del servidor.
+
+Operador del host, solo para levantar los entornos ya preparados:
+
+```sh
+docker start pokereport-prelaunch-20261002
+docker start pokereport-prelaunch-proxy-20261002
+python3 /tmp/pokereport-prelaunch-run.py list
+```
+
+Esperar `Done` en ambos contenedores antes de entrar. En un terminal local mantener este túnel, sin abrir puertos públicos:
+
+```powershell
+ssh -i C:/Users/JUAN/.ssh/pokereport_node01_ed25519 -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=15 -N -L 127.0.0.1:25590:127.0.0.1:25592 root@15.235.16.131
+```
+
+Si el túnel de QA ya existe, usarlo; no arrancar otro sobre el mismo puerto. Lanzar exclusivamente el cliente preparado:
+
+```powershell
+& 'C:/Users/JUAN/AppData/Local/Programs/FreesmLauncher/freesmlauncher.exe' --dir 'C:/Users/JUAN/.codex/prelaunch-qa/client-20261002' --launch 'Prelaunch QA' --offline PR_QA_Player --server 127.0.0.1:25590
+```
+
+La persona que prueba debe completar EasyAuth manualmente con una contraseña exclusiva de ensayo, usando `/register <password> <passwordAgain>` en primer acceso o `/login <password>` después. Hacerlo dentro del plazo; si aparece timeout, reconectar mediante conexión directa a `127.0.0.1:25590`. No fotografiar ni registrar contraseña, chat de autenticación o tokens. Si no llega a ese paso, registrar texto exacto del rechazo y logs; no marcar pruebas de protección. La captura F2 ya fue ejecutada e inspeccionada correctamente; el renderizado sí funciona.
+
+Antes de probar Player, el operador confirma que `PR_QA_Player` no aparece en OP ni en grants. Puede retirar OP en staging mediante:
+
+```sh
+python3 /tmp/pokereport-prelaunch-run.py deop PR_QA_Player
+python3 /tmp/pokereport-prelaunch-run.py gamemode survival PR_QA_Player
+```
+
+Usar portales/NPC reales para Ciudadela; ID real `lunaeternal:ciudadela`, no `pokereport:ciudadela`. Registrar la posición de la parcela de ensayo y conservar capturas antes/después. El operador entrega herramientas únicamente a esta cuenta en staging, por ejemplo:
+
+```sh
+python3 /tmp/pokereport-prelaunch-run.py give PR_QA_Player minecraft:diamond_pickaxe 1
+python3 /tmp/pokereport-prelaunch-run.py give PR_QA_Player minecraft:stone 16
+```
+
+La persona debe intentar físicamente BREAK y PLACE, comprobar ausencia de cambio en servidor y reconectar para descartar bloques fantasma. Repetir después en Creative accidental sin grants, asignado exclusivamente desde consola de staging. Volver a Survival al terminar. Las pruebas de otros perfiles requieren grants de ensayo explícitos según la sección Perfiles; no usar OP de personas reales como sustituto.
+
+Para cada paso usar F2 de Minecraft y recoger el archivo en `instances/Prelaunch QA/minecraft/screenshots`, con hora UTC; adjuntar solo capturas del juego sin secretos. Registrar líneas de `latest.log` cliente y logs del backend/proxy del mismo intervalo. Si el screenshot está negro, indicarlo como fallo de evidencia gráfica y pedir observación humana; no cambiar drivers ni desactivar seguridad de Windows como workaround.
+
+Plantilla obligatoria:
+
+```text
+CASE_ID:
+TIMESTAMP_UTC:
+OPERADOR:
+CUENTA / PERFIL / GRANTS:
+DIMENSIÓN / POSICIÓN:
+ACCIÓN FÍSICA:
+ESPERADO:
+OBSERVADO:
+RESULTADO: PASS / FAIL / NOT TESTED / BLOCKED
+SCREENSHOT: ruta de F2 o NO DISPONIBLE
+LOG: archivo y líneas / intervalo UTC
+ESTADO DB / INVENTARIO / BLOQUES ANTES Y DESPUÉS:
+```
+
+Sin ejecución humana y evidencia, conservar NOT TESTED. Al cerrar la sesión detener backend y proxy QA y terminar el túnel propio; preservar sus volúmenes. No desplegar ni certificar mientras sigan pendientes login, juego, multiplayer, staff y demás gates del candidato.
+
 Estado inicial: NOT TESTED para los casos de juego. El cliente aislado arrancó, pero la primera conexión se cortó y la herramienta de captura falló dos veces; no se observaron sesiones jugables ni se certificaron interfaces. Ningún autotest sustituye los pasos siguientes.
 
 Usar exclusivamente `/srv/pokereport-prelaunch-20261002`, DB `prelaunch_20261002`, conector Tebex desactivado y acceso por túnel localhost. Mantener la instancia original del launcher intacta. Copia de cliente: `C:/Users/JUAN/.codex/prelaunch-qa/client-20261002/instances/Prelaunch QA`. Comprobar que su JAR coincida con el candidato de `prelaunch/final-build.json` antes de probar; la primera sesión de arranque utilizó el candidato anterior. Nunca apuntar estas pruebas al principal.

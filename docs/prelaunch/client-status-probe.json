@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-10-02T18:04:40Z",
+  "target": "localhost staging tunnel",
+  "login_attempted": false,
+  "tcp": "PASS",
+  "minecraft_status": "PASS",
+  "version": {
+    "protocol": 767,
+    "name": "Velocity 1.7.2-1.21.11"
+  },
+  "online_players": 0
+}
