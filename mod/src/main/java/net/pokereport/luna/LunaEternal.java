@@ -99,6 +99,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
         LOG.info("Luna Eternal — iniciando");
+        net.pokereport.luna.world.WorldProtectionManager.registrar();
+        net.pokereport.luna.command.ProtectionCommands.registrar();
         net.pokereport.luna.world.FaunaControl.registrar();
         net.pokereport.luna.world.RaidDenPurgeService.registrar();
         net.pokereport.luna.lunita.LunitaManager.registrar();
@@ -754,6 +756,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.clan.ClanCommands.registrar(dispatcher);
                 net.pokereport.luna.command.RankCommands.registrar(dispatcher);
             });
+        net.pokereport.luna.world.SafeInteractionPolicy.registrar();
     }
 
     private void boot() {

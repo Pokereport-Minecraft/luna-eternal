@@ -18,6 +18,14 @@ import java.sql.PreparedStatement;
 @Mixin(BlockItem.class)
 public class MixinBlockItem {
 
+    @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", at = @At("HEAD"), cancellable = true)
+    private void luna$protectPlacement(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir) {
+        if (!context.getWorld().isClient() && context.getPlayer() instanceof net.minecraft.server.network.ServerPlayerEntity player
+                && !net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(player, context.getWorld())) {
+            cir.setReturnValue(ActionResult.FAIL);
+        }
+    }
+
     @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", at = @At("RETURN"))
     private void luna$onBlockPlaced(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir) {
         if (!cir.getReturnValue().isAccepted()) return;

@@ -390,6 +390,12 @@ public final class MarketService {
         }
         final long precio = acotarPrecio(precioPedido);
         final int cantidad = acotarCantidad(cantidadPedida);
+        final long reserva;
+        try {
+            reserva = Math.multiplyExact(precio, (long) cantidad);
+        } catch (ArithmeticException overflow) {
+            return Resultado.no("El importe total supera el límite seguro.");
+        }
 
         return enTransaccion(c -> {
             if (abiertas(c, playerId) >= MAX_ABIERTAS) {
@@ -404,13 +410,13 @@ public final class MarketService {
             if (lado == Lado.COMPRA) {
                 try {
                     LunaEternal.economy().applyInTransaction(c, playerId,
-                            Currency.POKEDOLLAR, -(precio * cantidad),
+                            Currency.POKEDOLLAR, -reserva,
                             "mercado_reservar", "mercado", null, clave);
                 } catch (EconomyException e) {
                     return Resultado.no(
                             e.kind == EconomyException.Kind.INSUFFICIENT_FUNDS
                                     ? "No tienes " + String.format("%,d",
-                                            precio * cantidad) + " de Plata."
+                                            reserva) + " de Plata."
                                     : "No se pudo reservar el dinero.");
                 }
             }
@@ -446,7 +452,8 @@ public final class MarketService {
             //   retenida hasta que canceles seria cobrarte por acertar.
             long sobra = 0;
             if (lado == Lado.COMPRA && cruce.ejecutado > 0) {
-                sobra = (long) cruce.ejecutado * precio - cruce.gastado;
+                sobra = Math.subtractExact(
+                        Math.multiplyExact((long) cruce.ejecutado, precio), cruce.gastado);
                 if (sobra > 0) {
                     abonar(c, playerId, sobra, "mercado_vuelta", orderId,
                             clave + ":vuelta");
@@ -553,7 +560,8 @@ public final class MarketService {
 
             afectados.add(otra[1]);
             quedan -= trozo;
-            gastado += precioEjecucion * trozo;
+            gastado = Math.addExact(gastado,
+                    Math.multiplyExact(precioEjecucion, (long) trozo));
         }
         return new Cruce(cantidad - quedan, gastado);
     }
@@ -572,7 +580,7 @@ public final class MarketService {
                           long compradorId, long vendedorId,
                           long compraOrden, long ventaOrden) throws SQLException {
 
-        long bruto = precio * qty;
+        long bruto = Math.multiplyExact(precio, (long) qty);
         // El mismo impuesto progresivo del GTS: el único sink que escala con la
         // riqueza. Los consumibles cuestan lo mismo al novato que al millonario.
         long impuesto = net.pokereport.luna.gts.GtsService.taxFor(bruto);
@@ -713,7 +721,8 @@ public final class MarketService {
             return;
         }
         if (lado == Lado.COMPRA) {
-            abonar(c, playerId, precio * quedan, "mercado_" + motivo, orderId,
+            abonar(c, playerId, Math.multiplyExact(precio, (long) quedan),
+                    "mercado_" + motivo, orderId,
                     "mkt_dev:" + orderId);
         } else {
             deber(c, playerId, itemId, quedan, motivo);

@@ -1,0 +1,18 @@
+{
+  "corrected_archive_restored_without_live_supplements": true,
+  "recovery_boot_and_rcon_list": true,
+  "players": 0,
+  "database_alter_and_restore": true,
+  "wallet_snapshot_sha256": "422063815fdbb9d0ebd7896fd96a6140be255e4e40b6bcb56448700fc0de5bc2",
+  "schema_version": 56,
+  "main_database_modified": false,
+  "coordinated_world_sql_snapshot": false,
+  "sql_time_utc": "2026-10-02 04:00",
+  "world_archive_time_utc": "2026-10-02 15:20:09",
+  "backup_inventory": {
+    "datapack_zip": 3,
+    "ops": 1,
+    "launcher": 1,
+    "files_backup_script": 1
+  }
+}

@@ -80,6 +80,13 @@ public final class EconomyReport {
             out.accept("  §7Ingreso diario (mediana): §f" + fmt(mediana));
             out.accept("  §8   Es el numero que calibra el margen de expedicion,");
             out.accept("  §8   el tope de los kits y los tramos del impuesto.");
+
+            if (net.pokereport.luna.LunaEternal.economicController() != null) {
+                double inflation = net.pokereport.luna.LunaEternal.economicController().getCurrentInflationRate();
+                double taxMult = net.pokereport.luna.LunaEternal.economicController().getTaxMultiplier();
+                out.accept("  §7Inflación PPI (Canasta): §f" + String.format("%.2f", inflation) + "x");
+                out.accept("  §7Multiplicador GTS Taxes: §f" + String.format("%.2f", taxMult) + "x");
+            }
         }
 
         if (flujos.isEmpty()) {

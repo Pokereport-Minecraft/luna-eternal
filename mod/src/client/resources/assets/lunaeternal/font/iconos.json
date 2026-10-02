@@ -2,6 +2,13 @@
   "providers": [
     {
       "type": "bitmap",
+      "file": "lunaeternal:font/logo_tab.png",
+      "height": 22,
+      "ascent": 18,
+      "chars": ["\ue005"]
+    },
+    {
+      "type": "bitmap",
       "file": "lunaeternal:font/clic_derecho.png",
       "height": 12,
       "ascent": 9,

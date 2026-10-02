@@ -1,0 +1,19 @@
+{
+  "live_only": [],
+  "build_only": [
+    "net/pokereport/luna/client/mixin/ConnectScreenMixin.class",
+    "net/pokereport/luna/client/mixin/DownloadingTerrainScreenMixin.class"
+  ],
+  "different": [
+    "net/pokereport/luna/client/Enlaces.class",
+    "net/pokereport/luna/client/mixin/MainMenuMixin.class",
+    "net/pokereport/luna/client/pokepad/Apps.class",
+    "net/pokereport/luna/client/pokepad/PokePadScreen.class",
+    "net/pokereport/luna/player/PlayerService.class",
+    "net/pokereport/luna/pokepad/CatalogoPad.class",
+    "net/pokereport/luna/test/AutoTest$1.class",
+    "net/pokereport/luna/test/AutoTest$1Fuente.class",
+    "net/pokereport/luna/test/AutoTest.class"
+  ],
+  "same": 646
+}

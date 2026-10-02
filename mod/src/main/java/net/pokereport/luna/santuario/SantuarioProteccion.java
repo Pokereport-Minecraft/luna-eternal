@@ -132,7 +132,7 @@ public final class SantuarioProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return ActionResult.PASS;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return ActionResult.PASS;
             }
             if (LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
@@ -147,7 +147,7 @@ public final class SantuarioProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return true;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return true;
             }
             return puedeTocar(sp, pos);
@@ -159,7 +159,7 @@ public final class SantuarioProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return ActionResult.PASS;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return ActionResult.PASS;
             }
             if (!LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
@@ -212,7 +212,7 @@ public final class SantuarioProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return TypedActionResult.pass(jugador.getStackInHand(mano));
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return TypedActionResult.pass(jugador.getStackInHand(mano));
             }
             if (!LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
@@ -244,7 +244,7 @@ public final class SantuarioProteccion {
                 jugador.getServerWorld().getRegistryKey())) {
             return true;
         }
-        if (jugador.isCreative() && jugador.hasPermissionLevel(2)) {
+        if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(jugador, jugador.getServerWorld())) {
             return true;
         }
         var nicho = catalogo.en(pos);

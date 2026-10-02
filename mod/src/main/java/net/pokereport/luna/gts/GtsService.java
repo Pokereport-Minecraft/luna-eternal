@@ -80,10 +80,22 @@ public final class GtsService {
         long tax = 0;
         long remaining = price;
         long previous = 0;
+
+        // Fase 15: Factor dinámico. Si hay inflación, el impuesto es más agresivo.
+        double multiplier = 1.0;
+        if (LunaEternal.economicController() != null) {
+            multiplier = LunaEternal.economicController().getTaxMultiplier();
+        }
+
         for (long[] bracket : TAX_BRACKETS) {
             if (remaining <= 0) break;
             long span = Math.min(remaining, bracket[0] - previous);
-            tax += span * bracket[1] / 100;
+
+            double effectiveRate = bracket[1] * multiplier;
+            // Cap el impuesto máximo absoluto en un 50% por tramo, incluso con hiperinflación
+            effectiveRate = Math.min(effectiveRate, 50.0);
+
+            tax += (long) (span * effectiveRate / 100);
             remaining -= span;
             previous = bracket[0];
         }
@@ -91,7 +103,13 @@ public final class GtsService {
     }
 
     public static long listingFee(long price) {
-        return Math.max(1, price * LISTING_FEE_PER_MILLE / 1000);
+        double multiplier = 1.0;
+        if (LunaEternal.economicController() != null) {
+            multiplier = LunaEternal.economicController().getTaxMultiplier();
+        }
+
+        double effectiveMille = LISTING_FEE_PER_MILLE * multiplier;
+        return Math.max(1, (long) (price * effectiveMille / 1000));
     }
 
     // ------------------------------------------------------------ publicar

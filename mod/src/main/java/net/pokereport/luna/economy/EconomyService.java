@@ -96,6 +96,10 @@ public class EconomyService {
                                    Long refId, String idempotencyKey)
             throws SQLException, EconomyException {
 
+        if (currency == Currency.MARK) {
+            throw new EconomyException(EconomyException.Kind.INVALID_AMOUNT,
+                    "MARK está retirada; el historial se conserva solo para auditoría");
+        }
         ensureRow(c, playerId, currency);
 
         // FOR UPDATE: bloquea la fila hasta el commit. Sin esto, dos

@@ -11,6 +11,7 @@
     "LobbyHudGuardMixin",
     "MainMenuMixin",
     "ConnectScreenMixin",
+    "DownloadingTerrainScreenMixin",
     "SplashOverlayMixin",
     "SplashOverlayAccessor",
     "SplashOverlayInvoker",
