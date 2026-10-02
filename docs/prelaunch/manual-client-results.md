@@ -14,6 +14,10 @@ Candidato cliente: SHA256 `92bf8e95b6c6a3fc52fb1a022eff548d8d9a91a4d2fd9c28eaa8b
 | Player Survival LAVA | PASS manual | Usuario confirma que no permite dejar lava | Mismo ensayo manual en Ciudadela |
 | Player Survival FIRE | PASS manual | Usuario confirma que no permite dejar fuego | Mismo ensayo manual en Ciudadela |
 
+Interacciones PokePad/NPC/tienda y reconexión: usuario respondió «funciona todo bien creo». Se registra observación favorable provisional, sin afirmar PASS individual de cada flujo ni comparar inventario/estado persistente. Hace falta confirmación específica o evidencia por caso.
+
+Daño por caída: PASS con cliente real conectado, comprobación RCON en Ciudadela/Survival. A las 18:27 UTC se elevó el fixture de Y68 a Y74 y volvió a Y68 con Health=20. Para evitar que la regeneración ocultase daño, se repitió con `naturalRegeneration=false`: aterrizó en Y68 con Health=20. Valor original true restaurado y verificado inmediatamente, solo en staging. Esto certifica esa caída, no lava, PvP, vacío ni combate Pokémon. FoodLevel=20 fue una medición puntual; sprint/hambre sostenida sigue pendiente.
+
 La hora anotada corresponde al registro/verificación, no a una hora exacta de clic. Screenshot de BREAK/PLACE no aportado; no se comparó snapshot de bloques ni inventario para estos dos casos. No afirmar ausencia de consumo/desincronización tras reconnect hasta probarlo. No confundir colocación visible breve y posterior reversión con permiso de construcción persistente.
 
 Tras Creative se repuso Survival y se entregaron únicamente al fixture QA cubos de agua/lava y flint and steel. Denegación manual de esos tres usos confirmada por el usuario. Persistencia/desincronización tras reconexión, entidades/decoración, hambre/daño/PvP, interacciones, dimensiones/teleports, batallas y multiplayer siguen NOT TESTED. P0/P1 no se cierran por estas siete pruebas. Computer Use permanece detenido por Escape del usuario; pruebas físicas realizadas por la persona.
