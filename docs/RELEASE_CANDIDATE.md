@@ -8,6 +8,8 @@ Avance manual posterior: EasyAuth aceptó el registro humano y se verificó entr
 
 Decisión posterior del usuario: omitir combate real de gimnasio. Su estado permanece NOT TESTED y OPEN-03 sigue abierto. Las pruebas manuales adicionales de protección, interacción y permisos están registradas con su alcance en manual-client-results.md; no sustituyen batallas ni multiplayer.
 
+Multiplayer: usuario dispone solo de la cuenta actual; escenarios de cinco clientes NOT TESTED. Staff: por instrucción del usuario se omite identificar/asignar personas y se entrega la herramienta de gestión por comandos [STAFF_PERMISSION_COMMANDS.md](STAFF_PERMISSION_COMMANDS.md), sin grants aplicados. La herramienta pasó seis pruebas de seguridad y preview en staging con hashes de archivos intactos; no equivale a QA jugable del admin autorizado ni certificación de identidades. No cambia el JAR candidato ni despliega producción.
+
 Feature freeze vigente. Sin merge, despliegue del mod principal ni certificación de apertura. Se reutilizó `1e08`, preservando las implementaciones recientes del portal/economía/Lunita y los demás worktrees.
 
 ## P0 ACTUAL — OPEN-01

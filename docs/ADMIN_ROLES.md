@@ -1,5 +1,7 @@
 # Roles administrativos — 2026-10-02
 
+Gestión preparada por solicitud del usuario: [STAFF_PERMISSION_COMMANDS.md](STAFF_PERMISSION_COMMANDS.md), herramienta `tools/staff_permissions.py` con presets, preview, respaldo y revocación. No se asignaron identidades reales. El usuario decidió omitir la confirmación de personas en esta fase; la tabla pendiente se conserva sin inventar staff.
+
 Autoridad comprobada: OP nativo. No hay LuckPerms instalado en el servidor inspeccionado. Tablist llama ADMIN a todos los OP; `testrango` es visual. Los rangos comerciales de RankService no conceden edición. No usar ninguno de esos textos como autorización.
 
 | Identidad | Mapas seguros | Comandos críticos | Survival |
