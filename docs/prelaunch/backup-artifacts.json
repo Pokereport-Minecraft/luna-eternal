@@ -1,0 +1,18 @@
+{
+  "files": {
+    "path": "/var/backups/pokereport/files/cobblemon_2026-10-02_152009.tar.zst",
+    "timestamp_utc": "2026-10-02T15:20:09Z",
+    "bytes": 11473418673,
+    "sha256": "d54ee4b811fa21b1a5b184033cdbd9d8d1dcc5b5c47f81944778030e7d5670f7"
+  },
+  "database": {
+    "path": "/var/backups/pokereport/database/s11945_luna_2026-10-02_040000.sql.gz",
+    "timestamp_utc": "2026-10-02T04:00:00Z",
+    "bytes": 95300,
+    "sha256": "2414e29bf25b7f57f5a9b7d60c874a533ce00356f692f02a949e55cd4cfd7129"
+  },
+  "coordinated_world_sql_snapshot": false,
+  "checksum_and_restore_previously_verified": true,
+  "hashes_read_from_existing_sidecars": true,
+  "new_predeployment_backup": "BLOCKED: no deployment authorized; required before future rollout"
+}

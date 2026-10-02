@@ -1,0 +1,12 @@
+{
+  "build_sha256": "92bf8e95b6c6a3fc52fb1a022eff548d8d9a91a4d2fd9c28eaa8be5d5dba57dd",
+  "build_bytes": 108372463,
+  "test_results": {
+    "tests": 188,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2
+  },
+  "delta_changed_entries": 106,
+  "base_sha256": "6a4642198448b0395bdae0739c4ad3d79bc2b86bc11a19d8bc120af5203838f9"
+}

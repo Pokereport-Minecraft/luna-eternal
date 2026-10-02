@@ -11,7 +11,7 @@ Estados: PASS = evidencia ejecutada; PENDING = no ejecutado; FAIL = reproducció
 | Exportación Brigadier | PASS | 2247 usos con Tebex; 2236 al aislar conector |
 | Backup corregido checksum | PASS | Archivo 2026-10-02_152009 |
 | Restauración archivos/SQL antigua | PASS parcial | Arranque con ZIP/launcher suplementados |
-| Restauración íntegra del backup corregido | PENDING | No confundir con la restauración antigua |
+| Restauración íntegra del backup corregido | PASS | Destino recovery separado, arranque y restauración exacta de wallet; SQL/mundo no coordinados |
 | Batallas con clientes / dos cuentas | PENDING | Procedimiento abajo |
 | Transiciones / reconexión | PENDING | Procedimiento abajo |
 | UI / resource pack / PokePad | PENDING | Cliente real necesario |
@@ -28,7 +28,9 @@ Nueva cuenta en Lobby: registro/login, tutorial/guardián. Viajar a Ciudadela, c
 
 ## Guion de gimnasio y concurrencia
 
-Dos jugadores: entrar simultáneamente, interactuar con líderes, iniciar batalla, ganar/perder/huir, desconectar dentro, reconectar, repetir jefe. Comprobar ranuras distintas, clon sin superposición, cleanup, salida, una sola recompensa/medalla por evento. Ejecutar Johto y Morti con offsets reales. Validar Cynthia tras corregir o justificar los movimientos inválidos que aparecen en arranque. Registrar ID batalla, UUID, hora, logs y estado DB antes/después. El clon y premios unitarios no certifican el combate completo.
+Dos jugadores: entrar simultáneamente, interactuar con líderes, iniciar batalla, ganar/perder/huir, desconectar dentro, reconectar, repetir jefe. Comprobar ranuras distintas, clon sin superposición, cleanup, salida, una sola recompensa/medalla por evento. Ejecutar Johto y Morti con offsets reales. Los IDs de movimientos de Cynthia se corrigieron y el arranque dejó de reportarlos inválidos; falta completar su batalla real. Registrar ID batalla, UUID, hora, logs y estado DB antes/después. El clon y premios unitarios no certifican el combate completo.
+
+Procedimiento ampliado de clientes: [MANUAL_CLIENT_QA.md](MANUAL_CLIENT_QA.md). Estado y recibos del candidato final: [RELEASE_CANDIDATE.md](RELEASE_CANDIDATE.md). Build final: 188 casos registrados, 186 ejecutados sin fallos, 2 omitidos por fixtures externos ausentes; no son 188 PASS ejecutados.
 
 ## Guion UI/economía
 

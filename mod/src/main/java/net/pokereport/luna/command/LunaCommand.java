@@ -1048,7 +1048,7 @@ public final class LunaCommand {
                                         com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "ronda"))))))))
 
             .then(literal("autotest")
-                .requires(s -> s.hasPermissionLevel(4))
+                .requires(s -> s.hasPermissionLevel(4) && s.getEntity() == null)
                 .executes(ctx -> autotest(ctx.getSource())))
 
             .then(literal("kits")
@@ -1941,6 +1941,18 @@ public final class LunaCommand {
     }
 
     private static int autotest(ServerCommandSource src) {
+        final boolean isolatedStaging;
+        try {
+            isolatedStaging = net.pokereport.luna.LunaConfig.load().jdbcUrl.contains("/prelaunch_20261002?");
+        } catch (java.io.IOException e) {
+            LunaEternal.LOG.warn("Autotest rechazado: no se pudo verificar la configuración.");
+            src.sendError(Text.literal("No se pudo verificar el staging aislado; autotest rechazado."));
+            return 0;
+        }
+        if (!isolatedStaging) {
+            src.sendError(Text.literal("Autotest escribe datos de ensayo: solo se permite en el staging aislado."));
+            return 0;
+        }
         var server = src.getServer();
         src.sendFeedback(() -> Text.literal("§7Ejecutando autotest…"), false);
         LunaEternal.submit(() -> {

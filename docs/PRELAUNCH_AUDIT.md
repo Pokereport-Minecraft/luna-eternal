@@ -1,5 +1,7 @@
 # Auditoría forense prelaunch — 2026-10-02
 
+Actualización de fase final: [RELEASE_CANDIDATE.md](RELEASE_CANDIDATE.md) contiene P0 concreto, los cinco P1 y resultados del candidato actualizado (188 casos: 186 ejecutados, 2 omitidos; 753 autotests y 21 ensayos de protección). Incluye drill Tebex duplicado/restart y API de solo lectura. Los conteos históricos de build abajo no distinguen casos omitidos; no interpretarlos como todos ejecutados. QA con clientes y deployment permanecen bloqueados.
+
 
 
 ## 1. Estado general

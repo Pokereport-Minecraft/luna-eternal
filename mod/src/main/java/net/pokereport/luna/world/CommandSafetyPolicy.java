@@ -13,7 +13,15 @@ public final class CommandSafetyPolicy {
             "givepokemon", "givepokemonother", "pokegive", "pokegiveother", "pokeeditother", "pokemoneditother",
             "runmolang", "runmolangscript", "tebex", "testcommand", "damage", "clear", "effect", "enchant",
             "experience", "xp", "attribute", "difficulty", "weather", "time", "rctmod",
-            "teleport", "tp", "spreadplayers", "transfer", "save-off", "save-on", "reloadshowdown");
+            "teleport", "tp", "spreadplayers", "transfer", "save-off", "save-on", "reloadshowdown",
+            "auth", "giveallmarks", "giveallpokemon", "givemark", "givepokemonegg", "givetm",
+            "pokeedit", "pokemonedit", "spawnpokemon", "spawnpokemonat", "spawnpokemonfrompool",
+            "clearparty", "testpartyslot", "lunita");
+    private static final Set<String> LUNA_ADMIN = Set.of("dar", "constructor", "rango", "testrango",
+            "gimnasio", "decorar", "naranja", "puerta", "traje", "pase", "torre_batalla",
+            "paradas", "comercio", "enfermera", "kits", "rotacion", "reiniciarmision",
+            "reiniciarinicial", "reiniciarmedalla", "darmedalla", "darmedallas", "via",
+            "rotarcazas", "probar", "lunita", "quienpokemon");
     private static final Set<String> TERRAIN = Set.of("fill", "fillbiome", "clone", "setblock", "data",
             "execute", "function", "summon", "place", "item", "loot", "schedule");
     // These commands can target another dimension regardless of the source world.
@@ -45,7 +53,9 @@ public final class CommandSafetyPolicy {
         int namespace = root.indexOf(':');
         if (namespace >= 0) root = root.substring(namespace + 1);
         if ("luna".equals(root) && tokens.length > 1
-                && Set.of("dar", "constructor", "rango", "testrango", "gimnasio", "decorar", "naranja").contains(tokens[1].toLowerCase(Locale.ROOT))) {
+                && "autotest".equalsIgnoreCase(tokens[1])) return false;
+        if ("luna".equals(root) && tokens.length > 1
+                && LUNA_ADMIN.contains(tokens[1].toLowerCase(Locale.ROOT))) {
             if (!access.superiorStaff() || !access.commandGrant()) return false;
             if (Set.of("gimnasio", "decorar", "naranja").contains(tokens[1].toLowerCase(Locale.ROOT))) {
                 return access.mayEdit();

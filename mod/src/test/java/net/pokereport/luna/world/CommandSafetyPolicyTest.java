@@ -5,6 +5,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import net.pokereport.luna.world.CommandSafetyPolicy.Access;
 
 class CommandSafetyPolicyTest {
+    @Test void accountAndPokemonAdministrationNeedExplicitCommandGrant() {
+        var ungranted = new Access(true, true, true, false, true, true, true);
+        for (String command : new String[]{"auth remove Player", "giveallpokemon", "givepokemonegg Player pikachu",
+                "pokeedit 1 shiny=true", "spawnpokemon pikachu", "clearparty Player", "lunita dar Player",
+                "luna puerta desactivar", "luna pase xp Player 100", "luna darmedallas Player", "luna kits rotacion reset"}) {
+            assertFalse(CommandSafetyPolicy.allowed(ungranted, command), command);
+            assertTrue(CommandSafetyPolicy.allowed(new Access(true, true, true, true, true, true, true), command), command);
+        }
+        assertFalse(CommandSafetyPolicy.allowed(new Access(true, true, true, true, true, true, true), "luna autotest"));
+        assertTrue(CommandSafetyPolicy.allowed(ungranted, "luna saldo"));
+        assertTrue(CommandSafetyPolicy.allowed(ungranted, "luna santuario aprobar nicho"));
+    }
     @Test void normalPlayersCannotUseCriticalCommandsOrNamespacedAliases() {
         var player = new Access(false, false, false, false, false, false, true);
         for (String command : new String[]{"op Alice", "gamemode creative", "give @s diamond", "fill ~ ~ ~ ~ ~ ~ stone",
