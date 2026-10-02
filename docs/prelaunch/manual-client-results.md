@@ -20,6 +20,10 @@ Confirmación posterior: tras solicitar sprint/saltos, PokePad, NPC, tienda y re
 
 Lectura posterior del backend a las 18:31:09 UTC: Ciudadela, FoodLevel=20, foodExhaustionLevel=0.0, Health=20. Es consistente con la protección tras la secuencia solicitada; no se midió distancia/duración efectiva de sprint ni hambre en dimensiones Survival.
 
+Viaje a Hogar o Salvaje, construcción fuera de spawn/claims y retorno a Ciudadela con denegación: usuario declara «ya probé todo y funcionó todo» tras pedir esa secuencia. PASS manual reportado para la secuencia; destino exacto pendiente de identificar. No extender esa declaración a ambos mundos, seis Salvajes, muerte/respawn, combates o multiplayer.
+
+Siguiente caso preparado: OP temporal de la cuenta de ensayo y Creative, sin añadir grants. Objetivo: verificar que OP por sí solo no permita editar Ciudadela. Revertir OP/Creative después del caso; no asignar privilegios a personas reales.
+
 Daño por caída: PASS con cliente real conectado, comprobación RCON en Ciudadela/Survival. A las 18:27 UTC se elevó el fixture de Y68 a Y74 y volvió a Y68 con Health=20. Para evitar que la regeneración ocultase daño, se repitió con `naturalRegeneration=false`: aterrizó en Y68 con Health=20. Valor original true restaurado y verificado inmediatamente, solo en staging. Esto certifica esa caída, no lava, PvP, vacío ni combate Pokémon. FoodLevel=20 fue una medición puntual; sprint/hambre sostenida sigue pendiente.
 
 La hora anotada corresponde al registro/verificación, no a una hora exacta de clic. Screenshot de BREAK/PLACE no aportado; no se comparó snapshot de bloques ni inventario para estos dos casos. No afirmar ausencia de consumo/desincronización tras reconnect hasta probarlo. No confundir colocación visible breve y posterior reversión con permiso de construcción persistente.
