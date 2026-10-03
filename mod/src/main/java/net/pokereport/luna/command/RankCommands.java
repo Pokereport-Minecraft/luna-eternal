@@ -3,7 +3,6 @@ package net.pokereport.luna.command;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.command.CheckSpawnsCommand;
-import com.cobblemon.mod.common.net.messages.client.storage.pc.OpenPCPacket;
 import com.cobblemon.mod.common.pokemon.EVs;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -166,7 +165,7 @@ public final class RankCommands {
         // RANGO MAESTRO (+5 Comandos = 10 Total)
         // ==========================================
 
-        // 6. /pc (EXCLUSIVO MAESTRO Y LEYENDA)
+        // 6. /pc (CAMPEON, MAESTRO Y LEYENDA; mismo control que la tecla P)
         dispatcher.register(
             CommandManager.literal("pc")
                 .executes(RankCommands::ejecutarPC)
@@ -337,20 +336,7 @@ public final class RankCommands {
         ServerPlayerEntity p = ctx.getSource().getPlayer();
         if (p == null) return 0;
 
-        if (!cumpleRango(p, Rank.MAESTRO)) {
-            p.sendMessage(Text.literal("§cEl acceso remoto a la PC es exclusivo para rangos Maestro y Leyenda. Los demás jugadores pueden usar las PCs del Centro Pokémon o craftear una física."), false);
-            return 0;
-        }
-
-        try {
-            new OpenPCPacket(p.getUuid()).sendToPlayer(p);
-            p.sendMessage(Text.literal("§aAbriendo tu PC Pokémon..."), false);
-            return 1;
-        } catch (Throwable t) {
-            LunaEternal.LOG.error("Error al abrir PC remota para {}", p.getName().getString(), t);
-            p.sendMessage(Text.literal("§cNo se pudo abrir la PC en este momento."), false);
-            return 0;
-        }
+        return net.pokereport.luna.rank.RemotePcAccess.open(p);
     }
 
     private static int ejecutarIVs(CommandContext<ServerCommandSource> ctx, int slot) {

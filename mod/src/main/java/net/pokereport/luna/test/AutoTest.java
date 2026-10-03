@@ -108,6 +108,10 @@ public final class AutoTest {
             testCazas(a);
             testCazasPremios(a);
             testRangos(a);
+            for (var rank : net.pokereport.luna.ui.Tablist.Rank.values()) {
+                check("PC remoto: " + rank.name(), net.pokereport.luna.rank.RemotePcAccess.allows(rank, false)
+                    == (rank.equipo || rank.escalon >= 3));
+            }
             testMochila(a);
             testVozPokedex();
             testCosmeticos();

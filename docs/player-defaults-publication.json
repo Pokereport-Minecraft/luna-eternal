@@ -1,0 +1,23 @@
+{
+  "previous_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-50b822c9ad.json",
+    "sha1": "50b822c9ad079b9f79f8bff50804c6845317236b",
+    "size": 63698,
+    "publicado": "2026-10-03T22:00:19Z"
+  },
+  "new_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-38a9240999.json",
+    "sha1": "38a9240999e7410561fb5992f7f9ea9bcc75ed75",
+    "size": 64226,
+    "publicado": "2026-10-03T23:33:53Z"
+  },
+  "removed": "mods/musicnotification-fabric-3.3.1+mc1.21.1.jar",
+  "initial_settings_only": true,
+  "unrelated_entries_preserved": true,
+  "jar_sha256": "5fb69284c8b3e4086d82f56b30478aa8cfea7a883d93d950c1e66059fc0b21fa",
+  "published": true,
+  "verified_downloads": true,
+  "pointer_asset_id": 608728191
+}

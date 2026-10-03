@@ -29,7 +29,8 @@
     "StaffOnlyJoinMessageMixin",
     "battle.RequestInstructionFixMixin",
     "battle.BattleActorChoiceFixMixin",
-    "battle.PokemonBattleSafetyMixin"
+    "battle.PokemonBattleSafetyMixin",
+    "LumyRemotePcMixin"
   ],
   "injectors": {
     "defaultRequire": 1
