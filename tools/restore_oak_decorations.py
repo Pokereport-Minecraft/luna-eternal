@@ -19,7 +19,9 @@ def decode(data):
     def number(fmt):
         return struct.unpack('>' + fmt, stream.read(struct.calcsize('>' + fmt)))[0]
     def string():
-        return stream.read(number('H')).decode('utf-8')
+        raw = stream.read(number('H')).replace(b'\xc0\x80', b'\x00')
+        text = raw.decode('utf-8', errors='surrogatepass')
+        return text.encode('utf-16', errors='surrogatepass').decode('utf-16')
     def read(kind):
         if kind in range(1, 7):
             value = number({1:'b', 2:'h', 3:'i', 4:'q', 5:'f', 6:'d'}[kind])
@@ -69,7 +71,6 @@ def main():
         _, document = decode(original)
         marker = '"entity":'
         start = document.index(marker) + len(marker)
-        decoder = json.JSONDecoder()  # Only locate the compound via balanced quoted text.
         depth, quoted, escaped, end = 0, False, False, start
         for end in range(start, len(document)):
             char = document[end]
@@ -86,6 +87,11 @@ def main():
         pos = entity['Pos']
         command = f'execute in lunaeternal:ciudadela unless entity {uid} run summon cobblemon:pokemon {pos[0]} {pos[1]} {pos[2]} {snbt}'
         subprocess.run(['/usr/local/sbin/pokereport-server-cmd', command], check=True)
+        # Original archives predate the Pokemon-side marker used by Pokedex events.
+        subprocess.run(['/usr/local/sbin/pokereport-server-cmd',
+                        f'execute in lunaeternal:ciudadela run data modify entity {uid} Pokemon.PersistentData.luna_decorativo set value 1b'], check=True)
+        subprocess.run(['/usr/local/sbin/pokereport-server-cmd',
+                        f'execute in lunaeternal:ciudadela run data modify entity {uid} Unbattleable set value 1b'], check=True)
         records.append(dict(uuid=uid, species=species, pos=pos, rotation=entity['Rotation']))
     (evidence / 'requested-restoration.json').write_text(json.dumps(records, indent=2))
     print(json.dumps(records, indent=2))

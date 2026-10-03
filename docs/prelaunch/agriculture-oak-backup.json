@@ -1,0 +1,24 @@
+{
+  "created_utc": "20261003T020652Z",
+  "release_dir": "/var/backups/pokereport/releases/20261003T020652Z",
+  "old_jar_sha256": "38adc41a18249f4d82c482ef2d384da4e3bd56a2a399194e60516208d460a403",
+  "state": "VERIFIED",
+  "server_stopped_utc": "2026-10-03T02:07:26.551853+00:00",
+  "database.sql.gz": {
+    "path": "/var/backups/pokereport/releases/20261003T020652Z/database.sql.gz",
+    "bytes": 98078,
+    "sha256": "a505b0096bf468743517919b03fc77be41c792b1a47cbcd168ffc40a9fbcd4af"
+  },
+  "volume.tar.zst": {
+    "path": "/var/backups/pokereport/releases/20261003T020652Z/volume.tar.zst",
+    "bytes": 12379774341,
+    "sha256": "a35793370a3cbb7317866795425bb5baeb5ed80413abed4d3e55d6b26d67617f"
+  },
+  "coordinated_server_stopped_snapshot": true,
+  "other_main_db_connections_before_after": 0,
+  "archive_inventory_count": 10108,
+  "sqlite_integrity": "PASS",
+  "gzip_and_zstd_integrity": "PASS",
+  "finished_utc": "2026-10-03T02:08:33.620228+00:00",
+  "schema_version": 56
+}
