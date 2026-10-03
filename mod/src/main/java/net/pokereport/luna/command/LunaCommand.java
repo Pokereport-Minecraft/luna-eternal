@@ -608,6 +608,12 @@ public final class LunaCommand {
 
             .then(literal("comercio")
                 .requires(x -> x.hasPermissionLevel(4))
+                .then(literal("agricultura").executes(ctx -> {
+                    int n = net.pokereport.luna.shop.ComercioNpc.colocarAgricultura(ctx.getSource().getServer());
+                    ctx.getSource().sendFeedback(() -> Text.literal(
+                            "§a" + n + " §7vendedores de bayas y cultivos colocados."), false);
+                    return n;
+                }))
                 .executes(ctx -> {
                     int n = net.pokereport.luna.shop.ComercioNpc.colocarTodos(ctx.getSource().getServer());
                     ctx.getSource().sendFeedback(() -> Text.literal(
