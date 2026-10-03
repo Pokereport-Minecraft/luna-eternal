@@ -1,3 +1,5 @@
+> Actualización de despliegue autorizada por el usuario: principal RUNNING y launcher publicado. Ver [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) y recibos. El texto anterior que indica «sin despliegue» es histórico. Apertura sigue NO CERTIFICADA; QA pendiente no se convierte en PASS.
+
 # Despliegue y rollback — procedimiento retenido
 
 NO ejecutar en producción durante esta fase. No hay merge, autorización de despliegue ni certificación de apertura. OPEN-01 y P1 críticos retienen el gate. El rollback completo se ensaya primero en una copia independiente con conectores externos desactivados.
@@ -13,7 +15,7 @@ NO ejecutar en producción durante esta fase. No hay merge, autorización de des
 
 ## Preparar el punto de reversión
 
-Tras cerrar blockers y obtener ruta autorizada: registrar commit limpio, JAR/hash, versiones de mods/datapacks y migraciones; anunciar mantenimiento, bloquear nuevos accesos y esperar que terminen combates y compras. Detener correctamente desde consola del panel con `stop`, o `docker stop -t 120 1f23bff0-bc4c-4c00-bbcf-2fe81ff666dd` desde host. Confirmar contenedor detenido y guardado completo; no usar kill como procedimiento normal.
+Tras cerrar blockers y obtener ruta autorizada: registrar commit limpio, JAR/hash, versiones de mods/datapacks y migraciones; anunciar mantenimiento, bloquear nuevos accesos y esperar que terminen combates y compras. Detener correctamente desde consola del panel con `stop`, o API Wings desde host; no usar docker stop en el principal, porque Wings lo reinicia. Confirmar contenedor detenido y guardado completo; no usar kill como procedimiento normal.
 
 Con el servidor detenido, generar backup NUEVO de SQL y volumen usando `/usr/local/sbin/pokereport-db-backup` y `/usr/local/sbin/pokereport-files-backup`, después de revisar que funcionen con el contenedor parado. Si el script exige RCON activo, adaptar el procedimiento operativo de backup detenido sin saltarse la copia: dump transaccional consistente + archivo íntegro de volumen. No reabrir el servidor para simular coordinación temporal.
 

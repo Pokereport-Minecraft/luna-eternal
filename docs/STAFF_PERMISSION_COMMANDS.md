@@ -1,8 +1,10 @@
+> Actualización de despliegue autorizada por el usuario: principal RUNNING y launcher publicado. Ver [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) y recibos. El texto anterior que indica «sin despliegue» es histórico. Apertura sigue NO CERTIFICADA; QA pendiente no se convierte en PASS.
+
 # Asignación de staff por comandos
 
 Herramienta: `tools/staff_permissions.py`. Gestiona únicamente el sistema existente: `ops.json` y `config/lunaeternal/world-edit.properties`. No asigna personas ahora, no cambia rangos comerciales, no instala LuckPerms y no despliega el mod.
 
-**Estos grants requieren el candidato de hardening. El JAR principal anterior todavía no aplica esta barrera.** Tener los archivos preparados no hace seguro el mod anterior. No ejecutar asignaciones de edición en producción como sustituto del despliegue/QA pendiente.
+**El candidato de hardening ya está desplegado.** Confirmar identidad/UUID y verificar el rol con la persona; no se ha asignado staff automáticamente.
 
 | Rol del comando | OP | Permisos explícitos | Edita mapas seguros |
 |---|---|---|---|
@@ -18,11 +20,11 @@ Los nombres de roles son presets de configuración, no un nuevo rango/tablist. M
 
 Confirmar UUID de la sesión autenticada del servidor, especialmente en offline/Velocity/EasyAuth; no usar un UUID de Mojang por suposición. Copiar la herramienta al host, por ejemplo a `/root/pokereport-tools/staff_permissions.py` (crear antes ese directorio). Usar consola del host/SSH, no el chat de Minecraft.
 
-Ejemplos para staging:
+Ejemplos para el principal desplegado:
 
 ```sh
-SERVER=/srv/pokereport-prelaunch-20261002
-CONTAINER=pokereport-prelaunch-20261002
+SERVER=/var/lib/pterodactyl/volumes/1f23bff0-bc4c-4c00-bbcf-2fe81ff666dd
+CONTAINER=1f23bff0-bc4c-4c00-bbcf-2fe81ff666dd
 TOOL=/root/pokereport-tools/staff_permissions.py
 ```
 
@@ -53,10 +55,11 @@ Sin `--apply`, esos comandos solo muestran la propuesta. Seleccionar UN rol; no 
 Cerrar las sesiones y detener correctamente el servidor durante mantenimiento; los grants se cargan al iniciar y no hay recarga en caliente. La herramienta verifica mediante Docker que el contenedor esté detenido y que monte exactamente el directorio indicado.
 
 ```sh
-docker stop -t 120 "$CONTAINER"
+# Detener desde el panel o API Wings; confirmar estado STOPPED.
+# No usar docker stop: Wings reinicia el principal.
 python3 "$TOOL" --server-root "$SERVER" assign --uuid "$STAFF_UUID" --name "$STAFF_NAME" --role builder --apply --container "$CONTAINER"
 python3 "$TOOL" --server-root "$SERVER" list
-docker start "$CONTAINER"
+# Iniciar desde el panel o API Wings después de comprobar ambos archivos.
 ```
 
 Antes de escribir se respaldan ambos archivos bajo `$SERVER/.staff-permission-backups/FECHA_UTC/`, con manifest que registra presencia original. Un fallo de escritura intenta restaurar ambos archivos. No arrancar si hay error: revisar el backup y que ambos archivos correspondan al mismo estado, especialmente después de una interrupción del proceso/host. No se borra el historial de backups.
@@ -78,9 +81,10 @@ ON exige OP4 + edit + editmode y activa Creative/sesión; OFF revoca sesión. Su
 Para quitar OP y todos los grants de esta persona:
 
 ```sh
-docker stop -t 120 "$CONTAINER"
+# Detener desde el panel o API Wings; confirmar estado STOPPED.
+# No usar docker stop: Wings reinicia el principal.
 python3 "$TOOL" --server-root "$SERVER" revoke --uuid "$STAFF_UUID" --apply --container "$CONTAINER"
-docker start "$CONTAINER"
+# Iniciar desde el panel o API Wings después de comprobar ambos archivos.
 ```
 
 Para conservar moderación y retirar edición/administración crítica, aplicar `--role moderator`: sustituye los grants anteriores y deja OP3. No basta con borrar un nodo mientras siga activa una sesión vieja: parada/reinicio eliminan esa sesión.

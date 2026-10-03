@@ -1,3 +1,5 @@
+> Actualización de despliegue autorizada por el usuario: principal RUNNING y launcher publicado. Ver [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) y recibos. El texto anterior que indica «sin despliegue» es histórico. Apertura sigue NO CERTIFICADA; QA pendiente no se convierte en PASS.
+
 # POKEREPORT NETWORK — RELEASE CANDIDATE
 
 2026-10-02 · `codex/prelaunch-world-hardening` · **BLOCKED**.
