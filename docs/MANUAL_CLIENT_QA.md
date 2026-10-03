@@ -65,7 +65,7 @@ ESTADO DB / INVENTARIO / BLOQUES ANTES Y DESPUÉS:
 
 Sin ejecución humana y evidencia, conservar NOT TESTED. Al cerrar la sesión detener backend y proxy QA y terminar el túnel propio; preservar sus volúmenes. No desplegar ni certificar mientras sigan pendientes login, juego, multiplayer, staff y demás gates del candidato.
 
-Solicitud adicional del usuario: revisar después de las pruebas el aviso «¡Elige tu inicial!» que muestra `key.keyboard.` literalmente. No se modificó aún; no mezclar esa revisión con resultados PASS de protección.
+Solicitud adicional del usuario: ocultar el aviso «¡Elige tu inicial!» que muestra `key.keyboard.` literalmente. Corrección exclusivamente de cliente en [STARTER_TOAST_FIX.md](STARTER_TOAST_FIX.md), con build comprobado. Verificación visual al iniciar mediante el launcher actualizado: NOT TESTED; no mezclarla con resultados PASS de protección.
 
 Estado inicial: NOT TESTED para los casos de juego. El cliente aislado arrancó, pero la primera conexión se cortó y la herramienta de captura falló dos veces; no se observaron sesiones jugables ni se certificaron interfaces. Ningún autotest sustituye los pasos siguientes.
 

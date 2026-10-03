@@ -1,6 +1,6 @@
 # Despliegue controlado — 2 de octubre de 2026
 
-Autorizado por el usuario: «despliega todo ya». Servidor principal RUNNING, arranque y comprobaciones de consola PASS. Apertura NO CERTIFICADA: smoke con cliente posterior al despliegue, batallas, multiplayer, identidades de staff y revisión externa de Tebex siguen pendientes con el alcance de RELEASE_CANDIDATE.md. El aviso «¡Elige tu inicial!» sigue pendiente de corrección.
+Autorizado por el usuario: «despliega todo ya». Servidor principal RUNNING, arranque y comprobaciones de consola PASS. Apertura NO CERTIFICADA: smoke con cliente posterior al despliegue, batallas, multiplayer, identidades de staff y revisión externa de Tebex siguen pendientes con el alcance de RELEASE_CANDIDATE.md. El aviso «¡Elige tu inicial!» tiene una corrección posterior exclusivamente de cliente: [STARTER_TOAST_FIX.md](STARTER_TOAST_FIX.md).
 
 ## Artefactos y publicación
 

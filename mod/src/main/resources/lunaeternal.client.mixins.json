@@ -17,7 +17,8 @@
     "SplashOverlayInvoker",
     "MoveTooltipOverlayStateAccessor",
     "CustomBattleControllerMixin",
-    "BattleMoveTileTooltipAuditMixin"
+    "BattleMoveTileTooltipAuditMixin",
+    "StarterToastMixin"
   ],
   "injectors": {
     "defaultRequire": 1
