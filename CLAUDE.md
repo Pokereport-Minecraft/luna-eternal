@@ -1,3 +1,5 @@
+> **2026-10-03 — Vídeos:** caché FFmpeg incompleta bloqueaba Oak/Torre/gimnasios. Reparación automática de DLL oficiales al arranque del cliente, sin cambiar servidor. Diagnóstico y validación nativa en [docs/MEDIA_PLAYBACK_FIX.md](docs/MEDIA_PLAYBACK_FIX.md). QA audiovisual completo pendiente.
+
 ## PokeVoice — candidato aislado (2026-10-03)
 
 Rama `codex/pokevoice`, base `a74d626d`. Simple Voice Chat Fabric 1.21.1 2.6.22, API 2.6.20; consentimiento por UUID en V057. Nuevo módulo `voice`, app PokéPad `pokevoice`; filtro exclusivo SOURCE_PROXIMITY. No SQL en audio. Estado de promoción BLOCKED hasta audio real con dos equipos y carga. Cliente publicado automáticamente y principal desplegado por solicitud expresa: UDP 24591/allocation 22. Arranque/UDP PASS, audio real y QA visual aún NOT RUN. Ver `docs/pokevoice/RELEASE_REPORT.md` y `docs/pokevoice/POKEVOICE_QA.md`; no contar microbenchmark como multiplayer.

@@ -1,0 +1,6 @@
+repair=7
+Warning: Version of org.bytedeco:ffmpeg could not be found.
+FFmpeg=8.0.1
+PASS decoded profesor-oak-intro-v3.mp4 1920x1080 streams=2 duration_us=27910000
+PASS decoded rotom-torre-comercial-v2.mp4 1920x1080 streams=2 duration_us=53000083
+PASS decoded rotom-gimnasios-v2.mp4 1920x1080 streams=2 duration_us=53200083

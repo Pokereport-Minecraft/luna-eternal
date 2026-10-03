@@ -20,7 +20,8 @@
     "BattleMoveTileTooltipAuditMixin",
     "StarterToastMixin",
     "VoiceKeyBindingAccessor",
-    "ConstructorEffectInventoryMixin"
+    "ConstructorEffectInventoryMixin",
+    "MediaBinariesRepairMixin"
   ],
   "injectors": {
     "defaultRequire": 1
