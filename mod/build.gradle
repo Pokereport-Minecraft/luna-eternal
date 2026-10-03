@@ -29,6 +29,7 @@ loom {
 
 repositories {
     mavenCentral()
+    maven { url = "https://maven.maxhenkel.de/repository/public" }
     // GeckoLib ya forma parte del modpack de producción. Solo compilamos contra
     // su API; no se empaqueta en Luna Eternal ni se duplica en el launcher.
     maven {
@@ -46,6 +47,9 @@ repositories {
 }
 
 dependencies {
+    implementation "de.maxhenkel.voicechat:voicechat-api:2.6.20"
+    modRuntimeOnly "maven.modrinth:simple-voice-chat:VS5X7jZd"
+    modRuntimeOnly "de.maxhenkel.voicechat:voicechat-api:2.6.20:fabric-stub"
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"

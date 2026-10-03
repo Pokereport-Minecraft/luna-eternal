@@ -52,6 +52,7 @@ UA = {"User-Agent": "PokeReport-LunaEternal/0.1 (dev)"}
 # La clave es el ID del mod tal y como aparece al principio del nombre del jar
 # en el manifiesto.
 QUEREMOS = {
+    "voicechat": "Motor oficial PokeVoice, mismo JAR que el manifiesto del cliente",
     "lithium":      "Optimiza la logica del servidor: mobs, fisicas, chunks. "
                     "Lo teniamos solo en el cliente, donde hace mucho menos",
     "ferritecore":  "Baja el consumo de memoria de los estados de bloque. En un "

@@ -3766,6 +3766,7 @@ public class Red implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        net.pokereport.luna.voice.VoiceNet.register();
         net.pokereport.luna.quienesepokemon.QuienEsEsePokemonNet.registrar();
         net.pokereport.luna.buhonero.BuhoneroNet.registrar();
         // ⚠⚠⚠ EL TIPO DE CONTENEDOR DE LA MOCHILA VA AQUI, en el entrypoint

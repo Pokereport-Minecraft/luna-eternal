@@ -1,0 +1,45 @@
+{
+  "manifest": "manifest-357c9ecd0e.json",
+  "previous_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-f83d7644f3.json",
+    "sha1": "f83d7644f38ac21ae641c76a7737123170b127a1",
+    "size": 63704,
+    "publicado": "2026-10-03T15:38:37Z"
+  },
+  "new_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-357c9ecd0e.json",
+    "sha1": "357c9ecd0ee05752a5188f622b0364191a4b0989",
+    "size": 63698,
+    "publicado": "2026-10-03T16:24:47Z"
+  },
+  "previous_flashback": {
+    "path": "mods/Flashback-0.39.9-for-MC1.21.1.jar",
+    "sha1": "bac9ad3387bb57df005d9bd2290d3810c1ff3c81",
+    "size": 210802503,
+    "url": "https://cdn.modrinth.com/data/4das1Fjq/versions/wZHvoJL4/Flashback-0.39.9-for-MC1.21.1.jar",
+    "profiles": [
+      "constructor"
+    ],
+    "urls": [
+      "https://cdn.modrinth.com/data/4das1Fjq/versions/wZHvoJL4/Flashback-0.39.9-for-MC1.21.1.jar"
+    ]
+  },
+  "new_flashback": {
+    "path": "mods/Flashback-0.39.8-for-MC1.21.jar",
+    "sha1": "b9180aac353f0dfff6a44039673d0ee8cf9f4a11",
+    "size": 210810969,
+    "url": "https://cdn.modrinth.com/data/4das1Fjq/versions/d1dppNas/Flashback-0.39.8-for-MC1.21.jar",
+    "profiles": [
+      "constructor"
+    ],
+    "urls": [
+      "https://cdn.modrinth.com/data/4das1Fjq/versions/d1dppNas/Flashback-0.39.8-for-MC1.21.jar"
+    ]
+  },
+  "download_hash_verified": true,
+  "fabric_metadata_checked": true,
+  "real_client_boot": "NOT RUN",
+  "pointer_verified": true
+}

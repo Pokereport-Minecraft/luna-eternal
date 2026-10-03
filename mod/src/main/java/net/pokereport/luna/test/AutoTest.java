@@ -130,6 +130,7 @@ public final class AutoTest {
             testPase(a);
             testInicial();
             testRotomTutorial();
+            testPokeVoice();
             net.pokereport.luna.lunita.LunitaAssets.verify();
             check("Lunita: textura, modelo y huesos de animaciones compatibles", true);
 
@@ -155,6 +156,22 @@ public final class AutoTest {
     }
 
     // ------------------------------------------------------------ pruebas
+
+    private void testPokeVoice() throws Exception {
+        var config=net.pokereport.luna.voice.VoiceConfig.defaults();
+        var repository=new net.pokereport.luna.voice.VoiceRelations.Repository(){
+            public net.pokereport.luna.voice.VoiceRelations.Saved load(){return new net.pokereport.luna.voice.VoiceRelations.Saved(java.util.Map.of(),java.util.Map.of());}
+            public void edge(net.pokereport.luna.voice.VoiceRelations.Pair p,net.pokereport.luna.voice.VoiceRelations.Edge e){}
+            public void preferences(UUID u,net.pokereport.luna.voice.VoiceRelations.Preferences p){}
+        };
+        var model=new net.pokereport.luna.voice.VoiceRelations(repository,config,System::currentTimeMillis);model.load();
+        model.presence(java.util.Map.of(T1,new net.pokereport.luna.voice.VoiceRelations.Presence("qa",0,0,0,true,true),T2,new net.pokereport.luna.voice.VoiceRelations.Presence("qa",4,0,0,true,true)));
+        check("PokeVoice: strangers denied",!model.allowsProximity(T1,T2));
+        var invite=model.invite(T1,T2);model.accept(T2,T1,invite.id());
+        check("PokeVoice: known bidirectional",model.allowsProximity(T1,T2)&&model.allowsProximity(T2,T1));
+        model.block(T1,T2);check("PokeVoice: block precedence",!model.allowsProximity(T1,T2));
+        model.unblock(T1,T2);check("PokeVoice: unblock does not grant",!model.allowsProximity(T1,T2));
+    }
 
     private void testWorldProtection() {
         var dimensions = java.util.List.of(

@@ -94,7 +94,8 @@ public final class Database implements AutoCloseable {
         "V053__catalogo_pwarps.sql",
         "V054__economia_observable.sql",
         "V055__minero_anti_exploit.sql",
-        "V056__economic_session.sql"
+        "V056__economic_session.sql",
+        "V057__pokevoice.sql"
     };
 
     private final HikariDataSource ds;

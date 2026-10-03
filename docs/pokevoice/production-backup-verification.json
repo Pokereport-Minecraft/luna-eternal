@@ -1,0 +1,9 @@
+{
+  "database_restore": "PASS",
+  "restored_schema_version": 56,
+  "restored_tables": 68,
+  "archive_selected_restore": "PASS",
+  "previous_jar_hash_verified": true,
+  "authentication_config_verified": true,
+  "full_world_restore": "NOT RUN"
+}

@@ -1,3 +1,7 @@
+## PokeVoice — candidato aislado (2026-10-03)
+
+Rama `codex/pokevoice`, base `a74d626d`. Simple Voice Chat Fabric 1.21.1 2.6.22, API 2.6.20; consentimiento por UUID en V057. Nuevo módulo `voice`, app PokéPad `pokevoice`; filtro exclusivo SOURCE_PROXIMITY. No SQL en audio. Estado de promoción BLOCKED hasta audio real con dos equipos y carga. Cliente publicado automáticamente y principal desplegado por solicitud expresa: UDP 24591/allocation 22. Arranque/UDP PASS, audio real y QA visual aún NOT RUN. Ver `docs/pokevoice/RELEASE_REPORT.md` y `docs/pokevoice/POKEVOICE_QA.md`; no contar microbenchmark como multiplayer.
+
 # CLAUDE.md — PokeReport: Luna Eternal
 
 > **2026-10-02 — Puertas y roles:** por petición del usuario, clic normal en puertas con bloques en mano conserva interacción nativa y protección de colocación. `/pradmin rol asignar <jugador conectado> <rol>` gestiona OP/grants y etiqueta operativa persistente, sin cambiar rango comercial. Detalles y validación en [docs/DOORS_AND_STAFF_ROLES.md](docs/DOORS_AND_STAFF_ROLES.md).

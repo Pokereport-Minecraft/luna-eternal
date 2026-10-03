@@ -79,6 +79,7 @@ public final class Apps {
 
             case "crianza" -> abrirCrianza();
             case "wiki" -> abrirWiki();
+            case "pokevoice" -> {var c=MinecraftClient.getInstance();c.setScreen(new net.pokereport.luna.client.voice.PokeVoiceScreen(c.currentScreen));yield true;}
             default -> false;
         };
     }

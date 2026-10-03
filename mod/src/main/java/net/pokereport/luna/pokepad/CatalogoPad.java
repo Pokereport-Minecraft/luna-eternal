@@ -121,7 +121,8 @@ public final class CatalogoPad {
             // ⚠ CRIANZA: el centro de crianza e incubación del PokePad (rango Élite+).
             new Ficha("crianza",    true),
             // Official web guides open through Minecraft's link confirmation.
-            new Ficha("wiki",       true)
+            new Ficha("wiki",       true),
+            new Ficha("pokevoice",  true)
     );
 
     /** Dónde vive el icono de esa aplicación <b>dentro del jar</b>. */
