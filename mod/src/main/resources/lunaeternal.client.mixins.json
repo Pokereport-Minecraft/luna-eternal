@@ -18,7 +18,9 @@
     "MoveTooltipOverlayStateAccessor",
     "CustomBattleControllerMixin",
     "BattleMoveTileTooltipAuditMixin",
-    "StarterToastMixin"
+    "StarterToastMixin",
+    "VoiceKeyBindingAccessor",
+    "ConstructorEffectInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

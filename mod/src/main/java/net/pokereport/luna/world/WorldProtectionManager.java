@@ -88,7 +88,7 @@ public final class WorldProtectionManager {
         });
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             if (!world.isClient() && player instanceof ServerPlayerEntity sp
-                    && !canModifyWorld(sp, world) && !SafeInteractionPolicy.usesDoor(sp, world, hit.getBlockPos())
+                    && !canModifyWorld(sp, world) && !SafeInteractionPolicy.usesPublicBlock(sp, world, hit.getBlockPos())
                     && modifiesWorld(sp.getStackInHand(hand).getItem())) {
                 return ActionResult.FAIL;
             }

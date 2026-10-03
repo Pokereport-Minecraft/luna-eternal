@@ -18,6 +18,7 @@ public final class VoiceRuntime implements DedicatedServerModInitializer {
     private static VoiceConfig config=VoiceConfig.defaults();
     private static ThreadPoolExecutor worker;
     private static final Map<UUID,Long> rate=new HashMap<>();
+    private static final Map<UUID,Long> refreshRate=new HashMap<>();
     private static final Map<UUID,ServerPlayerEntity> sessions=new ConcurrentHashMap<>();
     private static final Map<UUID,String> names=new ConcurrentHashMap<>();
     private static volatile Map<UUID,VoiceRelations.Presence> presence=Map.of();
@@ -49,18 +50,19 @@ public final class VoiceRuntime implements DedicatedServerModInitializer {
             presence=Map.copyOf(live);relations.presence(live);
             // Never acquire the control lock from the tick/audio thread while JDBC is running.
         });
-        ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->{rate.remove(handler.player.getUuid());names.remove(handler.player.getUuid());sessions.remove(handler.player.getUuid());
+        ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->{rate.remove(handler.player.getUuid());refreshRate.remove(handler.player.getUuid());names.remove(handler.player.getUuid());sessions.remove(handler.player.getUuid());
             if(worker!=null)try{worker.execute(()->relations.disconnect(handler.player.getUuid()));}catch(RejectedExecutionException e){}
             var live=new HashMap<>(presence);live.remove(handler.player.getUuid());presence=Map.copyOf(live);if(relations!=null)relations.presence(live);});
         ServerLifecycleEvents.SERVER_STOPPING.register(server->{
             if(worker!=null){worker.shutdown();try{if(!worker.awaitTermination(10,TimeUnit.SECONDS))worker.shutdownNow();}catch(InterruptedException e){Thread.currentThread().interrupt();}}
-            relations=null;presence=Map.of();rate.clear();names.clear();sessions.clear();
+            relations=null;presence=Map.of();rate.clear();refreshRate.clear();names.clear();sessions.clear();
         });
     }
     private static void request(ServerPlayerEntity actor,VoiceNet.Request request){
         if(relations==null||worker==null||!authenticated(actor)||!actor.isAlive())return;
-        long now=System.nanoTime();long previous=rate.getOrDefault(actor.getUuid(),0L);
-        if(now-previous<250_000_000L)return;rate.put(actor.getUuid(),now);
+        var limiter=request.action()==VoiceNet.Action.REFRESH?refreshRate:rate;
+        long now=System.nanoTime();long previous=limiter.getOrDefault(actor.getUuid(),0L);
+        if(now-previous<250_000_000L)return;limiter.put(actor.getUuid(),now);
         UUID actorId=actor.getUuid();MinecraftServer server=actor.getServer();
         try {worker.execute(()->{
             String message="";boolean changed=false;

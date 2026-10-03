@@ -57,8 +57,9 @@ public final class VoiceClient implements ClientModInitializer {
     public static void nativeMenu(String translation){
         var c=MinecraftClient.getInstance();
         for(KeyBinding key:c.options.allKeys)if(key.getTranslationKey().equals(translation)){
-            if(key.isUnbound()){if(c.player!=null)c.player.sendMessage(Text.literal("Asigna una tecla a "+Text.translatable(key.getTranslationKey()).getString()+" en Controles."),false);return;}
-            c.setScreen(null);KeyBinding.onKeyPressed(InputUtil.fromTranslationKey(key.getBoundKeyTranslationKey()));return;
+            c.setScreen(null);
+            var action=(net.pokereport.luna.client.mixin.VoiceKeyBindingAccessor)(Object)key;
+            action.pokevoice$setTimesPressed(action.pokevoice$getTimesPressed()+1);return;
         }
         if(c.player!=null)c.player.sendMessage(Text.literal("Simple Voice Chat no esta disponible."),false);
     }

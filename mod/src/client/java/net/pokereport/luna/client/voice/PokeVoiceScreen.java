@@ -32,17 +32,17 @@ public final class PokeVoiceScreen extends Screen {
         }
         @Override protected void renderWidget(DrawContext c,int mx,int my,float delta){
             boolean hover=isHovered()||isFocused();int px=getX(),py=getY(),w=getWidth(),h=getHeight();
-            int border=selected?0xFFFFCF78:hover?0xFFFFE2AA:danger?0xFFAB6470:0xFF59657A;
-            int bg=selected?0xFF725127:hover?0xFF303D50:0xFF1B2636;
+            int border=!active?0xFF78808C:selected?0xFFFFCF78:hover?0xFFFFE2AA:danger?0xFFAB6470:0xFF59657A;
+            int bg=!active?0xFFADB5C2:selected?0xFF725127:hover?0xFF303D50:0xFF1B2636;
             c.fill(px,py,px+w,py+h,border);c.fill(px+1,py+1,px+w-1,py+h-1,bg);
             float f=Math.min(Math.max(0.45f,(h-4)/12f),(w-6f)/Math.max(1,textRenderer.getWidth(getMessage())));
             int textWidth=textRenderer.getWidth(getMessage());c.getMatrices().push();
             c.getMatrices().translate(px+(w-textWidth*f)/2,py+(h-8*f)/2,0);c.getMatrices().scale(f,f,1);
-            c.drawText(textRenderer,getMessage(),0,0,selected?0xFFFFE3AB:0xFFF1F4FA,false);c.getMatrices().pop();
+            c.drawText(textRenderer,getMessage(),0,0,!active?0xFF526071:selected?0xFFFFE3AB:0xFFF1F4FA,false);c.getMatrices().pop();
         }
     }
-    private void button(String label,int nx,int ny,int w,Runnable action){button(label,nx,ny,w,action,false);}
-    private void button(String label,int nx,int ny,int w,Runnable action,boolean selected){addDrawableChild(new VoiceButton(label,nx,ny,w,action,selected));}
+    private VoiceButton button(String label,int nx,int ny,int w,Runnable action){return button(label,nx,ny,w,action,false);}
+    private VoiceButton button(String label,int nx,int ny,int w,Runnable action,boolean selected){return addDrawableChild(new VoiceButton(label,nx,ny,w,action,selected));}
     public void update(){
         if(client==null)return;clearChildren();shown.clear();
         button("Inicio",80,90,120,this::close);
@@ -70,8 +70,8 @@ public final class PokeVoiceScreen extends Screen {
                 case "BLOCKED" -> button("Desbloquear",990,row+10,230,()->act(VoiceNet.Action.UNBLOCK,p));
             }
         }
-        button("Anterior",485,704,200,()->{if(page>0){page--;update();}else if(view.page()>0)VoiceClient.action(VoiceNet.Action.REFRESH,VoiceNet.NONE,VoiceNet.NONE,false,view.page()-1);});
-        button("Siguiente",1040,704,200,()->{if((page+1)*rows<filtered.size()){page++;update();}else if(view.more())VoiceClient.action(VoiceNet.Action.REFRESH,VoiceNet.NONE,VoiceNet.NONE,false,view.page()+1);});
+        button("Anterior",485,704,200,()->{if(page>0){page--;update();}else if(view.page()>0)VoiceClient.action(VoiceNet.Action.REFRESH,VoiceNet.NONE,VoiceNet.NONE,false,view.page()-1);}).active=page>0||view.page()>0;
+        button("Siguiente",1040,704,200,()->{if((page+1)*rows<filtered.size()){page++;update();}else if(view.more())VoiceClient.action(VoiceNet.Action.REFRESH,VoiceNet.NONE,VoiceNet.NONE,false,view.page()+1);}).active=(page+1)*rows<filtered.size()||view.more();
     }
     private void act(VoiceNet.Action action,VoiceNet.Peer p){VoiceClient.action(action,p.id(),p.invitation(),false,VoiceClient.view.page());}
     private void text(DrawContext c,String label,int nx,int ny,int height,int color,int maxWidth){
@@ -101,7 +101,7 @@ public final class PokeVoiceScreen extends Screen {
             text(c,p.name(),548,row+5,24,0xFF16203A,410);
             String status=switch(p.state()){case "KNOWN"->(api==null||api.isDisconnected(p.id())?"Conocido · sin voz":"Conocido · voz disponible");case "PENDING_INCOMING"->"Solicitud recibida";case "PENDING_OUTGOING"->"Solicitud enviada";case "BLOCKED"->"Bloqueado";default->"Voz bloqueada";};
             if(api!=null&&p.state().equals("KNOWN")&&api.isTalking(p.id()))status="Hablando "+"|".repeat(1+(int)(System.currentTimeMillis()/180%3));
-            text(c,status+(p.distance()<0?" Â· fuera de alcance":" Â· "+(int)p.distance()+" bloques"),548,row+40,19,0xFF46516A,420);
+            text(c,status+(p.distance()<0?" · fuera de alcance":" · "+(int)p.distance()+" bloques"),548,row+40,19,0xFF46516A,420);
         }
         if(VoiceClient.view!=null)text(c,VoiceClient.view.message(),475,765,18,0xFF16203A,780);
         super.render(c,mouseX,mouseY,delta);

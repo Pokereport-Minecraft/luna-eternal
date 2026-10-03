@@ -26,6 +26,15 @@ public final class SafeInteractionPolicy {
                 || block instanceof net.minecraft.block.FenceGateBlock);
     }
 
+    /** Public gameplay blocks operate normally; placement is still denied by BlockItem.place. */
+    public static boolean publicGameplay(String id) {
+        if(id.equals("cobblemon:pc")||id.equals("cobblemon:healing_machine"))return true;
+        return id.startsWith("handcrafted:") && (id.endsWith("_chair")||id.endsWith("_bench")||id.endsWith("_couch"));
+    }
+    public static boolean usesPublicBlock(net.minecraft.entity.player.PlayerEntity player,World world,BlockPos pos){
+        return usesDoor(player,world,pos)||(!player.isSneaking()&&publicGameplay(net.minecraft.registry.Registries.BLOCK.getId(world.getBlockState(pos).getBlock()).toString()));
+    }
+
     public static void load() {
         allowedContainers = Set.of();
         Path file = Path.of("config", "lunaeternal", "interactions.properties");
@@ -55,6 +64,7 @@ public final class SafeInteractionPolicy {
         if (state.isOf(Blocks.COMMAND_BLOCK) || state.isOf(Blocks.CHAIN_COMMAND_BLOCK)
                 || state.isOf(Blocks.REPEATING_COMMAND_BLOCK) || state.isOf(Blocks.STRUCTURE_BLOCK)
                 || state.isOf(Blocks.JIGSAW)) return false;
+        if (publicGameplay(net.minecraft.registry.Registries.BLOCK.getId(state.getBlock()).toString())) return true;
         if (world.getBlockEntity(pos) instanceof Inventory) {
             return allowedContainers.contains(world.getRegistryKey().getValue() + "@"
                     + pos.getX() + "," + pos.getY() + "," + pos.getZ());

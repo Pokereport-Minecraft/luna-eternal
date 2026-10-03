@@ -12,6 +12,7 @@ public final class VoiceInvitationScreen extends Screen {
     private final long expires;
     public VoiceInvitationScreen(VoiceNet.Peer peer){super(Text.literal("Solicitud de voz"));this.peer=peer;expires=System.nanoTime()+peer.remainingMillis()*1_000_000L;}
     public boolean shouldPause(){return false;}
+    @Override public void renderBackground(DrawContext c,int mx,int my,float delta) {}
     protected void init(){int x=width/2,y=height/2;
         addDrawableChild(ButtonWidget.builder(Text.literal("Aceptar"),b->respond(VoiceNet.Action.ACCEPT)).dimensions(x-105,y+43,100,20).build());
         addDrawableChild(ButtonWidget.builder(Text.literal("Rechazar"),b->respond(VoiceNet.Action.REJECT)).dimensions(x+5,y+43,100,20).build());

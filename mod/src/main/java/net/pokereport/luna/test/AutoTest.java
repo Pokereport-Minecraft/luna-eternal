@@ -158,6 +158,13 @@ public final class AutoTest {
     // ------------------------------------------------------------ pruebas
 
     private void testPokeVoice() throws Exception {
+        check("Public PC interaction",net.pokereport.luna.world.SafeInteractionPolicy.publicGameplay("cobblemon:pc"));
+        check("Public chair interaction",net.pokereport.luna.world.SafeInteractionPolicy.publicGameplay("handcrafted:oak_chair"));
+        check("Chest remains protected",!net.pokereport.luna.world.SafeInteractionPolicy.publicGameplay("minecraft:chest"));
+        var effect=new net.minecraft.entity.effect.StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.SPEED,-1,3,true,false,false);
+        check("Managed buff hidden in inventory",net.pokereport.luna.world.ConstructorBuffs.hiddenManagedEffect(effect));
+        var potion=new net.minecraft.entity.effect.StatusEffectInstance(net.minecraft.entity.effect.StatusEffects.SPEED,600,3,true,false,false);
+        check("Normal potion remains visible",!net.pokereport.luna.world.ConstructorBuffs.hiddenManagedEffect(potion));
         var config=net.pokereport.luna.voice.VoiceConfig.defaults();
         var repository=new net.pokereport.luna.voice.VoiceRelations.Repository(){
             public net.pokereport.luna.voice.VoiceRelations.Saved load(){return new net.pokereport.luna.voice.VoiceRelations.Saved(java.util.Map.of(),java.util.Map.of());}
