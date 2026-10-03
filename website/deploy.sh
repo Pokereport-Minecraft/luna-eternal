@@ -29,7 +29,7 @@ PY
 cp -a "$stage/portal/." "$root/dist/"
 cp -a "$stage/tienda" "$root/dist/"
 mkdir -p "$root/dist/descargas"
-cp "$stage/PokeReport-Launcher-0.2.3.exe" "$root/dist/descargas/"
+cp "$stage/PokeReport-Launcher-0.2.4.exe" "$root/dist/descargas/"
 chmod -R a+rX "$root/dist"
 cp "$stage/nginx.conf" "$root/nginx.conf"
 if ! docker exec pokereport-frontend nginx -t; then

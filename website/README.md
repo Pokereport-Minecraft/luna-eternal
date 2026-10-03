@@ -8,7 +8,7 @@ Publicado el 2 de octubre de 2026 en el alojamiento existente. No usa Sites, Git
 - `/jugar/`: instalador oficial Windows 64 bits, instrucciones y preguntas frecuentes.
 - `/wiki/`: índice con búsqueda local, diez artículos y navegación por categorías.
 - `/tienda/`: aplicación original de la tienda y checkout Tebex, conservados.
-- `/descargas/PokeReport-Launcher-0.2.3.exe`: descarga servida desde el propio dominio, sin redirección pública a GitHub.
+- `/descargas/PokeReport-Launcher-0.2.4.exe`: descarga servida desde el propio dominio, sin redirección pública a GitHub.
 
 Diseño inspirado en la organización de [Diosesmon](https://www.diosesmon.net/) y su [wiki](https://wiki.diosesmon.net/), con identidad, textos y recursos de PokeReport. No se copió su código ni sus ilustraciones. Las imágenes son las del menú de PokeReport, extraídas del cliente vigente y optimizadas a WebP; las fuentes proceden del launcher existente.
 
@@ -27,7 +27,7 @@ Las páginas y guías se leen sin JavaScript; JS añade búsqueda, copia de IP y
 
 Host SSH configurado `su`. Frontend: `/opt/pokereport/frontend/dist`; Nginx frontend: `/opt/pokereport/frontend/nginx.conf`; edge: `/opt/pokereport/nginx-edge/edge.conf`. Se mantienen contenedores, permisos y redes existentes.
 
-El paquete tar debe contener `portal/` (dist construido), `nginx.conf`, `edge.conf` e instalador `PokeReport-Launcher-0.2.3.exe`. El instalador original se obtiene de la release oficial 0.2.3 de `corderovibes-collab/luna-eternal-launcher`, archivo `luna-launcher-win-x64-Setup.exe`. No ejecutar ese archivo durante las comprobaciones.
+El paquete tar debe contener `portal/` (dist construido), `nginx.conf`, `edge.conf` e instalador `PokeReport-Launcher-0.2.4.exe`. El instalador original se obtiene de la release oficial 0.2.4 de `corderovibes-collab/luna-eternal-launcher`, archivo `luna-launcher-win-x64-Setup.exe`. No ejecutar ese archivo durante las comprobaciones.
 
 Subir el paquete como `/tmp/pokereport-portal.tar.gz` y `deploy.sh`; ejecutar `bash /tmp/deploy.sh SHA256_DEL_PAQUETE`. El script valida hash, guarda respaldo y comprueba ambas configuraciones antes de recargar. Retiene JS y assets originales de la tienda, mueve su HTML a `/tienda/` y añade únicamente un enlace de vuelta al portal.
 
@@ -51,3 +51,11 @@ Se publicó un parche sobre el cliente final corregido de Lunita: cinco clases y
 ## Restaurar
 
 Copiar los archivos `nginx.conf`, `edge.conf` e `index.html` originales del respaldo a sus destinos correspondientes y probar Nginx antes de recargar ambos contenedores. Los assets originales nunca se sobrescribieron. Los directorios nuevos pueden conservarse para recuperación. Revertir también el cliente con el JAR `build/lunaeternal-lunita-pose-fix-client.jar` si se restaura la tienda en la raíz; usar el publicador dirigido para mantener puntero y respaldo sincronizados.
+
+## Descargas de jugadores y staff — 3 de octubre de 2026
+
+La página /jugar/ y el instalador servido por el dominio se actualizaron a 0.2.4. Solo ofrecen el perfil público Jugador. El enlace antiguo 0.2.3 redirige temporalmente al nuevo 0.2.4; se conserva el archivo anterior para recuperación. Se cambiaron únicamente la tarjeta de descarga, el archivo nuevo y las reglas de descargas de Nginx. Backup y hash íntegro de descarga en launcher-publication-024.json. No se redeplegó ni modificó la tienda.
+
+El instalador privado PokeReport-Staff-0.2.4-Setup.exe se entrega al propietario como archivo local en C:/Users/JUAN/.codex/pokevoice-artifacts. No se sube al dominio ni se enlaza desde la web. Incluye exactamente el instalador oficial normal más un acceso PokeReport Staff que habilita las herramientas solo en ese proceso. Es portable entre usuarios de Windows: no contiene rutas personales del propietario. Tras instalar, cerrar cualquier launcher abierto, abrir ese acceso y seleccionar Constructor. Los permisos del servidor siguen siendo obligatorios; este instalador no asigna roles ni concede edición.
+
+El paquete NSIS de staff se compiló y extrajo para comprobar el hash del instalador embebido y el script de acceso. No se ejecutó el instalador de staff ni se afirma validar su interfaz completa. Las fuentes del paquete privado están en C:/Users/JUAN/.codex/pokevoice-artifacts/staff-distribution.
