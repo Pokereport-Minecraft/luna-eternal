@@ -60,6 +60,10 @@ El modo edición se debe activar de nuevo tras reconectar. Bootstrap del primer 
 
 ## Next Actions
 
-Validación y despliegue en curso; recibo de cierre se añadirá tras los ensayos y el arranque principal. Verificación visual del tag y prueba humana de puerta posteriores al despliegue pendientes hasta confirmación del usuario. Los ensayos sintéticos no sustituyen ese registro.
+Desplegado el 2 de octubre de 2026 (Bogotá), código 566854ee. Build: 186 PASS y 2 SKIPPED; staging: 759 autotests y 37 ensayos de protección/puertas/roles PASS. Principal arrancado, comandos de roles responden y 20 TPS sin jugadores. TheJuanCE (UUID confirmado 432ef323-8ac3-3ba3-8175-aaf88c5589cf) tiene OP4, los tres grants y rol visual owner persistido. Cliente local instalado y hash verificado; launcher publicado con manifest-eb02b53565.json.
+
+Backup coordinado verificado en /var/backups/pokereport/releases/20261003T014429Z; SQL restaurado en esquema aislado y todos los saldos coinciden. JAR del servidor reempaquetado desde staging: sus entradas coinciden íntegramente con el build publicado, aunque el hash del ZIP completo difiere. Recibos: [backup](prelaunch/doors-roles-backup.json), [QA](prelaunch/doors-roles-qa.json), [despliegue](prelaunch/doors-roles-deployment.json), [cliente](prelaunch/doors-roles-client-installation.json), [publicación](prelaunch/doors-roles-publication.json).
+
+Verificación visual del tag y prueba humana de puerta posteriores al despliegue pendientes hasta confirmación del usuario (NOT TESTED). Los ensayos sintéticos no sustituyen ese registro. La apertura general sigue sin certificar: los pendientes de multiplayer y QA externo anteriores conservan su estado.
 
 Rollback: servidor detenido desde Wings/panel, preservar estado actual y restaurar juntos JAR, ops.json, world-edit.properties y staff-roles.properties del mismo punto anterior; conservar presencia/ausencia original. No restaurar economía/mundos por este cambio si no hay incidente de datos.

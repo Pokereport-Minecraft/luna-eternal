@@ -1,0 +1,16 @@
+{
+  "asset": "lunaeternal-doors-roles-54647916f9.jar",
+  "jar_sha256": "34301906da382f30cdb369571ca63949a58bb99702031f1eb9ac9857fa453829",
+  "manifest": "manifest-eb02b53565.json",
+  "manifest_sha1": "eb02b5356572bae211461c52ce21d2a5f95bbc12",
+  "fallback_commit": "03c3c09f2430f6dcaec81da768d5cfb94fd16056",
+  "pointer_verified": true,
+  "previous_manifest": "manifest-2e8b22a81b.json",
+  "server_changed": true,
+  "visual_client_qa": "NOT TESTED",
+  "build": {
+    "passed": 186,
+    "skipped": 2,
+    "failed": 0
+  }
+}

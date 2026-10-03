@@ -1,0 +1,30 @@
+{
+  "release_dir": "/var/backups/pokereport/releases/20261003T014429Z",
+  "build_sha256": "34301906da382f30cdb369571ca63949a58bb99702031f1eb9ac9857fa453829",
+  "deployed_jar_sha256": "38adc41a18249f4d82c482ef2d384da4e3bd56a2a399194e60516208d460a403",
+  "all_entries_match_build": true,
+  "owner": "TheJuanCE",
+  "owner_uuid": "432ef323-8ac3-3ba3-8175-aaf88c5589cf",
+  "state": "RUNNING",
+  "backup_verified": true,
+  "sql_restore_wallets_match": true,
+  "verification_schema": "roles_verify_20261003_014429",
+  "client_visual_qa": "NOT TESTED",
+  "opening_certified": false,
+  "source_commit": "566854ee",
+  "verified_utc": "2026-10-03T01:47:31.382292+00:00",
+  "started_at": "2026-10-03T01:45:46.858361888Z",
+  "owner_op4_and_all_grants_verified": true,
+  "owner_display_role_verified": true,
+  "schema_version": 56,
+  "smoke_evidence": [
+    "[01:46:12] [Server thread/INFO]: Done (4.554s)! For help, type \"help\"",
+    "[01:46:32] [Server thread/INFO]: Roles: admin, builder, developer, developer-edit, head-admin, moderator, owner, player. Usar /pradmin rol asignar <jugador conectado> <rol>; player retira acceso.",
+    "[01:46:32] [Server thread/INFO]: There are 0 of a max of 10 players online: ",
+    "> TPS from last 5s, 10s, 1m, 5m, 15m:",
+    "    *20.0, *20.0, *20.0, *20.0, *20.0",
+    "> Tick durations (min/med/95%ile/max ms) from last 10s, 1m:"
+  ],
+  "staging_autotests_passed": 759,
+  "staging_protection_tests_passed": 37
+}
