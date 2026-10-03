@@ -80,7 +80,8 @@ public final class GymArenaProteccion {
             BlockPos pos = golpe.getBlockPos();
             if (esZonaProtegida(mundo, pos)) {
                 var stack = sp.getStackInHand(mano);
-                if (esItemPeligroso(stack.getItem())) {
+                if (esItemPeligroso(stack.getItem())
+                        && !net.pokereport.luna.world.SafeInteractionPolicy.usesDoor(sp, mundo, pos)) {
                     avisar(sp);
                     return ActionResult.FAIL;
                 }

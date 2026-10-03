@@ -2,6 +2,10 @@
 
 # Asignación de staff por comandos
 
+## Método recomendado dentro de Minecraft
+
+Implementación y estado actual en [DOORS_AND_STAFF_ROLES.md](DOORS_AND_STAFF_ROLES.md). Una cuenta autorizada puede usar `/pradmin rol asignar JugadorConectado moderator` (o builder/developer/developer-edit/admin/head-admin/owner/player) y `/pradmin rol lista`. `player` retira acceso de staff. El comando actualiza permisos y etiqueta, conserva el rango comercial y no exige reinicio. El procedimiento SSH siguiente queda como herramienta de bootstrap/recuperación; sus presets antiguos no mantienen el archivo nuevo de etiquetas exactas.
+
 Herramienta: `tools/staff_permissions.py`. Gestiona únicamente el sistema existente: `ops.json` y `config/lunaeternal/world-edit.properties`. No asigna personas ahora, no cambia rangos comerciales, no instala LuckPerms y no despliega el mod.
 
 **El candidato de hardening ya está desplegado.** Confirmar identidad/UUID y verificar el rol con la persona; no se ha asignado staff automáticamente.

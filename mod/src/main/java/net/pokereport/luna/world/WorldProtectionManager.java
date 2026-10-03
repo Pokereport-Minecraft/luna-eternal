@@ -77,6 +77,7 @@ public final class WorldProtectionManager {
     public static void registrar() {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             WorldEditPermissions.load();
+            StaffRoles.load();
             SafeInteractionPolicy.load();
             WorldEditAudit.start();
         });
@@ -87,7 +88,8 @@ public final class WorldProtectionManager {
         });
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             if (!world.isClient() && player instanceof ServerPlayerEntity sp
-                    && !canModifyWorld(sp, world) && modifiesWorld(sp.getStackInHand(hand).getItem())) {
+                    && !canModifyWorld(sp, world) && !SafeInteractionPolicy.usesDoor(sp, world, hit.getBlockPos())
+                    && modifiesWorld(sp.getStackInHand(hand).getItem())) {
                 return ActionResult.FAIL;
             }
             return ActionResult.PASS;

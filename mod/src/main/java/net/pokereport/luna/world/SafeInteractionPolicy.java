@@ -18,6 +18,14 @@ public final class SafeInteractionPolicy {
     private static Set<String> allowedContainers = Set.of();
     private SafeInteractionPolicy() {}
 
+    /** A normal click on a door operates the block, even with building items in hand. */
+    public static boolean usesDoor(net.minecraft.entity.player.PlayerEntity player, World world, BlockPos pos) {
+        var block = world.getBlockState(pos).getBlock();
+        return !player.isSneaking() && (block instanceof net.minecraft.block.DoorBlock
+                || block instanceof net.minecraft.block.TrapdoorBlock
+                || block instanceof net.minecraft.block.FenceGateBlock);
+    }
+
     public static void load() {
         allowedContainers = Set.of();
         Path file = Path.of("config", "lunaeternal", "interactions.properties");

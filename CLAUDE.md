@@ -1,5 +1,7 @@
 # CLAUDE.md — PokeReport: Luna Eternal
 
+> **2026-10-02 — Puertas y roles:** por petición del usuario, clic normal en puertas con bloques en mano conserva interacción nativa y protección de colocación. `/pradmin rol asignar <jugador conectado> <rol>` gestiona OP/grants y etiqueta operativa persistente, sin cambiar rango comercial. Detalles y validación en [docs/DOORS_AND_STAFF_ROLES.md](docs/DOORS_AND_STAFF_ROLES.md).
+
 > **2026-10-02 — Aviso de inicial:** corrección exclusivamente de cliente en `StarterToastMixin`: evita que PartyOverlay añada el aviso genérico de Cobblemon, conservando selección mediante Oak y flags reales. Build 186 PASS / 2 SKIPPED; publicación y límites de QA visual en [docs/STARTER_TOAST_FIX.md](docs/STARTER_TOAST_FIX.md).
 
 > **2026-10-02 — Portal y wiki:** `website/` contiene el proyecto editable de pokereport.online, publicado en el host SSH `su` (/opt/pokereport). Portada, `/jugar/`, `/wiki/` y tienda original en `/tienda/`; descarga del launcher desde el propio dominio. PokéPad Wiki habilitada con confirmación de Minecraft. No se cambiaron protocolo ni servidor de juego. Despliegue, restauración y comprobaciones en [website/README.md](website/README.md).

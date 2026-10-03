@@ -48,10 +48,13 @@ public final class ProtectionSelfTest {
         MinecraftServer server = source.getServer();
         Path permissions = Path.of("config", "lunaeternal", "world-edit.properties");
         byte[] original = null;
+        byte[] originalRoles = null;
+        boolean rolesPresent = Files.exists(net.pokereport.luna.world.StaffRoles.FILE);
         var profile = new GameProfile(ID, "__worldqa");
         var world = server.getWorld(LunaDimensions.CIUDADELA);
         BlockPos pos = new BlockPos(-50000, 100, -50000);
         net.minecraft.block.BlockState previous = null;
+        net.minecraft.block.BlockState previousBelow = null, previousAbove = null;
         ServerPlayerEntity player = null;
         try {
             if (source.getEntity() != null || !LunaConfig.load().jdbcUrl.contains("/prelaunch_20261002?")) {
@@ -63,17 +66,27 @@ public final class ProtectionSelfTest {
                 return 0;
             }
             original = Files.readAllBytes(permissions);
+            if (rolesPresent) originalRoles = Files.readAllBytes(net.pokereport.luna.world.StaffRoles.FILE);
             Files.writeString(permissions, new String(original, java.nio.charset.StandardCharsets.UTF_8) + "\n" + ID + "="
                     + WorldEditPermissions.EDIT + "," + WorldEditPermissions.MODE + "," + WorldEditPermissions.COMMANDS + "\n");
             WorldEditPermissions.load();
             world.getChunk(pos);
             previous = world.getBlockState(pos);
+            previousBelow = world.getBlockState(pos.down());
+            previousAbove = world.getBlockState(pos.up());
             world.setBlockState(pos, Blocks.STONE.getDefaultState());
             player = new ServerPlayerEntity(server, world, profile, SyncedClientOptions.createDefault());
             player.networkHandler = new ServerPlayNetworkHandler(server, new ClientConnection(NetworkSide.SERVERBOUND),
                     player, ConnectedClientData.createDefault(profile, false));
             player.setPosition(pos.getX() + 3, pos.getY() + 2, pos.getZ() + 3);
             player.changeGameMode(GameMode.SURVIVAL);
+            // The synthetic connection has never logged in: keep EasyAuth's real
+            // unauthenticated denial, then simulate only this isolated fixture's session.
+            if (net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("easyauth")) {
+                check("EasyAuth mantiene bloqueo sin autenticar", net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker()
+                        .interact(player, world, Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)) == net.minecraft.util.ActionResult.FAIL);
+                player.getClass().getMethod("easyAuth$setAuthenticated", boolean.class).invoke(player, true);
+            }
             check("Player Survival no edita", !WorldProtectionManager.canModifyWorld(player, world));
             check("Fabric BEFORE cancela rotura normal", !PlayerBlockBreakEvents.BEFORE.invoker()
                     .beforeBlockBreak(world, player, pos, world.getBlockState(pos), null));
@@ -86,8 +99,22 @@ public final class ProtectionSelfTest {
             check("Cofre administrativo cerrado", !net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker()
                     .interact(player, world, Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)).isAccepted()
                     && !net.pokereport.luna.world.SafeInteractionPolicy.canInteract(player, world, pos));
-            world.setBlockState(pos, Blocks.OAK_DOOR.getDefaultState());
+            world.setBlockState(pos.down(), Blocks.STONE.getDefaultState());
+            world.setBlockState(pos, Blocks.OAK_DOOR.getDefaultState(), 2);
+            world.setBlockState(pos.up(), Blocks.OAK_DOOR.getDefaultState().with(net.minecraft.block.DoorBlock.HALF,
+                    net.minecraft.block.enums.DoubleBlockHalf.UPPER), 2);
             check("Puerta conserva interacción", net.pokereport.luna.world.SafeInteractionPolicy.canInteract(player, world, pos));
+            player.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.STONE));
+            check("Puerta con bloque en mano no se bloquea", net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker()
+                    .interact(player, world, Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)) == net.minecraft.util.ActionResult.PASS);
+            check("Clic real abre puerta con bloque en mano", player.interactionManager.interactBlock(player, world,
+                    player.getMainHandStack(), Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)).isAccepted()
+                    && world.getBlockState(pos).get(net.minecraft.block.DoorBlock.OPEN));
+            player.setSneaking(true);
+            check("Shift con bloque mantiene protección", net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker()
+                    .interact(player, world, Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)) == net.minecraft.util.ActionResult.FAIL);
+            player.setSneaking(false);
+            player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
             world.setBlockState(pos, Blocks.STONE.getDefaultState());
             player.setHealth(20);
             check("Daño lava cancelado", !player.damage(world.getDamageSources().lava(), 100) && player.getHealth() == 20);
@@ -125,6 +152,31 @@ public final class ProtectionSelfTest {
             server.getCommandManager().getDispatcher().execute("setblock -50000 100 -50000 dirt", player.getCommandSource());
             check("Edición autorizada /setblock funciona", world.getBlockState(pos).isOf(Blocks.DIRT));
             check("Hogar conserva permiso Survival", WorldProtectionManager.canModifyWorld(player, server.getOverworld()));
+            var commercialRank = net.pokereport.luna.ui.Tablist.rangoDe(player);
+            check("Asignar builder permite editar sin administrar roles", net.pokereport.luna.command.StaffRoleCommand.assign(source, player, "builder") == 1
+                    && WorldProtectionManager.hasAdministrativeEditAccess(player)
+                    && !net.pokereport.luna.command.StaffRoleCommand.authorized(player.getCommandSource()));
+            check("Builder no se eleva a owner", net.pokereport.luna.command.StaffRoleCommand.assign(player.getCommandSource(), player, "owner") == 0
+                    && !WorldEditPermissions.allowed(ID, WorldEditPermissions.COMMANDS));
+            check("Builder muestra etiqueta propia", net.pokereport.luna.ui.Tablist.rankOf(server, player) == net.pokereport.luna.ui.Tablist.Rank.BUILDER);
+            check("Asignar moderator desde consola funciona", net.pokereport.luna.command.StaffRoleCommand.assign(source, player, "moderator") == 1
+                    && !WorldEditPermissions.allowed(ID, WorldEditPermissions.EDIT)
+                    && !WorldEditPermissions.allowed(ID, WorldEditPermissions.COMMANDS) && !WorldProtectionManager.editing(player));
+            check("Moderator no administra roles", !net.pokereport.luna.command.StaffRoleCommand.authorized(player.getCommandSource()));
+            check("Moderator muestra MOD", net.pokereport.luna.ui.Tablist.rankOf(server, player) == net.pokereport.luna.ui.Tablist.Rank.MODERADOR);
+            check("Developer muestra DEV sin permiso de edición", net.pokereport.luna.command.StaffRoleCommand.assign(source, player, "developer") == 1
+                    && net.pokereport.luna.ui.Tablist.rankOf(server, player) == net.pokereport.luna.ui.Tablist.Rank.DEV
+                    && !WorldProtectionManager.hasAdministrativeEditAccess(player));
+            check("Asignar owner desde consola funciona", net.pokereport.luna.command.StaffRoleCommand.assign(source, player, "owner") == 1
+                    && net.pokereport.luna.command.StaffRoleCommand.authorized(player.getCommandSource())
+                    && !WorldProtectionManager.editing(player));
+            net.pokereport.luna.world.StaffRoles.load();
+            check("Owner mantiene etiqueta tras recargar", net.pokereport.luna.ui.Tablist.rankOf(server, player) == net.pokereport.luna.ui.Tablist.Rank.OWNER);
+            check("Staff conserva rango comercial", net.pokereport.luna.ui.Tablist.rangoDe(player) == commercialRank);
+            check("Retirar rol limpia OP y grants", net.pokereport.luna.command.StaffRoleCommand.assign(source, player, "player") == 1
+                    && server.getPlayerManager().getOpList().get(profile) == null
+                    && !WorldEditPermissions.allowed(ID, WorldEditPermissions.COMMANDS));
+            check("Retirar staff retira etiqueta", net.pokereport.luna.world.StaffRoles.display(ID) == null);
         } catch (Exception | LinkageError e) {
             failed++;
             LunaEternal.LOG.error("[PROTECTION-QA] FAIL excepción de ensayo", e);
@@ -132,10 +184,17 @@ public final class ProtectionSelfTest {
             try {
                 if (player != null) WorldProtectionManager.setEditing(player, false);
                 if (previous != null) world.setBlockState(pos, previous);
+                if (previousAbove != null) world.setBlockState(pos.up(), previousAbove);
+                if (previousBelow != null) world.setBlockState(pos.down(), previousBelow);
                 if (original != null) {
                     Files.write(permissions, original);
                     WorldEditPermissions.load();
                     server.getPlayerManager().getOpList().remove(profile);
+                    if (originalRoles != null) Files.write(net.pokereport.luna.world.StaffRoles.FILE, originalRoles);
+                    else if (!rolesPresent) Files.deleteIfExists(net.pokereport.luna.world.StaffRoles.FILE);
+                    net.pokereport.luna.world.StaffRoles.load();
+                    var team = server.getScoreboard().getScoreHolderTeam(profile.getName());
+                    if (team != null) server.getScoreboard().removeScoreHolderFromTeam(profile.getName(), team);
                 }
             } catch (Exception e) {
                 failed++;

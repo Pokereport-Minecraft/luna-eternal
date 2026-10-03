@@ -5,7 +5,9 @@
       "file": "lunaeternal:font/logo_tab.png",
       "height": 22,
       "ascent": 18,
-      "chars": ["\ue005"]
+      "chars": [
+        ""
+      ]
     },
     {
       "type": "bitmap",
@@ -86,6 +88,33 @@
       "ascent": 8,
       "chars": [
         ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "lunaeternal:font/ranks/badge_owner.png",
+      "height": 10,
+      "ascent": 8,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "lunaeternal:font/ranks/badge_head_admin.png",
+      "height": 10,
+      "ascent": 8,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "lunaeternal:font/ranks/badge_builder.png",
+      "height": 10,
+      "ascent": 8,
+      "chars": [
+        ""
       ]
     }
   ]

@@ -43,4 +43,10 @@ public final class WorldEditPermissions {
     public static boolean allowed(UUID id, String node) {
         return grants.getOrDefault(id, Set.of()).contains(node);
     }
+
+    public static Map<UUID, Set<String>> snapshot() { return grants; }
+
+    public static void replace(Map<UUID, Set<String>> updated) {
+        grants = Map.copyOf(updated);
+    }
 }

@@ -43,7 +43,10 @@ public final class Tablist {
         MAESTRO   ("40_maestro",   "\uE013", Formatting.DARK_PURPLE,  "MAESTRO",    4, false),
         CAMPEON   ("50_campeon",   "\uE012", Formatting.AQUA,         "CAMPEÓN",    3, false),
         ELITE     ("60_elite",     "\uE011", Formatting.GREEN,        "ÉLITE",      2, false),
-        ENTRENADOR("90_entrenador", "\uE010", Formatting.WHITE,        "ENTRENADOR", 1, false);
+        ENTRENADOR("90_entrenador", "\uE010", Formatting.WHITE,        "ENTRENADOR", 1, false),
+        OWNER     ("00_0_owner", "\uE018", Formatting.DARK_RED, "OWNER", -1, true),
+        HEAD_ADMIN("00_1_headadmin", "\uE019", Formatting.RED, "HEAD ADMIN", -1, true),
+        BUILDER   ("15_builder", "\uE01A", Formatting.YELLOW, "BUILDER", -1, true);
 
         public final String teamName;
         /** Glifo visible de la insignia antes del nombre. */
@@ -370,6 +373,16 @@ public final class Tablist {
             return test;
         }
         if (server.getPlayerManager().isOperator(player.getGameProfile())) {
+            Rank assigned = net.pokereport.luna.world.StaffRoles.display(player.getUuid());
+            if (assigned != null) return assigned;
+            // Older/offline grants can still display their effective staff category.
+            if (!player.hasPermissionLevel(4)) return Rank.MODERADOR;
+            boolean edit = net.pokereport.luna.world.WorldEditPermissions.allowed(player.getUuid(),
+                    net.pokereport.luna.world.WorldEditPermissions.EDIT);
+            boolean commands = net.pokereport.luna.world.WorldEditPermissions.allowed(player.getUuid(),
+                    net.pokereport.luna.world.WorldEditPermissions.COMMANDS);
+            if (edit && !commands) return Rank.BUILDER;
+            if (!edit && commands) return Rank.DEV;
             return Rank.ADMIN;
         }
         return net.pokereport.luna.rank.RankService.enCache(player.getUuid());

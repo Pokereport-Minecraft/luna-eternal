@@ -192,7 +192,8 @@ public final class SantuarioProteccion {
 
             // Fuera de nichos en la Ciudadela:
             var stack = sp.getStackInHand(mano);
-            if (stack.getItem() instanceof BlockItem) {
+            if (stack.getItem() instanceof BlockItem
+                    && !net.pokereport.luna.world.SafeInteractionPolicy.usesDoor(sp, mundo, pos)) {
                 if (!puedeTocar(sp, pos)) {
                     return ActionResult.FAIL;
                 }

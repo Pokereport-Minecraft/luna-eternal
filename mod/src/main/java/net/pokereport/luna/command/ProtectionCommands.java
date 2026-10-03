@@ -15,7 +15,9 @@ public final class ProtectionCommands {
         CommandRegistrationCallback.EVENT.register((dispatcher, registry, environment) ->
                 dispatcher.register(CommandManager.literal("pradmin")
                         .requires(source -> source.getEntity() == null || (source.getEntity() instanceof net.minecraft.server.network.ServerPlayerEntity player
-                                && WorldProtectionManager.hasAdministrativeEditAccess(player)))
+                                && (WorldProtectionManager.hasAdministrativeEditAccess(player)
+                                    || StaffRoleCommand.authorized(source))))
+                        .then(StaffRoleCommand.node())
                         .then(CommandManager.literal("editmode")
                                 .then(CommandManager.literal("on").executes(context -> mode(context.getSource(), true)))
                                 .then(CommandManager.literal("off").executes(context -> mode(context.getSource(), false))))
