@@ -11,3 +11,5 @@ JAR SHA256: daadba1436c1ec319b451fda9ad9f3881bb43a7f39a88dc6117de838c9640eb0.
 Cambio exclusivamente de servidor: no exige actualizar el launcher ni reemplazar opciones del cliente. No se ejecuta de nuevo el reset de jugadores.
 
 Staging: inicio correcto con mixins obligatorios y 803 autotests PASS / 0 FAIL. No se ejecutan fixtures sobre producción.
+
+Producción: desplegado con backup coordinado /var/backups/pokereport/preopen-fixes/20261004T004046Z (SQL + archivo completo del servidor). Inicio Done confirmado, sin fallos de mixins y puertos TCP 25565/25567 accesibles. Staging detenido después de validar. Configuración de Voice Chat y EasyAuth conservada. QA visual con cuentas reales pendiente.
