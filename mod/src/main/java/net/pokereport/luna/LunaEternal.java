@@ -702,6 +702,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             // La puerta no es un momento, es una verdad que se mantiene: quien
             // no ha cruzado esta en el lobby. Ver `Puerta.vigilar`.
             net.pokereport.luna.puerta.Puerta.vigilar(server);
+            net.pokereport.luna.world.RestrictedDimensions.enforce(server);
             // Quien lleva diez minutos sin moverse se va al lobby. Lleva su
             // propio corte de ticks por dentro, como ConstructorBuffs.
             net.pokereport.luna.world.Afk.tick(server);

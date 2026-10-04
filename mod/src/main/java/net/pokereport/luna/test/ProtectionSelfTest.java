@@ -87,6 +87,23 @@ public final class ProtectionSelfTest {
                         .interact(player, world, Hand.MAIN_HAND, new BlockHitResult(pos.toCenterPos(), Direction.UP, pos, false)) == net.minecraft.util.ActionResult.FAIL);
                 player.getClass().getMethod("easyAuth$setAuthenticated", boolean.class).invoke(player, true);
             }
+            for (var mode : new GameMode[]{GameMode.SURVIVAL, GameMode.CREATIVE}) {
+                player.changeGameMode(mode);
+                for (var dimension : new net.minecraft.registry.RegistryKey[]{World.NETHER, World.END}) {
+                    var destination = server.getWorld(dimension);
+                    check(mode + " destino restringido existe " + dimension.getValue(), destination != null);
+                    if (destination == null) continue;
+                    check(mode + " portal denegado " + dimension.getValue(), player.teleportTo(
+                            new net.minecraft.world.TeleportTarget(destination, player.getPos(),
+                                    net.minecraft.util.math.Vec3d.ZERO, 0, 0,
+                                    net.minecraft.world.TeleportTarget.NO_OP)) == null && player.getServerWorld() == world);
+                    check(mode + " tp denegado " + dimension.getValue(), !player.teleport(destination,
+                            0, 100, 0, java.util.Set.of(), 0, 0) && player.getServerWorld() == world);
+                    player.teleport(destination, 0, 100, 0, 0, 0);
+                    check(mode + " tp directo denegado " + dimension.getValue(), player.getServerWorld() == world);
+                }
+            }
+            player.changeGameMode(GameMode.SURVIVAL);
             check("Player Survival no edita", !WorldProtectionManager.canModifyWorld(player, world));
             check("Fabric BEFORE cancela rotura normal", !PlayerBlockBreakEvents.BEFORE.invoker()
                     .beforeBlockBreak(world, player, pos, world.getBlockState(pos), null));

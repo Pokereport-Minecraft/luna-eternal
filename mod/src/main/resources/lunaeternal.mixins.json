@@ -34,7 +34,8 @@
     "StaffOnlyPlayerNoticesMixin",
     "StaffOnlyDeathNoticeMixin",
     "StaffOnlyAdvancementNoticeMixin",
-    "SuccessfulFishingMixin"
+    "SuccessfulFishingMixin",
+    "RestrictedDimensionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

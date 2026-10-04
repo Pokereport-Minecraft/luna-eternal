@@ -1,3 +1,5 @@
+> **2026-10-04 — Nether/End:** acceso bloqueado para jugadores por portales y teletransportes; OP con rol staff conserva mantenimiento. Posiciones antiguas se corrigen al lobby. 242 PASS / 2 SKIPPED; staging 803 autotests y 53 ensayos PASS. Ver docs/RESTRICTED_DIMENSIONS.md.
+
 > **2026-10-03 — PC remoto:** tecla P y /pc exigen rango comercial Campeón/Maestro/Leyenda, incluso para OP/staff. PCs físicos siguen accesibles. Se elimina la excepción administrativa anterior; ver docs/REMOTE_PC_COMMERCIAL_RANK.md.
 
 > **2026-10-03 — Reset preapertura:** usuario autorizó borrar todos los datos de jugadores, incluido Tebex local. Principal vacío y reiniciado; 26 cuentas y 23 pagos locales retirados, inventarios/Pokémon/progreso/auth/OP/grants borrados. Mundos/NPCs/configuración preservados, backup probado y cola externa Tebex vacía. El panel externo y backups conservan historial; staging detenido. Fundador debe registrarse y reasignarse desde consola. Ver [docs/PREOPENING_PLAYER_RESET.md](docs/PREOPENING_PLAYER_RESET.md).
