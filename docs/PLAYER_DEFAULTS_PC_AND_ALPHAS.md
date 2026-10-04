@@ -16,6 +16,8 @@ Music Notification se retira del manifiesto. Ese componente proporcionaba Open J
 
 ## Angry Alphas
 
+> La auditoría de CPU del 4 de octubre reemplaza el dispatch descrito abajo: los selectores sin distancia recorrían todas las dimensiones y se repetían cada tick. El original queda deshabilitado; el pack corregido realiza una búsqueda por dimensión cada 20 ticks. Ver `technical/auditoria-cpu-salvaje-20261004.md`.
+
 Se fija **W’s Angry Alphas 1.1.0**, versión Modrinth `9chEWhXr`, compatible con Minecraft 1.21–1.21.1. Archivo oficial intacto, SHA1 `d2b5f740966c7d010583afdf3c682955aadf9994`; Cobblemon 1.8.0 dispone de Pokémon alfa. Se instala como datapack del servidor, no como mod del launcher.
 
 El archivo original dirige su tick al overworld. `pokereport-angry-alphas-worlds.zip` añade llamadas a la función oficial en Nether, End, los seis Salvajes e Islas Naranja. No modifica sus reglas de agresividad ni los spawns. Se puede reproducir con `python tools/prepare_angry_alphas.py`. Las funciones y los datapacks cargaron en staging sin errores de sintaxis.

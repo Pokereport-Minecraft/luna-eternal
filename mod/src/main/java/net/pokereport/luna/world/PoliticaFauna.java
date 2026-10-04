@@ -5,7 +5,7 @@ import java.util.Set;
 /** Solo fauna vanilla y entrenadores ambientales; nunca entidades genéricas del mundo. */
 public final class PoliticaFauna {
     public static final float DENSIDAD_HOGAR = 0.04f;
-    public static final float DENSIDAD_SALVAJE = 3.0f;
+    public static final float DENSIDAD_SALVAJE = 0.75f;
     public static final float MULTIPLICADOR_ULTRARRARO_SALVAJE = 1.10f;
     private static final Set<String> RAREZAS_PROHIBIDAS_HOGAR = Set.of(
             "legendary", "mythical", "ultra_beast", "paradox", "restricted");

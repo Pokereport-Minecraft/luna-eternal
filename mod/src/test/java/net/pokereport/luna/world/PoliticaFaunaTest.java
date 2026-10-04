@@ -18,7 +18,7 @@ class PoliticaFaunaTest {
     @Test void densidadDiferenteSinAfectarOtrasDimensiones() {
         assertEquals(0.04f,PoliticaFauna.densidad("minecraft:overworld"));
         for(String id:new String[]{"salvaje","salvaje2","salvaje3","salvaje4","salvaje5","salvaje6"})
-            assertEquals(3.0f,PoliticaFauna.densidad("lunaeternal:"+id));
+            assertEquals(0.75f,PoliticaFauna.densidad("lunaeternal:"+id));
         assertEquals(1f,PoliticaFauna.densidad("lunaeternal:ciudadela"));
         assertEquals(1f,PoliticaFauna.densidad("otro:salvaje"));
 
