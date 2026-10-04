@@ -3661,7 +3661,8 @@ public final class AutoTest {
             try (Connection c = db.connection();
                  PreparedStatement ps = c.prepareStatement(
                          "SELECT (SELECT COUNT(*) FROM player_puerta WHERE cruzada_ms = 0), "
-                         + "(SELECT COUNT(*) FROM player)");
+                         + "(SELECT COUNT(*) FROM player p JOIN schema_version v ON v.version = 36 "
+                         + "WHERE p.first_seen <= v.applied_at)");
                  java.sql.ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     heredados = rs.getLong(1);
@@ -3673,7 +3674,7 @@ public final class AutoTest {
             //   prueba que falla POR ESTAR LIMPIA -- la clase de rojo que enseña
             //   a ignorar los rojos.
             check("PUERTA: EL RELLENO DE LA MIGRACION CORRIO",
-                    jugadores <= 3 || heredados > 0);
+                    jugadores == 0 || heredados > 0);
 
             // ⚠⚠ UN JUGADOR RECIEN CREADO **NO** CONSTA COMO CRUZADO, y en eso
             //    consiste la funcion entera: si constara, el jugador nuevo se

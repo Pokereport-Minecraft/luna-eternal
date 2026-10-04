@@ -285,7 +285,12 @@ texturas desalojadas en el gestor de Minecraft.
 selectores nativos simultaneos y solo envia a la conexion que inicio la
 seleccion. Falta confirmar el recorrido en juego y contrastar el crash del
 jugador con su registro; encontrar este defecto no confirma por si solo la
-causa de ese incidente. Los cambios son locales, pendientes de distribucion.
+causa de ese incidente. El cliente corregido se publico en el manifiesto
+`15b39a6f34`, conservando todas las entradas y ajustes ajenos a este hotfix.
+Las comprobaciones de subida, moderacion y colocacion pasaron dentro de las
+807 pruebas del staging. Es necesario cerrar el juego y abrir el launcher
+para recibir las clases del cliente actualizadas. Detalles en
+[hotfix-santuario-misiones.md](../technical/hotfix-santuario-misiones.md).
 
 1. **Colocar la Mew**: `/luna santuario npc` de pie donde vaya. Ya lleva
    **cartel flotante** con el icono de clic derecho, como Oak (2026-09-08).

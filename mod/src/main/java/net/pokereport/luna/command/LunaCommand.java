@@ -1947,7 +1947,10 @@ public final class LunaCommand {
     private static int autotest(ServerCommandSource src) {
         final boolean isolatedStaging;
         try {
-            isolatedStaging = net.pokereport.luna.LunaConfig.load().jdbcUrl.contains("/prelaunch_20261002?");
+            var config = net.pokereport.luna.LunaConfig.load();
+            isolatedStaging = config.jdbcUrl.contains("/prelaunch_20261002?")
+                    || (config.jdbcUrl.contains("/hotfix_santuario_misiones_20261004?")
+                    && config.user.equals("santuario_misiones_qa"));
         } catch (java.io.IOException e) {
             LunaEternal.LOG.warn("Autotest rechazado: no se pudo verificar la configuración.");
             src.sendError(Text.literal("No se pudo verificar el staging aislado; autotest rechazado."));
