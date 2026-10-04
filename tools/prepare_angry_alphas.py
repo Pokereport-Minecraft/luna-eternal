@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 URL="https://cdn.modrinth.com/data/ZMIGaD0V/versions/9chEWhXr/W%27s%20Angry%20Alphas.zip"
 SHA1="d2b5f740966c7d010583afdf3c682955aadf9994"
-WORLDS=["minecraft:the_nether","minecraft:the_end","pokereport:salvaje"]+[f"pokereport:salvaje{x}" for x in range(2,7)]+["pokereport:islas_naranja"]
+WORLDS=["minecraft:the_nether","minecraft:the_end","lunaeternal:salvaje"]+[f"lunaeternal:salvaje{x}" for x in range(2,7)]+["lunaeternal:islas_naranja"]
 def main():
     out=ROOT/"build/angry-alphas";out.mkdir(parents=True,exist_ok=True)
     data=urllib.request.urlopen(URL,timeout=30).read();assert hashlib.sha1(data).hexdigest()==SHA1

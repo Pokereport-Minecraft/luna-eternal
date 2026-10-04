@@ -1,3 +1,5 @@
+> **2026-10-03 — Reset preapertura:** usuario autorizó borrar todos los datos de jugadores, incluido Tebex local. Principal vacío y reiniciado; 26 cuentas y 23 pagos locales retirados, inventarios/Pokémon/progreso/auth/OP/grants borrados. Mundos/NPCs/configuración preservados, backup probado y cola externa Tebex vacía. El panel externo y backups conservan historial; staging detenido. Fundador debe registrarse y reasignarse desde consola. Ver [docs/PREOPENING_PLAYER_RESET.md](docs/PREOPENING_PLAYER_RESET.md).
+
 > **2026-10-03 — Vídeos:** caché FFmpeg incompleta bloqueaba Oak/Torre/gimnasios. Reparación automática de DLL oficiales al arranque del cliente, sin cambiar servidor. Diagnóstico y validación nativa en [docs/MEDIA_PLAYBACK_FIX.md](docs/MEDIA_PLAYBACK_FIX.md). QA audiovisual completo pendiente.
 
 ## PokeVoice — candidato aislado (2026-10-03)
