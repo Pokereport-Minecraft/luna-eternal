@@ -109,6 +109,13 @@ public final class AutoTest {
             testCazasPremios(a);
             testRangos(a);
             for (var rank : net.pokereport.luna.ui.Tablist.Rank.values()) {
+                check("Avisos staff sin OP: " + rank.name(), !net.pokereport.luna.ui.StaffPlayerNotices.canReceive(false, rank));
+                check("Avisos staff autorizado: " + rank.name(), net.pokereport.luna.ui.StaffPlayerNotices.canReceive(true, rank) == rank.equipo);
+            }
+            check("Muerte solo staff", net.pokereport.luna.ui.StaffPlayerNotices.isPlayerEvent(net.minecraft.text.Text.translatable("death.attack.fall")));
+            check("Chat normal visible", !net.pokereport.luna.ui.StaffPlayerNotices.isPlayerEvent(net.minecraft.text.Text.literal("Hola entrenadores")));
+
+            for (var rank : net.pokereport.luna.ui.Tablist.Rank.values()) {
                 check("PC remoto: " + rank.name(), net.pokereport.luna.rank.RemotePcAccess.allows(rank, false)
                     == (rank.equipo || rank.escalon >= 3));
             }

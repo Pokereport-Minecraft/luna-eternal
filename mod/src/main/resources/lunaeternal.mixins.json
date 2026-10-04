@@ -30,7 +30,10 @@
     "battle.RequestInstructionFixMixin",
     "battle.BattleActorChoiceFixMixin",
     "battle.PokemonBattleSafetyMixin",
-    "LumyRemotePcMixin"
+    "LumyRemotePcMixin",
+    "StaffOnlyPlayerNoticesMixin",
+    "StaffOnlyDeathNoticeMixin",
+    "StaffOnlyAdvancementNoticeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

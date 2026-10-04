@@ -1,9 +1,8 @@
 package net.pokereport.luna.mixin;
 
 import net.minecraft.server.PlayerManager;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.pokereport.luna.ui.Tablist;
+import net.pokereport.luna.ui.StaffPlayerNotices;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -18,10 +17,6 @@ public abstract class StaffOnlyJoinMessageMixin {
                     target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Z)V",
                     ordinal = 0))
     private void luna$joinSoloStaff(PlayerManager manager, Text mensaje, boolean overlay) {
-        for (ServerPlayerEntity receptor : manager.getPlayerList()) {
-            if (Tablist.rankOf(receptor.getServer(), receptor).esStaff()) {
-                receptor.sendMessage(mensaje, overlay);
-            }
-        }
+        StaffPlayerNotices.dispatch(manager, mensaje, overlay);
     }
 }
