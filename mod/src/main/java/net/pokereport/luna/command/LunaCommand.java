@@ -1740,10 +1740,8 @@ public final class LunaCommand {
     /**
      * Borra el progreso de una mision concreta. <b>Solo para probar.</b>
      *
-     * <p>⚠ Nivel 4, como el del inicial, y por lo mismo: NO devuelve la
-     * recompensa ya cobrada, asi que quien reinicie una mision pagada se queda
-     * con el dinero y puede volver a cobrarla. Es un agujero deliberado y por eso
-     * esta donde esta.
+     * <p>Nivel 4, como el del inicial. Conserva las filas ya cobradas para
+     * mantenerlas coherentes con el historial de recompensas.
      */
     private static int reiniciarMision(ServerCommandSource origen, String questId) {
         var jugador = origen.getPlayer();
@@ -1916,9 +1914,8 @@ public final class LunaCommand {
                 // ⚠⚠ Y LA MISION TAMBIEN. Son DOS TABLAS distintas --`kit_claim`
                 //    y `quest_progress`-- y borrar una dejaba la otra puesta: el
                 //    usuario se encontraba la pantalla otra vez pero la mision
-                //    «Un compañero» seguia completa y cobrada. Ni volvia a
-                //    empezar ni se quedaba como estaba: quedaba a medias, que es
-                //    peor que cualquiera de las dos.
+                //    «Un compañero» seguia completa. Solo se reinicia si aun no
+                //    se ha cobrado: los pagos anteriores siguen en el ledger.
                 //
                 //    Se buscan las misiones POR OBJETIVO y no por identificador:
                 //    escribir "t1_inicial" aqui ataria este comando al nombre que
@@ -1936,9 +1933,10 @@ public final class LunaCommand {
                 //   guarda la ultima respuesta y seguia creyendo que ya habia
                 //   elegido. Borrar en la base no cambia lo que el cliente cree.
                 net.pokereport.luna.net.Red.refrescarInicial(jugador);
+                net.pokereport.luna.net.Red.refrescarMisiones(jugador);
                 origen.getServer().execute(() -> origen.sendFeedback(() -> Text.literal(
                         "§aReiniciado: marca del inicial y " + borradas
-                        + " mision(es). \u00a77Vuelve a hablar con Oak."), false));
+                        + " mision(es) sin cobrar. Las ya cobradas se conservan. \u00a77Vuelve a hablar con Oak."), false));
             } catch (Exception e) {
                 LunaEternal.LOG.warn("No se pudo reiniciar el inicial: {}", e.toString());
             }

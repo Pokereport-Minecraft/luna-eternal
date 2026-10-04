@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
@@ -40,47 +41,63 @@ public final class DialogoFoto {
 
     /** El trozo de subida: 16 KB, el mismo tamano que usa el servidor. */
     private static final int TROZO = 16 * 1024;
+    private static final AtomicBoolean ABIERTO = new AtomicBoolean();
 
     private DialogoFoto() {}
 
     /** Abre el dialogo nativo y, si se elige un fichero valido, lo sube troceado. */
     public static void abrir(net.minecraft.client.gui.screen.Screen pantalla) {
         var cliente = MinecraftClient.getInstance();
+        var conexion = cliente.getNetworkHandler();
+        if (conexion == null || !ABIERTO.compareAndSet(false, true)) return;
         new Thread(() -> {
-            String elegida = elegirConTinyfd();
-            if (elegida == null || elegida.isBlank()) {
-                return; // el jugador cancelo el dialogo
-            }
-            byte[] bytes;
             try {
-                bytes = Files.readAllBytes(Path.of(elegida));
-            } catch (IOException | RuntimeException e) {
-                return;
-            }
-            // ⚠ El tope se comprueba aqui SOLO para no gastar red en algo que
-            //   el servidor va a rechazar igual: la regla la aplica el.
-            if (bytes.length == 0
-                    || bytes.length > net.pokereport.luna.santuario.SantuarioService.FOTO_MAX_BYTES) {
-                cliente.execute(() -> {
-                    if (cliente.player != null) {
-                        cliente.player.sendMessage(net.minecraft.text.Text.translatable(
-                                "pokepad.lunaeternal.santuario.error.foto_grande"), false);
+                String elegida = elegirConTinyfd();
+                if (elegida == null || elegida.isBlank()) {
+                    return; // el jugador cancelo el dialogo
+                }
+                byte[] bytes;
+                try {
+                    // Acotar la lectura antes de reservar memoria: incluso un
+                    // fichero enorme o que crece mientras se lee queda limitado.
+                    try (var entrada = Files.newInputStream(Path.of(elegida))) {
+                        bytes = entrada.readNBytes(
+                                net.pokereport.luna.santuario.SantuarioService.FOTO_MAX_BYTES + 1);
                     }
-                });
-                return;
-            }
-            String idem = UUID.randomUUID().toString();
-            int total = bytes.length;
-            int trozos = (total + TROZO - 1) / TROZO;
-            for (int i = 0; i < trozos; i++) {
-                int desde = i * TROZO;
-                int hasta = Math.min(total, desde + TROZO);
-                byte[] parte = java.util.Arrays.copyOfRange(bytes, desde, hasta);
-                final int indice = i;
-                // ⚠ SE ENCOLA EN EL HILO DEL CLIENTE: los paquetes no se mandan
-                //   desde un hilo de AWT.
-                cliente.execute(() -> ClientPlayNetworking.send(new Red.SubirFoto(
-                        idem, total, indice, parte)));
+                } catch (IOException | RuntimeException e) {
+                    return;
+                }
+                // ⚠ El tope se comprueba aqui SOLO para no gastar red en algo que
+                //   el servidor va a rechazar igual: la regla la aplica el.
+                if (bytes.length == 0
+                        || bytes.length > net.pokereport.luna.santuario.SantuarioService.FOTO_MAX_BYTES) {
+                    cliente.execute(() -> {
+                        if (cliente.player != null) {
+                            cliente.player.sendMessage(net.minecraft.text.Text.translatable(
+                                    "pokepad.lunaeternal.santuario.error.foto_grande"), false);
+                        }
+                    });
+                    return;
+                }
+                String idem = UUID.randomUUID().toString();
+                int total = bytes.length;
+                int trozos = (total + TROZO - 1) / TROZO;
+                for (int i = 0; i < trozos; i++) {
+                    int desde = i * TROZO;
+                    int hasta = Math.min(total, desde + TROZO);
+                    byte[] parte = java.util.Arrays.copyOfRange(bytes, desde, hasta);
+                    final int indice = i;
+                    // ⚠ SE ENCOLA EN EL HILO DEL CLIENTE: los paquetes no se mandan
+                    //   desde un hilo de AWT.
+                    cliente.execute(() -> {
+                        if (conexion != null && cliente.getNetworkHandler() == conexion
+                                && ClientPlayNetworking.canSend(Red.SubirFoto.ID)) {
+                            ClientPlayNetworking.send(new Red.SubirFoto(idem, total, indice, parte));
+                        }
+                    });
+                }
+            } finally {
+                ABIERTO.set(false);
             }
         }, "luna-dialogo-foto").start();
     }

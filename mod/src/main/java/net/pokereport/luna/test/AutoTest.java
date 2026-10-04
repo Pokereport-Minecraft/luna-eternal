@@ -2193,6 +2193,28 @@ public final class AutoTest {
         check("tras cobrar deja de ser cobrable",
               !quests.state(p, inicial).claimable());
 
+        long plataCobrada = LunaEternal.economy().balance(p, Currency.POKEDOLLAR);
+        var viaCobrada = recompensaInicial.path() == null ? null
+                : LunaEternal.progression().all(p).get(recompensaInicial.path());
+        check("reiniciar una mision pagada conserva su marca", quests.reiniciar(p, inicial.id()) == 0
+                && quests.state(p, inicial).claimed());
+        // Reproduce un reinicio del inicial hecho con el codigo anterior.
+        try (var c = LunaEternal.database().connection();
+             var ps = c.prepareStatement("DELETE FROM quest_progress WHERE player_id = ? AND quest_id = ?")) {
+            ps.setLong(1, p);
+            ps.setString(2, inicial.id());
+            ps.executeUpdate();
+        }
+        quests.advance(p, net.pokereport.luna.quest.Quest.Objective.Type.STARTER, 1);
+        check("una mision reiniciada con pago anterior recupera su marca sin pagar",
+                !quests.claim(p, inicial) && quests.state(p, inicial).claimed());
+        check("recuperar una mision no duplica Plata",
+                LunaEternal.economy().balance(p, Currency.POKEDOLLAR) == plataCobrada);
+        if (viaCobrada != null) {
+            check("recuperar una mision no duplica XP",
+                    viaCobrada.equals(LunaEternal.progression().all(p).get(recompensaInicial.path())));
+        }
+
         // Ahora si avanza la encadenada.
         quests.advance(p, net.pokereport.luna.quest.Quest.Objective.Type.CATCH, 1);
         check("desbloqueada la anterior, la siguiente ya avanza",
