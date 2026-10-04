@@ -46,4 +46,6 @@ Producción arrancó a las 23:26:50 UTC, confirmó la nueva densidad a las 23:26
 
 Perfil posterior de 60 segundos: https://spark.lucko.me/0peElyrw6s. A las 23:29:35, con tres jugadores reconectados: TPS 19,92/19,96/19,99 (5 s/10 s/1 min), mediana 3,8–4,2 ms, p95 6–12,1 ms. Una muestra de hilos de 5 s midió el hilo principal al 13,19 % de un núcleo y unos 24 % agregados. Se observó también un pico puntual de CPU al reconectar jugadores; no se afirma que todos los picos de arranque/reconexión hayan desaparecido. La validación posterior se limita a esta carga, no certifica capacidad máxima.
 
+A las 23:30:51 había cinco jugadores conectados: 20 TPS en 5 s/10 s/1 min, mediana 4,3–4,5 ms, p95 7,7–8,2 ms y Docker CPU 24,20 %. En ese instante no había Pokémon cargados en Salvaje: los jugadores estaban reconectando y pasando por Ciudadela. La caída del coste del datapack sí se verificó previamente con los cinco jugadores que permanecían jugando durante su desactivación. Queda por observar el balance visual del nuevo spawn cuando regresen a Salvaje.
+
 Backups operativos y recibos: `/var/backups/pokereport/cpu-audit-20261004/`. El disco del nodo estaba al 95 %, con unos 12 GB disponibles; no se borraron respaldos para ocultar ese estado.
