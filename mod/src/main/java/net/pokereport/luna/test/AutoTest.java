@@ -117,7 +117,7 @@ public final class AutoTest {
 
             for (var rank : net.pokereport.luna.ui.Tablist.Rank.values()) {
                 check("PC remoto: " + rank.name(), net.pokereport.luna.rank.RemotePcAccess.allows(rank, false)
-                    == (rank.equipo || rank.escalon >= 3));
+                    == (!rank.equipo && rank.escalon >= 3));
             }
             testMochila(a);
             testVozPokedex();

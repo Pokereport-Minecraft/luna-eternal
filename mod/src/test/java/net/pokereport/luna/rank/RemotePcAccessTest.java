@@ -10,9 +10,12 @@ class RemotePcAccessTest {
         for (Rank rank : new Rank[]{Rank.CAMPEON, Rank.MAESTRO, Rank.LEYENDA})
             assertTrue(RemotePcAccess.allows(rank, false), rank.name());
     }
-    @Test void existingStaffAndOperatorAccessIsPreserved() {
-        for (Rank rank : Rank.values()) if (rank.equipo)
-            assertTrue(RemotePcAccess.allows(rank, false), rank.name());
-        assertTrue(RemotePcAccess.allows(Rank.ENTRENADOR, true));
+    @Test void staffAndOperatorDoNotBypassCommercialRank() {
+        for (Rank rank : Rank.values()) {
+            boolean eligible = rank == Rank.CAMPEON || rank == Rank.MAESTRO || rank == Rank.LEYENDA;
+            assertEquals(eligible, RemotePcAccess.allows(rank, true), rank.name());
+            assertEquals(eligible, RemotePcAccess.allows(rank, false), rank.name());
+        }
+        assertFalse(RemotePcAccess.allows(null, true));
     }
 }

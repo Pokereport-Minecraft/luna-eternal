@@ -15,7 +15,7 @@ public final class RemotePcAccess {
     private RemotePcAccess() {}
 
     public static boolean allows(Rank rank, boolean operator) {
-        return operator || (rank != null && (rank.equipo || rank.escalon >= Rank.CAMPEON.escalon));
+        return rank == Rank.CAMPEON || rank == Rank.MAESTRO || rank == Rank.LEYENDA;
     }
 
     public static boolean check(ServerPlayerEntity player) {
