@@ -33,7 +33,8 @@
     "LumyRemotePcMixin",
     "StaffOnlyPlayerNoticesMixin",
     "StaffOnlyDeathNoticeMixin",
-    "StaffOnlyAdvancementNoticeMixin"
+    "StaffOnlyAdvancementNoticeMixin",
+    "SuccessfulFishingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
