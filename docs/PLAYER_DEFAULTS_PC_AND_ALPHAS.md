@@ -1,3 +1,5 @@
+> Actualización: la excepción de OP/staff para el PC remoto fue eliminada por petición del usuario. La política vigente está en REMOTE_PC_COMMERCIAL_RANK.md: Campeón/Maestro/Leyenda exclusivamente.
+
 # PC remoto, ajustes iniciales y Angry Alphas — 2026-10-03
 
 ## Acceso al PC
