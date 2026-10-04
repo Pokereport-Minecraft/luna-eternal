@@ -64,3 +64,10 @@ el chat del juego. El primer intento de parada directa de Docker provoco
 el reinicio automatico de Wings; se repuso el jar anterior y se continuo
 con parada/arranque controlados por la API de Wings. La configuracion y el
 jar originales del staging se restauraron y el contenedor QA quedo parado.
+
+## Resultado en produccion
+
+Servidor activo con el hash esperado. El arranque registro base de datos
+lista, `Done (4.129s)` y `PokeVoice cache ready`. La fila de Freddysillo
+mantiene progreso 1 y ya tiene marca de cobro. El manifiesto publico se
+volvio a verificar despues del arranque.
