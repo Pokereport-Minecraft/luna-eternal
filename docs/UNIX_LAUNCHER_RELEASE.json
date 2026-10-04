@@ -1,0 +1,52 @@
+{
+  "version": "0.2.4",
+  "date_utc": "2026-10-04T04:30:17.491927+00:00",
+  "macos_run": 37175712451,
+  "linux_run": 37176410162,
+  "platforms": {
+    "linux-x64": {
+      "luna-launcher-linux-x64-0.2.4.AppImage": {
+        "bytes": 111176184,
+        "sha256": "1456be6b716f34dba436c46d2a7e54199dfe4fe27aa68f1333ab976fac34a983"
+      },
+      "PokeReport-Staff-0.2.4-linux-x64.zip": {
+        "bytes": 111176853,
+        "sha256": "bd16bf7d67e0b3c37ef5a1d854fa9a2a301dec6e48b78f732a127cdf367a808f"
+      },
+      "architecture": "x86_64",
+      "zip_crc": "PASS",
+      "staff_binary": "same",
+      "ci_test_suites": 29
+    },
+    "macos-x64": {
+      "PokeReport-Launcher-0.2.4-macos-x64.zip": {
+        "bytes": 45293309,
+        "sha256": "1b80c9e9545fa65edb8606450329a5009415440e030edf7351dc121e0a824721"
+      },
+      "PokeReport-Staff-0.2.4-macos-x64.zip": {
+        "bytes": 45244958,
+        "sha256": "393a53315c49c8ad2111ba9708a8d5bb2f18ccda66e2d7a68744482857b20eb4"
+      },
+      "architecture": "x86_64",
+      "zip_crc": "PASS",
+      "staff_binary": "same",
+      "ci_test_suites": 29
+    },
+    "macos-arm64": {
+      "platform": "macos-arm64",
+      "ci_run": 37175712451,
+      "tests": 29,
+      "binary_cpu": "arm64",
+      "archives_crc": "PASS",
+      "staff_same_binary": true,
+      "files": {
+        "PokeReport-Launcher-0.2.4-macos-arm64.zip": "f098ca4aba009f69dc339dc1674ac32d352be4a2cbae30d2fec45c123f3fbe13",
+        "PokeReport-Staff-0.2.4-macos-arm64.zip": "14324402725f14151564cb48a91b2182304bebbaee20cff285effcd7cf71f762"
+      }
+    }
+  },
+  "public_page": "https://pokereport.online/jugar/",
+  "staff_public": false,
+  "real_minecraft_qa": "PENDING",
+  "macos_notarization": false
+}
