@@ -659,11 +659,16 @@ public final class CrianzaService {
             principal = madre != null ? madre : padre;
         }
 
-        var pre = principal.getPreEvolution();
-        while (pre != null && pre.getSpecies().getPreEvolution() != null) {
-            pre = pre.getSpecies().getPreEvolution();
+        String baseEspecie;
+        if (madre != null && padre != null && madre.getSpecies().getName().equalsIgnoreCase("ditto") && padre.getSpecies().getName().equalsIgnoreCase("ditto")) {
+            baseEspecie = net.pokereport.luna.world.PoliticaFauna.getDittoPoolRandom();
+        } else {
+            var pre = principal.getPreEvolution();
+            while (pre != null && pre.getSpecies().getPreEvolution() != null) {
+                pre = pre.getSpecies().getPreEvolution();
+            }
+            baseEspecie = pre != null ? pre.getSpecies().getName() : principal.getSpecies().getName();
         }
-        String baseEspecie = pre != null ? pre.getSpecies().getName() : principal.getSpecies().getName();
 
         try {
             Pokemon baby = crearBebe(baseEspecie, madre, padre, principal);
@@ -795,7 +800,7 @@ public final class CrianzaService {
         boolean aDitto = a.getSpecies().getName().equalsIgnoreCase("ditto");
         boolean bDitto = b.getSpecies().getName().equalsIgnoreCase("ditto");
         if (aDitto && bDitto) {
-            return new CompatibilidadInfo(false, "Dos Ditto no pueden criar entre sí");
+            return new CompatibilidadInfo(true, "Ditto + Ditto = Especie Gen 1-2 Aleatoria");
         }
         if (aDitto || bDitto) {
             return new CompatibilidadInfo(true, "Compatible con Ditto");
