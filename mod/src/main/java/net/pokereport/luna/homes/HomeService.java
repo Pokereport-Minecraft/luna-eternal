@@ -54,7 +54,7 @@ public final class HomeService {
             case MAESTRO -> 5;
             case CAMPEON -> 4;
             case ELITE -> 3;
-            default -> 0;
+            default -> 1;
         };
     }
 
