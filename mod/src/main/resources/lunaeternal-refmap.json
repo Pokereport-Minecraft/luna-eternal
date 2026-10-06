@@ -1,0 +1,48 @@
+{
+  "mappings": {
+    "net/pokereport/luna/mixin/FaunaSpawnMixin": {
+      "spawnEntity": "Lnet/minecraft/class_3218;method_8649(Lnet/minecraft/class_1297;)Z"
+    },
+    "net/pokereport/luna/mixin/MixinArmorSlot": {
+      "canInsert": "Lnet/minecraft/class_9692;method_7680(Lnet/minecraft/class_1799;)Z",
+      "net.minecraft.screen.slot.ArmorSlot": "net/minecraft/class_9692"
+    },
+    "net/pokereport/luna/mixin/MixinLeyendaDeath": {
+      "getXpToDrop": "Lnet/minecraft/class_1657;method_6110()I"
+    },
+    "net/pokereport/luna/mixin/MixinRankEquipment": {
+      "canEquip": "Lnet/minecraft/class_1657;method_18397(Lnet/minecraft/class_1799;)Z"
+    },
+    "net/pokereport/luna/mixin/MixinRastreadorEntidades": {
+      "net.minecraft.server.world.ServerChunkLoadingManager$EntityTracker": "net/minecraft/class_3898$class_3208",
+      "updateTrackedStatus(Lnet/minecraft/server/network/ServerPlayerEntity;)V": "Lnet/minecraft/class_3898$class_3208;method_18736(Lnet/minecraft/class_3222;)V"
+    },
+    "net/pokereport/luna/mixin/PlayerSaveInvoker": {
+      "savePlayerData": "method_14577(Lnet/minecraft/class_3222;)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "net/pokereport/luna/mixin/FaunaSpawnMixin": {
+        "spawnEntity": "Lnet/minecraft/class_3218;method_8649(Lnet/minecraft/class_1297;)Z"
+      },
+      "net/pokereport/luna/mixin/MixinArmorSlot": {
+        "canInsert": "Lnet/minecraft/class_9692;method_7680(Lnet/minecraft/class_1799;)Z",
+        "net.minecraft.screen.slot.ArmorSlot": "net/minecraft/class_9692"
+      },
+      "net/pokereport/luna/mixin/MixinLeyendaDeath": {
+        "getXpToDrop": "Lnet/minecraft/class_1657;method_6110()I"
+      },
+      "net/pokereport/luna/mixin/MixinRankEquipment": {
+        "canEquip": "Lnet/minecraft/class_1657;method_18397(Lnet/minecraft/class_1799;)Z"
+      },
+      "net/pokereport/luna/mixin/MixinRastreadorEntidades": {
+        "net.minecraft.server.world.ServerChunkLoadingManager$EntityTracker": "net/minecraft/class_3898$class_3208",
+        "updateTrackedStatus(Lnet/minecraft/server/network/ServerPlayerEntity;)V": "Lnet/minecraft/class_3898$class_3208;method_18736(Lnet/minecraft/class_3222;)V"
+      },
+      "net/pokereport/luna/mixin/PlayerSaveInvoker": {
+        "savePlayerData": "method_14577(Lnet/minecraft/class_3222;)V"
+      }
+    }
+  }
+}

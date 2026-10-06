@@ -1,0 +1,22 @@
+{
+  "mappings": {
+    "net/pokereport/luna/client/mixin/HumanoidModelArmorCoverageMixin": {
+      "setAngles": "Lnet/minecraft/class_572;method_17087(Lnet/minecraft/class_1309;FFFFF)V"
+    },
+    "net/pokereport/luna/client/mixin/PlayerTabOverlayTitleMixin": {
+      "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V": "Lnet/minecraft/class_332;method_25294(IIIII)V",
+      "render": "Lnet/minecraft/class_355;method_1919(Lnet/minecraft/class_332;ILnet/minecraft/class_269;Lnet/minecraft/class_266;)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "net/pokereport/luna/client/mixin/HumanoidModelArmorCoverageMixin": {
+        "setAngles": "Lnet/minecraft/class_572;method_17087(Lnet/minecraft/class_1309;FFFFF)V"
+      },
+      "net/pokereport/luna/client/mixin/PlayerTabOverlayTitleMixin": {
+        "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V": "Lnet/minecraft/class_332;method_25294(IIIII)V",
+        "render": "Lnet/minecraft/class_355;method_1919(Lnet/minecraft/class_332;ILnet/minecraft/class_269;Lnet/minecraft/class_266;)V"
+      }
+    }
+  }
+}
