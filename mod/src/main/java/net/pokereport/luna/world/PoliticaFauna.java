@@ -15,7 +15,7 @@ public final class PoliticaFauna {
     public static synchronized String getDittoPoolRandom() {
         if (dittoPool == null) {
             dittoPool = new java.util.ArrayList<>();
-            for (com.cobblemon.mod.common.api.pokemon.PokemonSpecies spec : com.cobblemon.mod.common.pokemon.Species.INSTANCE.getImplemented()) {
+            for (com.cobblemon.mod.common.pokemon.Species spec : com.cobblemon.mod.common.api.pokemon.PokemonSpecies.INSTANCE.getImplemented()) {
                 if (generacionPermitida(spec.getNationalPokedexNumber(), null, spec.getLabels())) {
                     boolean isLegendary = spec.getLabels() != null && (spec.getLabels().contains("legendary") || spec.getLabels().contains("mythical") || spec.getLabels().contains("restricted"));
                     if (!isLegendary && spec.getPreEvolution() == null && !spec.getForms().get(0).getEggGroups().contains(com.cobblemon.mod.common.api.pokemon.egg.EggGroup.UNDISCOVERED)) {

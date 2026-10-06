@@ -45,16 +45,19 @@ public class AuditoriaSpawnCommand {
             float perPlayer = players > 0 ? (float) wildPokemon / players : 0;
             float perChunk = loadedChunks > 0 ? (float) wildPokemon / loadedChunks : 0;
             
-            src.sendFeedback(() -> Text.literal(
-                String.format("§bWORLD: §f%s\n" +
+            String msg = String.format("§bWORLD: §f%s\n" +
                               "§7players=§e%d\n" +
                               "§7loadedChunks=§e%d\n" +
                               "§7wildPokemon=§e%d\n" +
                               "§7pokemonPerPlayer=§e%.2f\n" +
                               "§7pokemonPerLoadedChunk=§e%.2f", 
                               world.getRegistryKey().getValue().toString(),
-                              players, loadedChunks, wildPokemon, perPlayer, perChunk)), false);
+                              players, loadedChunks, (int)wildPokemon, perPlayer, perChunk);
+            src.sendFeedback(() -> Text.literal(msg), false);
         }
         return 1;
     }
 }
+
+
+
