@@ -48,7 +48,8 @@ public final class HomeService {
 
     public static int limiteHomes(Rank rank, boolean isStaff) {
         if (isStaff) return 100;
-        if (rank == null || rank.equipo) return 100;
+        if (rank != null && rank.equipo) return 100;
+        if (rank == null) return 1;
         return switch (rank) {
             case LEYENDA -> 7;
             case MAESTRO -> 5;
