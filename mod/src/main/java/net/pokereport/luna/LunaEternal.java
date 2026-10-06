@@ -100,6 +100,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
     public void onInitializeServer() {
         LOG.info("Luna Eternal — iniciando");
         net.pokereport.luna.world.FaunaControl.registrar();
+        net.pokereport.luna.world.EvolucionControl.register();
         net.pokereport.luna.world.RaidDenPurgeService.registrar();
         net.pokereport.luna.lunita.LunitaManager.registrar();
         net.pokereport.luna.rotom.RotomTutorial.server();
@@ -285,6 +286,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
         });
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+            server.getGameRules().get(net.minecraft.world.GameRules.ANNOUNCE_ADVANCEMENTS).set(false, server);
             net.pokereport.luna.economy.SessionManager.start();
 
             net.pokereport.luna.progression.PlacedOreManager.startCleanup();
@@ -753,6 +755,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.homes.HomeCommands.registrar(dispatcher);
                 net.pokereport.luna.clan.ClanCommands.registrar(dispatcher);
                 net.pokereport.luna.command.RankCommands.registrar(dispatcher);
+                net.pokereport.luna.command.SpawnCommand.registrar(dispatcher);
+                net.pokereport.luna.command.AuditoriaSpawnCommand.registrar(dispatcher);
             });
     }
 
