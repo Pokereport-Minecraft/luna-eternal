@@ -1,0 +1,16 @@
+{
+  "asset": "lunaeternal-starter-toast-e1b6fac1ff.jar",
+  "jar_sha256": "48ffe6bb2c119f218e7097b4846432dc7bff11747910406f711942591bb360de",
+  "manifest": "manifest-2e8b22a81b.json",
+  "manifest_sha1": "2e8b22a81b642a7d8e2cdc4947d8d78ef9b7f797",
+  "fallback_commit": "d541f022a4715f2253caf5473b4dc064dcb96c52",
+  "pointer_verified": true,
+  "previous_manifest": "manifest-b8ca83a88a.json",
+  "server_changed": false,
+  "visual_client_qa": "NOT TESTED",
+  "build": {
+    "passed": 186,
+    "skipped": 2,
+    "failed": 0
+  }
+}

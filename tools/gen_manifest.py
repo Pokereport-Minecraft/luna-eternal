@@ -628,6 +628,15 @@ def construir() -> dict:
             "once": True,
         })
 
+    # Owner-approved initial settings: never overwrite an existing player file.
+    for nombre in ("options.txt", "defaultoptions.journal.json"):
+        datos = (RAIZ / "launcher-defaults" / nombre).read_bytes()
+        sha = hashlib.sha1(datos).hexdigest()
+        activo = "player-defaults-" + sha[:10] + "-" + nombre
+        (SALIDA / activo).write_bytes(datos)
+        ficheros.append({"path": nombre, "sha1": sha, "size": len(datos),
+                         "url": f"{BASE_ACTIVOS}/{activo}", "once": True})
+
     # 6-bis. REGLAS DEL SERVIDOR, y estas SI se pisan.
     #
     # ⚠⚠⚠ AL CONTRARIO QUE LAS DE ARRIBA, NO VAN `once`. Lo de arriba es

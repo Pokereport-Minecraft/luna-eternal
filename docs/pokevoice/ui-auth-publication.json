@@ -1,0 +1,22 @@
+{
+  "previous_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-357c9ecd0e.json",
+    "sha1": "357c9ecd0ee05752a5188f622b0364191a4b0989",
+    "size": 63698,
+    "publicado": "2026-10-03T16:24:47Z"
+  },
+  "new_pointer": {
+    "packVersion": "0.2.0",
+    "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-ffb7b92111.json",
+    "sha1": "ffb7b92111439523dea64a7b55f059b0ef78c1b7",
+    "size": 63698,
+    "publicado": "2026-10-03T19:39:10Z"
+  },
+  "asset": "lunaeternal-pokevoice-16905cf3a5.jar",
+  "only_entry_changed": "mods/lunaeternal-0.1.0.jar",
+  "sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0",
+  "published": true,
+  "download_hash_verified": true,
+  "pointer_verified": true
+}

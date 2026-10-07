@@ -1,0 +1,9 @@
+{
+  "asset": "lunaeternal-release-425e1ee3aa.jar",
+  "manifest": "manifest-b8ca83a88a.json",
+  "sha1": "425e1ee3aa576973b153dc29e28c685c18372255",
+  "sha256": "92bf8e95b6c6a3fc52fb1a022eff548d8d9a91a4d2fd9c28eaa8be5d5dba57dd",
+  "pointer_verified": true,
+  "only_manifest_entry_changed": "mods/lunaeternal-0.1.0.jar",
+  "fallback_commit": "fb66e71c872452a01ae16eef40869de3bfe06d42"
+}

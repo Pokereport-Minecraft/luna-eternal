@@ -14,10 +14,15 @@
       "net.pokereport.luna.net.Red"
     ],
     "server": [
-      "net.pokereport.luna.LunaEternal"
+      "net.pokereport.luna.LunaEternal",
+      "net.pokereport.luna.voice.VoiceRuntime"
     ],
     "client": [
-      "net.pokereport.luna.client.LunaCliente"
+      "net.pokereport.luna.client.LunaCliente",
+      "net.pokereport.luna.client.voice.VoiceClient"
+    ],
+    "voicechat": [
+      "net.pokereport.luna.voice.PokeVoicePlugin"
     ]
   },
   "mixins": [
@@ -29,6 +34,8 @@
     "minecraft": "~1.21.1",
     "java": ">=21",
     "fabric-api": "*",
-    "geckolib": ">=4.9.2"
+    "geckolib": ">=4.9.2",
+    "voicechat_api": ">=2.6.20",
+    "voicechat": ">=1.21.1-2.6.22"
   }
 }

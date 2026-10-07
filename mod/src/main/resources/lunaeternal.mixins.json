@@ -4,6 +4,19 @@
   "package": "net.pokereport.luna.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MixinBlockItem",
+    "SafePlayerMixin",
+    "SafeHungerMixin",
+    "SafeExplosionMixin",
+    "SafeFireMixin",
+    "SafeFluidMixin",
+    "SafeFarmlandMixin",
+    "CommandSafetyMixin",
+    "SafeDecorationMixin",
+    "SafeWorldBreakMixin",
+    "SafeEndermanMixin",
+    "SafeEndermanPlaceMixin",
+    "SafeLavaMixin",
     "MixinRastreadorEntidades",
     "MixinArmorSlot",
     "MixinRankEquipment",
@@ -18,7 +31,13 @@
     "MixinBlockItem",
     "battle.RequestInstructionFixMixin",
     "battle.BattleActorChoiceFixMixin",
-    "battle.PokemonBattleSafetyMixin"
+    "battle.PokemonBattleSafetyMixin",
+    "LumyRemotePcMixin",
+    "StaffOnlyPlayerNoticesMixin",
+    "StaffOnlyDeathNoticeMixin",
+    "StaffOnlyAdvancementNoticeMixin",
+    "SuccessfulFishingMixin",
+    "RestrictedDimensionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

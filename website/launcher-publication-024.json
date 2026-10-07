@@ -1,0 +1,16 @@
+{
+  "backup": "/opt/pokereport/backups/launcher-public-20261003T225848Z",
+  "public_download": "https://pokereport.online/descargas/PokeReport-Launcher-0.2.4.exe",
+  "sha256": "827b7a6e08516d1671f2823265afc6ad92210675e07ec0bcd37cffa9693b401c",
+  "staff_published_to_website": false,
+  "old_link_redirects_to_new": true,
+  "public_http_status": 200,
+  "public_download_bytes": 28536489,
+  "public_download_hash_verified": true,
+  "public_page_verified": true,
+  "legacy_redirect_verified": true,
+  "staff_installer_local": "C:\\Users\\JUAN\\.codex\\pokevoice-artifacts\\PokeReport-Staff-0.2.4-Setup.exe",
+  "staff_installer_sha256": "57cf96362b23b3c3a5f9d7f46917fe68c29feab3a1ac5d46004287cc4c059792",
+  "staff_payload_verified": true,
+  "staff_installer_executed": false
+}

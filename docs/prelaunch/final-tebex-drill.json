@@ -1,0 +1,16 @@
+{
+  "run_id": "qa-final-0dc398d9c68f",
+  "test_uuid": "e70044be-adf4-418f-8f63-bd933c647273",
+  "pending_test_username": "QA012b656f18",
+  "coin_amount": 500,
+  "balance": 500,
+  "fulfillments": 4,
+  "delivered": 3,
+  "pending": 1,
+  "duplicate_delivery": false,
+  "final_rank": "CAMPEON",
+  "real_external_purchase": false,
+  "external_connector_disabled": true,
+  "database": "prelaunch_20261002",
+  "replayed_after_restart": true
+}

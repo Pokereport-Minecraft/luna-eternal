@@ -1,0 +1,2236 @@
+/!
+/! <args>
+/,
+/, <args>
+/.s
+/.s <args>
+//
+// <args>
+//br
+//br <args>
+//brush
+//brush <args>
+//calc
+//calc <args>
+//calculate
+//calculate <args>
+//center
+//center <args>
+//chunk
+//chunk <args>
+//clearhistory
+//clearhistory <args>
+//cone
+//cone <args>
+//contract
+//contract <args>
+//copy
+//copy <args>
+//count
+//count <args>
+//curve
+//curve <args>
+//cut
+//cut <args>
+//cyl
+//cyl <args>
+//deform
+//deform <args>
+//desel
+//desel <args>
+//deselect
+//deselect <args>
+//distr
+//distr <args>
+//drain
+//drain <args>
+//drawsel
+//drawsel <args>
+//eval
+//eval <args>
+//evaluate
+//evaluate <args>
+//ex
+//ex <args>
+//expand
+//expand <args>
+//ext
+//ext <args>
+//extinguish
+//extinguish <args>
+//faces
+//faces <args>
+//fast
+//fast <args>
+//feature
+//feature <args>
+//fill
+//fill <args>
+//fillr
+//fillr <args>
+//fixlava
+//fixlava <args>
+//fixwater
+//fixwater <args>
+//flip
+//flip <args>
+//flora
+//flora <args>
+//forest
+//forest <args>
+//g
+//g <args>
+//gb
+//gb <args>
+//gen
+//gen <args>
+//genbiome
+//genbiome <args>
+//generate
+//generate <args>
+//generatebiome
+//generatebiome <args>
+//gmask
+//gmask <args>
+//green
+//green <args>
+//hcyl
+//hcyl <args>
+//help
+//help <args>
+//hollow
+//hollow <args>
+//hpos1
+//hpos1 <args>
+//hpos2
+//hpos2 <args>
+//hpyramid
+//hpyramid <args>
+//hsphere
+//hsphere <args>
+//inset
+//inset <args>
+//l
+//l <args>
+//limit
+//limit <args>
+//line
+//line <args>
+//lrbuild
+//lrbuild <args>
+//material
+//material <args>
+//middle
+//middle <args>
+//move
+//move <args>
+//naturalize
+//naturalize <args>
+//navwand
+//navwand <args>
+//outline
+//outline <args>
+//outset
+//outset <args>
+//overlay
+//overlay <args>
+//paste
+//paste <args>
+//perf
+//perf <args>
+//placement
+//placement <args>
+//pos
+//pos <args>
+//pos1
+//pos1 <args>
+//pos2
+//pos2 <args>
+//pyramid
+//pyramid <args>
+//re
+//re <args>
+//redo
+//redo <args>
+//regen
+//regen <args>
+//removeabove
+//removeabove <args>
+//removebelow
+//removebelow <args>
+//removenear
+//removenear <args>
+//reorder
+//reorder <args>
+//rep
+//rep <args>
+//replace
+//replace <args>
+//replacenear
+//replacenear <args>
+//restore
+//restore <args>
+//rotate
+//rotate <args>
+//schem
+//schem <args>
+//schematic
+//schematic <args>
+//search
+//search <args>
+//searchitem
+//searchitem <args>
+//sel
+//sel <args>
+//selwand
+//selwand <args>
+//set
+//set <args>
+//setbiome
+//setbiome <args>
+//shift
+//shift <args>
+//size
+//size <args>
+//smooth
+//smooth <args>
+//snow
+//snow <args>
+//snowsmooth
+//snowsmooth <args>
+//solve
+//solve <args>
+//sphere
+//sphere <args>
+//stack
+//stack <args>
+//structure
+//structure <args>
+//thaw
+//thaw <args>
+//timeout
+//timeout <args>
+//toggleplace
+//toggleplace <args>
+//trim
+//trim <args>
+//undo
+//undo <args>
+//update
+//update <args>
+//walls
+//walls <args>
+//wand
+//wand <args>
+//watchdog
+//watchdog <args>
+//world
+//world <args>
+/;
+/; <args>
+/abandonmultibattleteam
+/abandonmultiteam
+/accessories attribute modifier add <attribute> <id> <value> add_multiplied_base <slot> <isStackable>
+/accessories attribute modifier add <attribute> <id> <value> add_multiplied_total <slot> <isStackable>
+/accessories attribute modifier add <attribute> <id> <value> add_value <slot> <isStackable>
+/accessories attribute modifier get <attribute> <id>
+/accessories attribute modifier get <attribute> <id> <scale>
+/accessories attribute modifier remove <attribute> <id>
+/accessories edit
+/accessories edit <entity>
+/accessories log entity_bindings
+/accessories log groups
+/accessories log slots
+/accessories nest <item>
+/accessories slot add invalid <slot>
+/accessories slot add valid <slot>
+/accessories slot remove invalid <slot>
+/accessories slot remove valid <slot>
+/accessories stack-sizing <value>
+/accessories stack-sizing useStackSize <value>
+/account changePassword <old password>
+/account changePassword <old password> <new password>
+/account online <password>
+/account online <password> <confirm>
+/account unregister
+/account unregister <password>
+/advancement grant <targets> everything
+/advancement grant <targets> from <advancement>
+/advancement grant <targets> only <advancement>
+/advancement grant <targets> only <advancement> <criterion>
+/advancement grant <targets> through <advancement>
+/advancement grant <targets> until <advancement>
+/advancement revoke <targets> everything
+/advancement revoke <targets> from <advancement>
+/advancement revoke <targets> only <advancement>
+/advancement revoke <targets> only <advancement> <criterion>
+/advancement revoke <targets> through <advancement>
+/advancement revoke <targets> until <advancement>
+/almanac reload
+/almanac reload <config>
+/anvil
+/applyplayertexture <player>
+/asc
+/asc <args>
+/ascend
+/ascend <args>
+/attribute <target> <attribute> base get
+/attribute <target> <attribute> base get <scale>
+/attribute <target> <attribute> base set <value>
+/attribute <target> <attribute> get
+/attribute <target> <attribute> get <scale>
+/attribute <target> <attribute> modifier add <id> <value> add_multiplied_base
+/attribute <target> <attribute> modifier add <id> <value> add_multiplied_total
+/attribute <target> <attribute> modifier add <id> <value> add_value
+/attribute <target> <attribute> modifier remove <id>
+/attribute <target> <attribute> modifier value get <id>
+/attribute <target> <attribute> modifier value get <id> <scale>
+/auth clearUuid <username>
+/auth getOnlinePlayers
+/auth getPlayerInfo <username>
+/auth getUuid <username>
+/auth list
+/auth markAsOffline <username>
+/auth markAsOnline <username>
+/auth register <username> <password>
+/auth reload
+/auth remove <username>
+/auth setGlobalPassword <password>
+/auth setGlobalPassword <password> <singleUse>
+/auth setSpawn
+/auth setSpawn <dimension> <position>
+/auth setSpawn <dimension> <position> <angle>
+/auth setUuid <username> <uuid>
+/auth update <username> <password>
+/back
+/ban <targets>
+/ban <targets> <reason>
+/ban-ip <target>
+/ban-ip <target> <reason>
+/banlist
+/banlist ips
+/banlist players
+/basura
+/bedrockparticle <effect> <target>
+/bedrockparticle <effect> <target> <locator>
+/bedrockparticle <effect> <world> <pos>
+/behaviouredit
+/biomeinfo
+/biomeinfo <args>
+/biomelist
+/biomelist <args>
+/biomels
+/biomels <args>
+/bossbar add <id> <name>
+/bossbar get <id> max
+/bossbar get <id> players
+/bossbar get <id> value
+/bossbar get <id> visible
+/bossbar list
+/bossbar remove <id>
+/bossbar set <id> color blue
+/bossbar set <id> color green
+/bossbar set <id> color pink
+/bossbar set <id> color purple
+/bossbar set <id> color red
+/bossbar set <id> color white
+/bossbar set <id> color yellow
+/bossbar set <id> max <max>
+/bossbar set <id> name <name>
+/bossbar set <id> players
+/bossbar set <id> players <targets>
+/bossbar set <id> style notched_10
+/bossbar set <id> style notched_12
+/bossbar set <id> style notched_20
+/bossbar set <id> style notched_6
+/bossbar set <id> style progress
+/bossbar set <id> value <value>
+/bossbar set <id> visible <visible>
+/boxcount add <player> <amount>
+/boxcount query <player>
+/boxcount remove <player> <amount>
+/boxcount set <player> <amount>
+/br
+/br <args>
+/brush
+/brush <args>
+/butcher
+/butcher <args>
+/cb
+/cb add <target>
+/cb delete
+/cb get <type>
+/cb give <user> <type> <amount>
+/cb info
+/cb menu
+/cb menu <target>
+/cb view
+/ceil
+/ceil <args>
+/changeeyeheight <pokemon> flying <height>
+/changeeyeheight <pokemon> standing <height>
+/changeeyeheight <pokemon> swimming <height>
+/changescaleandsize <pokemon>
+/changescaleandsize <pokemon> <scale> <width> <height>
+/changewalkspeed
+/changewalkspeed <pokemon> <walkSpeed>
+/changewallpaper <player> <box> <wallpaper>
+/checkspawn <bucket>
+/checkspawns
+/chunkinfo
+/chunkinfo <args>
+/chunky
+/chunky border
+/chunky border add
+/chunky border add <world>
+/chunky border add <world> <shape>
+/chunky border add <world> <shape> <centerX>
+/chunky border add <world> <shape> <centerX> <centerZ>
+/chunky border add <world> <shape> <centerX> <centerZ> <radiusX>
+/chunky border add <world> <shape> <centerX> <centerZ> <radiusX> <radiusZ>
+/chunky border bypass
+/chunky border bypass <player>
+/chunky border help
+/chunky border list
+/chunky border load
+/chunky border load <world>
+/chunky border remove
+/chunky border remove <world>
+/chunky border wrap
+/chunky border wrap <wrap>
+/chunky cancel
+/chunky cancel <world>
+/chunky center
+/chunky center <x>
+/chunky center <x> <z>
+/chunky confirm
+/chunky continue
+/chunky continue <world>
+/chunky corners
+/chunky corners <x1>
+/chunky corners <x1> <z1>
+/chunky corners <x1> <z1> <x2>
+/chunky corners <x1> <z1> <x2> <z2>
+/chunky help
+/chunky help <page>
+/chunky pattern
+/chunky pattern <pattern>
+/chunky pattern <pattern> <value>
+/chunky pause
+/chunky pause <world>
+/chunky progress
+/chunky quiet
+/chunky quiet <interval>
+/chunky radius
+/chunky radius <radius>
+/chunky radius <radius> <radius>
+/chunky reload
+/chunky reload <type>
+/chunky selection
+/chunky shape
+/chunky shape <shape>
+/chunky silent
+/chunky spawn
+/chunky start
+/chunky start <world>
+/chunky start <world> <shape>
+/chunky start <world> <shape> <centerX>
+/chunky start <world> <shape> <centerX> <centerZ>
+/chunky start <world> <shape> <centerX> <centerZ> <radiusX>
+/chunky start <world> <shape> <centerX> <centerZ> <radiusX> <radiusZ>
+/chunky trim
+/chunky trim <world>
+/chunky trim <world> <shape>
+/chunky trim <world> <shape> <centerX>
+/chunky trim <world> <shape> <centerX> <centerZ>
+/chunky trim <world> <shape> <centerX> <centerZ> <radiusX>
+/chunky trim <world> <shape> <centerX> <centerZ> <radiusX> <radiusZ>
+/chunky trim <world> <shape> <centerX> <centerZ> <radiusX> <radiusZ> <trimMode>
+/chunky trim <world> <shape> <centerX> <centerZ> <radiusX> <radiusZ> <trimMode> <inhabited>
+/chunky world
+/chunky world <world>
+/chunky worldborder
+/clan delhome
+/clan home
+/clan sethome
+/clear
+/clear <targets>
+/clear <targets> <item>
+/clear <targets> <item> <maxCount>
+/clearclipboard
+/clearclipboard <args>
+/clearhistory
+/clearhistory <args>
+/clearparty <player>
+/clearpc <player>
+/clone <begin> <end> <destination>
+/clone <begin> <end> <destination> filtered <filter>
+/clone <begin> <end> <destination> filtered <filter> force
+/clone <begin> <end> <destination> filtered <filter> move
+/clone <begin> <end> <destination> filtered <filter> normal
+/clone <begin> <end> <destination> masked
+/clone <begin> <end> <destination> masked force
+/clone <begin> <end> <destination> masked move
+/clone <begin> <end> <destination> masked normal
+/clone <begin> <end> <destination> replace
+/clone <begin> <end> <destination> replace force
+/clone <begin> <end> <destination> replace move
+/clone <begin> <end> <destination> replace normal
+/clone <begin> <end> to <targetDimension> <destination>
+/clone <begin> <end> to <targetDimension> <destination> filtered <filter>
+/clone <begin> <end> to <targetDimension> <destination> filtered <filter> force
+/clone <begin> <end> to <targetDimension> <destination> filtered <filter> move
+/clone <begin> <end> to <targetDimension> <destination> filtered <filter> normal
+/clone <begin> <end> to <targetDimension> <destination> masked
+/clone <begin> <end> to <targetDimension> <destination> masked force
+/clone <begin> <end> to <targetDimension> <destination> masked move
+/clone <begin> <end> to <targetDimension> <destination> masked normal
+/clone <begin> <end> to <targetDimension> <destination> replace
+/clone <begin> <end> to <targetDimension> <destination> replace force
+/clone <begin> <end> to <targetDimension> <destination> replace move
+/clone <begin> <end> to <targetDimension> <destination> replace normal
+/clone from <sourceDimension> <begin> <end> <destination>
+/clone from <sourceDimension> <begin> <end> <destination> filtered <filter>
+/clone from <sourceDimension> <begin> <end> <destination> filtered <filter> force
+/clone from <sourceDimension> <begin> <end> <destination> filtered <filter> move
+/clone from <sourceDimension> <begin> <end> <destination> filtered <filter> normal
+/clone from <sourceDimension> <begin> <end> <destination> masked
+/clone from <sourceDimension> <begin> <end> <destination> masked force
+/clone from <sourceDimension> <begin> <end> <destination> masked move
+/clone from <sourceDimension> <begin> <end> <destination> masked normal
+/clone from <sourceDimension> <begin> <end> <destination> replace
+/clone from <sourceDimension> <begin> <end> <destination> replace force
+/clone from <sourceDimension> <begin> <end> <destination> replace move
+/clone from <sourceDimension> <begin> <end> <destination> replace normal
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination>
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> filtered <filter>
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> filtered <filter> force
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> filtered <filter> move
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> filtered <filter> normal
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> masked
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> masked force
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> masked move
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> masked normal
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> replace
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> replace force
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> replace move
+/clone from <sourceDimension> <begin> <end> to <targetDimension> <destination> replace normal
+/cobblecard carddex fill
+/cobblecard custombooster
+/cobblecard fill_cabinet
+/cobblecard give <target> <pokemon> <shiny> <rarity>
+/cobblecard give <target> <pokemon> <shiny> <rarity> <stat> <stat_value>
+/cobblecard give <target> <pokemon> <shiny> <rarity> <stat> <stat_value> <background>
+/cobblecard give <target> <pokemon> <shiny> <rarity> <stat> <stat_value> <background> <effect>
+/cobblecard render <pokemon> <shiny> <rarity>
+/cobblecard render <pokemon> <shiny> <rarity> <background>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4> <background4>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4> <background4> <effect4>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4> <background4> <effect4> more <pokemon5> <shiny5> <rarity5>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4> <background4> <effect4> more <pokemon5> <shiny5> <rarity5> <background5>
+/cobblecard render <pokemon> <shiny> <rarity> <background> <effect> more <pokemon2> <shiny2> <rarity2> <background2> <effect2> more <pokemon3> <shiny3> <rarity3> <background3> <effect3> more <pokemon4> <shiny4> <rarity4> <background4> <effect4> more <pokemon5> <shiny5> <rarity5> <background5> <effect5>
+/cobblecard workshop
+/cobblemon info
+/cobblemonclicktext <callback>
+/cobblemonconfig
+/cobblemonconfig reload
+/cobbreeding egg decrypt <player>
+/cobbreeding egg give <player> <properties>
+/cobbreeding egg hatch <player>
+/cobbreeding info
+/cobbreeding reload
+/craft
+/crd cycleraids
+/crd dens <position>
+/crd dens <position> <dimension>
+/crd dens <position> <dimension> boss <boss>
+/crd dens <position> <dimension> boss <boss> <cycle_mode>
+/crd dens <position> <dimension> boss <boss> <cycle_mode> <can_reset>
+/crd dens <position> <dimension> bucket <bucket>
+/crd dens <position> <dimension> bucket <bucket> <cycle_mode>
+/crd dens <position> <dimension> bucket <bucket> <cycle_mode> <can_reset>
+/crd dens <position> <dimension> random
+/crd dens <position> <dimension> random <cycle_mode>
+/crd dens <position> <dimension> random <cycle_mode> <can_reset>
+/crd dens <position> <dimension> tier <tier>
+/crd dens <position> <dimension> tier <tier> <cycle_mode>
+/crd dens <position> <dimension> tier <tier> <cycle_mode> <can_reset>
+/crd dens <position> boss <boss>
+/crd dens <position> boss <boss> <cycle_mode>
+/crd dens <position> boss <boss> <cycle_mode> <can_reset>
+/crd dens <position> bucket <bucket>
+/crd dens <position> bucket <bucket> <cycle_mode>
+/crd dens <position> bucket <bucket> <cycle_mode> <can_reset>
+/crd dens <position> random
+/crd dens <position> random <cycle_mode>
+/crd dens <position> random <cycle_mode> <can_reset>
+/crd dens <position> tier <tier>
+/crd dens <position> tier <tier> <cycle_mode>
+/crd dens <position> tier <tier> <cycle_mode> <can_reset>
+/crd forceclear
+/crd forceclear <player>
+/crd refresh
+/crd refresh <player>
+/crd resetclears <player>
+/crd resetclears <pos>
+/crd resetclears <pos> <dimension>
+/crd resetclears <pos> <dimension> <player>
+/crd spawnboss <pos>
+/crd spawnboss <pos> <dimension>
+/crd spawnboss <pos> <dimension> boss <boss>
+/crd spawnboss <pos> <dimension> boss <boss> <noAI>
+/crd spawnboss <pos> <dimension> boss <boss> <noAI> <isInvulnerable>
+/crd spawnboss <pos> <dimension> boss <boss> <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> <dimension> bucket <bucket>
+/crd spawnboss <pos> <dimension> bucket <bucket> <noAI>
+/crd spawnboss <pos> <dimension> bucket <bucket> <noAI> <isInvulnerable>
+/crd spawnboss <pos> <dimension> bucket <bucket> <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> <dimension> random
+/crd spawnboss <pos> <dimension> random <noAI>
+/crd spawnboss <pos> <dimension> random <noAI> <isInvulnerable>
+/crd spawnboss <pos> <dimension> random <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> <dimension> tier <tier>
+/crd spawnboss <pos> <dimension> tier <tier> <noAI>
+/crd spawnboss <pos> <dimension> tier <tier> <noAI> <isInvulnerable>
+/crd spawnboss <pos> <dimension> tier <tier> <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> boss <boss>
+/crd spawnboss <pos> boss <boss> <noAI>
+/crd spawnboss <pos> boss <boss> <noAI> <isInvulnerable>
+/crd spawnboss <pos> boss <boss> <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> bucket <bucket>
+/crd spawnboss <pos> bucket <bucket> <noAI>
+/crd spawnboss <pos> bucket <bucket> <noAI> <isInvulnerable>
+/crd spawnboss <pos> bucket <bucket> <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> random
+/crd spawnboss <pos> random <noAI>
+/crd spawnboss <pos> random <noAI> <isInvulnerable>
+/crd spawnboss <pos> random <noAI> <isInvulnerable> <isPersistent>
+/crd spawnboss <pos> tier <tier>
+/crd spawnboss <pos> tier <tier> <noAI>
+/crd spawnboss <pos> tier <tier> <noAI> <isInvulnerable>
+/crd spawnboss <pos> tier <tier> <noAI> <isInvulnerable> <isPersistent>
+/cs
+/cs <args>
+/cycler
+/cycler <args>
+/damage <target> <amount>
+/damage <target> <amount> <damageType>
+/damage <target> <amount> <damageType> at <location>
+/damage <target> <amount> <damageType> by <entity>
+/damage <target> <amount> <damageType> by <entity> from <cause>
+/data get block <targetPos>
+/data get block <targetPos> <path>
+/data get block <targetPos> <path> <scale>
+/data get entity <target>
+/data get entity <target> <path>
+/data get entity <target> <path> <scale>
+/data get storage <target>
+/data get storage <target> <path>
+/data get storage <target> <path> <scale>
+/data merge block <targetPos> <nbt>
+/data merge entity <target> <nbt>
+/data merge storage <target> <nbt>
+/data modify block <targetPos> <targetPath> append from block <sourcePos>
+/data modify block <targetPos> <targetPath> append from block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> append from entity <source>
+/data modify block <targetPos> <targetPath> append from entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> append from storage <source>
+/data modify block <targetPos> <targetPath> append from storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> append string block <sourcePos>
+/data modify block <targetPos> <targetPath> append string block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> append string block <sourcePos> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> append string block <sourcePos> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> append string entity <source>
+/data modify block <targetPos> <targetPath> append string entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> append string entity <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> append string entity <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> append string storage <source>
+/data modify block <targetPos> <targetPath> append string storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> append string storage <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> append string storage <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> append value <value>
+/data modify block <targetPos> <targetPath> insert <index> from block <sourcePos>
+/data modify block <targetPos> <targetPath> insert <index> from block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> from entity <source>
+/data modify block <targetPos> <targetPath> insert <index> from entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> from storage <source>
+/data modify block <targetPos> <targetPath> insert <index> from storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> string block <sourcePos>
+/data modify block <targetPos> <targetPath> insert <index> string block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> insert <index> string entity <source>
+/data modify block <targetPos> <targetPath> insert <index> string entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> string entity <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> insert <index> string entity <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> insert <index> string storage <source>
+/data modify block <targetPos> <targetPath> insert <index> string storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> insert <index> string storage <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> insert <index> string storage <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> insert <index> value <value>
+/data modify block <targetPos> <targetPath> merge from block <sourcePos>
+/data modify block <targetPos> <targetPath> merge from block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> merge from entity <source>
+/data modify block <targetPos> <targetPath> merge from entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> merge from storage <source>
+/data modify block <targetPos> <targetPath> merge from storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> merge string block <sourcePos>
+/data modify block <targetPos> <targetPath> merge string block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> merge string block <sourcePos> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> merge string block <sourcePos> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> merge string entity <source>
+/data modify block <targetPos> <targetPath> merge string entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> merge string entity <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> merge string entity <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> merge string storage <source>
+/data modify block <targetPos> <targetPath> merge string storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> merge string storage <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> merge string storage <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> merge value <value>
+/data modify block <targetPos> <targetPath> prepend from block <sourcePos>
+/data modify block <targetPos> <targetPath> prepend from block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend from entity <source>
+/data modify block <targetPos> <targetPath> prepend from entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend from storage <source>
+/data modify block <targetPos> <targetPath> prepend from storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend string block <sourcePos>
+/data modify block <targetPos> <targetPath> prepend string block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend string block <sourcePos> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> prepend string block <sourcePos> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> prepend string entity <source>
+/data modify block <targetPos> <targetPath> prepend string entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend string entity <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> prepend string entity <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> prepend string storage <source>
+/data modify block <targetPos> <targetPath> prepend string storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> prepend string storage <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> prepend string storage <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> prepend value <value>
+/data modify block <targetPos> <targetPath> set from block <sourcePos>
+/data modify block <targetPos> <targetPath> set from block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> set from entity <source>
+/data modify block <targetPos> <targetPath> set from entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> set from storage <source>
+/data modify block <targetPos> <targetPath> set from storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> set string block <sourcePos>
+/data modify block <targetPos> <targetPath> set string block <sourcePos> <sourcePath>
+/data modify block <targetPos> <targetPath> set string block <sourcePos> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> set string block <sourcePos> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> set string entity <source>
+/data modify block <targetPos> <targetPath> set string entity <source> <sourcePath>
+/data modify block <targetPos> <targetPath> set string entity <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> set string entity <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> set string storage <source>
+/data modify block <targetPos> <targetPath> set string storage <source> <sourcePath>
+/data modify block <targetPos> <targetPath> set string storage <source> <sourcePath> <start>
+/data modify block <targetPos> <targetPath> set string storage <source> <sourcePath> <start> <end>
+/data modify block <targetPos> <targetPath> set value <value>
+/data modify entity <target> <targetPath> append from block <sourcePos>
+/data modify entity <target> <targetPath> append from block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> append from entity <source>
+/data modify entity <target> <targetPath> append from entity <source> <sourcePath>
+/data modify entity <target> <targetPath> append from storage <source>
+/data modify entity <target> <targetPath> append from storage <source> <sourcePath>
+/data modify entity <target> <targetPath> append string block <sourcePos>
+/data modify entity <target> <targetPath> append string block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> append string block <sourcePos> <sourcePath> <start>
+/data modify entity <target> <targetPath> append string block <sourcePos> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> append string entity <source>
+/data modify entity <target> <targetPath> append string entity <source> <sourcePath>
+/data modify entity <target> <targetPath> append string entity <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> append string entity <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> append string storage <source>
+/data modify entity <target> <targetPath> append string storage <source> <sourcePath>
+/data modify entity <target> <targetPath> append string storage <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> append string storage <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> append value <value>
+/data modify entity <target> <targetPath> insert <index> from block <sourcePos>
+/data modify entity <target> <targetPath> insert <index> from block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> from entity <source>
+/data modify entity <target> <targetPath> insert <index> from entity <source> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> from storage <source>
+/data modify entity <target> <targetPath> insert <index> from storage <source> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> string block <sourcePos>
+/data modify entity <target> <targetPath> insert <index> string block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start>
+/data modify entity <target> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> insert <index> string entity <source>
+/data modify entity <target> <targetPath> insert <index> string entity <source> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> string entity <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> insert <index> string entity <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> insert <index> string storage <source>
+/data modify entity <target> <targetPath> insert <index> string storage <source> <sourcePath>
+/data modify entity <target> <targetPath> insert <index> string storage <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> insert <index> string storage <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> insert <index> value <value>
+/data modify entity <target> <targetPath> merge from block <sourcePos>
+/data modify entity <target> <targetPath> merge from block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> merge from entity <source>
+/data modify entity <target> <targetPath> merge from entity <source> <sourcePath>
+/data modify entity <target> <targetPath> merge from storage <source>
+/data modify entity <target> <targetPath> merge from storage <source> <sourcePath>
+/data modify entity <target> <targetPath> merge string block <sourcePos>
+/data modify entity <target> <targetPath> merge string block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> merge string block <sourcePos> <sourcePath> <start>
+/data modify entity <target> <targetPath> merge string block <sourcePos> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> merge string entity <source>
+/data modify entity <target> <targetPath> merge string entity <source> <sourcePath>
+/data modify entity <target> <targetPath> merge string entity <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> merge string entity <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> merge string storage <source>
+/data modify entity <target> <targetPath> merge string storage <source> <sourcePath>
+/data modify entity <target> <targetPath> merge string storage <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> merge string storage <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> merge value <value>
+/data modify entity <target> <targetPath> prepend from block <sourcePos>
+/data modify entity <target> <targetPath> prepend from block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> prepend from entity <source>
+/data modify entity <target> <targetPath> prepend from entity <source> <sourcePath>
+/data modify entity <target> <targetPath> prepend from storage <source>
+/data modify entity <target> <targetPath> prepend from storage <source> <sourcePath>
+/data modify entity <target> <targetPath> prepend string block <sourcePos>
+/data modify entity <target> <targetPath> prepend string block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> prepend string block <sourcePos> <sourcePath> <start>
+/data modify entity <target> <targetPath> prepend string block <sourcePos> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> prepend string entity <source>
+/data modify entity <target> <targetPath> prepend string entity <source> <sourcePath>
+/data modify entity <target> <targetPath> prepend string entity <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> prepend string entity <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> prepend string storage <source>
+/data modify entity <target> <targetPath> prepend string storage <source> <sourcePath>
+/data modify entity <target> <targetPath> prepend string storage <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> prepend string storage <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> prepend value <value>
+/data modify entity <target> <targetPath> set from block <sourcePos>
+/data modify entity <target> <targetPath> set from block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> set from entity <source>
+/data modify entity <target> <targetPath> set from entity <source> <sourcePath>
+/data modify entity <target> <targetPath> set from storage <source>
+/data modify entity <target> <targetPath> set from storage <source> <sourcePath>
+/data modify entity <target> <targetPath> set string block <sourcePos>
+/data modify entity <target> <targetPath> set string block <sourcePos> <sourcePath>
+/data modify entity <target> <targetPath> set string block <sourcePos> <sourcePath> <start>
+/data modify entity <target> <targetPath> set string block <sourcePos> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> set string entity <source>
+/data modify entity <target> <targetPath> set string entity <source> <sourcePath>
+/data modify entity <target> <targetPath> set string entity <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> set string entity <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> set string storage <source>
+/data modify entity <target> <targetPath> set string storage <source> <sourcePath>
+/data modify entity <target> <targetPath> set string storage <source> <sourcePath> <start>
+/data modify entity <target> <targetPath> set string storage <source> <sourcePath> <start> <end>
+/data modify entity <target> <targetPath> set value <value>
+/data modify storage <target> <targetPath> append from block <sourcePos>
+/data modify storage <target> <targetPath> append from block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> append from entity <source>
+/data modify storage <target> <targetPath> append from entity <source> <sourcePath>
+/data modify storage <target> <targetPath> append from storage <source>
+/data modify storage <target> <targetPath> append from storage <source> <sourcePath>
+/data modify storage <target> <targetPath> append string block <sourcePos>
+/data modify storage <target> <targetPath> append string block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> append string block <sourcePos> <sourcePath> <start>
+/data modify storage <target> <targetPath> append string block <sourcePos> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> append string entity <source>
+/data modify storage <target> <targetPath> append string entity <source> <sourcePath>
+/data modify storage <target> <targetPath> append string entity <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> append string entity <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> append string storage <source>
+/data modify storage <target> <targetPath> append string storage <source> <sourcePath>
+/data modify storage <target> <targetPath> append string storage <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> append string storage <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> append value <value>
+/data modify storage <target> <targetPath> insert <index> from block <sourcePos>
+/data modify storage <target> <targetPath> insert <index> from block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> from entity <source>
+/data modify storage <target> <targetPath> insert <index> from entity <source> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> from storage <source>
+/data modify storage <target> <targetPath> insert <index> from storage <source> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> string block <sourcePos>
+/data modify storage <target> <targetPath> insert <index> string block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start>
+/data modify storage <target> <targetPath> insert <index> string block <sourcePos> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> insert <index> string entity <source>
+/data modify storage <target> <targetPath> insert <index> string entity <source> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> string entity <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> insert <index> string entity <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> insert <index> string storage <source>
+/data modify storage <target> <targetPath> insert <index> string storage <source> <sourcePath>
+/data modify storage <target> <targetPath> insert <index> string storage <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> insert <index> string storage <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> insert <index> value <value>
+/data modify storage <target> <targetPath> merge from block <sourcePos>
+/data modify storage <target> <targetPath> merge from block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> merge from entity <source>
+/data modify storage <target> <targetPath> merge from entity <source> <sourcePath>
+/data modify storage <target> <targetPath> merge from storage <source>
+/data modify storage <target> <targetPath> merge from storage <source> <sourcePath>
+/data modify storage <target> <targetPath> merge string block <sourcePos>
+/data modify storage <target> <targetPath> merge string block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> merge string block <sourcePos> <sourcePath> <start>
+/data modify storage <target> <targetPath> merge string block <sourcePos> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> merge string entity <source>
+/data modify storage <target> <targetPath> merge string entity <source> <sourcePath>
+/data modify storage <target> <targetPath> merge string entity <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> merge string entity <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> merge string storage <source>
+/data modify storage <target> <targetPath> merge string storage <source> <sourcePath>
+/data modify storage <target> <targetPath> merge string storage <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> merge string storage <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> merge value <value>
+/data modify storage <target> <targetPath> prepend from block <sourcePos>
+/data modify storage <target> <targetPath> prepend from block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> prepend from entity <source>
+/data modify storage <target> <targetPath> prepend from entity <source> <sourcePath>
+/data modify storage <target> <targetPath> prepend from storage <source>
+/data modify storage <target> <targetPath> prepend from storage <source> <sourcePath>
+/data modify storage <target> <targetPath> prepend string block <sourcePos>
+/data modify storage <target> <targetPath> prepend string block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> prepend string block <sourcePos> <sourcePath> <start>
+/data modify storage <target> <targetPath> prepend string block <sourcePos> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> prepend string entity <source>
+/data modify storage <target> <targetPath> prepend string entity <source> <sourcePath>
+/data modify storage <target> <targetPath> prepend string entity <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> prepend string entity <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> prepend string storage <source>
+/data modify storage <target> <targetPath> prepend string storage <source> <sourcePath>
+/data modify storage <target> <targetPath> prepend string storage <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> prepend string storage <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> prepend value <value>
+/data modify storage <target> <targetPath> set from block <sourcePos>
+/data modify storage <target> <targetPath> set from block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> set from entity <source>
+/data modify storage <target> <targetPath> set from entity <source> <sourcePath>
+/data modify storage <target> <targetPath> set from storage <source>
+/data modify storage <target> <targetPath> set from storage <source> <sourcePath>
+/data modify storage <target> <targetPath> set string block <sourcePos>
+/data modify storage <target> <targetPath> set string block <sourcePos> <sourcePath>
+/data modify storage <target> <targetPath> set string block <sourcePos> <sourcePath> <start>
+/data modify storage <target> <targetPath> set string block <sourcePos> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> set string entity <source>
+/data modify storage <target> <targetPath> set string entity <source> <sourcePath>
+/data modify storage <target> <targetPath> set string entity <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> set string entity <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> set string storage <source>
+/data modify storage <target> <targetPath> set string storage <source> <sourcePath>
+/data modify storage <target> <targetPath> set string storage <source> <sourcePath> <start>
+/data modify storage <target> <targetPath> set string storage <source> <sourcePath> <start> <end>
+/data modify storage <target> <targetPath> set value <value>
+/data remove block <targetPos> <path>
+/data remove entity <target> <path>
+/data remove storage <target> <path>
+/datapack disable <name>
+/datapack enable <name>
+/datapack enable <name> after <existing>
+/datapack enable <name> before <existing>
+/datapack enable <name> first
+/datapack enable <name> last
+/datapack list
+/datapack list available
+/datapack list enabled
+/debug function <name>
+/debug start
+/debug stop
+/defaultgamemode <gamemode>
+/delchunks
+/delchunks <args>
+/delhome <nombre>
+/delpwarp <nombre>
+/deltree
+/deltree <args>
+/deop <targets>
+/desc
+/desc <args>
+/descend
+/descend <args>
+/difficulty
+/difficulty easy
+/difficulty hard
+/difficulty normal
+/difficulty peaceful
+/ec
+/effect clear
+/effect clear <targets>
+/effect clear <targets> <effect>
+/effect give <targets> <effect>
+/effect give <targets> <effect> <seconds>
+/effect give <targets> <effect> <seconds> <amplifier>
+/effect give <targets> <effect> <seconds> <amplifier> <hideParticles>
+/effect give <targets> <effect> infinite
+/effect give <targets> <effect> infinite <amplifier>
+/effect give <targets> <effect> infinite <amplifier> <hideParticles>
+/enchant <targets> <enchantment>
+/enchant <targets> <enchantment> <level>
+/enderchest
+/evs
+/evs <slot>
+/ex
+/ex <args>
+/execute align <axes> -> execute
+/execute anchored <anchor> -> execute
+/execute as <targets> -> execute
+/execute at <targets> -> execute
+/execute facing <pos> -> execute
+/execute facing entity <targets> <anchor> -> execute
+/execute if biome <pos> <biome>
+/execute if biome <pos> <biome> -> execute
+/execute if block <pos> <block>
+/execute if block <pos> <block> -> execute
+/execute if blocks <start> <end> <destination> all
+/execute if blocks <start> <end> <destination> all -> execute
+/execute if blocks <start> <end> <destination> masked
+/execute if blocks <start> <end> <destination> masked -> execute
+/execute if data block <sourcePos> <path>
+/execute if data block <sourcePos> <path> -> execute
+/execute if data entity <source> <path>
+/execute if data entity <source> <path> -> execute
+/execute if data storage <source> <path>
+/execute if data storage <source> <path> -> execute
+/execute if dimension <dimension>
+/execute if dimension <dimension> -> execute
+/execute if entity <entities>
+/execute if entity <entities> -> execute
+/execute if function <name> -> execute
+/execute if items block <pos> <slots> <item_predicate>
+/execute if items block <pos> <slots> <item_predicate> -> execute
+/execute if items entity <entities> <slots> <item_predicate>
+/execute if items entity <entities> <slots> <item_predicate> -> execute
+/execute if loaded <pos>
+/execute if loaded <pos> -> execute
+/execute if predicate <predicate>
+/execute if predicate <predicate> -> execute
+/execute if score <target> <targetObjective> < <source> <sourceObjective>
+/execute if score <target> <targetObjective> < <source> <sourceObjective> -> execute
+/execute if score <target> <targetObjective> <= <source> <sourceObjective>
+/execute if score <target> <targetObjective> <= <source> <sourceObjective> -> execute
+/execute if score <target> <targetObjective> = <source> <sourceObjective>
+/execute if score <target> <targetObjective> = <source> <sourceObjective> -> execute
+/execute if score <target> <targetObjective> > <source> <sourceObjective>
+/execute if score <target> <targetObjective> > <source> <sourceObjective> -> execute
+/execute if score <target> <targetObjective> >= <source> <sourceObjective>
+/execute if score <target> <targetObjective> >= <source> <sourceObjective> -> execute
+/execute if score <target> <targetObjective> matches <range>
+/execute if score <target> <targetObjective> matches <range> -> execute
+/execute in <dimension> -> execute
+/execute on attacker -> execute
+/execute on controller -> execute
+/execute on leasher -> execute
+/execute on origin -> execute
+/execute on owner -> execute
+/execute on passengers -> execute
+/execute on target -> execute
+/execute on vehicle -> execute
+/execute positioned <pos> -> execute
+/execute positioned as <targets> -> execute
+/execute positioned over <heightmap> -> execute
+/execute rotated <rot> -> execute
+/execute rotated as <targets> -> execute
+/execute run ...
+/execute store result block <targetPos> <path> byte <scale> -> execute
+/execute store result block <targetPos> <path> double <scale> -> execute
+/execute store result block <targetPos> <path> float <scale> -> execute
+/execute store result block <targetPos> <path> int <scale> -> execute
+/execute store result block <targetPos> <path> long <scale> -> execute
+/execute store result block <targetPos> <path> short <scale> -> execute
+/execute store result bossbar <id> max -> execute
+/execute store result bossbar <id> value -> execute
+/execute store result entity <target> <path> byte <scale> -> execute
+/execute store result entity <target> <path> double <scale> -> execute
+/execute store result entity <target> <path> float <scale> -> execute
+/execute store result entity <target> <path> int <scale> -> execute
+/execute store result entity <target> <path> long <scale> -> execute
+/execute store result entity <target> <path> short <scale> -> execute
+/execute store result score <targets> <objective> -> execute
+/execute store result storage <target> <path> byte <scale> -> execute
+/execute store result storage <target> <path> double <scale> -> execute
+/execute store result storage <target> <path> float <scale> -> execute
+/execute store result storage <target> <path> int <scale> -> execute
+/execute store result storage <target> <path> long <scale> -> execute
+/execute store result storage <target> <path> short <scale> -> execute
+/execute store success block <targetPos> <path> byte <scale> -> execute
+/execute store success block <targetPos> <path> double <scale> -> execute
+/execute store success block <targetPos> <path> float <scale> -> execute
+/execute store success block <targetPos> <path> int <scale> -> execute
+/execute store success block <targetPos> <path> long <scale> -> execute
+/execute store success block <targetPos> <path> short <scale> -> execute
+/execute store success bossbar <id> max -> execute
+/execute store success bossbar <id> value -> execute
+/execute store success entity <target> <path> byte <scale> -> execute
+/execute store success entity <target> <path> double <scale> -> execute
+/execute store success entity <target> <path> float <scale> -> execute
+/execute store success entity <target> <path> int <scale> -> execute
+/execute store success entity <target> <path> long <scale> -> execute
+/execute store success entity <target> <path> short <scale> -> execute
+/execute store success score <targets> <objective> -> execute
+/execute store success storage <target> <path> byte <scale> -> execute
+/execute store success storage <target> <path> double <scale> -> execute
+/execute store success storage <target> <path> float <scale> -> execute
+/execute store success storage <target> <path> int <scale> -> execute
+/execute store success storage <target> <path> long <scale> -> execute
+/execute store success storage <target> <path> short <scale> -> execute
+/execute summon <entity> -> execute
+/execute unless biome <pos> <biome>
+/execute unless biome <pos> <biome> -> execute
+/execute unless block <pos> <block>
+/execute unless block <pos> <block> -> execute
+/execute unless blocks <start> <end> <destination> all
+/execute unless blocks <start> <end> <destination> all -> execute
+/execute unless blocks <start> <end> <destination> masked
+/execute unless blocks <start> <end> <destination> masked -> execute
+/execute unless data block <sourcePos> <path>
+/execute unless data block <sourcePos> <path> -> execute
+/execute unless data entity <source> <path>
+/execute unless data entity <source> <path> -> execute
+/execute unless data storage <source> <path>
+/execute unless data storage <source> <path> -> execute
+/execute unless dimension <dimension>
+/execute unless dimension <dimension> -> execute
+/execute unless entity <entities>
+/execute unless entity <entities> -> execute
+/execute unless function <name> -> execute
+/execute unless items block <pos> <slots> <item_predicate>
+/execute unless items block <pos> <slots> <item_predicate> -> execute
+/execute unless items entity <entities> <slots> <item_predicate>
+/execute unless items entity <entities> <slots> <item_predicate> -> execute
+/execute unless loaded <pos>
+/execute unless loaded <pos> -> execute
+/execute unless predicate <predicate>
+/execute unless predicate <predicate> -> execute
+/execute unless score <target> <targetObjective> < <source> <sourceObjective>
+/execute unless score <target> <targetObjective> < <source> <sourceObjective> -> execute
+/execute unless score <target> <targetObjective> <= <source> <sourceObjective>
+/execute unless score <target> <targetObjective> <= <source> <sourceObjective> -> execute
+/execute unless score <target> <targetObjective> = <source> <sourceObjective>
+/execute unless score <target> <targetObjective> = <source> <sourceObjective> -> execute
+/execute unless score <target> <targetObjective> > <source> <sourceObjective>
+/execute unless score <target> <targetObjective> > <source> <sourceObjective> -> execute
+/execute unless score <target> <targetObjective> >= <source> <sourceObjective>
+/execute unless score <target> <targetObjective> >= <source> <sourceObjective> -> execute
+/execute unless score <target> <targetObjective> matches <range>
+/execute unless score <target> <targetObjective> matches <range> -> execute
+/experience add <targets> <amount>
+/experience add <targets> <amount> levels
+/experience add <targets> <amount> points
+/experience query <targets> levels
+/experience query <targets> points
+/experience set <targets> <amount>
+/experience set <targets> <amount> levels
+/experience set <targets> <amount> points
+/ext
+/ext <args>
+/extinguish
+/extinguish <args>
+/farwand
+/farwand <args>
+/fill <from> <to> <block>
+/fill <from> <to> <block> destroy
+/fill <from> <to> <block> hollow
+/fill <from> <to> <block> keep
+/fill <from> <to> <block> outline
+/fill <from> <to> <block> replace
+/fill <from> <to> <block> replace <filter>
+/fillbiome <from> <to> <biome>
+/fillbiome <from> <to> <biome> replace <filter>
+/fixlava
+/fixlava <args>
+/fixwater
+/fixwater <args>
+/flood
+/flood <args>
+/floodfill
+/floodfill <args>
+/forceload add <from>
+/forceload add <from> <to>
+/forceload query
+/forceload query <pos>
+/forceload remove <from>
+/forceload remove <from> <to>
+/forceload remove all
+/forcespawn
+/forcespawn <amount>
+/forestgen
+/forestgen <args>
+/freezepokemon
+/freezepokemon <seconds>
+/friendship <slot>
+/function <name>
+/function <name> <arguments>
+/function <name> with block <sourcePos>
+/function <name> with block <sourcePos> <path>
+/function <name> with entity <source>
+/function <name> with entity <source> <path>
+/function <name> with storage <source>
+/function <name> with storage <source> <path>
+/gamemode <gamemode>
+/gamemode <gamemode> <target>
+/gamerule accessories.keepAccessoryInventory
+/gamerule accessories.keepAccessoryInventory <value>
+/gamerule announceAdvancements
+/gamerule announceAdvancements <value>
+/gamerule axiomDoBlockDrops
+/gamerule axiomDoBlockDrops <value>
+/gamerule axiomDoBlockGravity
+/gamerule axiomDoBlockGravity <value>
+/gamerule axiomDoTrampleFarmland
+/gamerule axiomDoTrampleFarmland <value>
+/gamerule axiomPlayerInvulnerability
+/gamerule axiomPlayerInvulnerability <value>
+/gamerule battleInvulnerability
+/gamerule battleInvulnerability <value>
+/gamerule blockExplosionDropDecay
+/gamerule blockExplosionDropDecay <value>
+/gamerule commandBlockOutput
+/gamerule commandBlockOutput <value>
+/gamerule commandModificationBlockLimit
+/gamerule commandModificationBlockLimit <value>
+/gamerule consumeMoveItemOnUse
+/gamerule consumeMoveItemOnUse <value>
+/gamerule disableElytraMovementCheck
+/gamerule disableElytraMovementCheck <value>
+/gamerule disableRaids
+/gamerule disableRaids <value>
+/gamerule doDaylightCycle
+/gamerule doDaylightCycle <value>
+/gamerule doEntityDrops
+/gamerule doEntityDrops <value>
+/gamerule doFireTick
+/gamerule doFireTick <value>
+/gamerule doImmediateRespawn
+/gamerule doImmediateRespawn <value>
+/gamerule doInsomnia
+/gamerule doInsomnia <value>
+/gamerule doLimitedCrafting
+/gamerule doLimitedCrafting <value>
+/gamerule doMobLoot
+/gamerule doMobLoot <value>
+/gamerule doMobSpawning
+/gamerule doMobSpawning <value>
+/gamerule doPatrolSpawning
+/gamerule doPatrolSpawning <value>
+/gamerule doPokemonLoot
+/gamerule doPokemonLoot <value>
+/gamerule doPokemonSpawning
+/gamerule doPokemonSpawning <value>
+/gamerule doShinyStarters
+/gamerule doShinyStarters <value>
+/gamerule doTileDrops
+/gamerule doTileDrops <value>
+/gamerule doTraderSpawning
+/gamerule doTraderSpawning <value>
+/gamerule doVinesSpread
+/gamerule doVinesSpread <value>
+/gamerule doWardenSpawning
+/gamerule doWardenSpawning <value>
+/gamerule doWeatherCycle
+/gamerule doWeatherCycle <value>
+/gamerule drowningDamage
+/gamerule drowningDamage <value>
+/gamerule enderPearlsVanishOnDeath
+/gamerule enderPearlsVanishOnDeath <value>
+/gamerule fallDamage
+/gamerule fallDamage <value>
+/gamerule fireDamage
+/gamerule fireDamage <value>
+/gamerule forgiveDeadPlayers
+/gamerule forgiveDeadPlayers <value>
+/gamerule freezeDamage
+/gamerule freezeDamage <value>
+/gamerule globalSoundEvents
+/gamerule globalSoundEvents <value>
+/gamerule healersHealPC
+/gamerule healersHealPC <value>
+/gamerule keepInventory
+/gamerule keepInventory <value>
+/gamerule lavaSourceConversion
+/gamerule lavaSourceConversion <value>
+/gamerule logAdminCommands
+/gamerule logAdminCommands <value>
+/gamerule maxCommandChainLength
+/gamerule maxCommandChainLength <value>
+/gamerule maxCommandForkCount
+/gamerule maxCommandForkCount <value>
+/gamerule maxEntityCramming
+/gamerule maxEntityCramming <value>
+/gamerule mobExplosionDropDecay
+/gamerule mobExplosionDropDecay <value>
+/gamerule mobGriefing
+/gamerule mobGriefing <value>
+/gamerule mobTargetInBattle
+/gamerule mobTargetInBattle <value>
+/gamerule naturalRegeneration
+/gamerule naturalRegeneration <value>
+/gamerule playersNetherPortalCreativeDelay
+/gamerule playersNetherPortalCreativeDelay <value>
+/gamerule playersNetherPortalDefaultDelay
+/gamerule playersNetherPortalDefaultDelay <value>
+/gamerule playersSleepingPercentage
+/gamerule playersSleepingPercentage <value>
+/gamerule projectilesCanBreakBlocks
+/gamerule projectilesCanBreakBlocks <value>
+/gamerule randomTickSpeed
+/gamerule randomTickSpeed <value>
+/gamerule reducedDebugInfo
+/gamerule reducedDebugInfo <value>
+/gamerule sendCommandFeedback
+/gamerule sendCommandFeedback <value>
+/gamerule showDeathMessages
+/gamerule showDeathMessages <value>
+/gamerule snowAccumulationHeight
+/gamerule snowAccumulationHeight <value>
+/gamerule spawnChunkRadius
+/gamerule spawnChunkRadius <value>
+/gamerule spawnRadius
+/gamerule spawnRadius <value>
+/gamerule spectatorsGenerateChunks
+/gamerule spectatorsGenerateChunks <value>
+/gamerule tntExplosionDropDecay
+/gamerule tntExplosionDropDecay <value>
+/gamerule universalAnger
+/gamerule universalAnger <value>
+/gamerule waterSourceConversion
+/gamerule waterSourceConversion <value>
+/getnbt
+/give <targets> <item>
+/give <targets> <item> <count>
+/giveallmarks <player> <slot>
+/giveallpokemon
+/giveallpokemon <min>
+/giveallpokemon <min> <max>
+/givemark <player> <slot> <mark>
+/givepokemon <properties>
+/givepokemonegg <player> <properties>
+/givepokemonother <player> <properties>
+/givetm <move>
+/givetm <move> <player>
+/givetm <move> <player> <quantity>
+/givetm <move> <quantity>
+/gmask
+/gmask <args>
+/green
+/green <args>
+/grindstone
+/hatchpokemonegg <player>
+/heal
+/healpokemon
+/healpokemon <player>
+/held_item <target> <slot> <item>
+/help
+/help <command>
+/home
+/home <nombre>
+/homes
+/image2map create <mode> <path>
+/image2map create <width> <height> <mode> <path>
+/image2map preview <path>
+/info
+/info <args>
+/islasnaranja
+/item modify block <pos> <slot> <modifier>
+/item modify entity <targets> <slot> <modifier>
+/item replace block <pos> <slot> from block <source> <sourceSlot>
+/item replace block <pos> <slot> from block <source> <sourceSlot> <modifier>
+/item replace block <pos> <slot> from entity <source> <sourceSlot>
+/item replace block <pos> <slot> from entity <source> <sourceSlot> <modifier>
+/item replace block <pos> <slot> with <item>
+/item replace block <pos> <slot> with <item> <count>
+/item replace entity <targets> <slot> from block <source> <sourceSlot>
+/item replace entity <targets> <slot> from block <source> <sourceSlot> <modifier>
+/item replace entity <targets> <slot> from entity <source> <sourceSlot>
+/item replace entity <targets> <slot> from entity <source> <sourceSlot> <modifier>
+/item replace entity <targets> <slot> with <item>
+/item replace entity <targets> <slot> with <item> <count>
+/ivs
+/ivs <slot>
+/j
+/j <args>
+/jade hide <targets>
+/jade show <targets>
+/jfr start
+/jfr stop
+/jumpto
+/jumpto <args>
+/kick <targets>
+/kick <targets> <reason>
+/kill
+/kill <targets>
+/kits rotacion reset
+/kits rotacion reset <dias>
+/l l -> login
+/letmedespawn add <mobName>
+/letmedespawn addPersistenceEnabler <itemName>
+/letmedespawn remove <mobName>
+/letmedespawn removePersistenceEnabler <itemName>
+/levelup <player> <slot>
+/levelup <slot>
+/list
+/list uuids
+/listchunks
+/listchunks <args>
+/locate biome <biome>
+/locate poi <poi>
+/locate structure <structure>
+/login
+/login <password>
+/logout
+/loot give <players> fish <loot_table> <pos>
+/loot give <players> fish <loot_table> <pos> <tool>
+/loot give <players> fish <loot_table> <pos> mainhand
+/loot give <players> fish <loot_table> <pos> offhand
+/loot give <players> kill <target>
+/loot give <players> loot <loot_table>
+/loot give <players> mine <pos>
+/loot give <players> mine <pos> <tool>
+/loot give <players> mine <pos> mainhand
+/loot give <players> mine <pos> offhand
+/loot insert <targetPos> fish <loot_table> <pos>
+/loot insert <targetPos> fish <loot_table> <pos> <tool>
+/loot insert <targetPos> fish <loot_table> <pos> mainhand
+/loot insert <targetPos> fish <loot_table> <pos> offhand
+/loot insert <targetPos> kill <target>
+/loot insert <targetPos> loot <loot_table>
+/loot insert <targetPos> mine <pos>
+/loot insert <targetPos> mine <pos> <tool>
+/loot insert <targetPos> mine <pos> mainhand
+/loot insert <targetPos> mine <pos> offhand
+/loot replace block <targetPos> <slot> <count> fish <loot_table> <pos>
+/loot replace block <targetPos> <slot> <count> fish <loot_table> <pos> <tool>
+/loot replace block <targetPos> <slot> <count> fish <loot_table> <pos> mainhand
+/loot replace block <targetPos> <slot> <count> fish <loot_table> <pos> offhand
+/loot replace block <targetPos> <slot> <count> kill <target>
+/loot replace block <targetPos> <slot> <count> loot <loot_table>
+/loot replace block <targetPos> <slot> <count> mine <pos>
+/loot replace block <targetPos> <slot> <count> mine <pos> <tool>
+/loot replace block <targetPos> <slot> <count> mine <pos> mainhand
+/loot replace block <targetPos> <slot> <count> mine <pos> offhand
+/loot replace block <targetPos> <slot> fish <loot_table> <pos>
+/loot replace block <targetPos> <slot> fish <loot_table> <pos> <tool>
+/loot replace block <targetPos> <slot> fish <loot_table> <pos> mainhand
+/loot replace block <targetPos> <slot> fish <loot_table> <pos> offhand
+/loot replace block <targetPos> <slot> kill <target>
+/loot replace block <targetPos> <slot> loot <loot_table>
+/loot replace block <targetPos> <slot> mine <pos>
+/loot replace block <targetPos> <slot> mine <pos> <tool>
+/loot replace block <targetPos> <slot> mine <pos> mainhand
+/loot replace block <targetPos> <slot> mine <pos> offhand
+/loot replace entity <entities> <slot> <count> fish <loot_table> <pos>
+/loot replace entity <entities> <slot> <count> fish <loot_table> <pos> <tool>
+/loot replace entity <entities> <slot> <count> fish <loot_table> <pos> mainhand
+/loot replace entity <entities> <slot> <count> fish <loot_table> <pos> offhand
+/loot replace entity <entities> <slot> <count> kill <target>
+/loot replace entity <entities> <slot> <count> loot <loot_table>
+/loot replace entity <entities> <slot> <count> mine <pos>
+/loot replace entity <entities> <slot> <count> mine <pos> <tool>
+/loot replace entity <entities> <slot> <count> mine <pos> mainhand
+/loot replace entity <entities> <slot> <count> mine <pos> offhand
+/loot replace entity <entities> <slot> fish <loot_table> <pos>
+/loot replace entity <entities> <slot> fish <loot_table> <pos> <tool>
+/loot replace entity <entities> <slot> fish <loot_table> <pos> mainhand
+/loot replace entity <entities> <slot> fish <loot_table> <pos> offhand
+/loot replace entity <entities> <slot> kill <target>
+/loot replace entity <entities> <slot> loot <loot_table>
+/loot replace entity <entities> <slot> mine <pos>
+/loot replace entity <entities> <slot> mine <pos> <tool>
+/loot replace entity <entities> <slot> mine <pos> mainhand
+/loot replace entity <entities> <slot> mine <pos> offhand
+/loot spawn <targetPos> fish <loot_table> <pos>
+/loot spawn <targetPos> fish <loot_table> <pos> <tool>
+/loot spawn <targetPos> fish <loot_table> <pos> mainhand
+/loot spawn <targetPos> fish <loot_table> <pos> offhand
+/loot spawn <targetPos> kill <target>
+/loot spawn <targetPos> loot <loot_table>
+/loot spawn <targetPos> mine <pos>
+/loot spawn <targetPos> mine <pos> <tool>
+/loot spawn <targetPos> mine <pos> mainhand
+/loot spawn <targetPos> mine <pos> offhand
+/lrbuild
+/lrbuild <args>
+/lumyreward <player> <champion>
+/luna
+/luna afk
+/luna afk probar
+/luna auditar
+/luna autotest
+/luna comercio
+/luna constructor <clave>
+/luna cosmeticos
+/luna cosmeticos huerfanos
+/luna dar <moneda> <cantidad>
+/luna darmedalla <cual>
+/luna darmedalla <cual> <jugador>
+/luna darmedallas
+/luna darmedallas <jugador>
+/luna decorar <especie> <postura>
+/luna decorar <especie> <postura> <donde>
+/luna decorar <especie> <postura> <donde> <grados>
+/luna decorar quitar
+/luna decorar quitar <radio>
+/luna economia
+/luna economia <horas>
+/luna enfermera npc
+/luna estado
+/luna gimnasio
+/luna gimnasio <cual>
+/luna gimnasio <cual> comprobar
+/luna gimnasio <cual> equipo
+/luna gimnasio <cual> liberar
+/luna gimnasio <cual> lider
+/luna gimnasio <cual> limpiarranuras
+/luna gimnasio <cual> medir
+/luna gimnasio <cual> mirar <grados>
+/luna gimnasio <cual> nomirar
+/luna gimnasio <cual> plataforma
+/luna gimnasio <cual> posiciones
+/luna gimnasio <cual> purgar
+/luna gimnasio <cual> testadaptador
+/luna gimnasio ciudadela
+/luna gimnasio ciudadela <grados>
+/luna gimnasio ciudadela quitar
+/luna gimnasio liberar
+/luna gimnasio plataformas
+/luna gimnasio reclonar
+/luna inicial
+/luna inicial abrir <jugador>
+/luna inicial dar <jugador> <especie>
+/luna inicial oak
+/luna inicial oak quitar
+/luna inicial reiniciar
+/luna inicial reiniciar <jugador>
+/luna ir <destino>
+/luna kits rotacion reset
+/luna kits rotacion reset <dias>
+/luna lunita debug
+/luna lunita goto
+/luna lunita respawn
+/luna lunita status
+/luna lunita tp
+/luna naranja plataforma
+/luna naranja plataforma <radio>
+/luna paradas
+/luna paradas etiquetar
+/luna paradas quitar
+/luna pase
+/luna pase nivel <jugador> <n>
+/luna pase nueva_temporada
+/luna pase nueva_temporada <dias>
+/luna pase reiniciar <jugador>
+/luna pase via_luna <jugador>
+/luna pase xp <jugador> <cantidad>
+/luna probar <gimnasio>
+/luna puerta
+/luna puerta activar
+/luna puerta desactivar
+/luna puerta npc
+/luna puerta npc <especie>
+/luna puerta npc quitar
+/luna puerta reiniciar <jugador>
+/luna quienpokemon estado
+/luna quienpokemon iniciar
+/luna rango
+/luna rango <jugador> <rango>
+/luna reiniciarinicial
+/luna reiniciarmedalla <cual>
+/luna reiniciarmedalla <cual> <jugador>
+/luna reiniciarmision <id>
+/luna rotarcazas
+/luna rotom reset
+/luna rotom spawn
+/luna rotom testtorre
+/luna rotom testvideo
+/luna rotom tp
+/luna rotom tptorre
+/luna saldo
+/luna santuario aprobar <foto>
+/luna santuario eliminar <nicho>
+/luna santuario info <nicho>
+/luna santuario listar
+/luna santuario nicho
+/luna santuario nicho aqui
+/luna santuario nicho aqui <nombre>
+/luna santuario nicho borrar <nicho>
+/luna santuario nicho ir <nicho>
+/luna santuario nicho proyector <nicho>
+/luna santuario nicho recolocar
+/luna santuario nicho renombrar <nicho> <nombre>
+/luna santuario nicho ver
+/luna santuario npc
+/luna santuario npc quitar
+/luna santuario pendientes
+/luna santuario recargar
+/luna santuario rechazar <foto>
+/luna tebex chargeback <transaction> <uuid> <packageId>
+/luna tebex fulfill <transaction> <uuid> <packageId> <purchaseQuantity>
+/luna tebex fulfill <transaction> <uuid> <packageId> <purchaseQuantity> <username>
+/luna tebex refund <transaction> <uuid> <packageId>
+/luna testrango <rango>
+/luna torre_batalla arena
+/luna torre_batalla dar_ronda <jugador> <modo> <ronda>
+/luna torre_batalla holograma 1vs1
+/luna torre_batalla holograma 2vs2
+/luna torre_batalla holograma actualizar
+/luna torre_batalla holograma aleatorio
+/luna torre_batalla holograma quitar
+/luna torre_batalla npc
+/luna torre_batalla npc quitar
+/luna torre_batalla nueva_temporada
+/luna torre_batalla tp
+/luna traje <jugador>
+/luna traje dar <jugador> <traje>
+/luna traje quitar <jugador> <traje>
+/luna via <via> <xp>
+/luna videooak
+/lunita dar <jugador>
+/lunita dar <jugador> <nivel>
+/lunita verificar
+/mask
+/mask <args>
+/material
+/material <args>
+/me <action>
+/midnightconfig cobblemon-cards allowFakemonCards
+/midnightconfig cobblemon-cards allowFakemonCards <value>
+/midnightconfig cobblemon-cards armorStatMultiplier
+/midnightconfig cobblemon-cards armorStatMultiplier <value>
+/midnightconfig cobblemon-cards attackDamageStatMultiplier
+/midnightconfig cobblemon-cards attackDamageStatMultiplier <value>
+/midnightconfig cobblemon-cards attackSpeedStatMultiplier
+/midnightconfig cobblemon-cards attackSpeedStatMultiplier <value>
+/midnightconfig cobblemon-cards boosterChestSpawnChance
+/midnightconfig cobblemon-cards boosterChestSpawnChance <value>
+/midnightconfig cobblemon-cards cardDropChance
+/midnightconfig cobblemon-cards cardDropChance <value>
+/midnightconfig cobblemon-cards cardDropChanceStatMultiplier
+/midnightconfig cobblemon-cards cardDropChanceStatMultiplier <value>
+/midnightconfig cobblemon-cards diamondBinderPages
+/midnightconfig cobblemon-cards diamondBinderPages <value>
+/midnightconfig cobblemon-cards displayPercentStatOnCards
+/midnightconfig cobblemon-cards displayPercentStatOnCards <value>
+/midnightconfig cobblemon-cards enableBoosterChestSpawn
+/midnightconfig cobblemon-cards enableBoosterChestSpawn <value>
+/midnightconfig cobblemon-cards enableCardStats
+/midnightconfig cobblemon-cards enableCardStats <value>
+/midnightconfig cobblemon-cards enableDiamondBinder
+/midnightconfig cobblemon-cards enableDiamondBinder <value>
+/midnightconfig cobblemon-cards enableGoldBinder
+/midnightconfig cobblemon-cards enableGoldBinder <value>
+/midnightconfig cobblemon-cards enableIronBinder
+/midnightconfig cobblemon-cards enableIronBinder <value>
+/midnightconfig cobblemon-cards enableLeatherBinder
+/midnightconfig cobblemon-cards enableLeatherBinder <value>
+/midnightconfig cobblemon-cards enableMasterAlbum
+/midnightconfig cobblemon-cards enableMasterAlbum <value>
+/midnightconfig cobblemon-cards enableNetheriteBinder
+/midnightconfig cobblemon-cards enableNetheriteBinder <value>
+/midnightconfig cobblemon-cards enablePlayerStats
+/midnightconfig cobblemon-cards enablePlayerStats <value>
+/midnightconfig cobblemon-cards enableSpawnBoostStats
+/midnightconfig cobblemon-cards enableSpawnBoostStats <value>
+/midnightconfig cobblemon-cards globalStatMultiplier
+/midnightconfig cobblemon-cards globalStatMultiplier <value>
+/midnightconfig cobblemon-cards godPackTicketChance
+/midnightconfig cobblemon-cards godPackTicketChance <value>
+/midnightconfig cobblemon-cards goldBinderPages
+/midnightconfig cobblemon-cards goldBinderPages <value>
+/midnightconfig cobblemon-cards gradingStationDustCost
+/midnightconfig cobblemon-cards gradingStationDustCost <value>
+/midnightconfig cobblemon-cards gradingStationProcessTime
+/midnightconfig cobblemon-cards gradingStationProcessTime <value>
+/midnightconfig cobblemon-cards ironBinderPages
+/midnightconfig cobblemon-cards ironBinderPages <value>
+/midnightconfig cobblemon-cards leatherBinderPages
+/midnightconfig cobblemon-cards leatherBinderPages <value>
+/midnightconfig cobblemon-cards luckStatMultiplier
+/midnightconfig cobblemon-cards luckStatMultiplier <value>
+/midnightconfig cobblemon-cards lunaGoldGodPackChance
+/midnightconfig cobblemon-cards lunaGoldGodPackChance <value>
+/midnightconfig cobblemon-cards masterAlbumPages
+/midnightconfig cobblemon-cards masterAlbumPages <value>
+/midnightconfig cobblemon-cards maxHealthStatMultiplier
+/midnightconfig cobblemon-cards maxHealthStatMultiplier <value>
+/midnightconfig cobblemon-cards maxNationalDex
+/midnightconfig cobblemon-cards maxNationalDex <value>
+/midnightconfig cobblemon-cards maxSpawnBoostMultiplier
+/midnightconfig cobblemon-cards maxSpawnBoostMultiplier <value>
+/midnightconfig cobblemon-cards miningSpeedStatMultiplier
+/midnightconfig cobblemon-cards miningSpeedStatMultiplier <value>
+/midnightconfig cobblemon-cards movementSpeedStatMultiplier
+/midnightconfig cobblemon-cards movementSpeedStatMultiplier <value>
+/midnightconfig cobblemon-cards netheriteBinderPages
+/midnightconfig cobblemon-cards netheriteBinderPages <value>
+/midnightconfig cobblemon-cards playerStatMultiplier
+/midnightconfig cobblemon-cards playerStatMultiplier <value>
+/midnightconfig cobblemon-cards recyclerProcessTime
+/midnightconfig cobblemon-cards recyclerProcessTime <value>
+/midnightconfig cobblemon-cards restorerBaseCost
+/midnightconfig cobblemon-cards restorerBaseCost <value>
+/midnightconfig cobblemon-cards spawnBoostStatMultiplier
+/midnightconfig cobblemon-cards spawnBoostStatMultiplier <value>
+/msd apply <type> <resource_id>
+/msd hard_reset
+/msd reload
+/msg <targets> <message>
+/naranja
+/navwand
+/navwand <args>
+/none
+/none <args>
+/npcdelete
+/npcdelete <target>
+/npcedit
+/npcspawn <class>
+/npcspawn <class> <level>
+/npcspawnat <pos> <class>
+/npcspawnat <pos> <class> <level>
+/op <targets>
+/opendialogue <dialogue> <player>
+/openstarterscreen <player>
+/pardon <targets>
+/pardon-ip <target>
+/particle <name>
+/particle <name> <pos>
+/particle <name> <pos> <delta> <speed> <count>
+/particle <name> <pos> <delta> <speed> <count> force
+/particle <name> <pos> <delta> <speed> <count> force <viewers>
+/particle <name> <pos> <delta> <speed> <count> normal
+/particle <name> <pos> <delta> <speed> <count> normal <viewers>
+/pc
+/pc <box>
+/pcsearch <properties>
+/pcsearch other <other> <properties>
+/pctake <player> <box> <slot>
+/perf start
+/perf stop
+/pickaxe
+/pickaxe <args>
+/place feature <feature>
+/place feature <feature> <pos>
+/place jigsaw <pool> <target> <max_depth>
+/place jigsaw <pool> <target> <max_depth> <position>
+/place structure <structure>
+/place structure <structure> <pos>
+/place template <template>
+/place template <template> <pos>
+/place template <template> <pos> <rotation>
+/place template <template> <pos> <rotation> <mirror>
+/place template <template> <pos> <rotation> <mirror> <integrity>
+/place template <template> <pos> <rotation> <mirror> <integrity> <seed>
+/placement
+/placement <args>
+/playsound <sound>
+/playsound <sound> ambient
+/playsound <sound> ambient <targets>
+/playsound <sound> ambient <targets> <pos>
+/playsound <sound> ambient <targets> <pos> <volume>
+/playsound <sound> ambient <targets> <pos> <volume> <pitch>
+/playsound <sound> ambient <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> block
+/playsound <sound> block <targets>
+/playsound <sound> block <targets> <pos>
+/playsound <sound> block <targets> <pos> <volume>
+/playsound <sound> block <targets> <pos> <volume> <pitch>
+/playsound <sound> block <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> hostile
+/playsound <sound> hostile <targets>
+/playsound <sound> hostile <targets> <pos>
+/playsound <sound> hostile <targets> <pos> <volume>
+/playsound <sound> hostile <targets> <pos> <volume> <pitch>
+/playsound <sound> hostile <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> master
+/playsound <sound> master <targets>
+/playsound <sound> master <targets> <pos>
+/playsound <sound> master <targets> <pos> <volume>
+/playsound <sound> master <targets> <pos> <volume> <pitch>
+/playsound <sound> master <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> music
+/playsound <sound> music <targets>
+/playsound <sound> music <targets> <pos>
+/playsound <sound> music <targets> <pos> <volume>
+/playsound <sound> music <targets> <pos> <volume> <pitch>
+/playsound <sound> music <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> neutral
+/playsound <sound> neutral <targets>
+/playsound <sound> neutral <targets> <pos>
+/playsound <sound> neutral <targets> <pos> <volume>
+/playsound <sound> neutral <targets> <pos> <volume> <pitch>
+/playsound <sound> neutral <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> player
+/playsound <sound> player <targets>
+/playsound <sound> player <targets> <pos>
+/playsound <sound> player <targets> <pos> <volume>
+/playsound <sound> player <targets> <pos> <volume> <pitch>
+/playsound <sound> player <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> record
+/playsound <sound> record <targets>
+/playsound <sound> record <targets> <pos>
+/playsound <sound> record <targets> <pos> <volume>
+/playsound <sound> record <targets> <pos> <volume> <pitch>
+/playsound <sound> record <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> voice
+/playsound <sound> voice <targets>
+/playsound <sound> voice <targets> <pos>
+/playsound <sound> voice <targets> <pos> <volume>
+/playsound <sound> voice <targets> <pos> <volume> <pitch>
+/playsound <sound> voice <targets> <pos> <volume> <pitch> <minVolume>
+/playsound <sound> weather
+/playsound <sound> weather <targets>
+/playsound <sound> weather <targets> <pos>
+/playsound <sound> weather <targets> <pos> <volume>
+/playsound <sound> weather <targets> <pos> <volume> <pitch>
+/playsound <sound> weather <targets> <pos> <volume> <pitch> <minVolume>
+/pokebox <player> <slot>
+/pokebox <player> <slot> <box>
+/pokeboxall <player>
+/pokeboxall <player> <box>
+/pokedex grant <player> all <dex>
+/pokedex grant <player> only <species> <form>
+/pokedex printcalculations <player>
+/pokedex printcalculations <player> <dex>
+/pokedex printcalculations <player> all
+/pokedex revoke <player> all <dex>
+/pokedex revoke <player> only <species> <form>
+/pokeedit <slot> <properties>
+/pokeeditother <player> <slot> <properties>
+/pokeevs
+/pokeevs <slot>
+/pokegive <properties>
+/pokegiveother <player> <properties>
+/pokeheal
+/pokeheal <player>
+/pokeivs
+/pokeivs <slot>
+/pokemonedit <slot> <properties>
+/pokemoneditother <player> <slot> <properties>
+/pokemonrestart
+/pokemonrestart <reset_starters>
+/pokemonrestartother <player>
+/pokemonrestartother <player> <reset_starters>
+/pokenav catalogue <player> grant all
+/pokenav catalogue <player> grant id <id>
+/pokenav catalogue <player> grant species <species>
+/pokenav catalogue <player> list
+/pokenav catalogue <player> revoke all
+/pokenav catalogue <player> revoke id <id>
+/pokenav catalogue <player> revoke species <species>
+/pokerestart
+/pokerestart <reset_starters>
+/pokerestartother <player>
+/pokerestartother <player> <reset_starters>
+/pokespawn <properties>
+/pokespawnat <pos> <properties>
+/pradmin commands
+/pradmin editmode off
+/pradmin editmode on
+/pradmin selftest
+/pradmin status
+/pumpkins
+/pumpkins <args>
+/pwarp
+/pwarp <creador> <nombre>
+/pwarps
+/querylearnset <player> <slot> <move>
+/random reset *
+/random reset * <seed>
+/random reset * <seed> <includeWorldSeed>
+/random reset * <seed> <includeWorldSeed> <includeSequenceId>
+/random reset <sequence>
+/random reset <sequence> <seed>
+/random reset <sequence> <seed> <includeWorldSeed>
+/random reset <sequence> <seed> <includeWorldSeed> <includeSequenceId>
+/random roll <range>
+/random roll <range> <sequence>
+/random value <range>
+/random value <range> <sequence>
+/range
+/range <args>
+/rctmod player add progress <targets> after <trainerId>
+/rctmod player add progress <targets> before <trainerId>
+/rctmod player add progress after <trainerId>
+/rctmod player add progress before <trainerId>
+/rctmod player get defeats <trainerId>
+/rctmod player get defeats <trainerId> <target>
+/rctmod player get level_cap
+/rctmod player get level_cap <target>
+/rctmod player get luck
+/rctmod player get luck <target>
+/rctmod player get progress
+/rctmod player get progress <target>
+/rctmod player get progress <target> graph
+/rctmod player get progress <target> graph <graph_flags>
+/rctmod player get progress graph
+/rctmod player get progress graph <graph_flags>
+/rctmod player get series
+/rctmod player get series <target>
+/rctmod player get series <target> completed
+/rctmod player get series completed
+/rctmod player get type_defeats <type>
+/rctmod player get type_defeats <type> <target>
+/rctmod player set defeats <trainerId> <targets> <value>
+/rctmod player set defeats <trainerId> <value>
+/rctmod player set progress <targets> after <trainerId>
+/rctmod player set progress <targets> before <trainerId>
+/rctmod player set progress after <trainerId>
+/rctmod player set progress before <trainerId>
+/rctmod player set series <seriesId>
+/rctmod player set series <seriesId> <targets>
+/rctmod player set series <seriesId> <targets> completed <count>
+/rctmod player set series <seriesId> completed <count>
+/rctmod trainer get max_trainer_defeats <trainer>
+/rctmod trainer get max_trainer_wins <trainer>
+/rctmod trainer get required_defeats <trainer>
+/rctmod trainer get required_level_cap <trainer> <player>
+/rctmod trainer get required_series <trainer>
+/rctmod trainer get reward_level_cap <trainer> <player>
+/rctmod trainer get type <trainer>
+/rctmod trainer spawn_for
+/rctmod trainer spawn_for <target>
+/rctmod trainer summon <trainer>
+/rctmod trainer summon <trainer> <at>
+/rctmod trainer summon <trainer> <at> <nbt>
+/rctmod trainer summon <trainer> <nbt>
+/rctmod trainer summon_persistent <trainer>
+/rctmod trainer summon_persistent <trainer> <at>
+/rctmod trainer summon_persistent <trainer> <at> <nbt>
+/rctmod trainer summon_persistent <trainer> <nbt>
+/rctmod trainer unregister_persistent <mobUUID>
+/recipe give <targets> *
+/recipe give <targets> <recipe>
+/recipe take <targets> *
+/recipe take <targets> <recipe>
+/redo
+/redo <args>
+/reg reg -> register
+/register
+/register <password> <passwordAgain>
+/reload
+/reloadshowdown
+/rem
+/rem <args>
+/rement
+/rement <args>
+/remove
+/remove <args>
+/removeabove
+/removeabove <args>
+/removebelow
+/removebelow <args>
+/removenear
+/removenear <args>
+/rename <nombre>
+/renamebox <player> <box> <name>
+/repl
+/repl <args>
+/replacenear
+/replacenear <args>
+/restore
+/restore <args>
+/return <value>
+/return fail
+/return run ...
+/ride <target> dismount
+/ride <target> mount <vehicle>
+/runmolang <molang>
+/runmolang <molang> <npc>
+/runmolang <molang> <npc> <pokemon>
+/runmolang <molang> <player>
+/runmolang <molang> <player> <npc>
+/runmolang <molang> <player> <npc> <pokemon>
+/runmolang <molang> <player> <pokemon>
+/runmolang <molang> <pokemon>
+/runmolangscript <script>
+/runmolangscript <script> <npc>
+/runmolangscript <script> <npc> <pokemon>
+/runmolangscript <script> <player>
+/runmolangscript <script> <player> <npc>
+/runmolangscript <script> <player> <npc> <pokemon>
+/runmolangscript <script> <player> <pokemon>
+/runmolangscript <script> <pokemon>
+/save-all
+/save-all flush
+/save-off
+/save-on
+/say <message>
+/schedule clear <function>
+/schedule function <function> <time>
+/schedule function <function> <time> append
+/schedule function <function> <time> replace
+/schem
+/schem <args>
+/schematic
+/schematic <args>
+/scoreboard objectives add <objective> <criteria>
+/scoreboard objectives add <objective> <criteria> <displayName>
+/scoreboard objectives list
+/scoreboard objectives modify <objective> displayautoupdate <value>
+/scoreboard objectives modify <objective> displayname <displayName>
+/scoreboard objectives modify <objective> numberformat
+/scoreboard objectives modify <objective> numberformat blank
+/scoreboard objectives modify <objective> numberformat fixed <contents>
+/scoreboard objectives modify <objective> numberformat styled <style>
+/scoreboard objectives modify <objective> rendertype hearts
+/scoreboard objectives modify <objective> rendertype integer
+/scoreboard objectives remove <objective>
+/scoreboard objectives setdisplay <slot>
+/scoreboard objectives setdisplay <slot> <objective>
+/scoreboard players add <targets> <objective> <score>
+/scoreboard players display name <targets> <objective>
+/scoreboard players display name <targets> <objective> <name>
+/scoreboard players display numberformat <targets> <objective>
+/scoreboard players display numberformat <targets> <objective> blank
+/scoreboard players display numberformat <targets> <objective> fixed <contents>
+/scoreboard players display numberformat <targets> <objective> styled <style>
+/scoreboard players enable <targets> <objective>
+/scoreboard players get <target> <objective>
+/scoreboard players list
+/scoreboard players list <target>
+/scoreboard players operation <targets> <targetObjective> <operation> <source> <sourceObjective>
+/scoreboard players remove <targets> <objective> <score>
+/scoreboard players reset <targets>
+/scoreboard players reset <targets> <objective>
+/scoreboard players set <targets> <objective> <score>
+/searchitem
+/searchitem <args>
+/seed
+/selwand
+/selwand <args>
+/setblock <pos> <block>
+/setblock <pos> <block> destroy
+/setblock <pos> <block> keep
+/setblock <pos> <block> replace
+/sethome
+/sethome <nombre>
+/setidletimeout <minutes>
+/setpwarp <nombre>
+/setworldspawn
+/setworldspawn <pos>
+/setworldspawn <pos> <angle>
+/size
+/size <args>
+/skin clear
+/skin clear <targets>
+/skin config reload
+/skin refresh
+/skin reset
+/skin reset <targets>
+/skin set ely.by <username>
+/skin set ely.by <username> <targets>
+/skin set mojang <username>
+/skin set mojang <username> <targets>
+/skin set web classic <url>
+/skin set web classic <url> <targets>
+/skin set web slim <url>
+/skin set web slim <url> <targets>
+/smithing
+/snap
+/snap <args>
+/snapshot
+/snapshot <args>
+/snow
+/snow <args>
+/sp
+/sp <args>
+/spark
+/spark <args>
+/spawnallpokemon
+/spawnallpokemon <min>
+/spawnallpokemon <min> <max>
+/spawnnpc <class>
+/spawnnpc <class> <level>
+/spawnnpcat <pos> <class>
+/spawnnpcat <pos> <class> <level>
+/spawnpoint
+/spawnpoint <targets>
+/spawnpoint <targets> <pos>
+/spawnpoint <targets> <pos> <angle>
+/spawnpokemon <properties>
+/spawnpokemonat <pos> <properties>
+/spawnpokemonfrompool
+/spawnpokemonfrompool <amount>
+/spawns
+/spectate
+/spectate <target>
+/spectate <target> <player>
+/spectateBattle <player>
+/spreadplayers <center> <spreadDistance> <maxRange> <respectTeams> <targets>
+/spreadplayers <center> <spreadDistance> <maxRange> under <maxHeight> <respectTeams> <targets>
+/stonecutter
+/stop
+/stopbattle <player>
+/stopsound <targets>
+/stopsound <targets> * <sound>
+/stopsound <targets> ambient
+/stopsound <targets> ambient <sound>
+/stopsound <targets> block
+/stopsound <targets> block <sound>
+/stopsound <targets> hostile
+/stopsound <targets> hostile <sound>
+/stopsound <targets> master
+/stopsound <targets> master <sound>
+/stopsound <targets> music
+/stopsound <targets> music <sound>
+/stopsound <targets> neutral
+/stopsound <targets> neutral <sound>
+/stopsound <targets> player
+/stopsound <targets> player <sound>
+/stopsound <targets> record
+/stopsound <targets> record <sound>
+/stopsound <targets> voice
+/stopsound <targets> voice <sound>
+/stopsound <targets> weather
+/stopsound <targets> weather <sound>
+/summon <entity>
+/summon <entity> <pos>
+/summon <entity> <pos> <nbt>
+/superpickaxe
+/superpickaxe <args>
+/tag <targets> add <name>
+/tag <targets> list
+/tag <targets> remove <name>
+/takemark <player> <slot> <mark>
+/takepokemon <player> <slot>
+/teach <player> <slot> <move>
+/team add <team>
+/team add <team> <displayName>
+/team empty <team>
+/team join <team>
+/team join <team> <members>
+/team leave <members>
+/team list
+/team list <team>
+/team modify <team> collisionRule always
+/team modify <team> collisionRule never
+/team modify <team> collisionRule pushOtherTeams
+/team modify <team> collisionRule pushOwnTeam
+/team modify <team> color <value>
+/team modify <team> deathMessageVisibility always
+/team modify <team> deathMessageVisibility hideForOtherTeams
+/team modify <team> deathMessageVisibility hideForOwnTeam
+/team modify <team> deathMessageVisibility never
+/team modify <team> displayName <displayName>
+/team modify <team> friendlyFire <allowed>
+/team modify <team> nametagVisibility always
+/team modify <team> nametagVisibility hideForOtherTeams
+/team modify <team> nametagVisibility hideForOwnTeam
+/team modify <team> nametagVisibility never
+/team modify <team> prefix <prefix>
+/team modify <team> seeFriendlyInvisibles <allowed>
+/team modify <team> suffix <suffix>
+/team remove <team>
+/teammsg <message>
+/technicalmachine check <player>
+/technicalmachine lock <player> all
+/technicalmachine lock <player> only <TM>
+/technicalmachine unlock <player> all
+/technicalmachine unlock <player> only <TM>
+/teleport <destination>
+/teleport <location>
+/teleport <targets> <destination>
+/teleport <targets> <location>
+/teleport <targets> <location> <rotation>
+/teleport <targets> <location> facing <facingLocation>
+/teleport <targets> <location> facing entity <facingEntity>
+/teleport <targets> <location> facing entity <facingEntity> <facingAnchor>
+/tell tell -> msg
+/tellraw <targets> <message>
+/testcommand
+/testpartyslot <player> <slot> <properties>
+/testpcslot <player> <box> <slot> <properties>
+/teststore <player> <store> <properties>
+/thaw
+/thaw <args>
+/thru
+/thru <args>
+/tick freeze
+/tick query
+/tick rate <rate>
+/tick sprint <time>
+/tick sprint stop
+/tick step
+/tick step <time>
+/tick step stop
+/tick unfreeze
+/time add <time>
+/time query day
+/time query daytime
+/time query gametime
+/time set <time>
+/time set day
+/time set midnight
+/time set night
+/time set noon
+/title <targets> actionbar <title>
+/title <targets> clear
+/title <targets> reset
+/title <targets> subtitle <title>
+/title <targets> times <fadeIn> <stay> <fadeOut>
+/title <targets> title <title>
+/tm tm -> teammsg
+/toggleeditwand
+/toggleeditwand <args>
+/toggleplace
+/toggleplace <args>
+/tool
+/tool <args>
+/tp tp -> teleport
+/tpa <jugador>
+/tpaccept
+/tpcancel
+/tpdeny
+/tpno
+/tpyes
+/tracemask
+/tracemask <args>
+/transfer <hostname>
+/transfer <hostname> <port>
+/transfer <hostname> <port> <players>
+/transformmodelpart <transform>
+/transformmodelpart <transform> <part>
+/transformmodelpart <transform> <part> <x> <y> <z>
+/trash
+/tree
+/tree <args>
+/trigger <objective>
+/trigger <objective> add <value>
+/trigger <objective> set <value>
+/undo
+/undo <args>
+/unlockpcboxwallpaper <player> <wallpaper>
+/unlockpcboxwallpaper <player> <wallpaper> <playsSound>
+/unstuck
+/unstuck <args>
+/up
+/up <args>
+/w w -> msg
+/we
+/we <args>
+/weather clear
+/weather clear <duration>
+/weather rain
+/weather rain <duration>
+/weather thunder
+/weather thunder <duration>
+/whitelist add <targets>
+/whitelist list
+/whitelist off
+/whitelist on
+/whitelist reload
+/whitelist remove <targets>
+/workbench
+/worldborder add <distance>
+/worldborder add <distance> <time>
+/worldborder center <pos>
+/worldborder damage amount <damagePerBlock>
+/worldborder damage buffer <distance>
+/worldborder get
+/worldborder set <distance>
+/worldborder set <distance> <time>
+/worldborder warning distance <distance>
+/worldborder warning time <time>
+/worldedit
+/worldedit <args>
+/xp xp -> experience

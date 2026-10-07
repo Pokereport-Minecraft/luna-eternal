@@ -151,6 +151,10 @@ public final class ConstructorBuffs {
      * particulas ni icono. Una pocion o habilidad normal no comparte toda la
      * firma y por tanto no se borra al salir de la Ciudadela.
      */
+    public static boolean hiddenManagedEffect(StatusEffectInstance effect) {
+        return effect!=null && EFECTOS.contains(effect.getEffectType()) && esGestionado(effect,nivel(effect.getEffectType()));
+    }
+
     private static boolean esGestionado(StatusEffectInstance actual, int nivel) {
         return actual != null
                 && actual.isInfinite()

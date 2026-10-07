@@ -264,34 +264,15 @@ public final class OficiosListener {
         return 0;
     }
 
-    /**
-     * PESCADOR: recoger la caña Poké.
-     *
-     * <p>⚠ Se cuenta el <b>recogido</b> y no el lanzamiento. Lanzar es gratis y se
-     * puede repetir sin parar; recoger exige que haya picado algo. Es la misma
-     * decisión que ya se tomó con la cría —cuenta al eclosionar, no al recoger el
-     * huevo— y por el mismo motivo.
-     */
+    /** Only actual fishing output counts; never cast/reel clicks. Called on the server thread. */
+    public static void pescaReal(ServerPlayerEntity player) {
+        anotar(player, Path.PESCADOR, JobsConfig.fishingXp(),
+                net.pokereport.luna.quest.Quest.Objective.Type.FISH, 1,
+                net.pokereport.luna.pase.PaseXp.PESCA);
+    }
+
     private static void pescador() {
-        try {
-            CobblemonEvents.POKEROD_REEL.subscribe(evento -> {
-                try {
-                    if (evento.getPlayer() instanceof ServerPlayerEntity sp) {
-                        anotar(sp, Path.PESCADOR, JobsConfig.fishingXp(),
-                               net.pokereport.luna.quest.Quest.Objective.Type.FISH, 1,
-                               net.pokereport.luna.pase.PaseXp.PESCA);
-                    }
-                } catch (Throwable t) {
-                    LunaEternal.LOG.error("Error anotando pesca", t);
-                }
-            });
-        } catch (Throwable t) {
-            // Si Cobblemon cambia el evento, el oficio deja de avanzar pero el
-            // servidor arranca. Se anota FUERTE porque es justo el fallo que no
-            // se ve: nadie reporta "no subo de Pescador" hasta semanas después.
-            LunaEternal.LOG.error("PESCADOR SIN ENGANCHE: el evento POKEROD_REEL "
-                    + "no se pudo suscribir. El oficio no avanzara.", t);
-        }
+        // Successful outputs are observed by SuccessfulFishingMixin, once per bobber.
     }
 
     /** AGRICULTOR: bayas y bellotas, que son los dos cultivos de Cobblemon. */

@@ -182,7 +182,7 @@
   "pokepad.lunaeternal.app.warps": "pWarps",
   "pokepad.lunaeternal.app.warps.desc": "Public, favorite and popular places",
   "pokepad.lunaeternal.app.wiki": "Wiki",
-  "pokepad.lunaeternal.app.wiki.desc": "How everything works, without leaving the game",
+  "pokepad.lunaeternal.app.wiki.desc": "Official guides in your browser",
   "pokepad.lunaeternal.cadena.coleccionista": "COLLECTOR",
   "pokepad.lunaeternal.cadena.comercio": "TRADE",
   "pokepad.lunaeternal.cadena.diaria": "DAILY",
@@ -279,6 +279,7 @@
   "pokepad.lunaeternal.clan.tienes_tu": "YOUR SILVER",
   "pokepad.lunaeternal.clan.tope": "Officer daily limit: %s",
   "pokepad.lunaeternal.cobrar": "CLAIM",
+  "pokepad.lunaeternal.mision.error_cobro": "§cCould not claim the quest. Try again; if it persists, contact staff.",
   "pokepad.lunaeternal.como_se_sube": "HOW TO RAISE",
   "pokepad.lunaeternal.comprar": "BUY",
   "pokepad.lunaeternal.cosmeticos": "Cosmetics",
@@ -755,5 +756,10 @@
   "gui.lunaeternal.menu.status.connecting": "§eConnecting...",
   "gui.lunaeternal.menu.status.offline": "§cOffline",
   "gui.lunaeternal.menu.greeting": "Welcome, %s!",
-  "entity.lunaeternal.lunita": "Lunita"
+  "entity.lunaeternal.lunita": "Lunita",
+  "lunaeternal.species.lunita.name": "Lunita",
+  "lunaeternal.species.lunita.desc": "Lunita is a Fairy and Psychic companion so sweet that hearts melt at the mere sight of her. Her gentle eyes hold the light of happy memories. She loves resting on the shoulder of someone she loves and sharing every adventure. The love she left behind shines forever.",
+  "cobblemon.ui.pokedex.region.lunita": "In Memory of Lunita",
+  "pokepad.lunaeternal.app.pokevoice": "PokeVoice",
+  "pokepad.lunaeternal.app.pokevoice.desc": "Comunicacion de Entrenadores por proximidad y grupos"
 }

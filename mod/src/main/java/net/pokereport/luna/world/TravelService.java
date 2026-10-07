@@ -170,7 +170,7 @@ public final class TravelService {
      * Punto seguro de una dimensión. En las vacías construye la plataforma si
      * hace falta; en las generadas busca la superficie.
      */
-    private static Vec3d safeSpawn(ServerWorld world) {
+    static Vec3d safeSpawn(ServerWorld world) {
         boolean isVoid = world.getRegistryKey().equals(LunaDimensions.LOBBY)
                       || world.getRegistryKey().equals(LunaDimensions.CIUDADELA);
 

@@ -1,0 +1,6 @@
+# Copiar al servidor como config/lunaeternal/world-edit.properties.
+# UUID debe salir de ops.json/identidad autenticada existente, nunca inventarse.
+# Nivel 4 + ambos permisos + Creative + editmode activo son obligatorios.
+# UUID_REAL=pokereport.world.edit,pokereport.admin.editmode
+# Agregar pokereport.admin.commands solo para quien administre comandos críticos.
+# No se aceptan *, minecraft.*, pokereport.* ni otras wildcard.

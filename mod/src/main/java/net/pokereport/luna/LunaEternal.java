@@ -99,6 +99,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
         LOG.info("Luna Eternal — iniciando");
+        net.pokereport.luna.world.WorldProtectionManager.registrar();
+        net.pokereport.luna.command.ProtectionCommands.registrar();
         net.pokereport.luna.world.FaunaControl.registrar();
         net.pokereport.luna.world.EvolucionControl.register();
         net.pokereport.luna.world.RaidDenPurgeService.registrar();
@@ -702,6 +704,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             // La puerta no es un momento, es una verdad que se mantiene: quien
             // no ha cruzado esta en el lobby. Ver `Puerta.vigilar`.
             net.pokereport.luna.puerta.Puerta.vigilar(server);
+            net.pokereport.luna.world.RestrictedDimensions.enforce(server);
             // Quien lleva diez minutos sin moverse se va al lobby. Lleva su
             // propio corte de ticks por dentro, como ConstructorBuffs.
             net.pokereport.luna.world.Afk.tick(server);
@@ -758,6 +761,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.command.SpawnCommand.registrar(dispatcher);
                 net.pokereport.luna.command.AuditoriaSpawnCommand.registrar(dispatcher);
             });
+        net.pokereport.luna.world.SafeInteractionPolicy.registrar();
     }
 
     private void boot() {

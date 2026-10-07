@@ -169,7 +169,7 @@ public final class FaunaControl {
                 Thread t = new Thread(r,"luna-fauna-archive");t.setDaemon(true);return t;
             },new ThreadPoolExecutor.AbortPolicy());
             activo = true;
-            LunaEternal.LOG.info("Fauna configurada: vanilla bloqueada, NPC protegidos, Hogar=0.04 y Salvaje=3.0 Pokemon/chunk (Gen 1-2 estrictas)");
+            LunaEternal.LOG.info("Fauna configurada: vanilla bloqueada, NPC protegidos, Hogar=0.04 y Salvaje=0.75 Pokemon/chunk (Gen 1-2 estrictas)");
         });
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             if (!activo) return;
@@ -180,7 +180,7 @@ public final class FaunaControl {
                 if (cambio || tickPeriodico) {
                     var spawner = ((PlayerSpawnerAccessor)p).getPlayerSpawner();
                     spawner.setMaxPokemonPerChunk(PoliticaFauna.densidad(mundo));
-                    spawner.setTicksBetweenSpawns(LunaDimensions.HOGAR.equals(p.getServerWorld().getRegistryKey()) ? 200f : 15f);
+                    spawner.setTicksBetweenSpawns(LunaDimensions.HOGAR.equals(p.getServerWorld().getRegistryKey()) ? 200f : 60f);
                 }
             }
         });

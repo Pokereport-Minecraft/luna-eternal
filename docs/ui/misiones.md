@@ -16,6 +16,24 @@ coincide con el código, gana el código y se corrige esto.
 
 ## Current Status
 
+**2026-10-04 · correccion del cobro tras reiniciar el inicial.** El
+reinicio borraba `quest_progress` aunque su pago seguia registrado en el
+ledger. Al volver a completar la mision, la clave de idempotencia repetida
+provocaba rollback y dejaba el boton COBRAR permanentemente disponible.
+Ahora el reinicio conserva las filas cobradas. Si una fila ya fue borrada
+por el codigo anterior, cobrar restaura la marca cuando todos sus pagos
+monetarios ya estan registrados, sin repetir monedas, XP ni premio del pase.
+La restauracion devuelve `false` porque no es una recompensa nueva; el
+estado reenviado desbloquea la cadena. Se captura una sola clave de periodo
+por transaccion y los errores de cobro se muestran al jugador.
+Las regresiones para conservar y recuperar la marca sin duplicar Plata ni XP
+pasaron en el staging: **807/807**, ademas de **244/244** pruebas locales.
+Se confirmo el caso de Freddysillo en produccion: progreso 1, sin marca de
+cobro, y asiento previo de 503 Plata. Se restauro solo su marca de cobro,
+verificando que saldo, XP y ledger permanecieron exactamente iguales.
+Detalles de artefactos y despliegue en
+[hotfix-santuario-misiones.md](../technical/hotfix-santuario-misiones.md).
+
 **2026-08-23 · las tres pantallas funcionando y verificadas en el juego.**
 
 ```

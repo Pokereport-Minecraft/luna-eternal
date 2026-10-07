@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +38,7 @@ public final class TexturasFoto {
     /** Lo mas que se guarda en memoria. Un memorial no son cien fotos. */
     private static final int CACHE_MAX = 24;
 
-    private static final Map<String, NativeImageBackedTexture> TEXTURAS = new HashMap<>();
+    private static final Map<String, NativeImageBackedTexture> TEXTURAS = new LinkedHashMap<>();
     private static final Map<String, Foto> PROPORCIONES = new HashMap<>();
     /** Las que ya se han pedido y aun no han llegado, para no pedirlas a coro. */
     private static final Set<String> PEDIDAS = new HashSet<>();
@@ -116,16 +117,26 @@ public final class TexturasFoto {
 
     /** Del fichero ya bajado a la textura registrada. Corre en el hilo del cliente. */
     private static void cargar(String sha1, Path fichero) {
-        try (InputStream in = Files.newInputStream(fichero);
-             NativeImage imagen = NativeImage.read(in)) {
-            var textura = new NativeImageBackedTexture(imagen);
-            MinecraftClient.getInstance().getTextureManager().registerTexture(
-                    Identifier.of("lunaeternal", "foto_" + sha1), textura);
-            TEXTURAS.put(sha1, textura);
-            PROPORCIONES.put(sha1, new Foto(
-                    Identifier.of("lunaeternal", "foto_" + sha1),
-                    imagen.getWidth(), imagen.getHeight()));
-        } catch (java.io.IOException e) {
+        try (InputStream in = Files.newInputStream(fichero)) {
+            NativeImage imagen = NativeImage.read(in);
+            NativeImageBackedTexture textura = null;
+            try {
+                // La textura conserva la imagen para subirla a la GPU. Cerrarla
+                // aqui deja un puntero nativo liberado en el siguiente dibujado.
+                int ancho = imagen.getWidth();
+                int alto = imagen.getHeight();
+                textura = new NativeImageBackedTexture(imagen);
+                Identifier id = Identifier.of("lunaeternal", "foto_" + sha1);
+                MinecraftClient.getInstance().getTextureManager().registerTexture(id, textura);
+                TEXTURAS.put(sha1, textura);
+                PROPORCIONES.put(sha1, new Foto(id, ancho, alto));
+                PEDIDAS.remove(sha1);
+            } catch (RuntimeException e) {
+                if (textura != null) textura.close();
+                else imagen.close();
+                throw e;
+            }
+        } catch (java.io.IOException | RuntimeException e) {
             PEDIDAS.remove(sha1);
         }
         if (TEXTURAS.size() > CACHE_MAX) {
@@ -133,6 +144,8 @@ public final class TexturasFoto {
             //   el fichero sigue en disco y se recarga si alguien vuelve a
             //   mirar ese memorial.
             String vieja = TEXTURAS.keySet().iterator().next();
+            MinecraftClient.getInstance().getTextureManager().destroyTexture(
+                    Identifier.of("lunaeternal", "foto_" + vieja));
             TEXTURAS.remove(vieja);
             PROPORCIONES.remove(vieja);
         }
@@ -140,6 +153,10 @@ public final class TexturasFoto {
 
     /** Al salir del servidor se olvida todo: las fotos son de ESE mundo. */
     public static void olvidar() {
+        var gestor = MinecraftClient.getInstance().getTextureManager();
+        for (String sha1 : TEXTURAS.keySet()) {
+            gestor.destroyTexture(Identifier.of("lunaeternal", "foto_" + sha1));
+        }
         TEXTURAS.clear();
         PROPORCIONES.clear();
         PEDIDAS.clear();

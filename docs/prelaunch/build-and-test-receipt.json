@@ -1,0 +1,17 @@
+{
+  "tests": 187,
+  "failures": 0,
+  "errors": 0,
+  "build_sha256": "a53a53da2592348aaf1655267187eb12b62f5678ed098743c1f175d10e5ee2e8",
+  "branch": "codex/prelaunch-world-hardening",
+  "base": "ef9f8832",
+  "live_jar_unchanged": true,
+  "staging_autotest": {
+    "pass": 753,
+    "fail": 0
+  },
+  "staging_protection": {
+    "pass": 21,
+    "fail": 0
+  }
+}

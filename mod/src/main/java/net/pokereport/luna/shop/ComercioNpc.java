@@ -34,7 +34,11 @@ public final class ComercioNpc {
             new Puesto("muebles", "Muebles y Decoración", "tienda:muebles",
                     new Vec3d(16.577, 70, 113.556), 90f),
             new Puesto("rango", "Kits de Rango", "kits:rango",
-                    new Vec3d(4.575, 92, 111.343), 0f));
+                    new Vec3d(4.575, 92, 111.343), 0f),
+            new Puesto("bayas", "Bayas", "tienda:bayas",
+                    new Vec3d(104.710, 98, -68.682), 180f),
+            new Puesto("cultivos", "Cultivos", "tienda:cultivos",
+                    new Vec3d(105.650, 105, -78.648), 0f));
 
     public static void registrar() {
         UseEntityCallback.EVENT.register((jugador, mundo, mano, entidad, golpe) -> {
@@ -50,11 +54,23 @@ public final class ComercioNpc {
     }
 
     public static int colocarTodos(MinecraftServer servidor) {
+        return colocar(servidor, PUESTOS);
+    }
+
+    /** Coloca únicamente los dos vendedores agrícolas; conserva los demás. */
+    public static int colocarAgricultura(MinecraftServer servidor) {
+        return colocar(servidor, PUESTOS.stream()
+                .filter(p -> p.id().equals("bayas") || p.id().equals("cultivos")).toList());
+    }
+
+    private static int colocar(MinecraftServer servidor, List<Puesto> seleccionados) {
         ServerWorld mundo = servidor.getWorld(LunaDimensions.CIUDADELA);
         if (mundo == null) return 0;
         int puestos = 0;
-        for (Puesto p : PUESTOS) {
-            for (Entity e : mundo.getOtherEntities(null, Box.of(p.pos(), 4, 4, 4), ComercioNpc::es)) e.discard();
+        for (Puesto p : seleccionados) {
+            mundo.getChunk(net.minecraft.util.math.BlockPos.ofFloored(p.pos()));
+            for (Entity e : mundo.getOtherEntities(null, Box.of(p.pos(), 4, 4, 4),
+                    e -> e.getCommandTags().contains("luna_comercio_" + p.id()))) e.discard();
             TrainerMob mob = TrainerMob.getEntityType().create(mundo);
             if (mob == null) continue;
             mob.refreshPositionAndAngles(p.pos().x, p.pos().y, p.pos().z, p.yaw(), 0f);

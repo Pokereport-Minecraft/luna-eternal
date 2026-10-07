@@ -97,6 +97,7 @@ PACK_BASE = "cobbleverse"
 # motivo, y esta escrito para que dentro de seis meses nadie lo vuelva a anadir
 # "porque venia en el oficial".
 EXCLUIDOS = {
+    "music-notification": "Retirado por peticion del usuario: quitar Open Jukebox del cliente (2026-10-03).",
     "stendhal":
         "CC-BY-NC-ND-4.0. El NC prohibe el uso con animo comercial y el plan "
         "incluye venta de paquetes (D-007). No es cuestion de redistribuir: es "
@@ -524,6 +525,7 @@ OVERRIDES_FUERA = (
 # `iris`, `yacl`, `sodium`, `lithium`, `ferrite-core`, `entityculling` y
 # `modmenu` ya vienen en la base: no se repiten aqui.
 EXTRA_JUGADOR = [
+    "simple-voice-chat",
     # Animaciones de primera persona. Es estrictamente CLIENTE: no registra
     # contenido ni paquetes de red, por lo que nunca se instala en el servidor.
     # La build se fija abajo para que una regeneracion no salte por accidente a
@@ -747,6 +749,8 @@ FIJADOS = {}
 #   forma de comprobarlo es la de siempre: abrir el jar y mirar si su
 #   `MixinSodiumRenderSectionManager` sigue nombrando `prepareRender`.
 CLAVADOS = {
+    "simple-voice-chat": {"version": "fabric-1.21.1-2.6.22", "motivo": "PokeVoice: Release fijo compatible, QA cliente/servidor"},
+    "flashback": {"version": "0.39.8", "motivo": "Constructor: 0.39.9 exige voz beta >=2.6.23; conservar SVC Release 2.6.22"},
     "axiom": "5.4.2",
     "punchy-fpa": {"version": "2.8c",
                     "motivo": "Fabric 1.21.1 auditado; mod estrictamente de cliente"},

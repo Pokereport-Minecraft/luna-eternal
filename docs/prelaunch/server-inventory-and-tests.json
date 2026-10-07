@@ -1,0 +1,412 @@
+{
+  "live_jar_sha256": "6a4642198448b0395bdae0739c4ad3d79bc2b86bc11a19d8bc120af5203838f9",
+  "mods": [
+    {
+      "file": "Almanac-1.21.1-2-fabric-1.5.2.jar",
+      "id": "almanac",
+      "version": "1.5.2"
+    },
+    {
+      "file": "Axiom-5.4.2-for-MC1.21.1.jar",
+      "id": "axiom",
+      "version": "5.4.2"
+    },
+    {
+      "file": "Carved Wood-fabric-1.21.1-1.9.8-B.jar",
+      "id": "carved_wood",
+      "version": "1.9.8-B"
+    },
+    {
+      "file": "Chunky-Fabric-1.4.23.jar",
+      "id": "chunky",
+      "version": "1.4.23"
+    },
+    {
+      "file": "ClaimBlocks-1.0.jar",
+      "id": "claimblocks",
+      "version": "1.0.0"
+    },
+    {
+      "file": "Clumps-fabric-1.21.1-19.0.0.1.jar",
+      "id": "clumps",
+      "version": "19.0.0.1"
+    },
+    {
+      "file": "CobbleFurnies-fabric-1.2.jar",
+      "id": "cobblefurnies",
+      "version": "1.2"
+    },
+    {
+      "file": "Cobblemon-fabric-1.8.0+1.21.1.jar",
+      "id": "cobblemon",
+      "version": "1.8.0+1.21.1"
+    },
+    {
+      "file": "CobbleverseBadges-1.3.jar",
+      "metadata": "not fabric root"
+    },
+    {
+      "file": "Cobbreeding-fabric-2.3.0.jar",
+      "id": "cobbreeding",
+      "version": "2.3.0"
+    },
+    {
+      "file": "EasyAuth-3.4.4.jar",
+      "id": "easyauth",
+      "version": "3.4.4"
+    },
+    {
+      "file": "FabricProxy-Lite-2.9.0.jar",
+      "id": "fabricproxy-lite",
+      "version": "2.9.0"
+    },
+    {
+      "file": "ForgeConfigAPIPort-v21.1.6-1.21.1-Fabric.jar",
+      "id": "forgeconfigapiport",
+      "version": "21.1.6"
+    },
+    {
+      "file": "GooeyLibs-Fabric-3.1.1-1.21.x.jar",
+      "id": "gooeylibs",
+      "version": "3.1.1"
+    },
+    {
+      "file": "Jade-1.21.1-Fabric-15.10.6.jar",
+      "id": "jade",
+      "version": "15.10.6+fabric"
+    },
+    {
+      "file": "Luckys-Cozyhome-Refurnished-1.1.20.jar",
+      "id": "cozyhome",
+      "version": "1.1.20"
+    },
+    {
+      "file": "LumyMon-0.6.6.jar",
+      "id": "lumymon",
+      "version": "0.6.6"
+    },
+    {
+      "file": "Only Bottle Caps-1.5.0-fabric.jar",
+      "id": "obc",
+      "version": "1.5.0-fabric"
+    },
+    {
+      "file": "Platform-fabric-1.21.1-1.3.3.jar",
+      "id": "platform",
+      "version": "1.3.3"
+    },
+    {
+      "file": "Terralith_1.21.x_v2.6.2.jar",
+      "id": "terralith",
+      "version": "2.6.2"
+    },
+    {
+      "file": "VanillaBackport-fabric-1.21.1-1.1.7.10.jar",
+      "id": "vanillabackport",
+      "version": "1.1.7.10"
+    },
+    {
+      "file": "accessories-fabric-1.1.0-beta.53+1.21.1.jar",
+      "id": "accessories",
+      "version": "1.1.0-beta.53+1.21.1"
+    },
+    {
+      "file": "architectury-13.0.11-fabric.jar",
+      "id": "architectury",
+      "version": "13.0.11"
+    },
+    {
+      "file": "armaduraspokereport-kits-completo-1.0.0.jar",
+      "id": "armaduraspokereport",
+      "version": "1.0.0"
+    },
+    {
+      "file": "athena-fabric-1.21.1-4.0.6.jar",
+      "id": "athena",
+      "version": "4.0.6"
+    },
+    {
+      "file": "beautify-2.0.0+1.21.1.jar",
+      "id": "beautify",
+      "version": "2.0.0+1.21.1"
+    },
+    {
+      "file": "cloth-config-15.0.140-fabric.jar",
+      "id": "cloth-config",
+      "version": "15.0.140"
+    },
+    {
+      "file": "cobblecuisine-2.0.1-1.7.rc1.jar",
+      "id": "cobblecuisine",
+      "version": "2.0.1"
+    },
+    {
+      "file": "cobblemon-additions-4.3.0-luna1.jar",
+      "id": "cobblemon-additions",
+      "version": "4.3.0"
+    },
+    {
+      "file": "cobblemon-battle-positions-1.1.3.jar",
+      "id": "cobblemonbattlepositions",
+      "version": "1.1.2"
+    },
+    {
+      "file": "cobblemon-cards-1.0.5-luna1.jar",
+      "id": "cobblemon-cards",
+      "version": "1.0.0"
+    },
+    {
+      "file": "cobblemonraiddens-fabric-0.12.1+1.21.1.jar",
+      "id": "cobblemonraiddens",
+      "version": "0.12.1+1.21.1"
+    },
+    {
+      "file": "cobblenav-fabric-2.4.1.jar",
+      "id": "cobblenav",
+      "version": "2.4.1"
+    },
+    {
+      "file": "comforts-fabric-9.0.5+1.21.1.jar",
+      "id": "comforts",
+      "version": "9.0.5+1.21.1"
+    },
+    {
+      "file": "crossstitch-0.1.6.jar",
+      "id": "crossstitch",
+      "version": "0.1.6"
+    },
+    {
+      "file": "eeveelution-armor-1.0.0.jar",
+      "id": "eeveelution",
+      "version": "1.0.0"
+    },
+    {
+      "file": "effortless-1.21.1-3.4.0.jar",
+      "id": "effortless",
+      "version": "3.4.0"
+    },
+    {
+      "file": "fabric-api-0.116.15+1.21.1.jar",
+      "id": "fabric-api",
+      "version": "0.116.15+1.21.1"
+    },
+    {
+      "file": "fabric-language-kotlin-1.13.13+kotlin.2.4.10.jar",
+      "id": "fabric-language-kotlin",
+      "version": "1.13.13+kotlin.2.4.10"
+    },
+    {
+      "file": "ferritecore-7.0.3-fabric.jar",
+      "id": "ferritecore",
+      "version": "7.0.3"
+    },
+    {
+      "file": "fightorflight-fabric-0.11.0.jar",
+      "id": "fightorflight",
+      "version": "0.11.0"
+    },
+    {
+      "file": "fusion-1.3.15a-fabric-mc1.21.jar",
+      "id": "fusion",
+      "version": "1.3.15+a"
+    },
+    {
+      "file": "geckolib-fabric-1.21.1-4.9.2.jar",
+      "id": "geckolib",
+      "version": "4.9.2"
+    },
+    {
+      "file": "handcrafted-fabric-1.21.1-4.0.3.jar",
+      "id": "handcrafted",
+      "version": "4.0.3"
+    },
+    {
+      "file": "image2map-0.7.1+1.21.jar",
+      "id": "image2map",
+      "version": "0.7.1+1.21"
+    },
+    {
+      "file": "krypton-0.2.8.jar",
+      "id": "krypton",
+      "version": "0.2.8"
+    },
+    {
+      "file": "letmedespawn-1.21.x-fabric-1.5.0.jar",
+      "id": "letmedespawn",
+      "version": "1.5.0"
+    },
+    {
+      "file": "lithium-fabric-0.15.4+mc1.21.1.jar",
+      "id": "lithium",
+      "version": "0.15.4+mc1.21.1"
+    },
+    {
+      "file": "lithostitched-1.7.13-fabric-21.1.jar",
+      "id": "lithostitched",
+      "version": "1.7.13"
+    },
+    {
+      "file": "lunaeternal-0.1.0.jar",
+      "id": "lunaeternal",
+      "version": "0.1.0"
+    },
+    {
+      "file": "lunaneon-0.1.0.jar",
+      "id": "lunaneon",
+      "version": "0.1.0"
+    },
+    {
+      "file": "magikarp-animated-armor-1.0.0.jar",
+      "id": "magikarparmor",
+      "version": "1.0.0"
+    },
+    {
+      "file": "mega_showdown-fabric-1.0.2+1.8+1.21.1-release.jar",
+      "metadata": "not fabric root"
+    },
+    {
+      "file": "moar-concrete-1.3.1.jar",
+      "id": "moarconcrete",
+      "version": "1.3.1"
+    },
+    {
+      "file": "owo-lib-0.12.15.4+1.21.jar",
+      "id": "owo",
+      "version": "0.12.15.4+1.21"
+    },
+    {
+      "file": "pikachu-animated-armor-1.0.0.jar",
+      "id": "pikachuarmor",
+      "version": "1.0.0"
+    },
+    {
+      "file": "pokeblocks-1.5.0-1.21.1.jar",
+      "id": "pokeblocks",
+      "version": "1.5.0-1.21.1"
+    },
+    {
+      "file": "rctapi-fabric-1.21.1-0.16.0-beta.jar",
+      "id": "rctapi",
+      "version": "0.16.0-beta"
+    },
+    {
+      "file": "rctmod-fabric-1.21.1-0.19.0-beta.jar",
+      "id": "rctmod",
+      "version": "0.19.0-beta"
+    },
+    {
+      "file": "rechiseled-1.2.5-fabric-mc1.21.jar",
+      "id": "rechiseled",
+      "version": "1.2.5"
+    },
+    {
+      "file": "resourcefullib-fabric-1.21-3.0.12.jar",
+      "id": "resourcefullib",
+      "version": "3.0.12"
+    },
+    {
+      "file": "skinrestorer-2.11.0+1.21-fabric.jar",
+      "id": "skinrestorer",
+      "version": "2.11.0+1.21-fabric"
+    },
+    {
+      "file": "sophisticatedcore-1.21.1-1.2.9.21.168.jar",
+      "id": "sophisticatedcore",
+      "version": "1.21.1-1.2.9.21.168"
+    },
+    {
+      "file": "spark-1.10.109-fabric.jar",
+      "id": "spark",
+      "version": "1.10.109"
+    },
+    {
+      "file": "supermartijn642configlib-1.1.8-fabric-mc1.21.jar",
+      "id": "supermartijn642configlib",
+      "version": "1.1.8"
+    },
+    {
+      "file": "supermartijn642corelib-1.1.24-fabric-mc1.21.jar",
+      "id": "supermartijn642corelib",
+      "version": "1.1.24"
+    },
+    {
+      "file": "tebex-fabric-1.21.1-2.4.0-974a9d5.jar",
+      "id": "tebex",
+      "version": "2.4.0"
+    },
+    {
+      "file": "tmcraft-1.4.19+1.8.0.jar",
+      "id": "tmcraft",
+      "version": "1.4.19+1.8.0"
+    },
+    {
+      "file": "worldedit-mod-7.3.8.jar",
+      "id": "worldedit",
+      "version": "7.3.8+6939-7d32b45"
+    }
+  ],
+  "public_server_properties": {
+    "online-mode": "false",
+    "max-players": "10",
+    "view-distance": "8",
+    "simulation-distance": "6",
+    "difficulty": "normal",
+    "pvp": "true",
+    "white-list": "false",
+    "spawn-protection": "0"
+  },
+  "op_levels": {
+    "4": 7
+  },
+  "dimension_directories": [
+    "cobblemonraiddens/raid_dimension",
+    "lumymon/nightmare",
+    "lumymon/origin",
+    "lunaeternal/ciudadela",
+    "lunaeternal/gimnasio_morti",
+    "lunaeternal/gimnasios",
+    "lunaeternal/islas_naranja",
+    "lunaeternal/lobby",
+    "lunaeternal/salvaje",
+    "lunaeternal/salvaje2",
+    "lunaeternal/salvaje3",
+    "lunaeternal/salvaje4",
+    "lunaeternal/salvaje5",
+    "lunaeternal/salvaje6",
+    "lunaeternal/torre"
+  ],
+  "datapacks": [
+    "COBBLEVERSE-RCT-DP-v20.zip",
+    "COBBLEVERSE-RCT-DP-v20.zip.bak_20260923_223904",
+    "luna-generaciones.zip",
+    "luna-naranja.zip"
+  ],
+  "final_staging_evidence": [
+    "[17:42:51] [Server thread/INFO]: Luna Eternal \u2014 base de datos lista",
+    "[17:43:29] [Server thread/INFO]: Done (37.650s)! For help, type \"help\"",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Player Survival no edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Fabric BEFORE cancela rotura normal",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS BlockItem.place rechaza colocaci\u00f3n directa",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS World.breakBlock cancela destrucci\u00f3n ambiental",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Cofre administrativo cerrado",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Puerta conserva interacci\u00f3n",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Da\u00f1o lava cancelado",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Da\u00f1o ca\u00edda cancelado",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Da\u00f1o vac\u00edo cancelado",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Hambre estable en Ciudadela",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Armor stand resiste da\u00f1o sin permiso",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Farmland no se convierte en tierra",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Explosi\u00f3n conserva terreno",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Player Creative no edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS OP2 Creative con nodos no edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS OP2 no evade con /fill",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS OP4 autorizado Survival no edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS OP4 Creative sin editmode no edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS OP4 autorizado Creative EditMode edita",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Edici\u00f3n autorizada /setblock funciona",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] PASS Hogar conserva permiso Survival",
+    "[17:46:10] [Server thread/INFO]: [PROTECTION-QA] FINAL passed=21 failed=0",
+    "[17:46:11] [luna-io-1/INFO]: Autotest final: passed=753 failed=0"
+  ],
+  "final_cynthia_invalid_move_log": []
+}

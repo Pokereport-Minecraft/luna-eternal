@@ -1,0 +1,18 @@
+{
+  "utc": "20261003T212851Z",
+  "backup": "/var/backups/pokereport/preopen-fixes/20261003T212851Z",
+  "sha256": "a253b389819236431e1d058851f8779748110ea3f470c679bad13c42fefb9728",
+  "config_unchanged": true,
+  "schema": 57,
+  "state": "RUNNING",
+  "real_client_qa": "NOT RUN",
+  "startup_utc": "2026-10-03T21:30:49Z",
+  "voice_start_utc": "2026-10-03T21:30:52Z",
+  "cache_ready_utc": "2026-10-03T21:30:57Z",
+  "external_udp_ping_ms": 117,
+  "external_udp_attempts": 1,
+  "launcher_installed_local": "0.2.4",
+  "launcher_release": "https://github.com/corderovibes-collab/luna-eternal-launcher/releases/tag/v0.2.4",
+  "launcher_commit": "fcf6447b3",
+  "launcher_installer_sha256": "827b7a6e08516d1671f2823265afc6ad92210675e07ec0bcd37cffa9693b401c"
+}

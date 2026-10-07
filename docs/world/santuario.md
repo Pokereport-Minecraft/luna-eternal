@@ -273,6 +273,25 @@ de Viajes son **de cliente**. Sin bajarse el jar nuevo se sigue viendo
 
 ## Next Actions
 
+### Correccion de fotos del cliente (2026-10-04)
+
+Se encontro que `TexturasFoto.cargar` cerraba la `NativeImage` al terminar de
+registrar una textura que conserva esa misma imagen. Se elimina ese cierre
+prematuro; la textura libera la imagen al desalojarla de la cache o al salir
+del servidor. La cache ahora respeta el orden de insercion y destruye las
+texturas desalojadas en el gestor de Minecraft.
+
+`DialogoFoto` limita la lectura a 2,5 MB + 1 byte antes de validar, impide
+selectores nativos simultaneos y solo envia a la conexion que inicio la
+seleccion. Falta confirmar el recorrido en juego y contrastar el crash del
+jugador con su registro; encontrar este defecto no confirma por si solo la
+causa de ese incidente. El cliente corregido se publico en el manifiesto
+`15b39a6f34`, conservando todas las entradas y ajustes ajenos a este hotfix.
+Las comprobaciones de subida, moderacion y colocacion pasaron dentro de las
+807 pruebas del staging. Es necesario cerrar el juego y abrir el launcher
+para recibir las clases del cliente actualizadas. Detalles en
+[hotfix-santuario-misiones.md](../technical/hotfix-santuario-misiones.md).
+
 1. **Colocar la Mew**: `/luna santuario npc` de pie donde vaya. Ya lleva
    **cartel flotante** con el icono de clic derecho, como Oak (2026-09-08).
 2. **Capturar los nichos construidos**: ponerse en el centro de cada uno y

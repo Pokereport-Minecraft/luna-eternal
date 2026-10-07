@@ -1,0 +1,141 @@
+{
+  "release_dir": "/var/backups/pokereport/releases/20261003T020652Z",
+  "build_sha256": "d28db0a75928bef9d0a0911b7ffcd62d04cb402bc6a616a93f9e862fd6e48e6d",
+  "deployed_jar_sha256": "f80f0c8aa32da0730833fa9d37fc2ffce74cba755d679fba247328cb0ba2c19e",
+  "all_entries_match_build": true,
+  "backup_verified": true,
+  "state": "RUNNING",
+  "client_update_required": false,
+  "source_commit": "ddb1fc3c",
+  "verified_utc": "2026-10-03T02:11:26.965861+00:00",
+  "started_at": "2026-10-03T02:09:22.226243537Z",
+  "build_passed": 186,
+  "build_skipped": 2,
+  "staging_autotests_passed": 759,
+  "oak_reloaded_after_restart": true,
+  "persistence": {
+    "oak": [
+      {
+        "uuid": "268bbe3f-a87c-4ebe-9093-33a286dd88e9",
+        "species": "charmander",
+        "pos": [
+          -11.67,
+          79.0,
+          -54.5
+        ],
+        "rotation": [
+          179.5596923828125,
+          0.0
+        ],
+        "persisted": true
+      },
+      {
+        "uuid": "c213554e-d17f-483b-bb04-71416935949a",
+        "species": "squirtle",
+        "pos": [
+          -8.534,
+          79.0,
+          -54.6
+        ],
+        "rotation": [
+          -179.99029541015625,
+          0.0
+        ],
+        "persisted": true
+      },
+      {
+        "uuid": "7abf428c-c3aa-4e27-8787-04fb05a455bd",
+        "species": "bulbasaur",
+        "pos": [
+          -14.5,
+          79.0,
+          -54.5
+        ],
+        "rotation": [
+          -178.04046630859375,
+          0.0
+        ],
+        "persisted": true
+      },
+      {
+        "uuid": "11933479-dd23-41a0-8cd1-c74786b1bad4",
+        "species": "omastar",
+        "pos": [
+          -11.47,
+          79.0,
+          -75.5
+        ],
+        "rotation": [
+          -1.440133810043335,
+          0.0
+        ],
+        "persisted": true
+      },
+      {
+        "uuid": "18f146ac-0a3a-4a2b-a7e3-eae5cdbc7afc",
+        "species": "kabutops",
+        "pos": [
+          -11.57,
+          80.98297,
+          -75.688
+        ],
+        "rotation": [
+          -1.5901150703430176,
+          0.0
+        ],
+        "persisted": true
+      }
+    ],
+    "vendors": [
+      {
+        "tag": "luna_comercio_bayas",
+        "pos": [
+          104.71,
+          98.0,
+          -68.682
+        ],
+        "rotation": [
+          180.0,
+          0.0
+        ],
+        "persisted": true
+      },
+      {
+        "tag": "luna_comercio_cultivos",
+        "pos": [
+          105.65,
+          105.0,
+          -78.648
+        ],
+        "rotation": [
+          0.0,
+          0.0
+        ],
+        "persisted": true
+      }
+    ],
+    "forced_chunks": {
+      "DataVersion": 3955,
+      "cobblemon:data_version": 2,
+      "data": {
+        "Forced": []
+      }
+    }
+  },
+  "visual_client_qa": "NOT TESTED",
+  "smoke_evidence": [
+    "[02:09:47] [Server thread/INFO]: Done (4.202s)! For help, type \"help\"",
+    "[02:09:56] [Server thread/INFO]: \u00a7a2 \u00a77vendedores de bayas y cultivos colocados.",
+    "[02:09:56] [Server thread/INFO]: Omastar has the following entity data: [-11.47d, 79.0d, -75.5d]",
+    "[02:09:56] [Server thread/INFO]: Kabutops has the following entity data: [-11.57d, 80.98297d, -75.688d]",
+    "[02:09:56] [Server thread/INFO]: Charmander has the following entity data: [-11.67d, 79.0d, -54.5d]",
+    "[02:09:56] [Server thread/INFO]: Squirtle has the following entity data: [-8.534d, 79.0d, -54.6d]",
+    "[02:09:56] [Server thread/INFO]: Bulbasaur has the following entity data: [-14.5d, 79.0d, -54.5d]",
+    "[02:10:08] [Server thread/INFO]: Omastar has the following entity data: [-11.47d, 79.0d, -75.5d]",
+    "[02:10:08] [Server thread/INFO]: Kabutops has the following entity data: [-11.57d, 80.98297d, -75.688d]",
+    "[02:10:08] [Server thread/INFO]: Charmander has the following entity data: [-11.67d, 79.0d, -54.5d]",
+    "[02:10:08] [Server thread/INFO]: Squirtle has the following entity data: [-8.534d, 79.0d, -54.6d]",
+    "[02:10:08] [Server thread/INFO]: Bulbasaur has the following entity data: [-14.5d, 79.0d, -54.5d]",
+    "    *20.0, *20.0, *20.0, *20.0, *20.0"
+  ]
+}

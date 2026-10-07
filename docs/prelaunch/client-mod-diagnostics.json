@@ -1,0 +1,21 @@
+{
+  "client_mods_with_fabric_metadata": 135,
+  "shared_mod_version_differences": [
+    {
+      "id": "fabric-api",
+      "server": "0.116.15+1.21.1",
+      "client": "0.116.17+1.21.1"
+    }
+  ],
+  "cobblemon": {
+    "version": "1.8.0+1.21.1",
+    "environment": "*"
+  },
+  "lunaeternal": {
+    "version": "0.1.0",
+    "environment": "*"
+  },
+  "candidate_jar_matches": true,
+  "crash_reports": [],
+  "note": "Version comparison is diagnostic only; accepted login and play must prove compatibility. Client-only mods are expected."
+}

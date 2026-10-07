@@ -10,12 +10,18 @@
     "LobbyScreenGuardMixin",
     "LobbyHudGuardMixin",
     "MainMenuMixin",
+    "ConnectScreenMixin",
+    "DownloadingTerrainScreenMixin",
     "SplashOverlayMixin",
     "SplashOverlayAccessor",
     "SplashOverlayInvoker",
     "MoveTooltipOverlayStateAccessor",
     "CustomBattleControllerMixin",
-    "BattleMoveTileTooltipAuditMixin"
+    "BattleMoveTileTooltipAuditMixin",
+    "StarterToastMixin",
+    "VoiceKeyBindingAccessor",
+    "ConstructorEffectInventoryMixin",
+    "MediaBinariesRepairMixin"
   ],
   "injectors": {
     "defaultRequire": 1

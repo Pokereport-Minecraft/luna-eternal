@@ -514,11 +514,13 @@ public final class Arenas {
         //    fundidos, y el segundo jugador aparece dentro de la pared del
         //    primero. Mejor negarse y decirlo.
         int paso = Gimnasio.pasoRanura(g);
-        if (z0 + fondo > paso) {
+        // Copies translate the entire measured interval, including negative offsets.
+        // Its depth determines overlap, not the template's absolute far edge.
+        if (fondo > paso) {
             LunaEternal.LOG.error("Gimnasio {}: la sala mide {} de fondo y las "
                     + "ranuras van cada {}. NO SE CLONA: la copia pisaria la "
                     + "ranura siguiente. Sube PASO_RANURA.",
-                    g.id(), z0 + fondo, paso);
+                    g.id(), fondo, paso);
             return;
         }
 

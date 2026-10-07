@@ -34,6 +34,12 @@ public abstract class LobbyNetworkGuardMixin {
     /** Un cliente modificado tampoco puede sacar ni ordenar Pokemon en Lobby. */
     @Inject(method = "onCustomPayload", at = @At("HEAD"), cancellable = true)
     private void pokereport$bloquearCobblemonLobby(CustomPayloadC2SPacket packet, CallbackInfo ci) {
+        if ("axiom".equals(packet.payload().getId().id().getNamespace())
+                && net.pokereport.luna.world.WorldProtectionManager.isProtectedDimension(player.getWorld())
+                && !net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(player, player.getWorld())) {
+            ci.cancel();
+            return;
+        }
         if (Puerta.bloqueado(player)
                 && "cobblemon".equals(packet.payload().getId().id().getNamespace())) {
             ci.cancel();
@@ -58,6 +64,9 @@ public abstract class LobbyNetworkGuardMixin {
     }
 
     private boolean debeBloquear(String comando) {
+        if (!net.pokereport.luna.world.CommandSafetyPolicy.allowed(player, comando == null ? "" : comando)) {
+            return true;
+        }
         if (!Puerta.bloqueado(player)) {
             return false;
         }
@@ -70,7 +79,9 @@ public abstract class LobbyNetworkGuardMixin {
 
     private void avisar() {
         player.sendMessage(Text.literal(
-                "§6§lPOKEREPORT §8» §7En el Lobby solo puedes moverte, autenticarte y usar el guardian."),
+                net.pokereport.luna.puerta.Puerta.bloqueado(player)
+                        ? "§6§lPOKEREPORT §8» §7En el Lobby solo puedes moverte, autenticarte y usar el guardian."
+                        : "§cEsta acción requiere autorización administrativa explícita y, para editar mapas, modo edición."),
                 false);
     }
 }

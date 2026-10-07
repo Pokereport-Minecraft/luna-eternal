@@ -164,6 +164,10 @@ public final class StarterService {
                         return;
                     }
 
+                    // Only reached after the atomic initial claim and successful Pokémon delivery.
+                    var dex = new net.minecraft.item.ItemStack(com.cobblemon.mod.common.CobblemonItems.POKEDEX_RED);
+                    if (!player.getInventory().insertStack(dex)) player.dropItem(dex, false);
+
                     player.sendMessage(Text.literal(
                         LunaEternal.PREFIJO + op.nombre()
                         + " §7se une a tu equipo."), false);

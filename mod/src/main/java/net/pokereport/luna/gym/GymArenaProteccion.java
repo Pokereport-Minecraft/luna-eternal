@@ -34,11 +34,8 @@ public final class GymArenaProteccion {
      * o a dimensiones protegidas del servidor (torre, lobby).
      */
     public static boolean esZonaProtegida(World mundo, BlockPos pos) {
-        var key = mundo.getRegistryKey();
-        return LunaDimensions.GIMNASIOS.equals(key)
-                || LunaDimensions.TORRE.equals(key)
-                || LunaDimensions.LOBBY.equals(key)
-                || LunaDimensions.ISLAS_NARANJA.equals(key);
+        return net.pokereport.luna.world.WorldProtectionManager.isProtectedDimension(mundo)
+                && !LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey());
     }
 
     public static void registrar() {
@@ -47,7 +44,7 @@ public final class GymArenaProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return ActionResult.PASS;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return ActionResult.PASS;
             }
             if (esZonaProtegida(mundo, pos)) {
@@ -62,7 +59,7 @@ public final class GymArenaProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return true;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return true;
             }
             if (esZonaProtegida(mundo, pos)) {
@@ -77,20 +74,23 @@ public final class GymArenaProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return ActionResult.PASS;
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return ActionResult.PASS;
             }
             BlockPos pos = golpe.getBlockPos();
             if (esZonaProtegida(mundo, pos)) {
                 var stack = sp.getStackInHand(mano);
-                if (esItemPeligroso(stack.getItem())) {
+                if (esItemPeligroso(stack.getItem())
+                        && !net.pokereport.luna.world.SafeInteractionPolicy.usesDoor(sp, mundo, pos)) {
                     avisar(sp);
                     return ActionResult.FAIL;
                 }
                 var block = mundo.getBlockState(pos).getBlock();
                 if (block instanceof net.minecraft.block.DoorBlock
                         || block instanceof net.minecraft.block.TrapdoorBlock
-                        || block instanceof net.minecraft.block.FenceGateBlock) {
+                        || block instanceof net.minecraft.block.FenceGateBlock
+                        || block instanceof net.minecraft.block.ButtonBlock
+                        || block instanceof net.minecraft.block.LeverBlock) {
                     return ActionResult.PASS;
                 }
                 return ActionResult.FAIL;
@@ -103,7 +103,7 @@ public final class GymArenaProteccion {
             if (mundo.isClient() || !(jugador instanceof ServerPlayerEntity sp)) {
                 return TypedActionResult.pass(jugador.getStackInHand(mano));
             }
-            if (sp.isCreative() && sp.hasPermissionLevel(2)) {
+            if (net.pokereport.luna.world.WorldProtectionManager.canModifyWorld(sp, mundo)) {
                 return TypedActionResult.pass(jugador.getStackInHand(mano));
             }
             if (esZonaProtegida(mundo, sp.getBlockPos())) {

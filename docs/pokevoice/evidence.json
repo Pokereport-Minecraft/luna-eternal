@@ -1,0 +1,114 @@
+{
+  "captured_utc": "2026-10-03T15:20:52.848774+00:00",
+  "branch": "codex/pokevoice",
+  "base": "a74d626d",
+  "build": {
+    "status": "PASS",
+    "passed": 230,
+    "skipped": 2,
+    "failed": 0,
+    "discovered": 232
+  },
+  "staging_autotest": {
+    "status": "PASS",
+    "passed": 763,
+    "failed": 0,
+    "utc": "2026-10-03T19:43:15Z",
+    "jar_sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0"
+  },
+  "final_candidate_sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0",
+  "final_candidate_staging_restart": {
+    "status": "PASS",
+    "done_utc": "2026-10-03T15:21:57Z",
+    "engine_utc": "2026-10-03T15:22:00Z",
+    "cache_utc": "2026-10-03T15:22:06Z",
+    "udp_bind": "127.0.0.1:24590"
+  },
+  "real_audio": "NOT RUN",
+  "load_tps_udp": "NOT RUN",
+  "production_deployment": {
+    "utc": "20261003T194908Z",
+    "backup": "/var/backups/pokereport/pokevoice-production/20261003T194908Z",
+    "jar_sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0",
+    "voice_port": 24591,
+    "allocation_id": 22,
+    "status": "PASS_STARTUP_AND_UDP",
+    "audio_real": "NOT RUN",
+    "started_utc": "2026-10-03T19:50:10Z",
+    "cache_utc": "2026-10-03T19:50:18Z",
+    "schema_version": 57,
+    "udp_ping_ms": 113,
+    "udp_ping_attempts": 1,
+    "primary_backend_preserved": "172.18.0.1:25567",
+    "wings_port_mapping_verified": true,
+    "client_visual_qa": "NOT RUN",
+    "shutdown_note": "Minecraft saved all dimensions and closed DB; lingering Java process required Docker stop after Wings graceful stop timeout; backup taken only after exit"
+  },
+  "release_certification": "BLOCKED",
+  "backup": "/var/backups/pokereport/pokevoice/20261003T150620Z",
+  "database_migration": {
+    "status": "PASS",
+    "version": 57,
+    "description": "pokevoice",
+    "initial_relationship_rows": 0,
+    "initial_preference_rows": 0
+  },
+  "staging_public_access": {
+    "status": "PASS",
+    "proxy": "15.235.16.131:25595",
+    "udp_port": 24590,
+    "source_ip_restriction": false,
+    "whitelisted_users": [
+      "TheJuanCE",
+      "Freddysillo"
+    ],
+    "backend": "127.0.0.1:25590",
+    "rcon": "127.0.0.1:25591",
+    "real_audio": "NOT RUN"
+  },
+  "launcher_publication": {
+    "previous_pointer": {
+      "packVersion": "0.2.0",
+      "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-357c9ecd0e.json",
+      "sha1": "357c9ecd0ee05752a5188f622b0364191a4b0989",
+      "size": 63698,
+      "publicado": "2026-10-03T16:24:47Z"
+    },
+    "new_pointer": {
+      "packVersion": "0.2.0",
+      "manifest": "https://github.com/corderovibes-collab/luna-eternal-pack/releases/download/pack-assets/manifest-ffb7b92111.json",
+      "sha1": "ffb7b92111439523dea64a7b55f059b0ef78c1b7",
+      "size": 63698,
+      "publicado": "2026-10-03T19:39:10Z"
+    },
+    "asset": "lunaeternal-pokevoice-16905cf3a5.jar",
+    "only_entry_changed": "mods/lunaeternal-0.1.0.jar",
+    "sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0",
+    "published": true,
+    "download_hash_verified": true,
+    "pointer_verified": true
+  },
+  "ui_auth_build": {
+    "status": "PASS",
+    "tests": 232,
+    "passed": 230,
+    "skipped": 2,
+    "failures": 0,
+    "errors": 0
+  },
+  "public_udp_ping": {
+    "status": "PASS",
+    "tool": "henkelmax/svc-cli-utils 1.0.4",
+    "endpoint": "15.235.16.131:24590",
+    "latency_ms": 87,
+    "attempts": 1,
+    "does_not_validate_audio": true
+  },
+  "easy_auth_diagnosis": {
+    "client_secret_request_sent": true,
+    "server_request_not_received": true,
+    "initial_custom_payload_blocked": true,
+    "fix": "allow only voicechat:request_secret; microphone API authentication gate",
+    "post_fix_real_client": "NOT RUN"
+  }
+}

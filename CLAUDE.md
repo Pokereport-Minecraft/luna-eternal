@@ -1,4 +1,24 @@
+> **2026-10-04 — Nether/End:** acceso bloqueado para jugadores por portales y teletransportes; OP con rol staff conserva mantenimiento. Posiciones antiguas se corrigen al lobby. 242 PASS / 2 SKIPPED; staging 803 autotests y 53 ensayos PASS. Ver docs/RESTRICTED_DIMENSIONS.md.
+
+> **2026-10-03 — PC remoto:** tecla P y /pc exigen rango comercial Campeón/Maestro/Leyenda, incluso para OP/staff. PCs físicos siguen accesibles. Se elimina la excepción administrativa anterior; ver docs/REMOTE_PC_COMMERCIAL_RANK.md.
+
+> **2026-10-03 — Reset preapertura:** usuario autorizó borrar todos los datos de jugadores, incluido Tebex local. Principal vacío y reiniciado; 26 cuentas y 23 pagos locales retirados, inventarios/Pokémon/progreso/auth/OP/grants borrados. Mundos/NPCs/configuración preservados, backup probado y cola externa Tebex vacía. El panel externo y backups conservan historial; staging detenido. Fundador debe registrarse y reasignarse desde consola. Ver [docs/PREOPENING_PLAYER_RESET.md](docs/PREOPENING_PLAYER_RESET.md).
+
+> **2026-10-03 — Vídeos:** caché FFmpeg incompleta bloqueaba Oak/Torre/gimnasios. Reparación automática de DLL oficiales al arranque del cliente, sin cambiar servidor. Diagnóstico y validación nativa en [docs/MEDIA_PLAYBACK_FIX.md](docs/MEDIA_PLAYBACK_FIX.md). QA audiovisual completo pendiente.
+
+## PokeVoice — candidato aislado (2026-10-03)
+
+Rama `codex/pokevoice`, base `a74d626d`. Simple Voice Chat Fabric 1.21.1 2.6.22, API 2.6.20; consentimiento por UUID en V057. Nuevo módulo `voice`, app PokéPad `pokevoice`; filtro exclusivo SOURCE_PROXIMITY. No SQL en audio. Estado de promoción BLOCKED hasta audio real con dos equipos y carga. Cliente publicado automáticamente y principal desplegado por solicitud expresa: UDP 24591/allocation 22. Arranque/UDP PASS, audio real y QA visual aún NOT RUN. Ver `docs/pokevoice/RELEASE_REPORT.md` y `docs/pokevoice/POKEVOICE_QA.md`; no contar microbenchmark como multiplayer.
+
 # CLAUDE.md — PokeReport: Luna Eternal
+
+> **2026-10-02 — Puertas y roles:** por petición del usuario, clic normal en puertas con bloques en mano conserva interacción nativa y protección de colocación. `/pradmin rol asignar <jugador conectado> <rol>` gestiona OP/grants y etiqueta operativa persistente, sin cambiar rango comercial. Detalles y validación en [docs/DOORS_AND_STAFF_ROLES.md](docs/DOORS_AND_STAFF_ROLES.md).
+
+> **2026-10-02 — Aviso de inicial:** corrección exclusivamente de cliente en `StarterToastMixin`: evita que PartyOverlay añada el aviso genérico de Cobblemon, conservando selección mediante Oak y flags reales. Build 186 PASS / 2 SKIPPED; publicación y límites de QA visual en [docs/STARTER_TOAST_FIX.md](docs/STARTER_TOAST_FIX.md).
+
+> **2026-10-02 — Portal y wiki:** `website/` contiene el proyecto editable de pokereport.online, publicado en el host SSH `su` (/opt/pokereport). Portada, `/jugar/`, `/wiki/` y tienda original en `/tienda/`; descarga del launcher desde el propio dominio. PokéPad Wiki habilitada con confirmación de Minecraft. No se cambiaron protocolo ni servidor de juego. Despliegue, restauración y comprobaciones en [website/README.md](website/README.md).
+
+> **2026-10-02 — Lunita conmemorativa:** guardiana GeckoLib reparada y especie Cobblemon independiente `lunaeternal:lunita`, Hada/Psíquico, habilidades y movimientos de Eevee, ambos hombros y Pokédex propia. Solo entrega administrativa `/lunita dar <jugador> [nivel]`; sin aparición natural, cría ni evolución. Evidencia: [docs/lunita-v2-validation.md](docs/lunita-v2-validation.md). El usuario autorizó instalar pese a seis fallos generales preexistentes; parches dirigidos preservan los activos ajenos.
 
 > Documento maestro. **Se lee antes de cualquier trabajo.** Si una decisión
 > arquitectónica cambia, se actualiza aquí antes de cerrar la sesión.

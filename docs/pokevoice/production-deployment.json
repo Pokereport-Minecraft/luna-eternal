@@ -1,0 +1,18 @@
+{
+  "utc": "20261003T194908Z",
+  "backup": "/var/backups/pokereport/pokevoice-production/20261003T194908Z",
+  "jar_sha256": "63bdca36e32707c9ee6bea29b6b8d0cbc41193de609eeda67b8c5b24a99183a0",
+  "voice_port": 24591,
+  "allocation_id": 22,
+  "status": "PASS_STARTUP_AND_UDP",
+  "audio_real": "NOT RUN",
+  "started_utc": "2026-10-03T19:50:10Z",
+  "cache_utc": "2026-10-03T19:50:18Z",
+  "schema_version": 57,
+  "udp_ping_ms": 113,
+  "udp_ping_attempts": 1,
+  "primary_backend_preserved": "172.18.0.1:25567",
+  "wings_port_mapping_verified": true,
+  "client_visual_qa": "NOT RUN",
+  "shutdown_note": "Minecraft saved all dimensions and closed DB; lingering Java process required Docker stop after Wings graceful stop timeout; backup taken only after exit"
+}

@@ -3766,6 +3766,7 @@ public class Red implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        net.pokereport.luna.voice.VoiceNet.register();
         net.pokereport.luna.quienesepokemon.QuienEsEsePokemonNet.registrar();
         net.pokereport.luna.buhonero.BuhoneroNet.registrar();
         // ⚠⚠⚠ EL TIPO DE CONTENEDOR DE LA MOCHILA VA AQUI, en el entrypoint
@@ -5064,6 +5065,12 @@ public class Red implements ModInitializer {
                 } catch (Exception e) {
                     LunaEternal.LOG.warn("No se pudo cobrar la mision {}: {}",
                             carga.id(), e.toString());
+                    jugador.getServer().execute(() -> {
+                        if (!jugador.isRemoved()) {
+                            jugador.sendMessage(net.minecraft.text.Text.translatable(
+                                    "pokepad.lunaeternal.mision.error_cobro"), false);
+                        }
+                    });
                 }
                 // Se reenvia SIEMPRE, saliera bien o mal: es la forma de que la
                 // pantalla vuelva a la verdad sin tener que adivinar que cambio.
