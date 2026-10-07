@@ -537,6 +537,8 @@ EXTRA_JUGADOR = [
     # Es la unica via que permite su licencia (§2.1, §2.2.a) — ver
     # docs/technical/client-pack.md §2-quater.
     "euphoria-patches",
+    "lootr",
+    "lootrmon",
     # ⚠ SHINE SE RETIRO EL 2026-08-17. NO VOLVER A METERLO SIN LEER ESTO.
     #
     # CRASHEABA EL CLIENTE AL RENDERIZAR:
@@ -585,7 +587,7 @@ EXTRA_JUGADOR = [
     #   dos cosas distintas y por eso solo hace falta tocar una.
     "lmd",
     # Jade: HUD informativo de bloques, entidades y cofres
-    "jade",
+    # "jade",
     # Image2Map: Convierte imágenes en mapas para carteles gigantes y marcos luminosos
     "image2map",
 ]
@@ -1417,3 +1419,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

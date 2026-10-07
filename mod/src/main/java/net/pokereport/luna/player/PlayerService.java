@@ -119,6 +119,21 @@ public final class PlayerService {
         throw new SQLException("No se pudo resolver player_id para " + mcUuid);
     }
 
+    public void savePlayTicks(UUID mcUuid, long playTicks) {
+        // Actualizamos de forma asíncrona para no bloquear el DISCONNECT
+        Thread.ofVirtual().start(() -> {
+            try (Connection c = db.connection();
+                 PreparedStatement ps = c.prepareStatement(
+                     "UPDATE player SET play_ticks = ? WHERE mc_uuid = ?")) {
+                ps.setLong(1, playTicks);
+                ps.setString(2, mcUuid.toString());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                // Falla silenciosa, la próxima vez que se guarde se actualizará.
+            }
+        });
+    }
+
     public void forget(UUID mcUuid) {
         cache.remove(mcUuid);
     }

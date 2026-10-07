@@ -7113,7 +7113,7 @@ public class Red implements ModInitializer {
                 entradas.add(new EntradaTienda(
                         pila,
                         e.label() == null ? "" : e.label(),
-                        e.buy(), e.sell(), e.currency().name(), e.clave()));
+                        net.pokereport.luna.shop.DynamicPricing.getDynamicBuyPrice(e), net.pokereport.luna.shop.DynamicPricing.getDynamicSellPrice(e), e.currency().name(), e.clave()));
             }
             salida.add(new CategoriaTienda(c.id(), c.name(),
                     net.minecraft.registry.Registries.ITEM.getId(c.icon()).toString(),

@@ -33,14 +33,14 @@ import net.pokereport.luna.net.Red;
  *           Plata te dieron</td></tr>
  * </table>
  *
- * <h2>⚠ El toast solo llega a quien tiene el mod</h2>
+ * <h2>? El toast solo llega a quien tiene el mod</h2>
  *
  * Es un paquete nuestro. El chat y la barra de acción son de vanilla y llegan
  * siempre, así que <b>quien no tenga el mod se entera igual</b> — con menos
  * fanfarria, pero se entera. Por eso no se manda solo el toast: sería un aviso
  * que desaparece según con qué cliente entres.
  *
- * <h2>⚠ Se llama SIEMPRE desde el hilo del servidor</h2>
+ * <h2>? Se llama SIEMPRE desde el hilo del servidor</h2>
  *
  * La red no es segura desde un hilo cualquiera, y estos avisos nacen casi siempre
  * en el executor de E/S. Cada método salta al hilo del servidor por su cuenta,
@@ -74,7 +74,7 @@ public final class Aviso {
                 return;
             }
             try {
-                // ⚠ EL TOAST EN try/catch APARTE. Si el cliente no tiene el mod,
+                // ? EL TOAST EN try/catch APARTE. Si el cliente no tiene el mod,
                 //   `send` puede quejarse; el chat y el sonido tienen que llegar
                 //   igual. Un aviso a medias es mejor que ninguno.
                 ServerPlayNetworking.send(jugador,
@@ -86,8 +86,8 @@ public final class Aviso {
             // La barra de acción lleva el titular; el chat, el detalle. Repetir lo
             // mismo en los dos sitios es ruido.
             jugador.sendMessage(Text.literal("§6§l" + titulo), true);
-            jugador.sendMessage(Text.literal("§6" + titulo + " §8· §f" + detalle), false);
-            // ⚠⚠⚠ `playSoundToPlayer` Y NO `playSound`, Y ES AL REVÉS DE LO QUE
+            // spam en chat desactivado
+            // ??? `playSoundToPlayer` Y NO `playSound`, Y ES AL REVÉS DE LO QUE
             //    PARECE. Leído del bytecode de 1.21.1:
             //
             //      PlayerEntity.playSound(s, v, p)
@@ -111,14 +111,14 @@ public final class Aviso {
      * gimnasio es lo contrario — es el final de algo, y merece parar la pantalla
      * un segundo. Petición del usuario, y es la decisión correcta.
      *
-     * <h2>⚠⚠ ESTO SÍ LLEGA A TODO EL MUNDO, TENGA O NO NUESTRO MOD</h2>
+     * <h2>?? ESTO SÍ LLEGA A TODO EL MUNDO, TENGA O NO NUESTRO MOD</h2>
      *
      * El título es un paquete de <b>vainilla</b> ({@code TitleS2CPacket}), al
      * contrario que el toast, que solo lo dibuja quien tiene el mod. Para algo
      * que marca un hito eso importa: nadie se queda sin enterarse de que ha
      * ganado.
      *
-     * <p>⚠ Y los tiempos van explícitos. Si no se mandan, se queda el último que
+     * <p>? Y los tiempos van explícitos. Si no se mandan, se queda el último que
      * usara <b>otro mod o el propio servidor</b>, y un día el mensaje aparece y
      * desaparece en dos fotogramas sin que nadie sepa por qué.
      *
