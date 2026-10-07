@@ -97,7 +97,6 @@ PACK_BASE = "cobbleverse"
 # motivo, y esta escrito para que dentro de seis meses nadie lo vuelva a anadir
 # "porque venia en el oficial".
 EXCLUIDOS = {
-    "music-notification": "Retirado por peticion del usuario: quitar Open Jukebox del cliente (2026-10-03).",
     "stendhal":
         "CC-BY-NC-ND-4.0. El NC prohibe el uso con animo comercial y el plan "
         "incluye venta de paquetes (D-007). No es cuestion de redistribuir: es "

@@ -55,13 +55,14 @@ El prefijo es **`[ PokeReport ]`** y los mensajes están en español, en
 
 ### Los cinco escalones
 
-> ⚠⚠⚠ **El número que se configura es el RADIO, no el lado.** Un cuadrado
-> centrado en el propio módulo tiene **siempre** lado impar —el módulo más `r`
-> a cada lado—, así que un 50×50 exacto **no existe**. Los cinco son radio
-> 7 · 25 · 50 · 80 · 125, o sea **15×15 · 51×51 · 101×101 · 161×161 ·
-> 251×251**, y se llaman por su tamaño real: llamar «50×50» a algo que protege
-> 51 genera la pregunta *«me dijiste 50»* y además descuadra cualquier cuenta
-> de solapes.
+> ⚠⚠⚠ **El número que se configura es el RADIO (`radius_x`, `radius_z`), que representa la distancia protegida desde el bloque central hacia cada dirección.**
+> Anteriormente se habían configurado a la mitad (7, 25, 50, 80, 125) asumiendo diámetro total, lo que hacía que el jugador sólo pudiera caminar 7 bloques desde el centro antes de quedar desprotegido («dice que cubre 15x15 pero cubre mucho menos»).
+> Con los radios reales (15 · 50 · 100 · 160 · 250), la protección cubre efectivamente esa distancia hacia cada lado:
+> - Poké Ball: radio 15 (15 bloques a cada lado, total 31×31)
+> - Great Ball: radio 50 (50 bloques a cada lado, total 101×101)
+> - Ultra Ball: radio 100 (100 bloques a cada lado, total 201×201)
+> - Luxury Ball: radio 160 (160 bloques a cada lado, total 321×321)
+> - Master Ball: radio 250 (250 bloques a cada lado, total 501×501)
 
 ### Las texturas
 
