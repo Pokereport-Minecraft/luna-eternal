@@ -258,13 +258,67 @@ public final class Lideres {
      * Escucha la carga de entidades para silenciar etiquetas de nombre y eliminar
      * instantáneamente cualquier duplicado en la recepción de la Ciudadela.
      */
-    public static void registrar() {
-        ServerEntityEvents.ENTITY_LOAD.register((entidad, mundo) -> {
-            if (entidad == null || entidad.isRemoved()) {
-                return;
-            }
+    
+    private static final java.util.Queue<Entity> pendientesDeDeduplicar = new java.util.concurrent.ConcurrentLinkedQueue<>();
 
-            // 1. Líderes de gimnasio (TrainerMob)
+    public static void registrar() {
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
+            Entity entidad;
+            while ((entidad = pendientesDeDeduplicar.poll()) != null) {
+                if (entidad.isRemoved()) continue;
+                ServerWorld mundo = (ServerWorld) entidad.getWorld();
+                
+                // 1. Lideres de gimnasio (TrainerMob)
+                if (entidad instanceof TrainerMob mob && entidad.getCommandTags().contains(MARCA) && entidad.getCommandTags().contains(MARCA_RECEPCION) && LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
+                    Gimnasio.Gimnasio_ g = gimnasioDe(entidad);
+                    if (g != null) {
+                        String gymTag = marcaDe(g);
+                        var pos = entidad.getPos();
+                        Box box = Box.of(pos, 4.0, 4.0, 4.0);
+                        for (var otro : mundo.getEntitiesByClass(TrainerMob.class, box, x -> x != entidad && !x.isRemoved() && x.getCommandTags().contains(gymTag))) {
+                            entidad.discard();
+                            LunaEternal.LOG.info("Deduplicado: eliminado lider repetido de {} en {}", g.id(), pos);
+                            break;
+                        }
+                    }
+                }
+                
+                // 2. Hologramas / Carteles de lideres
+                else if (entidad instanceof DisplayEntity.TextDisplayEntity text && entidad.getCommandTags().contains(Cartel.MARCA)) {
+                    for (String tag : entidad.getCommandTags()) {
+                        if (tag.startsWith("luna_cartel_") && !tag.equals(Cartel.MARCA)) {
+                            var pos = entidad.getPos();
+                            Box box = Box.of(pos, 4.0, 4.0, 4.0);
+                            for (var otro : mundo.getEntitiesByClass(DisplayEntity.TextDisplayEntity.class, box, x -> x != entidad && !x.isRemoved() && x.getCommandTags().contains(tag))) {
+                                entidad.discard();
+                                LunaEternal.LOG.info("Deduplicado: eliminado cartel repetido con tag {} en {}", tag, pos);
+                                break;
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                // 3. Pokemon decorativos en Ciudadela
+                else if (entidad instanceof PokemonEntity poke && entidad.getCommandTags().contains(Decorativos.MARCA) && LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
+                    var pData = poke.getPokemon();
+                    if (pData != null && pData.getSpecies() != null) {
+                        String esp = pData.getSpecies().getName();
+                        var pos = entidad.getPos();
+                        Box box = Box.of(pos, 4.0, 4.0, 4.0);
+                        for (var otro : mundo.getEntitiesByClass(PokemonEntity.class, box, x -> x != entidad && !x.isRemoved() && x.getCommandTags().contains(Decorativos.MARCA) && x.getPokemon() != null && x.getPokemon().getSpecies() != null && esp.equalsIgnoreCase(x.getPokemon().getSpecies().getName()))) {
+                            entidad.discard();
+                            LunaEternal.LOG.info("Deduplicado: eliminado pokemon decorativo repetido ({}) en {}", esp, pos);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
+        ServerEntityEvents.ENTITY_LOAD.register((entidad, mundo) -> {
+            if (entidad == null || entidad.isRemoved()) return;
+
             if (entidad instanceof TrainerMob mob && entidad.getCommandTags().contains(MARCA)) {
                 mob.setCustomName(null);
                 mob.setCustomNameVisible(false);
@@ -272,63 +326,14 @@ public final class Lideres {
                 mob.setInvulnerable(true);
                 mob.setSilent(true);
                 mob.setPersistent(true);
-
-                if (entidad.getCommandTags().contains(MARCA_RECEPCION)
-                        && LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
-                    Gimnasio.Gimnasio_ g = gimnasioDe(entidad);
-                    if (g != null) {
-                        String gymTag = marcaDe(g);
-                        var pos = entidad.getPos();
-                        Box box = Box.of(pos, 4.0, 4.0, 4.0);
-                        for (var otro : mundo.getEntitiesByClass(TrainerMob.class, box,
-                                x -> x != entidad && !x.isRemoved() && x.getCommandTags().contains(gymTag))) {
-                            entidad.discard();
-                            LunaEternal.LOG.info("Deduplicado: eliminado líder repetido de {} en {}", g.id(), pos);
-                            return;
-                        }
-                    }
-                }
+                pendientesDeDeduplicar.add(entidad);
             }
-
-            // 2. Hologramas / Carteles de líderes
-            if (entidad instanceof DisplayEntity.TextDisplayEntity text
-                    && entidad.getCommandTags().contains(Cartel.MARCA)) {
-                for (String tag : entidad.getCommandTags()) {
-                    if (tag.startsWith("luna_cartel_") && !tag.equals(Cartel.MARCA)) {
-                        var pos = entidad.getPos();
-                        Box box = Box.of(pos, 4.0, 4.0, 4.0);
-                        for (var otro : mundo.getEntitiesByClass(DisplayEntity.TextDisplayEntity.class, box,
-                                x -> x != entidad && !x.isRemoved() && x.getCommandTags().contains(tag))) {
-                            entidad.discard();
-                            LunaEternal.LOG.info("Deduplicado: eliminado cartel repetido con tag {} en {}", tag, pos);
-                            return;
-                        }
-                        break;
-                    }
-                }
+            else if (entidad instanceof DisplayEntity.TextDisplayEntity text && entidad.getCommandTags().contains(Cartel.MARCA)) {
+                pendientesDeDeduplicar.add(entidad);
             }
-
-            // 3. Pokémon decorativos en Ciudadela
-            if (entidad instanceof PokemonEntity poke
-                    && entidad.getCommandTags().contains(Decorativos.MARCA)
-                    && LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
-                var pData = poke.getPokemon();
-                if (pData != null && pData.getSpecies() != null) {
-                    String esp = pData.getSpecies().getName();
-                    var pos = entidad.getPos();
-                    Box box = Box.of(pos, 4.0, 4.0, 4.0);
-                    for (var otro : mundo.getEntitiesByClass(PokemonEntity.class, box,
-                            x -> x != entidad && !x.isRemoved()
-                                    && x.getCommandTags().contains(Decorativos.MARCA)
-                                    && x.getPokemon() != null && x.getPokemon().getSpecies() != null
-                                    && esp.equalsIgnoreCase(x.getPokemon().getSpecies().getName()))) {
-                        entidad.discard();
-                        LunaEternal.LOG.info("Deduplicado: eliminado pokémon decorativo repetido ({}) en {}", esp, pos);
-                        return;
-                    }
-                }
+            else if (entidad instanceof PokemonEntity poke && entidad.getCommandTags().contains(Decorativos.MARCA) && LunaDimensions.CIUDADELA.equals(mundo.getRegistryKey())) {
+                pendientesDeDeduplicar.add(entidad);
             }
-
         });
     }
 
