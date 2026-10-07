@@ -25,11 +25,7 @@ public abstract class ChatFormatMixin {
             MutableText prefix = Text.empty();
             Tablist.Rank rank = Tablist.rankOf(sender.server, sender);
             
-            // Format requested: "[ELITE] PlayerName: Message"
-            // For unranked (ENTRENADOR): "PlayerName: Message"
-            if (rank != Tablist.Rank.ENTRENADOR) {
-                prefix.append(Text.literal("[" + rank.titulo + "] ").formatted(rank.color));
-            }
+            prefix.append(Tablist.prefixOf(rank));
             
             Tablist.ClanInfo clan = Tablist.clanDe(sender);
             if (clan != null && !clan.etiqueta().isEmpty()) {
