@@ -3260,7 +3260,7 @@ public final class LunaCommand {
                     + "Sin el, los bloques que coloques no hacen nada."));
                 return 0;
             }
-            var donde = buscarBloque(mundo, origen, alcance, bloque);
+            var donde = buscarBloque(mundo, g, origen, alcance, c[0], bloque);
             if (donde == null) {
                 boolean grave = "OBLIGATORIO".equals(c[2]);
                 s.sendFeedback(() -> Text.literal(
@@ -3301,14 +3301,14 @@ public final class LunaCommand {
         var m = net.pokereport.luna.gym.Arenas.medir(s.getServer(), g);
         if (m != null && encontrados > 0) {
             int fondo = m[2] + m[5];
-            var pp = buscarBloque(mundo, origen, alcance,
+            var pp = buscarBloque(mundo, g, origen, alcance, "player_pokemon_position",
                     net.minecraft.registry.Registries.BLOCK.get(
                         net.minecraft.util.Identifier.of(
                             "cobblemonbattlepositions", "player_pokemon_position")));
             if (pp != null) {
                 int zb = pp.getZ() - origen.getZ();
                 // Lo peor posible: alguien de pie en el borde sur de su sala.
-                int aLaSiguiente = net.pokereport.luna.gym.Gimnasio.PASO_RANURA
+                int aLaSiguiente = net.pokereport.luna.gym.Gimnasio.pasoRanura(g)
                         + zb - fondo;
                 boolean seguro = aLaSiguiente > RADIO_POSICIONES;
                 s.sendFeedback(() -> Text.literal(seguro
@@ -3338,12 +3338,36 @@ public final class LunaCommand {
     /** Busca un bloque dentro de la caja del maestro. Devuelve el primero. */
     private static net.minecraft.util.math.BlockPos buscarBloque(
             net.minecraft.server.world.ServerWorld mundo,
+            net.pokereport.luna.gym.Gimnasio.Gimnasio_ g,
             net.minecraft.util.math.BlockPos origen, int alcance,
+            String idBloque,
             net.minecraft.block.Block bloque) {
+        var lista = net.pokereport.luna.gym.Arenas.POSICIONES_KANTO.get(g.id());
+        if (lista == null) {
+            lista = net.pokereport.luna.gym.Arenas.POSICIONES_JOHTO.get(g.id());
+        }
+        if (lista != null) {
+            for (var pb : lista) {
+                if (pb.idBloque().equals(idBloque)) {
+                    var p = new net.minecraft.util.math.BlockPos(pb.x(), pb.y(), pb.z());
+                    if (mundo.getBlockState(p).isOf(bloque)) {
+                        return p;
+                    }
+                }
+            }
+        }
+        int[] m = net.pokereport.luna.gym.Arenas.medida(mundo.getServer(), g);
+        int minX = m != null ? m[0] : -32;
+        int maxX = m != null ? m[0] + m[3] : alcance;
+        int minY = m != null ? m[1] : -16;
+        int maxY = m != null ? m[1] + m[4] : 120;
+        int minZ = m != null ? m[2] : -48;
+        int maxZ = m != null ? m[2] + m[5] : alcance;
+
         var pos = new net.minecraft.util.math.BlockPos.Mutable();
-        for (int dy = -16; dy < 120; dy++) {
-            for (int dz = 0; dz < alcance; dz++) {
-                for (int dx = 0; dx < alcance; dx++) {
+        for (int dy = minY; dy < maxY; dy++) {
+            for (int dz = minZ; dz < maxZ; dz++) {
+                for (int dx = minX; dx < maxX; dx++) {
                     pos.set(origen.getX() + dx, origen.getY() + dy,
                             origen.getZ() + dz);
                     if (mundo.getBlockState(pos).isOf(bloque)) {
