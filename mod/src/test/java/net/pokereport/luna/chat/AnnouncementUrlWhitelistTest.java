@@ -17,6 +17,8 @@ public class AnnouncementUrlWhitelistTest {
         assertTrue(ServerAnnouncementService.isUrlWhitelisted("https://pokereport.online/tienda/"));
         assertTrue(ServerAnnouncementService.isUrlWhitelisted("https://play.pokereport.online"));
         assertTrue(ServerAnnouncementService.isUrlWhitelisted("https://discord.gg/JsUTQWRH8H"));
+        assertTrue(ServerAnnouncementService.isUrlWhitelisted("https://pokereport.tebex.io/"));
+        assertTrue(ServerAnnouncementService.isUrlWhitelisted("https://checkout.tebex.io/"));
     }
 
     @Test

@@ -21,7 +21,8 @@ public final class ServerAnnouncementService {
 
     public static final Set<String> DOMAIN_WHITELIST = Set.of(
             "pokereport.online",
-            "discord.gg"
+            "discord.gg",
+            "tebex.io"
     );
 
     public record Announcement(

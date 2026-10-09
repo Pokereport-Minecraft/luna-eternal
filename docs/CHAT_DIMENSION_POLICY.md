@@ -16,7 +16,7 @@ Chat System 2.0 establishes strict spatial and dimensional isolation across Poke
 | **Ciudadela** | `lunaeternal:ciudadela` | `(4.27, 70.00, 0.36)` yaw `0.0°` | **STANDARD SOCIAL HUB + ANNOUNCEMENTS** |
 | **Mundo Hogar** | `minecraft:overworld` | World spawn | Standard Gameplay (Global / Local / Trade / Clan) |
 | **Mundos Salvajes** | `lunaeternal:salvaje` (1-6) | Dynamic terrain surface | Standard Gameplay (Global / Local / Trade / Clan) |
-| **Gimnasios** | `lunaeternal:gimnasios` | Arena offset coordinates | Battle Focus (Global / Staff / Private) |
+| **Gimnasios** | `lunaeternal:gimnasios` | Arena offset coordinates | Battle Focus (Global / Local 64m / Staff / Private) |
 
 ---
 
