@@ -35,6 +35,7 @@
     "battle.StrongBattleAIReplacementMixin",
     "battle.PokemonBattleSafetyMixin",
     "battle.BattleSelectActionsHandlerMixin",
+    "battle.PokemonModelConverterFixMixin",
     "LumyRemotePcMixin",
     "StaffOnlyPlayerNoticesMixin",
     "StaffOnlyDeathNoticeMixin",

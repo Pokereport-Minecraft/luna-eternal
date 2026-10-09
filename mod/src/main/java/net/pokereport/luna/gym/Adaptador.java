@@ -114,6 +114,12 @@ public final class Adaptador {
             int minCuantos = Gimnasio.equipoMinimo(g);
             int cuantos = Math.max(minCuantos, Math.min(TOPE_EQUIPO, rival.size()));
             var equipo = componer(pool, rival, cuantos, g.nivel());
+            var validacion = GymTeamValidator.validar(equipo, g);
+            if (!validacion.valid()) {
+                LunaEternal.LOG.warn("[ADAPTIVE-FALLBACK] Validación fallida para {}: {}. Usando fallback canónico.",
+                        g.id(), validacion.reason());
+                return false;
+            }
 
             var registro = ModCommon.RCT.getTrainerRegistry();
             String id = PREFIJO + g.id() + "_" + jugador.getUuid();

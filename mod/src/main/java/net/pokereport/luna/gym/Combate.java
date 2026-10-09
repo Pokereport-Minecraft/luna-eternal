@@ -631,7 +631,15 @@ public final class Combate {
             return;
         }
         if (mob.isInBattle() || RCTMod.getInstance().isInBattle(jugador)) {
-            return;
+            var b = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(jugador.getUuid());
+            if (b == null || b.getEnded()) {
+                LunaEternal.LOG.warn("[COMBATE-REMEDY] Estado en combate obsoleto para {} o {}. Restableciendo...",
+                        jugador.getName().getString(), g.id());
+                try { mob.cancelBattle(); } catch (Throwable ignored) {}
+                try { RCTMod.getInstance().getTrainerManager().removeBattle(jugador.getUuid()); } catch (Throwable ignored) {}
+            } else {
+                return;
+            }
         }
         int sobreNivel = primerSobreNivel(jugador, g.nivel());
         if (!PRUEBAS.contains(jugador.getUuid()) && sobreNivel > 0) {
@@ -1093,6 +1101,9 @@ public final class Combate {
         //    no se vacía solo: sin esta línea crecería con cada reto del
         //    servidor, para siempre, sin dar ningún error.
         Adaptador.soltar(jugador.getUuid());
+        try {
+            RCTMod.getInstance().getTrainerManager().removeBattle(jugador.getUuid());
+        } catch (Throwable ignored) {}
 
         // Identificar gimnasio y ranura antes de soltarla en Ranuras
         var asig = Ranuras.asignacionDe(jugador.getUuid());

@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.battles.PassActionResponse;
 import com.cobblemon.mod.common.battles.ShowdownActionRequest;
+import com.cobblemon.mod.common.battles.ShowdownActionResponse;
 import com.cobblemon.mod.common.battles.ShowdownInterpreter;
 import com.cobblemon.mod.common.battles.SwitchActionResponse;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
@@ -16,7 +17,11 @@ import com.cobblemon.mod.common.battles.dispatch.DispatchResultKt;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleMakeChoicePacket;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleQueueRequestPacket;
+import com.gitlab.srcmc.rctmod.api.RCTMod;
+import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import net.minecraft.text.Text;
+import net.pokereport.luna.LunaEternal;
+import net.pokereport.luna.battle.TrainerBattleAI;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,22 +29,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
- * Red de seguridad activa en PokemonBattle.tick().
+ * Red de seguridad activa en PokemonBattle.
  *
  * Supervisa los combates en curso para evitar bloqueos por desincronización o paquetes perdidos:
- * 1. Si hay cambios forzados pendientes y la cola de dispatches está ociosa, garantiza que la IA
- *    genere su elección (con fallback al primer Pokémon vivo de banquillo) y que el jugador reciba
- *    el diálogo de selección.
- * 2. Si todos los combatientes con cambio forzado tienen sus respuestas listas, dispara checkForInputDispatch().
- * 3. Si todos los Pokémon de ambos bandos están debilitados y Showdown no ha finalizado, resuelve empate.
- * 4. Si un bando tiene 0 Pokémon en todo su equipo y el otro tiene vivos, declara ganador al bando con vida.
+ * 1. Garantiza que la IA y el jugador tengan sus opciones activas en cada turno (tanto cambios forzados como turnos regulares).
+ * 2. Si un actor IA se atasca, rescata su elección y limpia el conjunto de solicitudes de RCT.
+ * 3. Si un combate termina (por victoria, derrota, huida, empate o forzado), limpia de forma determinista el estado de TrainerMob y RCT.
+ * 4. Resuelve empates y victorias estancadas si Showdown deja de responder.
  */
 @Mixin(value = PokemonBattle.class, priority = 9999, remap = false)
 public abstract class PokemonBattleSafetyMixin {
@@ -78,9 +83,6 @@ public abstract class PokemonBattleSafetyMixin {
     public abstract void setLosers(List<? extends BattleActor> losers);
 
     @Shadow(remap = false)
-    public abstract void end();
-
-    @Shadow(remap = false)
     public abstract UUID getBattleId();
 
     @Shadow(remap = false)
@@ -97,6 +99,37 @@ public abstract class PokemonBattleSafetyMixin {
 
     @Unique
     private int pokeReport$stuckTicks = 0;
+
+    /**
+     * Limpieza completa de entrenadores y estado de batalla al finalizar cualquier combate.
+     */
+    @Inject(method = "end", at = @At("HEAD"), remap = false)
+    private void pokeReport$onBattleEndCleanTrainers(CallbackInfo ci) {
+        PokemonBattle battle = (PokemonBattle) (Object) this;
+        try {
+            for (BattleActor actor : battle.getActors()) {
+                for (UUID pUuid : actor.getPlayerUUIDs()) {
+                    try {
+                        var bOpt = RCTMod.getInstance().getTrainerManager().getBattle(pUuid);
+                        if (bOpt.isPresent()) {
+                            var tb = bOpt.get();
+                            for (TrainerMob mob : tb.getTrainerSideMobs()) {
+                                if (mob != null) mob.cancelBattle();
+                            }
+                            for (TrainerMob mob : tb.getInitiatorSideMobs()) {
+                                if (mob != null) mob.cancelBattle();
+                            }
+                        }
+                    } catch (Throwable ignored) {}
+                    try {
+                        RCTMod.getInstance().getTrainerManager().removeBattle(pUuid);
+                    } catch (Throwable ignored) {}
+                }
+            }
+        } catch (Throwable t) {
+            LunaEternal.LOG.warn("[BATTLE-SAFETY] Error limpiando estado de entrenadores en end(): {}", t.getMessage());
+        }
+    }
 
     /**
      * Reemplazo robusto de checkForInputDispatch con prioridad 9999.
@@ -158,10 +191,8 @@ public abstract class PokemonBattleSafetyMixin {
         DispatchResult dr = this.getDispatchResult();
         if (dr != null && !dr.canProceed()) {
             this.pokeReport$stuckTicks++;
-            // 200 ticks = 10 segundos continuos sin avanzar de animación / future.
-            // Los faints y recalls normales tardan entre 2.5s y 3.5s (50-70 ticks), por lo que 80 ticks generaba falsos positivos.
             if (this.pokeReport$stuckTicks >= 200) {
-                net.pokereport.luna.LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} atascada en DispatchResult por {} ticks. Desatascando...",
+                LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} atascada en DispatchResult por {} ticks. Desatascando...",
                         this.getBattleId(), this.pokeReport$stuckTicks);
                 this.pokeReport$stuckTicks = 0;
                 this.setDispatchResult(DispatchResultKt.getGO());
@@ -172,7 +203,7 @@ public abstract class PokemonBattleSafetyMixin {
         if (!this.getDispatches().isEmpty()) {
             this.pokeReport$stuckTicks++;
             if (this.pokeReport$stuckTicks >= 200) {
-                net.pokereport.luna.LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} con {} dispatches atascados por {} ticks. Desatascando...",
+                LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} con {} dispatches atascados por {} ticks. Desatascando...",
                         this.getBattleId(), this.getDispatches().size(), this.pokeReport$stuckTicks);
                 this.pokeReport$stuckTicks = 0;
                 this.setDispatchResult(DispatchResultKt.getGO());
@@ -193,20 +224,45 @@ public abstract class PokemonBattleSafetyMixin {
 
     @Unique
     private void pokeReport$revisarCombate() {
-        boolean algunCambioForzado = false;
+        boolean algunaSolicitudPendiente = false;
 
         for (BattleActor actor : this.getActors()) {
             ShowdownActionRequest req = actor.getRequest();
-            if (req != null && req.getForceSwitch() != null && req.getForceSwitch().contains(true)) {
-                algunCambioForzado = true;
+            if (req != null && !req.getWait()) {
+                algunaSolicitudPendiente = true;
 
                 // 1. Si es IA y no ha respondido:
                 if (actor instanceof AIBattleActor ai && actor.getResponses().isEmpty()) {
                     try {
+                        Field f = ai.getClass().getDeclaredField("requests");
+                        f.setAccessible(true);
+                        Object s = f.get(ai);
+                        if (s instanceof Set<?> set) {
+                            set.clear();
+                        }
+                    } catch (Throwable ignored) {}
+
+                    try {
                         ai.onChoiceRequested();
                     } catch (Throwable ignored) {}
 
-                    // Si aún no tiene respuestas, rescatar con el primer Pokémon vivo de banquillo
+                    // Rescate directo si sigue vacío
+                    if (actor.getResponses().isEmpty()) {
+                        try {
+                            List<ShowdownActionResponse> choices = req.iterate(ai.getActivePokemon(), (active, moves, forced) -> {
+                                try {
+                                    return ai.getBattleAI().choose(active, ai.getBattle(), ai.getSide(), moves, forced);
+                                } catch (Throwable t2) {
+                                    return TrainerBattleAI.forcedChoice(active, ai.getSide(), moves, forced);
+                                }
+                            });
+                            if (choices != null && !choices.isEmpty()) {
+                                actor.setActionResponses(choices);
+                            }
+                        } catch (Throwable ignored) {}
+                    }
+
+                    // Rescate con Pokémon vivo de banquillo o pase seguro
                     if (actor.getResponses().isEmpty()) {
                         BattlePokemon vivo = null;
                         for (BattlePokemon bp : actor.getPokemonList()) {
@@ -218,16 +274,21 @@ public abstract class PokemonBattleSafetyMixin {
                         if (vivo != null) {
                             vivo.setWillBeSwitchedIn(true);
                             actor.getResponses().add(new SwitchActionResponse(vivo.getUuid()));
-                            actor.setMustChoose(false);
                         } else {
                             actor.getResponses().add(PassActionResponse.INSTANCE);
-                            actor.setMustChoose(false);
                         }
                     }
+
+                    for (BattlePokemon bp : actor.getPokemonList()) {
+                        if (bp != null && !bp.isSentOut()) {
+                            bp.setWillBeSwitchedIn(false);
+                        }
+                    }
+                    actor.setMustChoose(false);
                 }
 
                 // 2. Si es Jugador y el flag mustChoose quedó apagado pero necesita elegir:
-                if (actor instanceof PlayerBattleActor playerActor && !actor.getMustChoose() && actor.getResponses().isEmpty()) {
+                if (actor instanceof PlayerBattleActor && !actor.getMustChoose() && actor.getResponses().isEmpty()) {
                     actor.setMustChoose(true);
                     actor.sendUpdate(new BattleMakeChoicePacket());
                     actor.sendUpdate(new BattleQueueRequestPacket(req));
@@ -235,12 +296,12 @@ public abstract class PokemonBattleSafetyMixin {
             }
         }
 
-        // Si hay cambio forzado en curso y los actores requeridos ya tienen respuestas preparadas:
-        if (algunCambioForzado) {
+        // Si hay solicitudes activas y todos los actores con solicitud ya tienen respuestas preparadas:
+        if (algunaSolicitudPendiente) {
             boolean listosParaEnviar = true;
             for (BattleActor a : this.getActors()) {
                 ShowdownActionRequest req = a.getRequest();
-                if (req != null && req.getForceSwitch() != null && req.getForceSwitch().contains(true)) {
+                if (req != null && !req.getWait()) {
                     if (a.getResponses().isEmpty()) {
                         listosParaEnviar = false;
                         break;
@@ -300,7 +361,7 @@ public abstract class PokemonBattleSafetyMixin {
         this.broadcastChatMessage(Text.literal("§e¡El combate ha terminado en empate!"));
         this.setWinners(Collections.emptyList());
         this.setLosers(allActors);
-        this.end();
+        ((PokemonBattle) (Object) this).end();
         try {
             CobblemonEvents.BATTLE_VICTORY.emit(new BattleVictoryEvent[]{
                 new BattleVictoryEvent((PokemonBattle)(Object)this, Collections.emptyList(), allActors, false)
@@ -321,7 +382,7 @@ public abstract class PokemonBattleSafetyMixin {
         this.broadcastChatMessage(Text.literal("§6¡" + ganador.getName().getString() + " ha ganado el combate!"));
         this.setWinners(winners);
         this.setLosers(losers);
-        this.end();
+        ((PokemonBattle) (Object) this).end();
         try {
             CobblemonEvents.BATTLE_VICTORY.emit(new BattleVictoryEvent[]{
                 new BattleVictoryEvent((PokemonBattle)(Object)this, winners, losers, false)

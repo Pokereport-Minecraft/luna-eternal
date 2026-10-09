@@ -15,6 +15,10 @@ public abstract class StrongBattleAIReplacementMixin {
     @Inject(method = "choose", at = @At("HEAD"), cancellable = true)
     private void pokeReport$safeReplacement(ActiveBattlePokemon active, PokemonBattle battle,
             BattleSide side, ShowdownMoveset moves, boolean forced, CallbackInfoReturnable<ShowdownActionResponse> cir) {
+        if (active == null || (moves == null && !forced)) {
+            cir.setReturnValue(PassActionResponse.INSTANCE);
+            return;
+        }
         var response = TrainerBattleAI.forcedChoice(active, side, moves, forced);
         if (response != null) cir.setReturnValue(response);
     }
