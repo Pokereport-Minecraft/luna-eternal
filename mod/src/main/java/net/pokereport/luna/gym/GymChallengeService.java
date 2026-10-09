@@ -130,9 +130,11 @@ public final class GymChallengeService {
     public static void tick(MinecraftServer server) {
         if (server == null || server.getTicks() % 4 != 0) return;
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-            if (player.isSpectator() || player.isCreative()) continue;
-            if (GymChallengePolicy.isStaffExempt(player)) continue;
-            if (GymChallengePolicy.isChallengeActive(player)) {
+            if (player.isSpectator()) continue;
+            boolean isStaff = GymChallengePolicy.isStaffExempt(player);
+            boolean isCreative = player.isCreative();
+
+            if (!isCreative && !isStaff && GymChallengePolicy.isChallengeActive(player)) {
                 // Bloqueo estricto de vuelo en supervivencia durante el reto
                 if (player.getAbilities().flying) {
                     player.getAbilities().flying = false;
@@ -145,17 +147,17 @@ public final class GymChallengeService {
                     player.stopRiding();
                     player.sendMessage(Text.literal("§c§lGIMNASIO §8» §7No está permitido usar monturas dentro del gimnasio."), true);
                 }
+            }
 
-                // Detección de llegada a la cámara del líder en Sabrina
-                PlayerChallenge ch = CHALLENGES.get(player.getUuid());
-                if (ch != null && "sabrina".equalsIgnoreCase(ch.gymId()) && !ch.routeCompleted()) {
-                    Gimnasio.Gimnasio_ gSabrina = Gimnasio.de("sabrina");
-                    if (gSabrina != null) {
-                        Vec3d liderPos = Gimnasio.lider(gSabrina, ch.slot());
-                        if (player.squaredDistanceTo(liderPos) <= 144.0 && Math.abs(player.getY() - liderPos.y) <= 4.0) {
-                            completarRuta(player.getUuid(), "sabrina");
-                            player.sendMessage(Text.literal("§a§l¡PARKOUR SUPERADO! §r§7Has alcanzado la cámara de Sabrina. ¡Habla con ella para combatir!"), false);
-                        }
+            // Detección de llegada a la cámara del líder en Sabrina
+            PlayerChallenge ch = CHALLENGES.get(player.getUuid());
+            if (ch != null && "sabrina".equalsIgnoreCase(ch.gymId()) && !ch.routeCompleted()) {
+                Gimnasio.Gimnasio_ gSabrina = Gimnasio.de("sabrina");
+                if (gSabrina != null) {
+                    Vec3d liderPos = Gimnasio.lider(gSabrina, ch.slot());
+                    if (player.squaredDistanceTo(liderPos) <= 144.0 && Math.abs(player.getY() - liderPos.y) <= 4.0) {
+                        completarRuta(player.getUuid(), "sabrina");
+                        player.sendMessage(Text.literal("§a§l¡PARKOUR SUPERADO! §r§7Has alcanzado la cámara de Sabrina. ¡Habla con ella para combatir!"), false);
                     }
                 }
             }

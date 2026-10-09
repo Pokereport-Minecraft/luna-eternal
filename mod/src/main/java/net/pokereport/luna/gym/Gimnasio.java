@@ -459,7 +459,11 @@ public final class Gimnasio {
         // tener patios y alas separados por huecos grandes, así que necesita la
         // misma holgura que los gimnasios de la Liga Naranja; 128 cortaría o
         // haría solapar las copias de los jugadores.
-        return (g != null && (g.region() == Region.NARANJA || "morti".equals(g.id())))
+        // Toda la región de Johto también requiere 512 porque varios de sus gimnasios
+        // (Pegaso: 161, Anton: 129, Blanca: 161, Debora: 145, Campeón Johto: 145)
+        // superan los 128 bloques de fondo, lo que causaba que Arenas.clonar se negara
+        // a clonar y las salas quedaran vacías en el vacío.
+        return (g != null && (g.region() == Region.NARANJA || g.region() == Region.JOHTO || "morti".equals(g.id())))
                 ? 512 : PASO_RANURA;
     }
 

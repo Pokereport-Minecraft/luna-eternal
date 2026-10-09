@@ -250,7 +250,7 @@ public final class Arenas {
         return servidor.getWorld(LunaDimensions.GIMNASIOS);
     }
 
-    private static ServerWorld mundoMaestro(MinecraftServer servidor, Gimnasio.Gimnasio_ g) {
+    public static ServerWorld mundoMaestro(MinecraftServer servidor, Gimnasio.Gimnasio_ g) {
         return g != null && "morti".equals(g.id()) ? servidor.getWorld(LunaDimensions.GIMNASIOS) : mundo(servidor, g);
     }
 

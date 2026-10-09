@@ -644,20 +644,20 @@ public final class Combate {
             }
         }
         int sobreNivel = primerSobreNivel(jugador, g.nivel());
-        if (!PRUEBAS.contains(jugador.getUuid()) && sobreNivel > 0) {
+        if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengePolicy.isStaffExempt(jugador) && sobreNivel > 0) {
             jugador.sendMessage(Text.literal(
                     "§c§l¡COMBATE BLOQUEADO! §r§7Tu equipo contiene Pokémon por encima del §eNv. "
                     + g.nivel() + "§7 (detectado Nv. " + sobreNivel + ")."), false);
             return;
         }
         int minimo = Gimnasio.equipoMinimo(g);
-        if (!PRUEBAS.contains(jugador.getUuid()) && contarConscientes(jugador) < minimo) {
+        if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengePolicy.isStaffExempt(jugador) && contarConscientes(jugador) < minimo) {
             jugador.sendMessage(Text.literal(
                     "§c§l¡COMBATE BLOQUEADO! §r§7Necesitas al menos §e" + minimo
                     + " Pokémon conscientes§7 para retar a " + g.lider() + "."), false);
             return;
         }
-        if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengeService.esRutaCompletada(jugador.getUuid(), g.id())) {
+        if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengePolicy.isStaffExempt(jugador) && !GymChallengeService.esRutaCompletada(jugador.getUuid(), g.id())) {
             jugador.sendMessage(Text.literal(
                     "§c§l¡DESAFÍO INCOMPLETO! §r§7Debes superar el desafío y los obstáculos del gimnasio antes de retar a " + g.lider() + "."), false);
             return;

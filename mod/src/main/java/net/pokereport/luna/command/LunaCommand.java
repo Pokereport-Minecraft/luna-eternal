@@ -415,7 +415,7 @@ public final class LunaCommand {
                                 s.sendError(Text.literal("No existe ese gimnasio"));
                                 return 0;
                             }
-                            var mundo = net.pokereport.luna.gym.Arenas.mundo(s.getServer());
+                            var mundo = net.pokereport.luna.gym.Arenas.mundo(s.getServer(), g);
                             if (mundo == null) {
                                 s.sendError(Text.literal("La dimension de gimnasios no existe"));
                                 return 0;
@@ -3178,7 +3178,7 @@ public final class LunaCommand {
             return 0;
         }
         var servidor = s.getServer();
-        var mundo = net.pokereport.luna.gym.Arenas.mundo(servidor);
+        var mundo = net.pokereport.luna.gym.Arenas.mundoMaestro(servidor, g);
         if (mundo == null) {
             s.sendError(Text.literal("\u00a7cLa dimension de gimnasios no existe. "
                     + "\u00a77Hace falta reiniciar tras instalar el mod."));
@@ -3234,7 +3234,7 @@ public final class LunaCommand {
             s.sendError(Text.literal("§cNo existe"));
             return 0;
         }
-        var mundo = net.pokereport.luna.gym.Arenas.mundo(s.getServer());
+        var mundo = net.pokereport.luna.gym.Arenas.mundoMaestro(s.getServer(), g);
         if (mundo == null) {
             s.sendError(Text.literal("§cLa dimension de gimnasios no existe"));
             return 0;
@@ -3247,7 +3247,7 @@ public final class LunaCommand {
             {"trainer_stand_position",   "donde se pone el lider",   "opcional"},
         };
         var origen = net.pokereport.luna.gym.Gimnasio.maestro(g);
-        int alcance = net.pokereport.luna.gym.Gimnasio.PASO_RANURA;
+        int alcance = net.pokereport.luna.gym.Gimnasio.pasoRanura(g);
         int encontrados = 0;
         s.sendFeedback(() -> Text.literal(
             "§6Bloques de posicion en el maestro de §f" + g.id()), false);

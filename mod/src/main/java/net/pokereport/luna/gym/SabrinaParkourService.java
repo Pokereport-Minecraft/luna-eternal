@@ -38,11 +38,11 @@ import net.pokereport.luna.world.LunaDimensions;
  */
 public final class SabrinaParkourService {
 
-    private static final double MIN_X = 5182.564;
-    private static final double MAX_X = 5200.490;
-    private static final double REL_MIN_Z = 153.509;
-    private static final double REL_MAX_Z = 221.492;
-    private static final double MAX_Y = 77.0;
+    private static final double MIN_X = 5170.0;
+    private static final double MAX_X = 5204.0;
+    private static final double REL_MIN_Z = 20.0;
+    private static final double REL_MAX_Z = 94.0;
+    private static final double MAX_Y = 78.0;
 
     private static final long DEBOUNCE_MS = 1500L;
     private static final Map<UUID, Long> ULTIMA_CAIDA = new ConcurrentHashMap<>();
@@ -67,10 +67,7 @@ public final class SabrinaParkourService {
         long ahora = System.currentTimeMillis();
 
         for (ServerPlayerEntity jugador : mundo.getPlayers()) {
-            if (jugador.isSpectator() || !jugador.isAlive()) {
-                continue;
-            }
-            if (GymChallengePolicy.isStaffExempt(jugador)) {
+            if (jugador.isSpectator() || jugador.isCreative() || !jugador.isAlive()) {
                 continue;
             }
 

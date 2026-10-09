@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GymFailZoneTest {
 
-    private static final double MIN_X = 5182.564;
-    private static final double MAX_X = 5200.490;
-    private static final double REL_MIN_Z = 153.509;
-    private static final double REL_MAX_Z = 221.492;
-    private static final double MAX_Y = 77.0;
+    private static final double MIN_X = 5170.0;
+    private static final double MAX_X = 5204.0;
+    private static final double REL_MIN_Z = 20.0;
+    private static final double REL_MAX_Z = 94.0;
+    private static final double MAX_Y = 78.0;
 
     private boolean estaEnZonaCaida(double px, double py, double pz, int slot) {
         double minZ = REL_MIN_Z + slot * Gimnasio.PASO_RANURA;
@@ -27,15 +27,15 @@ public class GymFailZoneTest {
         for (int slot = 0; slot < Gimnasio.RANURAS; slot++) {
             // Punto central dentro del foso de caída
             double midX = (MIN_X + MAX_X) / 2.0;
-            double midY = 60.0; // En el foso, bajo Y=77
+            double midY = 65.0; // En el foso, bajo Y=78
             double midZ = (REL_MIN_Z + REL_MAX_Z) / 2.0 + slot * Gimnasio.PASO_RANURA;
 
             assertTrue(estaEnZonaCaida(midX, midY, midZ, slot),
                     "El centro del foso en ranura " + slot + " debe ser detectado como zona de caída");
 
-            // Punto justo por encima del umbral de caída (Y = 78.0)
-            assertFalse(estaEnZonaCaida(midX, 78.0, midZ, slot),
-                    "Punto por encima de Y=77 no debe ser detectado como caída");
+            // Punto justo por encima del umbral de caída (Y = 79.0)
+            assertFalse(estaEnZonaCaida(midX, 79.0, midZ, slot),
+                    "Punto por encima de Y=78 no debe ser detectado como caída");
 
             // Plataforma del líder (X = 5161.603, Y = 71.0, Z = 52.524 + slot*128)
             Vec3d lider = Gimnasio.lider(Gimnasio.de("sabrina"), slot);

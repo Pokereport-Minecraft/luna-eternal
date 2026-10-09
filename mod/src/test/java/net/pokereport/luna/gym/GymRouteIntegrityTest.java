@@ -50,10 +50,10 @@ public class GymRouteIntegrityTest {
     void testSlotSpacingConsistency() {
         for (Gimnasio.Gimnasio_ g : Gimnasio.TODOS) {
             int paso = Gimnasio.pasoRanura(g);
-            if (g.region() == Gimnasio.Region.NARANJA || "morti".equals(g.id())) {
-                assertEquals(512, paso, "Liga Naranja y Morti deben usar 512 bloques de paso para aislar salas grandes");
+            if (g.region() == Gimnasio.Region.NARANJA || g.region() == Gimnasio.Region.JOHTO || "morti".equals(g.id())) {
+                assertEquals(512, paso, "Liga Naranja, Johto y Morti deben usar 512 bloques de paso para aislar salas grandes");
             } else {
-                assertEquals(128, paso, "Gimnasios estándar deben usar 128 bloques de paso en Z");
+                assertEquals(128, paso, "Gimnasios estándar de Kanto deben usar 128 bloques de paso en Z");
             }
 
             for (int slot = 1; slot < Gimnasio.RANURAS; slot++) {
