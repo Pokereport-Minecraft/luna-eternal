@@ -85,6 +85,10 @@ public final class Puerta {
      * proyecto.
      */
     public static final int PROTOCOLO = 3;
+    public static final int REQUIRED_PROTOCOL_VERSION = PROTOCOLO;
+    public static final String RECOMMENDED_PACK_VERSION = "0.2.0";
+    public static final String MINIMUM_SUPPORTED_CLIENT_BUNDLE = "0.1.0";
+    public static final String RECOMMENDED_CLIENT_BUNDLE = "0.1.0";
 
     /**
      * &#9888;&#9888;&#9888; LA PUERTA NACE APAGADA, Y ESO NO ES PRUDENCIA: SIN
@@ -643,16 +647,23 @@ public final class Puerta {
      * jugador puede hacer con esa informacion.
      */
     private static void negar(ServerPlayerEntity jugador, Fallo fallo) {
-        jugador.sendMessage(Text.literal(
-                "§c§lNO PUEDES PASAR TODAVIA"), false);
         if (fallo == Fallo.SIN_MOD) {
             jugador.sendMessage(Text.literal(
-                    "§7Te falta el mod de §6PokeReport§7. Entra con el "
-                    + "§elauncher oficial§7, no con Minecraft a secas."), false);
-        } else {
+                    "§c§lPOKEREPORT NECESITA ACTUALIZARSE"), false);
             jugador.sendMessage(Text.literal(
-                    "§7Tu version esta §edesfasada§7. Cierra el juego, "
-                    + "§eabre el launcher§7 y deja que actualice."), false);
+                    "§7Te falta el mod de §6PokeReport§7. Entra con el "
+                    + "§elauncher oficial§7 o descarga el modpack en §bpokereport.online§7."), false);
+        } else {
+            Integer suyo = SALUDOS.get(jugador.getUuid());
+            String versionJugador = (suyo == null) ? "desconocida" : String.valueOf(suyo);
+            jugador.sendMessage(Text.literal(
+                    "§c§lPOKEREPORT NECESITA ACTUALIZARSE"), false);
+            jugador.sendMessage(Text.literal(
+                    "§7Tu versión: §c" + versionJugador), false);
+            jugador.sendMessage(Text.literal(
+                    "§7Versión requerida: §a" + PROTOCOLO + " §7(Modpack: §e" + RECOMMENDED_PACK_VERSION + "§7)"), false);
+            jugador.sendMessage(Text.literal(
+                    "§7Descarga el modpack o actualiza en: §bpokereport.online"), false);
         }
         jugador.playSoundToPlayer(net.minecraft.sound.SoundEvents.BLOCK_ANVIL_LAND,
                 net.minecraft.sound.SoundCategory.MASTER, 0.6f, 1.4f);

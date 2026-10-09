@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PokeReport Client Update Baseline",
+  "provenance": {
+    "gitCommit": "63640845",
+    "gitBranch": "codex/economy-launch-readiness",
+    "gitWorktree": "D:\\pokereportversionmejorada",
+    "recordedAt": "2026-10-08T01:53:30-05:00"
+  },
+  "runtime": {
+    "minecraftVersion": "1.21.1",
+    "fabricLoaderVersion": "0.19.5",
+    "yarnMappings": "1.21.1+build.3",
+    "javaVersion": "21",
+    "cobblemonVersion": "1.8.0+1.21.1 (Fabric YgmyyFcs)",
+    "rctApiVersion": "0.16.0-beta fabric 1.21.1 (poXTxoNY)",
+    "rctModVersion": "0.19.0-beta fabric 1.21.1 (jdUENp3C)"
+  },
+  "versions": {
+    "basePackVersion": "0.2.0",
+    "clientBundleVersion": "0.1.0",
+    "protocolVersion": 3,
+    "manifestSchemaVersion": 2,
+    "updaterVersion": "1.0.0"
+  },
+  "deployedArtifacts": {
+    "lunaeternal": {
+      "path": "mod/build/libs/lunaeternal-0.1.0.jar",
+      "size": 108526702,
+      "sha256": "b03fbf048c35634cb3781f0c277c7cb83392c82a6d9da19faa6337e9a6cced05",
+      "sha1": "4b78eb900a"
+    },
+    "lunaneon": {
+      "path": "neon/build/libs/lunaneon-0.1.0.jar",
+      "size": 5843451,
+      "sha256": "314325ef2a2eb0713d2a5a9cdb57f28479a781c65d158e0c52bb8d299bbca4f2",
+      "sha1": "1c8bd744f4"
+    },
+    "armaduras": {
+      "path": "tools/armaduras_export/build/libs/armaduraspokereport-kits-completo-1.0.0.jar",
+      "size": 674002,
+      "sha256": "3a645733f5c030857ff91162db864b0a3c008e6d1e35f787bd71f38c4b2cd24d",
+      "sha1": "4edb88a80d"
+    },
+    "cobblemon_cards": {
+      "path": "build/pack/overrides/mods/cobblemon-cards-1.0.5-luna1.jar",
+      "size": 23519511,
+      "sha256": "4102963756cf9e24e077a64e6c860a300001cdcacec71ef1830282e481e4ccfe",
+      "sha1": "5beff3063c"
+    },
+    "cobblemon_battle_positions": {
+      "path": "build/pack/overrides/mods/cobblemon-battle-positions-1.1.3.jar",
+      "size": 58572,
+      "sha256": "d76bbd753763dde4a552d1a86b8bc6ceee9abcb00fa1bd29b6c2e389079437ed",
+      "sha1": "2edbf7224a"
+    },
+    "cobblemon_additions": {
+      "path": "build/pack/cobblemon-additions-4.3.0-luna1-73366274a3.jar",
+      "size": 605112,
+      "sha256": "f19d78b8449beff176e7b6a6e326f1244c568c6bcb32c69625df02523d62d9f6",
+      "sha1": "73366274a3"
+    },
+    "magikarp_armor": {
+      "path": "build/pack/magikarp-animated-armor-1.0.0-16eba5c814.jar",
+      "size": 44336,
+      "sha256": "19f42fd107a8f1a1b41e67f14844ca4ec8874a0fbf2f66e314cbd0f0ccd438a3",
+      "sha1": "16eba5c814"
+    },
+    "pikachu_armor": {
+      "path": "build/pack/pikachu-animated-armor-1.0.0-21e4f3efcc.jar",
+      "size": 150367,
+      "sha256": "c25730d669b8233aad8870d0f9603f542b44ef17fca174e4c3b0ea18232d98e3",
+      "sha1": "21e4f3efcc"
+    },
+    "eevee_armor": {
+      "path": "build/pack/eeveelution-armor-1.0.0-95dd5d5bf0.jar",
+      "size": 319784,
+      "sha256": "a6c04c0ecf27e149e94c19d386aeb3374c435a39406a1d203cafce3673537638",
+      "sha1": "95dd5d5bf0"
+    }
+  }
+}

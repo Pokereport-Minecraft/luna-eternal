@@ -48,6 +48,14 @@ public final class LunaCommand {
             .then(literal("saldo")
                 .executes(ctx -> balance(ctx.getSource())))
 
+            // Estado y re-aplicación del borde de mundo (WorldBorder)
+            .then(literal("borde")
+                .requires(s -> s.hasPermissionLevel(2))
+                .executes(ctx -> net.pokereport.luna.world.BordeMundoService.comandoEstado(ctx.getSource()))
+                .then(literal("estado").executes(ctx -> net.pokereport.luna.world.BordeMundoService.comandoEstado(ctx.getSource())))
+                .then(literal("aplicar").requires(s -> s.hasPermissionLevel(4))
+                    .executes(ctx -> net.pokereport.luna.world.BordeMundoService.comandoAplicar(ctx.getSource()))))
+
             // El libro de bienvenida ejecuta este botón silencioso. Diosesmon
             // recibe el paquete y reproduce el MP4 dentro de Minecraft.
             .then(literal("videooak")
@@ -620,6 +628,16 @@ public final class LunaCommand {
                             "§a" + n + " §7vendedores colocados en la Torre Comercial."), false);
                     return n;
                 }))
+
+            .then(literal("npc")
+                .requires(x -> x.hasPermissionLevel(4))
+                .then(literal("cartas").executes(ctx -> {
+                    boolean ok = net.pokereport.luna.cards.CardsNpc.colocar(ctx.getSource().getServer());
+                    ctx.getSource().sendFeedback(() -> Text.literal(ok
+                            ? "§aNPC Coleccionista de Cartas colocado en Ciudadela (29.69, 72, 69.037)."
+                            : "§cNo se pudo colocar el NPC (¿mundo ciudadela no disponible?)."), false);
+                    return ok ? 1 : 0;
+                })))
 
             .then(literal("decorar")
                 // ⚠ Nivel 4: coloca entidades permanentes en el mundo. Es

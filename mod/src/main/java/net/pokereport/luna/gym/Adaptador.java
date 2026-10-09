@@ -8,8 +8,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
+import com.cobblemon.mod.common.api.moves.Moves;
+import com.cobblemon.mod.common.api.moves.categories.DamageCategories;
 import com.cobblemon.mod.common.battles.BattleFormat;
-import com.cobblemon.mod.common.battles.ai.StrongBattleAI;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.gitlab.srcmc.rctapi.api.battle.BattleRules;
@@ -103,7 +104,7 @@ public final class Adaptador {
      */
     public static boolean pelear(ServerPlayerEntity jugador, TrainerMob mob,
                                  Gimnasio_ g) {
-        List<Repertorio.Ficha> pool = Repertorio.de(g.id());
+        List<Repertorio.Ficha> pool = repertorioDe(g);
         if (pool.isEmpty()) {
             // El líder todavía no tiene repertorio: que lo lleve el datapack.
             return false;
@@ -124,7 +125,7 @@ public final class Adaptador {
 
             var modelo = new TrainerModel(
                     com.gitlab.srcmc.rctapi.api.util.Text.literal(g.lider()),
-                    JTO.of(() -> new StrongBattleAI(g.pericia())),
+                    JTO.of(() -> new net.pokereport.luna.battle.TrainerBattleAI(Math.max(4, g.pericia()))),
                     bolsaDe(g), equipo);
 
             TrainerNPC npc = registro.registerNPC(id, modelo);
@@ -152,7 +153,7 @@ public final class Adaptador {
             LunaEternal.LOG.info(
                     "Gimnasio {}: {} pelea a nivel {} con {} contra {} (pericia {})",
                     g.id(), jugador.getGameProfile().getName(), g.nivel(),
-                    rival.size(), resumen(equipo), g.pericia());
+                    rival.size(), resumen(equipo), Math.max(4, g.pericia()));
             return true;
         } catch (Exception e) {
             // ⚠⚠ SE CAE AL CAMINO DE SIEMPRE EN VEZ DE DEJAR AL JUGADOR SIN
@@ -160,6 +161,10 @@ public final class Adaptador {
             //    sale andando: un reto que no empieza lo deja encerrado.
             LunaEternal.LOG.error("No se pudo componer el equipo de {}", g.id(), e);
             soltar(jugador.getUuid());
+            // Registration can succeed before startBattle throws, while the
+            // successful-battle tracking map has not yet been populated.
+            try { ModCommon.RCT.getTrainerRegistry().unregisterById(PREFIJO + g.id() + "_" + jugador.getUuid()); }
+            catch (RuntimeException cleanup) { LunaEternal.LOG.warn("No se pudo retirar entrenador fallido {}", g.id(), cleanup); }
             return false;
         }
     }
@@ -253,7 +258,9 @@ public final class Adaptador {
         var party = com.cobblemon.mod.common.Cobblemon.INSTANCE
                 .getStorage().getParty(jugador);
         for (Pokemon p : party) {
-            if (p == null || p.isFainted()) {
+            // BattleRules heals the entire party before starting. Include the
+            // currently fainted members too, or the player can fight 6 vs 1.
+            if (p == null) {
                 continue;
             }
             Species s = p.getSpecies();
@@ -279,9 +286,7 @@ public final class Adaptador {
     private static List<PokemonModel> componer(List<Repertorio.Ficha> pool,
                                                List<Enemigo> rival,
                                                int cuantos, int nivel) {
-        var ordenado = new ArrayList<>(pool);
-        ordenado.sort(Comparator.comparingDouble(
-                (Repertorio.Ficha c) -> -puntuar(c, rival)));
+        var ordenado = ordenarEquipo(pool, rival, cuantos);
 
         boolean rivalFisico = mayoriaFisica(rival);
         var salida = new ArrayList<PokemonModel>();
@@ -405,7 +410,7 @@ public final class Adaptador {
      * Permite auditar sin necesidad de un combate en vivo.
      */
     public static List<String> verificarConversion(Gimnasio.Gimnasio_ g) {
-        var pool = Repertorio.de(g.id());
+        var pool = repertorioDe(g);
         if (pool == null || pool.isEmpty()) {
             return List.of("§cNo hay repertorio para " + g.id());
         }
@@ -448,16 +453,23 @@ public final class Adaptador {
      * y el líder perdería justo lo que le hace pesado.
      */
     private static List<String> elegirAtaques(Repertorio.Ficha c, List<Enemigo> rival) {
-        var restantes = new ArrayList<>(c.ataques());
+        var sp = especie(c.especie());
+        var legales = sp == null ? java.util.Set.<String>of() : sp.getMoves().getAllLegalMoves().stream()
+                .map(com.cobblemon.mod.common.api.moves.MoveTemplate::getName).collect(java.util.stream.Collectors.toSet());
+        var restantes = new ArrayList<>(new java.util.LinkedHashSet<>(c.ataques()));
+        if (!legales.isEmpty()) restantes.removeIf(m -> !legales.contains(m));
+        if (restantes.size() < ATAQUES) legales.stream().sorted().forEach(m -> {
+            if (!restantes.contains(m)) restantes.add(m);
+        });
+        if (restantes.isEmpty()) throw new IllegalStateException("No legal moves for " + c.especie());
         var salida = new ArrayList<String>(ATAQUES);
         salida.add(restantes.remove(0));
 
-        restantes.sort(Comparator.comparingDouble(m -> -notaAtaque(m, rival)));
-        for (String m : restantes) {
-            if (salida.size() >= ATAQUES) {
-                break;
-            }
-            salida.add(m);
+        while (!restantes.isEmpty() && salida.size() < ATAQUES) {
+            // Prefer coverage over a second/third attack of the same type.
+            String mejor = restantes.stream().max(Comparator.comparingDouble(m ->
+                    notaAtaque(m, rival) - penalizacionRepetida(m, salida))).orElseThrow();
+            salida.add(mejor); restantes.remove(mejor);
         }
         return salida;
     }
@@ -466,7 +478,9 @@ public final class Adaptador {
     private static final double NOTA_UTILIDAD = 1.0;
 
     private static double notaAtaque(String movimiento, List<Enemigo> rival) {
-        String tipo = TIPO_DE_ATAQUE.get(movimiento);
+        var move = Moves.INSTANCE.getByName(movimiento);
+        if (move != null && move.getDamageCategory() == DamageCategories.INSTANCE.getSTATUS()) return NOTA_UTILIDAD;
+        String tipo = move == null ? TIPO_DE_ATAQUE.get(movimiento) : move.getElementalType().getName();
         if (tipo == null || rival.isEmpty()) {
             return NOTA_UTILIDAD;
         }
@@ -474,7 +488,117 @@ public final class Adaptador {
         for (Enemigo e : rival) {
             suma += Tipos.contra(tipo, e.tipo1(), e.tipo2());
         }
-        return suma / rival.size();
+        double potencia = move == null ? 1 : Math.max(0.5, Math.min(1.7, move.getPower() / 70.0));
+        double precision = move == null || move.getAccuracy() <= 0 ? 1 : Math.min(1, move.getAccuracy() / 100.0);
+        return suma / rival.size() * potencia * precision;
+    }
+
+    private static double penalizacionRepetida(String move, List<String> elegidos) {
+        var template = Moves.INSTANCE.getByName(move);
+        if (template == null || template.getDamageCategory() == DamageCategories.INSTANCE.getSTATUS()) return 0;
+        String tipo = template.getElementalType().getName();
+        return elegidos.stream().map(Moves::getByName).filter(java.util.Objects::nonNull)
+                .anyMatch(m -> m.getDamageCategory() != DamageCategories.INSTANCE.getSTATUS()
+                        && m.getElementalType().getName().equals(tipo)) ? 0.85 : 0;
+    }
+
+    private static List<Repertorio.Ficha> ordenarEquipo(List<Repertorio.Ficha> pool, List<Enemigo> rival, int cuantos) {
+        var disponibles = new ArrayList<>(pool);
+        var salida = new ArrayList<Repertorio.Ficha>();
+        // Retain the leader's signature even against an unfavourable matchup.
+        disponibles.stream().filter(Repertorio.Ficha::firma).findFirst().ifPresent(f -> {
+            salida.add(f); disponibles.remove(f);
+        });
+        while (!disponibles.isEmpty()) {
+            var mejor = disponibles.stream().max(Comparator.comparingDouble(c -> puntuar(c, rival)
+                    + coberturaNueva(c, salida, rival))).orElseThrow();
+            salida.add(mejor); disponibles.remove(mejor);
+        }
+        // Some canonical mono-type teams contain repeat species. Reuse only
+        // when the registered pool cannot cover the player's full party.
+        int originales = salida.size();
+        for (int i = originales; originales > 0 && i < cuantos; i++) salida.add(salida.get(i % originales));
+        return salida;
+    }
+
+    private static double coberturaNueva(Repertorio.Ficha candidato, List<Repertorio.Ficha> elegidos, List<Enemigo> rival) {
+        double suma = 0;
+        for (Enemigo enemigo : rival) {
+            double anterior = elegidos.stream().flatMap(c -> c.ataques().stream())
+                    .mapToDouble(m -> notaAtaque(m, List.of(enemigo))).max().orElse(0);
+            double nueva = candidato.ataques().stream().mapToDouble(m -> notaAtaque(m, List.of(enemigo))).max().orElse(0);
+            suma += Math.max(0, nueva - anterior);
+        }
+        return rival.isEmpty() ? 0 : suma / rival.size();
+    }
+
+    /** Runtime fallback for every Johto leader, using its actual registered team. */
+    public static List<Repertorio.Ficha> repertorioDe(Gimnasio_ g) {
+        var definido = Repertorio.de(g.id());
+        if (!definido.isEmpty()) return definido;
+        var npc = ModCommon.RCT.getTrainerRegistry().getById(g.entrenador(), TrainerNPC.class);
+        if (npc == null) return List.of();
+        var firma = java.util.Arrays.stream(npc.getTeam()).filter(java.util.Objects::nonNull)
+                .max(Comparator.comparingInt(Pokemon::getLevel)).orElse(null);
+        var salida = new ArrayList<Repertorio.Ficha>();
+        for (Pokemon p : npc.getTeam()) {
+            if (p == null) continue;
+            var ficha = fichaDePokemon(p, p == firma);
+            if (ficha != null) salida.add(ficha);
+        }
+        return salida;
+    }
+
+    private static Repertorio.Ficha fichaDePokemon(Pokemon p, boolean firma) {
+            var model = new PokemonModel(p);
+            var legal = new ArrayList<>(p.getForm().getMoves().getAllLegalMoves());
+            legal.sort(Comparator.comparingDouble((com.cobblemon.mod.common.api.moves.MoveTemplate m) ->
+                    m.getDamageCategory() == DamageCategories.INSTANCE.getSTATUS() ? 55 : m.getPower()).reversed()
+                    .thenComparing(com.cobblemon.mod.common.api.moves.MoveTemplate::getName));
+            var ataques = new java.util.LinkedHashSet<String>();
+            // Preserve canonical tactics; add legal coverage alternatives.
+            ataques.addAll(model.getMoveset());
+            var porTipo = new java.util.HashSet<String>();
+            for (var move : legal) {
+                if (move.getDamageCategory() != DamageCategories.INSTANCE.getSTATUS()
+                        && porTipo.add(move.getElementalType().getName())) ataques.add(move.getName());
+                if (ataques.size() >= 12) break;
+            }
+            if (ataques.size() < 4) for (var move : legal) {
+                ataques.add(move.getName()); if (ataques.size() >= 4) break;
+            }
+            if (ataques.size() < 4) return null;
+            String[] items = model.getHeldItems();
+            String species = model.getSpecies();
+            if (species.startsWith("cobblemon:")) species = species.substring("cobblemon:".length());
+            return new Repertorio.Ficha(species, model.getAbility(), model.getNature(),
+                    items.length == 0 ? "sitrus_berry" : items[0], List.copyOf(ataques), firma);
+    }
+
+    /** Pure composition on detached QA Pokemon; never writes player storage. */
+    public static List<PokemonModel> prepararEquipo(Gimnasio_ g, List<Pokemon> rival) {
+        var tipos = new ArrayList<Enemigo>();
+        for (Pokemon pokemon : rival) {
+            var t = Tipos.deEspecie(pokemon.getSpecies());
+            tipos.add(new Enemigo(t[0], t[1], Tipos.pegaFisico(pokemon.getSpecies())));
+        }
+        return componer(repertorioDe(g), tipos, Math.min(6, Math.max(Gimnasio.equipoMinimo(g), rival.size())), g.nivel());
+    }
+
+    /** Tower keeps random variety but selects a complementary team from 24 candidates. */
+    public static List<PokemonModel> prepararRivalMixto(List<String> candidatos, List<Pokemon> rival, int nivel) {
+        var pool = new ArrayList<Repertorio.Ficha>();
+        for (String nombre : candidatos) {
+            var p = com.cobblemon.mod.common.api.pokemon.PokemonProperties.Companion.parse(nombre + " level=" + nivel).create();
+            var ficha = fichaDePokemon(p, false);
+            if (ficha != null) pool.add(ficha);
+        }
+        var tipos = new ArrayList<Enemigo>();
+        for (Pokemon p : rival) {
+            var t = Tipos.deEspecie(p.getSpecies());
+            tipos.add(new Enemigo(t[0], t[1], Tipos.pegaFisico(p.getSpecies())));
+        }
+        return componer(pool, tipos, 6, nivel);
     }
 
     /**
@@ -532,22 +656,20 @@ public final class Adaptador {
      */
     public static List<String> ensayo(ServerPlayerEntity jugador, Gimnasio_ g) {
         var salida = new ArrayList<String>();
-        var pool = Repertorio.de(g.id());
+        var pool = repertorioDe(g);
         if (pool.isEmpty()) {
             salida.add("§7" + g.lider()
                     + " todavía no tiene repertorio: pelea con el del datapack");
             return salida;
         }
         var rival = leerEquipo(jugador);
-        int cuantos = Math.max(1, Math.min(TOPE_EQUIPO, rival.size()));
+        int cuantos = Math.max(Gimnasio.equipoMinimo(g), Math.min(TOPE_EQUIPO, rival.size()));
         salida.add("§6" + g.lider() + " §7· nivel §f"
-                + g.nivel() + " §7· pericia §f" + g.pericia()
+                + g.nivel() + " §7· pericia §f" + Math.max(4, g.pericia())
                 + "§7 · tu equipo: §f" + rival.size()
                 + (rival.isEmpty() ? " §c(sin Pokémon sanos)" : ""));
 
-        var ordenado = new ArrayList<>(pool);
-        ordenado.sort(Comparator.comparingDouble(
-                (Repertorio.Ficha c) -> -puntuar(c, rival)));
+        var ordenado = ordenarEquipo(pool, rival, cuantos);
         boolean fisico = mayoriaFisica(rival);
         salida.add("§7tus ataques son sobre todo §f"
                 + (fisico ? "físicos" : "especiales")

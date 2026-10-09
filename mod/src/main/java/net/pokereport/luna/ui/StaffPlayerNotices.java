@@ -22,10 +22,21 @@ public final class StaffPlayerNotices {
         for (Text sibling : message.getSiblings()) if (isPlayerEvent(sibling)) return true;
         return false;
     }
+    public static boolean isAdvancement(Text message) {
+        if (message.getContent() instanceof TranslatableTextContent content) {
+            if (content.getKey().startsWith("chat.type.advancement.")) return true;
+        }
+        for (Text sibling : message.getSiblings()) if (isAdvancement(sibling)) return true;
+        return false;
+    }
     public static boolean canReceive(boolean operator, Rank rank) {
         return operator && rank != null && rank.esStaff();
     }
     public static void dispatch(PlayerManager manager, Text message, boolean overlay) {
+        if (isAdvancement(message)) {
+            // Los avances nunca se envían al chat (ni a jugadores ni a staff)
+            return;
+        }
         LunaEternal.LOG.info("[staff-event] {}", message.getString());
         for (var player : manager.getPlayerList()) {
             if (canReceive(manager.isOperator(player.getGameProfile()),

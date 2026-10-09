@@ -59,8 +59,13 @@ public final class GymLevelCapService {
         CobblemonEvents.POKEMON_SENT_PRE.subscribe(event -> {
             var pokemon = event.getPokemon();
             if (pokemon == null) return;
+            // No bloquear clones de batalla (usados por Cobblemon al escalar niveles ej. 50/100 o en combates)
+            if (pokemon.isBattleClone()) return;
             UUID uuid = pokemon.getOwnerUUID();
             if (uuid == null) return;
+
+            // Jamás cancelar envíos dentro de combates activos (rompe la máquina de estados de Showdown y congela la batalla)
+            if (com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(uuid) != null) return;
 
             ServerPlayerEntity player = pokemon.getOwnerPlayer();
             if (player == null && event.getLevel() != null && event.getLevel().getServer() != null) {
@@ -80,10 +85,16 @@ public final class GymLevelCapService {
             }
         });
 
-        // 2. Bloquear combates si el jugador incluye Pokémon por encima del nivel permitido
+        // 2. Bloquear combates si el jugador incluye Pokémon por encima del nivel permitido (solo PvE/Gimnasios sin ajuste de nivel)
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(event -> {
             var battle = event.getBattle();
             if (battle == null) return;
+
+            // Si el combate tiene ajuste de nivel (ej. subir o igualar a Nv. 50 o 100 en retos PvP), permitir siempre
+            if (battle.getFormat() != null && battle.getFormat().getAdjustLevel() > 0) return;
+
+            // Si es un duelo PvP entre jugadores, permitir siempre (en Pokémon el nivel de medallas es para PvE)
+            if (battle.isPvP()) return;
 
             for (var actor : battle.getActors()) {
                 for (UUID uuid : actor.getPlayerUUIDs()) {
@@ -161,7 +172,7 @@ public final class GymLevelCapService {
         UseEntityCallback.EVENT.register((jugador, mundo, mano, entidad, golpe) -> {
             if (entidad instanceof com.cobblemon.mod.common.entity.pokemon.PokemonEntity pe) {
                 var p = pe.getPokemon();
-                if (p != null && jugador.getUuid().equals(p.getOwnerUUID())) {
+                if (p != null && !p.isBattleClone() && jugador.getUuid().equals(p.getOwnerUUID())) {
                     if (jugador.isCreative()) return ActionResult.PASS;
                     int cap = nivelMaximo(jugador.getUuid());
                     if (p.getLevel() > cap) {

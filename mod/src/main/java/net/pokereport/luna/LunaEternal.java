@@ -90,6 +90,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
     private static net.pokereport.luna.crianza.CrianzaService crianza;
     private static net.pokereport.luna.homes.HomeService homes;
     private static net.pokereport.luna.tebex.TebexService tebex;
+    private static net.pokereport.luna.progression.TrainerLicenseService licenses;
     private static net.minecraft.server.MinecraftServer serverInstance;
     private static ThreadPoolExecutor io;
     private static final AtomicLong ioRejectedCount = new AtomicLong(0);
@@ -107,6 +108,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
         net.pokereport.luna.lunita.LunitaManager.registrar();
         net.pokereport.luna.rotom.RotomTutorial.server();
         net.pokereport.luna.quienesepokemon.QuienEsEsePokemonService.registrar();
+        net.pokereport.luna.progression.ExperienceBalanceService.registrar();
         // Toda cuenta de teletransporte (home, pwarp, clan home y gimnasios)
         // se cancela por daño desde un único punto server-side.
         net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.ALLOW_DAMAGE
@@ -202,6 +204,11 @@ public final class LunaEternal implements DedicatedServerModInitializer {
         net.pokereport.luna.santuario.SantuarioNpc.registrarClic();
         net.pokereport.luna.torrebatalla.TorreNpc.registrarClic();
         net.pokereport.luna.shop.ComercioNpc.registrar();
+        net.pokereport.luna.cards.CardsNpc.registrar();
+        net.pokereport.luna.spectate.SpectateFollowManager.registrar();
+        net.pokereport.luna.spectate.StaffSpectateService.registrar();
+        net.pokereport.luna.moderation.ModerationService.registrar();
+        net.pokereport.luna.command.SpectateFollowCommand.registrar();
         net.pokereport.luna.torrebatalla.TorreReglas.registrar();
         net.pokereport.luna.torrebatalla.TorreBatallaService.registrarEventos();
         net.pokereport.luna.battlefix.BattleFixService.registrar();
@@ -288,7 +295,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
         });
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-            server.getGameRules().get(net.minecraft.world.GameRules.ANNOUNCE_ADVANCEMENTS).set(false, server);
+            silenciarAdvancements(server);
             net.pokereport.luna.economy.SessionManager.start();
 
             net.pokereport.luna.progression.PlacedOreManager.startCleanup();
@@ -401,6 +408,15 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             }
             if (crianza != null) {
                 crianza.recuperarEntregasPendientes(player);
+            }
+            if (licenses != null) {
+                var perfilL = player.getGameProfile();
+                submit(() -> {
+                    try {
+                        long idL = players.resolve(perfilL.getId(), perfilL.getName());
+                        licenses.load(perfilL.getId(), idL);
+                    } catch (Exception ignored) {}
+                });
             }
             if (homes != null) {
                 var perfilH = player.getGameProfile();
@@ -640,6 +656,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.gym.Ranuras.alSalir(player);
             }
             net.pokereport.luna.gym.MedallaService.olvidar(player.getUuid());
+            net.pokereport.luna.progression.TrainerLicenseService.clearCache(player.getUuid());
             // ⚠ Y su cuenta atras, que ademas SUELTA lo que tuviera reservado:
             //   irse a mitad de la cuenta del gimnasio dejaba la ranura pillada.
             net.pokereport.luna.world.Espera.olvidar(player.getUuid());
@@ -760,6 +777,10 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.command.RankCommands.registrar(dispatcher);
                 net.pokereport.luna.command.SpawnCommand.registrar(dispatcher);
                 net.pokereport.luna.command.AuditoriaSpawnCommand.registrar(dispatcher);
+                net.pokereport.luna.command.LicenciaCommand.registrar(dispatcher);
+                net.pokereport.luna.command.EventCommand.registrar(dispatcher);
+                net.pokereport.luna.command.StaffSpectateCommand.registrar(dispatcher);
+                net.pokereport.luna.command.ModerationCommands.registrar(dispatcher);
             });
         net.pokereport.luna.world.SafeInteractionPolicy.registrar();
     }
@@ -778,6 +799,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             // La economía de trabajos es editable sin recompilar. Se valida al
             // arrancar para no aceptar recompensas negativas o límites nulos.
             net.pokereport.luna.progression.JobsConfig.load();
+            net.pokereport.luna.progression.ProgressionBalanceConfig.load();
 
             players = new PlayerService(database);
             economy = new EconomyService(database);
@@ -815,6 +837,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             crianza = new net.pokereport.luna.crianza.CrianzaService(database, economy);
             homes = new net.pokereport.luna.homes.HomeService(database);
             homes.cargarPwarps();
+            licenses = new net.pokereport.luna.progression.TrainerLicenseService(database);
 
             java.nio.file.Path configDir = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir();
             net.pokereport.luna.tebex.PackageRegistry tebexPackages =
@@ -972,6 +995,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
     public static net.pokereport.luna.clan.ClanService clans() { return clans; }
     public static net.pokereport.luna.clan.ClanHomeService clanHomes() { return clanHomes; }
     public static net.pokereport.luna.quest.QuestService quests() { return quests; }
+    public static net.pokereport.luna.progression.TrainerLicenseService licenses() { return licenses; }
     public static net.pokereport.luna.economy.EconomyStats stats() { return stats; }
     public static net.pokereport.luna.economy.EconomyTelemetry economyTelemetry() { return economyTelemetry; }
     public static net.pokereport.luna.economy.EconomicController economicController() { return economicController; }
@@ -1033,5 +1057,17 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 });
             });
         });
+    }
+
+    public static void silenciarAdvancements(net.minecraft.server.MinecraftServer server) {
+        if (server == null) return;
+        if (server.getGameRules() != null) {
+            server.getGameRules().get(net.minecraft.world.GameRules.ANNOUNCE_ADVANCEMENTS).set(false, server);
+        }
+        for (net.minecraft.server.world.ServerWorld world : server.getWorlds()) {
+            if (world != null && world.getGameRules() != null) {
+                world.getGameRules().get(net.minecraft.world.GameRules.ANNOUNCE_ADVANCEMENTS).set(false, server);
+            }
+        }
     }
 }

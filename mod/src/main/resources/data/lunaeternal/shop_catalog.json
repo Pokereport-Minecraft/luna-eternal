@@ -87,14 +87,14 @@
       "entries": [
         {
           "item": "cobblemon:destiny_knot",
-          "buy": 3000,
-          "sell": 300,
+          "buy": 15000,
+          "sell": 1500,
           "label": "§fLazo Destino §8· hereda 5 IVs de los padres"
         },
         {
           "item": "cobblemon:everstone",
-          "buy": 900,
-          "sell": 90,
+          "buy": 3500,
+          "sell": 350,
           "label": "§fPiedra Eterna §8· no evoluciona, y pasa su naturaleza"
         },
         {
@@ -109,33 +109,33 @@
         },
         {
           "item": "cobblemon:power_weight",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         },
         {
           "item": "cobblemon:power_bracer",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         },
         {
           "item": "cobblemon:power_belt",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         },
         {
           "item": "cobblemon:power_lens",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         },
         {
           "item": "cobblemon:power_band",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         },
         {
           "item": "cobblemon:power_anklet",
-          "buy": 900,
-          "sell": 90
+          "buy": 5000,
+          "sell": 500
         }
       ]
     },
@@ -146,42 +146,7 @@
       "description": "Todas las bayas. Cultivarlas sigue dando XP de Agricultor.",
       "entries": [
         {
-          "item": "cobblemon:aguav_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:apicot_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
           "item": "cobblemon:aspear_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:babiri_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:belue_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:bluk_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:candied_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:charti_berry",
           "buy": 200,
           "sell": 20
         },
@@ -196,122 +161,7 @@
           "sell": 20
         },
         {
-          "item": "cobblemon:chilan_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:chople_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:coba_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:colbur_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:cornn_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:custap_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:durin_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:eggant_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:enigma_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
           "item": "cobblemon:figy_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:ganlon_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:grepa_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:haban_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:hondew_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:hopo_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:iapapa_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:jaboca_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:kasib_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:kebia_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:kee_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:kelpsy_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:lansat_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:leppa_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:liechi_berry",
           "buy": 200,
           "sell": 20
         },
@@ -321,57 +171,7 @@
           "sell": 20
         },
         {
-          "item": "cobblemon:mago_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:magost_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:maranga_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:micle_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:nanab_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:nomel_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:occa_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
           "item": "cobblemon:oran_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:pamtre_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:passho_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:payapa_berry",
           "buy": 200,
           "sell": 20
         },
@@ -386,117 +186,12 @@
           "sell": 20
         },
         {
-          "item": "cobblemon:petaya_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:pinap_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:pomeg_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:qualot_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:rabuta_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
           "item": "cobblemon:rawst_berry",
           "buy": 200,
           "sell": 20
         },
         {
-          "item": "cobblemon:razz_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:rindo_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:roseli_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:rowap_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:salac_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:shuca_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
           "item": "cobblemon:sitrus_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:spelon_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:starf_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:tamato_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:tanga_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:touga_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:wacan_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:watmel_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:wepear_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:wiki_berry",
-          "buy": 200,
-          "sell": 20
-        },
-        {
-          "item": "cobblemon:yache_berry",
           "buy": 200,
           "sell": 20
         }
@@ -559,7 +254,7 @@
       "id": "variedades",
       "name": "§bVariedades",
       "icon": "minecraft:water_bucket",
-      "description": "Cubos y utilidades sueltas que hacen falta a diario.",
+      "description": "Cubos, drops de criaturas y utilidades que hacen falta a diario.",
       "entries": [
         {
           "item": "minecraft:bucket",
@@ -601,6 +296,86 @@
           "item": "minecraft:flint_and_steel",
           "buy": 120,
           "sell": 12
+        },
+        {
+          "item": "minecraft:string",
+          "buy": 80,
+          "sell": 8
+        },
+        {
+          "item": "minecraft:spider_eye",
+          "buy": 100,
+          "sell": 10
+        },
+        {
+          "item": "minecraft:rotten_flesh",
+          "buy": 50,
+          "sell": 5
+        },
+        {
+          "item": "minecraft:bone",
+          "buy": 80,
+          "sell": 8
+        },
+        {
+          "item": "minecraft:gunpowder",
+          "buy": 150,
+          "sell": 15
+        },
+        {
+          "item": "minecraft:leather",
+          "buy": 100,
+          "sell": 10
+        },
+        {
+          "item": "minecraft:feather",
+          "buy": 50,
+          "sell": 5
+        },
+        {
+          "item": "minecraft:flint",
+          "buy": 50,
+          "sell": 5
+        },
+        {
+          "item": "minecraft:slime_ball",
+          "buy": 120,
+          "sell": 12
+        },
+        {
+          "item": "minecraft:ender_pearl",
+          "buy": 250,
+          "sell": 25
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "buy": 300,
+          "sell": 30
+        },
+        {
+          "item": "minecraft:ghast_tear",
+          "buy": 400,
+          "sell": 40
+        },
+        {
+          "item": "minecraft:phantom_membrane",
+          "buy": 350,
+          "sell": 35
+        },
+        {
+          "item": "minecraft:ink_sac",
+          "buy": 60,
+          "sell": 6
+        },
+        {
+          "item": "minecraft:glow_ink_sac",
+          "buy": 80,
+          "sell": 8
+        },
+        {
+          "item": "minecraft:magma_cream",
+          "buy": 150,
+          "sell": 15
         }
       ]
     },

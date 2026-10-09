@@ -311,16 +311,24 @@ public final class OficiosListener {
      * <p>Ya estaba decidido así para la Vía de Criador y se mantiene: recoger un
      * huevo es gratis y repetible; que nazca ocurre una vez.
      */
+    /**
+     * Registra la eclosión o reclamo de cría (tanto por Cobblemon HATCH_EGG_POST como por PokéPad Crianza).
+     */
+    public static void anotarEclosion(ServerPlayerEntity jugador) {
+        if (jugador == null) return;
+        try {
+            anotar(jugador, Path.CRIADOR, JobsConfig.hatchingXp(),
+                   net.pokereport.luna.quest.Quest.Objective.Type.HATCH, 1,
+                   net.pokereport.luna.pase.PaseXp.ECLOSION);
+        } catch (Throwable t) {
+            LunaEternal.LOG.error("Error anotando eclosion / entrega de cria", t);
+        }
+    }
+
     private static void criador() {
         try {
             CobblemonEvents.HATCH_EGG_POST.subscribe(evento -> {
-                try {
-                    anotar(evento.getPlayer(), Path.CRIADOR, JobsConfig.hatchingXp(),
-                           net.pokereport.luna.quest.Quest.Objective.Type.HATCH, 1,
-                           net.pokereport.luna.pase.PaseXp.ECLOSION);
-                } catch (Throwable t) {
-                    LunaEternal.LOG.error("Error anotando eclosion", t);
-                }
+                anotarEclosion(evento.getPlayer());
             });
         } catch (Throwable t) {
             LunaEternal.LOG.error("CRIADOR: sin enganche de eclosion", t);

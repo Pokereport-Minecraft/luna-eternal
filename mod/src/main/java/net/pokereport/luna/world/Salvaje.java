@@ -126,27 +126,7 @@ public final class Salvaje {
      */
     public static void ponerBorde(MinecraftServer servidor) {
         cargarConfiguracion();
-        int puestos = 0;
-        // ⚠ A LOS SEIS, no solo a los activos. Un mundo de reserva se
-        //   pre-genera antes de entrar en servicio, y pre-generar sin borde
-        //   generaria hasta el infinito.
-        for (var clave : LunaDimensions.SALVAJES) {
-            ServerWorld mundo = servidor.getWorld(clave);
-            if (mundo == null) {
-                continue;
-            }
-            var borde = mundo.getWorldBorder();
-            borde.setCenter(0.5, 0.5);
-            borde.setSize(RADIO * 2.0);
-            // ⚠ Sin daño y sin margen: el borde es una regla de diseño, no una
-            //   trampa. Que empuje, no que mate.
-            borde.setDamagePerBlock(0.0);
-            borde.setSafeZone(0.0);
-            borde.setWarningBlocks(32);
-            puestos++;
-        }
-        LunaEternal.LOG.info("Salvaje: {} mundos con borde de {} de radio · "
-                + "{} activos", puestos, RADIO, ACTIVOS);
+        BordeMundoService.aplicar(servidor);
     }
 
     /**

@@ -336,7 +336,7 @@ public class CrianzaScreen extends Screen {
         texto(ctx, Text.literal("GUÍA DE HERENCIA"), x + 18, y + 17, 14, ORO, false, false);
         texto(ctx, Text.literal("Prepara los objetos antes de recoger"), x + 18, y + 43, 11, TEXTO_SUAVE, false, false);
         String[][] filas = {
-            {"IVs", "3 estadísticas de los progenitores", "Con Lazo Destino: 5 estadísticas"},
+            {"IVs Y BRAZALES", "Brazales Recios garantizan su estadística", "Con Lazo Destino: 5 estadísticas de padres"},
             {"NATURALEZA", "Piedra Eterna: hereda su naturaleza", "Si ambos la llevan: 50% de cada uno"},
             {"POKÉ BALL", "Del progenitor principal", "Master y Gloria: Poké Ball normal"},
             {"ENTREGA", "Cría de nivel 1 al equipo o a la PC", "Si no hay espacio, libera una casilla"}

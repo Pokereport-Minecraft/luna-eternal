@@ -109,6 +109,8 @@ public final class FaunaControl {
                 if (esHogarOSalvaje(dim)) {
                     if (!pokemonPermitido(p, dim.getValue().toString())) {
                         event.cancel();
+                    } else if (!PoliticaFauna.evaluarProbabilidadSpawn(p, pe.getX(), pe.getY(), pe.getZ())) {
+                        event.cancel();
                     }
                 } else {
                     event.cancel();

@@ -11,20 +11,56 @@ public final class PoliticaFauna {
             "legendary", "mythical", "ultra_beast", "paradox", "restricted");
     
     private static java.util.List<String> dittoPool = null;
-    
+
+    private static final java.util.List<String> DITTO_POOL_FALLBACK = java.util.List.of(
+            "bulbasaur", "charmander", "squirtle", "caterpie", "weedle", "pidgey", "rattata", "spearow",
+            "ekans", "sandshrew", "nidoran-f", "nidoran-m", "vulpix", "zubat", "oddish", "paras",
+            "venonat", "diglett", "meowth", "psyduck", "mankey", "growlithe", "poliwag", "abra",
+            "machop", "bellsprout", "tentacool", "geodude", "ponyta", "slowpoke", "magnemite",
+            "doduo", "seel", "grimer", "shellder", "gastly", "onix", "drowzee", "krabby",
+            "voltorb", "exeggcute", "cubone", "lickitung", "koffing", "rhyhorn", "tangela", "kangaskhan",
+            "horsea", "goldeen", "staryu", "scyther", "pinsir", "tauros", "magikarp", "lapras",
+            "eevee", "porygon", "omanyte", "kabuto", "aerodactyl", "snorlax", "dratini",
+            "chikorita", "cyndaquil", "totodile", "sentret", "hoothoot", "ledyba", "spinarak", "chinchou",
+            "pichu", "cleffa", "igglybuff", "togepi", "natu", "mareep", "marill", "sudowoodo",
+            "hoppip", "aipom", "sunkern", "yanma", "wooper", "murkrow", "misdreavus", "wobbuffet",
+            "girafarig", "pineco", "dunsparce", "gligar", "snubbull", "qwilfish", "shuckle", "heracross",
+            "sneasel", "teddiursa", "slugma", "swinub", "corsola", "remoraid", "delibird", "mantine",
+            "skarmory", "houndour", "phanpy", "stantler", "smeargle", "tyrogue", "smoochum", "elekid",
+            "magby", "miltank", "larvitar"
+    );
+
     public static synchronized String getDittoPoolRandom() {
-        if (dittoPool == null) {
+        if (dittoPool == null || dittoPool.isEmpty()) {
             dittoPool = new java.util.ArrayList<>();
-            for (com.cobblemon.mod.common.pokemon.Species spec : com.cobblemon.mod.common.api.pokemon.PokemonSpecies.INSTANCE.getImplemented()) {
-                if (generacionPermitida(spec.getNationalPokedexNumber(), null, spec.getLabels())) {
-                    boolean isLegendary = spec.getLabels() != null && (spec.getLabels().contains("legendary") || spec.getLabels().contains("mythical") || spec.getLabels().contains("restricted"));
-                    if (!isLegendary && spec.getPreEvolution() == null && !spec.getForms().get(0).getEggGroups().contains(com.cobblemon.mod.common.api.pokemon.egg.EggGroup.UNDISCOVERED)) {
-                        dittoPool.add(spec.getName());
-                    }
+            try {
+                for (com.cobblemon.mod.common.pokemon.Species spec : com.cobblemon.mod.common.api.pokemon.PokemonSpecies.INSTANCE.getImplemented()) {
+                    try {
+                        if (spec == null) continue;
+                        if (generacionPermitida(spec.getNationalPokedexNumber(), null, spec.getLabels())) {
+                            boolean isLegendary = spec.getLabels() != null && (
+                                    spec.getLabels().contains("legendary") ||
+                                    spec.getLabels().contains("mythical") ||
+                                    spec.getLabels().contains("restricted")
+                            );
+                            if (!isLegendary && spec.getPreEvolution() == null && !spec.getName().equalsIgnoreCase("ditto")) {
+                                var eggGroups = spec.getEggGroups();
+                                boolean isUndiscovered = eggGroups != null && eggGroups.contains(com.cobblemon.mod.common.api.pokemon.egg.EggGroup.UNDISCOVERED);
+                                boolean isBaby = spec.getLabels() != null && spec.getLabels().contains("baby");
+                                if (!isUndiscovered || isBaby) {
+                                    dittoPool.add(spec.getName());
+                                }
+                            }
+                        }
+                    } catch (Throwable ignored) {}
                 }
+            } catch (Throwable t) {
+                System.err.println("PoliticaFauna: Error al construir dittoPool dinámico: " + t.getMessage());
             }
         }
-        if (dittoPool.isEmpty()) return "ditto";
+        if (dittoPool == null || dittoPool.isEmpty()) {
+            dittoPool = new java.util.ArrayList<>(DITTO_POOL_FALLBACK);
+        }
         return dittoPool.get(new java.util.Random().nextInt(dittoPool.size()));
     }
 
@@ -101,6 +137,89 @@ public final class PoliticaFauna {
             if (RAREZAS_PROHIBIDAS_HOGAR.contains(etiqueta.toLowerCase())) return false;
         }
         return true;
+    }
+
+    public static boolean esInicial(int dex) {
+        return (dex >= 1 && dex <= 9) || (dex >= 152 && dex <= 160);
+    }
+
+    public static boolean esPseudolegendario(int dex) {
+        return (dex >= 147 && dex <= 149) || (dex >= 246 && dex <= 248);
+    }
+
+    public static boolean esLegendarioOMitico(int dex, Set<String> etiquetas) {
+        if (dex == 144 || dex == 145 || dex == 146 || dex == 150 || dex == 151
+                || (dex >= 243 && dex <= 245) || dex == 249 || dex == 250 || dex == 251) {
+            return true;
+        }
+        if (etiquetas != null) {
+            for (String tag : etiquetas) {
+                String t = tag.toLowerCase();
+                if (t.contains("legendary") || t.contains("mythical")) return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean esRaro(int dex, Set<String> etiquetas) {
+        if (dex == 113 || dex == 131 || dex == 132 || dex == 133 || dex == 137
+                || dex == 142 || dex == 143 || dex == 242) {
+            return true;
+        }
+        if (etiquetas != null) {
+            for (String tag : etiquetas) {
+                String t = tag.toLowerCase();
+                if (t.contains("rare") || t.contains("ultra-rare")) return true;
+            }
+        }
+        return false;
+    }
+
+    public static double obtenerMultiplicadorSpawn(int dex, String especie, Set<String> etiquetas) {
+        if (!net.pokereport.luna.progression.ProgressionBalanceConfig.isEnabled()) {
+            return 1.0;
+        }
+        var cfg = net.pokereport.luna.progression.ProgressionBalanceConfig.get().spawn;
+
+        if (esLegendarioOMitico(dex, etiquetas)) {
+            return cfg.legendaryMultiplier;
+        }
+        if (esPseudolegendario(dex)) {
+            return cfg.pseudoLegendaryMultiplier;
+        }
+        if (esInicial(dex)) {
+            return cfg.starterMultiplier;
+        }
+        if (esRaro(dex, etiquetas)) {
+            return cfg.rareMultiplier;
+        }
+        return cfg.commonMultiplier;
+    }
+
+    public static boolean evaluarProbabilidadSpawn(com.cobblemon.mod.common.pokemon.Pokemon pokemon,
+                                                   double x, double y, double z) {
+        if (pokemon == null || !net.pokereport.luna.progression.ProgressionBalanceConfig.isEnabled()) {
+            return true;
+        }
+        int dex = pokemon.getSpecies().getNationalPokedexNumber();
+        String especie = pokemon.getSpecies().getName().toLowerCase();
+        Set<String> etiquetas = pokemon.getSpecies().getLabels();
+
+        double mult = obtenerMultiplicadorSpawn(dex, especie, etiquetas);
+        if (mult >= 1.0) {
+            return true;
+        }
+
+        double roll = java.util.concurrent.ThreadLocalRandom.current().nextDouble();
+        boolean spawns = roll < mult;
+
+        if (spawns && esLegendarioOMitico(dex, etiquetas)) {
+            net.pokereport.luna.LunaEternal.LOG.info(
+                    "[LEGENDARY_SPAWN] Especie: {} (Dex: {}), Coords: [x={:.1f}, y={:.1f}, z={:.1f}]",
+                    especie, dex, x, y, z);
+        }
+
+        return spawns;
     }
 }
 

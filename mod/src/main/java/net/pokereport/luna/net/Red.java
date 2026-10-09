@@ -4464,18 +4464,9 @@ public class Red implements ModInitializer {
                     LunaEternal.LOG.error("No se pudo leer la foto {}", sha1, e);
                     return;
                 }
-                server.execute(() -> {
-                    if (jugador.isRemoved() || bytes == null) {
-                        return;
-                    }
-                    for (int i = 0; i * TROZO_FOTO < bytes.length; i++) {
-                        int desde = i * TROZO_FOTO;
-                        int hasta = Math.min(bytes.length, desde + TROZO_FOTO);
-                        ServerPlayNetworking.send(jugador, new FotoTramo(sha1,
-                                bytes.length, i,
-                                java.util.Arrays.copyOfRange(bytes, desde, hasta)));
-                    }
-                });
+                if (bytes != null && !jugador.isRemoved()) {
+                    net.pokereport.luna.santuario.SanctuaryImagePipeline.streamPhotoToPlayer(jugador, sha1, bytes);
+                }
             });
         });
 
@@ -6347,34 +6338,35 @@ public class Red implements ModInitializer {
             return;
         }
         for (var cobro : cobros) {
-            var r = cobro.recompensa();
-            if (r.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON) {
+            for (var r : net.pokereport.luna.pase.PaseCatalogo.entregables(cobro.nivel())) {
+                if (r.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON) {
+                    servidor.execute(() -> {
+                        if (!jugador.isRemoved()) {
+                            entregarPokemonDelPase(jugador, r);
+                        }
+                    });
+                    continue;
+                }
+                if (r.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.MONEDA) {
+                    // Ya ingresadas, dentro de la transaccion del cobro. Ver el
+                    // aviso del javadoc: pagarlas aqui seria pagarlas dos veces.
+                    continue;
+                }
+                var item = net.pokereport.luna.market.Inventarios.objeto(r.id());
+                if (item == null) {
+                    // Un identificador que no existe es el fallo de las Cazas: el
+                    // jugador ha PAGADO el pase y no recibe nada. Se anota FUERTE.
+                    LunaEternal.LOG.error("El pase promete un objeto que no existe: "
+                            + "{} (nivel {})", r.id(), cobro.nivel());
+                    continue;
+                }
                 servidor.execute(() -> {
                     if (!jugador.isRemoved()) {
-                        entregarPokemonDelPase(jugador, r);
+                        net.pokereport.luna.market.Inventarios.meter(
+                                jugador, item, r.cantidad());
                     }
                 });
-                continue;
             }
-            if (r.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.MONEDA) {
-                // Ya ingresadas, dentro de la transaccion del cobro. Ver el
-                // aviso del javadoc: pagarlas aqui seria pagarlas dos veces.
-                continue;
-            }
-            var item = net.pokereport.luna.market.Inventarios.objeto(r.id());
-            if (item == null) {
-                // Un identificador que no existe es el fallo de las Cazas: el
-                // jugador ha PAGADO el pase y no recibe nada. Se anota FUERTE.
-                LunaEternal.LOG.error("El pase promete un objeto que no existe: "
-                        + "{} (nivel {})", r.id(), cobro.nivel());
-                continue;
-            }
-            servidor.execute(() -> {
-                if (!jugador.isRemoved()) {
-                    net.pokereport.luna.market.Inventarios.meter(
-                            jugador, item, r.cantidad());
-                }
-            });
         }
         servidor.execute(() -> {
             if (!jugador.isRemoved()) {

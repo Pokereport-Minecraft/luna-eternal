@@ -102,14 +102,66 @@ public final class GtsService {
         return tax;
     }
 
+    private static final java.util.concurrent.atomic.AtomicLong moneyRemovedByGtsToday = new java.util.concurrent.atomic.AtomicLong(0);
+    private static final java.util.concurrent.atomic.AtomicLong totalListingValue = new java.util.concurrent.atomic.AtomicLong(0);
+    private static final java.util.concurrent.atomic.AtomicLong totalListingsCount = new java.util.concurrent.atomic.AtomicLong(0);
+    private static final java.util.concurrent.atomic.AtomicLong totalSaleValue = new java.util.concurrent.atomic.AtomicLong(0);
+    private static final java.util.concurrent.atomic.AtomicLong totalSalesCount = new java.util.concurrent.atomic.AtomicLong(0);
+
+    public static long getMoneyRemovedByGtsToday() { return moneyRemovedByGtsToday.get(); }
+    public static double getAverageListingValue() {
+        long count = totalListingsCount.get();
+        return count == 0 ? 0.0 : (double) totalListingValue.get() / count;
+    }
+    public static double getAverageSaleValue() {
+        long count = totalSalesCount.get();
+        return count == 0 ? 0.0 : (double) totalSaleValue.get() / count;
+    }
+    public static void registrarListing(long price, long fee) {
+        moneyRemovedByGtsToday.addAndGet(fee);
+        totalListingValue.addAndGet(price);
+        totalListingsCount.incrementAndGet();
+    }
+    public static void registrarVenta(long price, long tax) {
+        moneyRemovedByGtsToday.addAndGet(tax);
+        totalSaleValue.addAndGet(price);
+        totalSalesCount.incrementAndGet();
+    }
+    public static void reiniciarTelemetria() {
+        moneyRemovedByGtsToday.set(0);
+        totalListingValue.set(0);
+        totalListingsCount.set(0);
+        totalSaleValue.set(0);
+        totalSalesCount.set(0);
+    }
+
+    public static long taxFor(long price, net.pokereport.luna.ui.Tablist.Rank rank) {
+        var cfg = net.pokereport.luna.progression.ProgressionBalanceConfig.get().gts;
+        double discount = 0.0;
+        if (rank != null) {
+            if (rank.escalon >= net.pokereport.luna.ui.Tablist.Rank.LEYENDA.escalon) discount = cfg.leyendaTaxDiscount;
+            else if (rank.escalon >= net.pokereport.luna.ui.Tablist.Rank.MAESTRO.escalon) discount = cfg.maestroTaxDiscount;
+            else if (rank.escalon >= net.pokereport.luna.ui.Tablist.Rank.CAMPEON.escalon) discount = cfg.campeonTaxDiscount;
+            else if (rank.escalon >= net.pokereport.luna.ui.Tablist.Rank.ELITE.escalon) discount = cfg.eliteTaxDiscount;
+        }
+        long baseTax = taxFor(price);
+        if (discount > 0.0) {
+            long maxDiscountAmount = (long) (price * (discount / 100.0));
+            return Math.max(1, baseTax - maxDiscountAmount);
+        }
+        return baseTax;
+    }
+
     public static long listingFee(long price) {
+        if (price <= 0) return 0;
         double multiplier = 1.0;
         if (LunaEternal.economicController() != null) {
             multiplier = LunaEternal.economicController().getTaxMultiplier();
         }
 
-        double effectiveMille = LISTING_FEE_PER_MILLE * multiplier;
-        return Math.max(1, (long) (price * effectiveMille / 1000));
+        var cfg = net.pokereport.luna.progression.ProgressionBalanceConfig.get().gts;
+        double pct = cfg != null ? cfg.listingFeePercent : (LISTING_FEE_PER_MILLE / 10.0);
+        return Math.max(1, (long) (price * (pct / 100.0) * multiplier));
     }
 
     // ------------------------------------------------------------ publicar
@@ -133,6 +185,12 @@ public final class GtsService {
         try (Connection c = db.connection()) {
             c.setAutoCommit(false);
             try {
+                int maxListings = limitePublicacionesPara(c, sellerId);
+                int activas = publicacionesActivas(c, sellerId);
+                if (activas >= maxListings) {
+                    return Result.fail("§cHas alcanzado el límite de " + maxListings + " ofertas activas en el GTS para tu rango.");
+                }
+
                 // La tasa se cobra dentro de la MISMA transacción que crea el
                 // listado: o hay listado y se cobró, o no hay ninguna de las dos.
                 LunaEternal.economy().applyInTransaction(
@@ -298,6 +356,12 @@ public final class GtsService {
         try (Connection c = db.connection()) {
             c.setAutoCommit(false);
             try {
+                int maxListings = limitePublicacionesPara(c, sellerId);
+                int activas = publicacionesActivas(c, sellerId);
+                if (activas >= maxListings) {
+                    return Result.fail("§cHas alcanzado el límite de " + maxListings + " ofertas activas en el GTS para tu rango.");
+                }
+
                 LunaEternal.economy().applyInTransaction(
                     c, sellerId, Currency.POKEDOLLAR, -fee,
                     "gts_listing", "gts", null, UUID.randomUUID().toString());
@@ -1005,5 +1069,31 @@ public final class GtsService {
 
     private static String fmt(long v) {
         return String.format("%,d", v);
+    }
+
+    public int limitePublicacionesPara(Connection c, long sellerId) throws SQLException {
+        if (!net.pokereport.luna.progression.ProgressionBalanceConfig.isEnabled()) {
+            return Integer.MAX_VALUE;
+        }
+        net.pokereport.luna.ui.Tablist.Rank rank = net.pokereport.luna.ui.Tablist.Rank.porDefecto();
+        try (PreparedStatement ps = c.prepareStatement("SELECT rank_id FROM player WHERE player_id = ?")) {
+            ps.setLong(1, sellerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    rank = net.pokereport.luna.ui.Tablist.Rank.de(rs.getString(1));
+                }
+            }
+        }
+        return net.pokereport.luna.progression.ProgressionPolicyService.maxGtsListingsForRank(rank);
+    }
+
+    public int publicacionesActivas(Connection c, long sellerId) throws SQLException {
+        try (PreparedStatement ps = c.prepareStatement(
+                "SELECT COUNT(*) FROM gts_listing WHERE seller_id = ? AND state = 'ACTIVE'")) {
+            ps.setLong(1, sellerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        }
     }
 }

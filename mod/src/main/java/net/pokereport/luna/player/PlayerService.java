@@ -72,6 +72,23 @@ public final class PlayerService {
         }
     }
 
+    public UUID uuidOf(String username) {
+        if (username == null || username.isBlank()) {
+            return null;
+        }
+        try (var c = db.connection();
+             var ps = c.prepareStatement(
+                     "SELECT mc_uuid FROM player WHERE username = ? LIMIT 1")) {
+            ps.setString(1, username);
+            try (var rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return UUID.fromString(rs.getString(1));
+                }
+            }
+        } catch (Exception ignored) {}
+        return null;
+    }
+
     public long resolve(UUID mcUuid, String username) throws SQLException {
         Long cached = cache.get(mcUuid);
         if (cached != null) return cached;

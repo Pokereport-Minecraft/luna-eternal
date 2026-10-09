@@ -5311,16 +5311,19 @@ public final class AutoTest {
         var primero = net.pokereport.luna.pase.PaseCatalogo.de(1);
         var ultimo = net.pokereport.luna.pase.PaseCatalogo.de(
                 net.pokereport.luna.pase.PaseNivel.MAX);
-        check("el nivel 1 da un Charizard de nivel 15",
+        check("el nivel 1 da un Charizard shiny de nivel 15",
               primero != null
                   && primero.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
                   && "charizard".equals(primero.id()) && primero.nivel() == 15
-                  && !primero.shiny());
+                  && primero.shiny());
         check("EL NIVEL 100 DA UN CHARIZARD SHINY DE NIVEL 50",
               ultimo != null
                   && ultimo.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
                   && "charizard".equals(ultimo.id()) && ultimo.nivel() == 50
                   && ultimo.shiny());
+        check("el nivel 100 entrega Master Ball adicional",
+              net.pokereport.luna.pase.PaseCatalogo.entregables(100).stream()
+                  .anyMatch(r -> "cobblemon:master_ball".equals(r.id())));
 
         // ⚠⚠⚠ Y LLEVA EL CASCO MECHA, Y ES EL UNICO QUE LO LLEVA. El casco es un
         //    ASPECTO FORZADO que el pack de cosmeticos (dentro de lunaneon.jar)

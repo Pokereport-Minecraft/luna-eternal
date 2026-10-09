@@ -255,6 +255,8 @@ public final class Apps {
             cliente.setScreen(new KitsScreen(null, 1));
         } else if ("kits:rango".equals(destino)) {
             cliente.setScreen(new KitsScreen(null, 0));
+        } else if ("cartas".equals(destino)) {
+            cliente.setScreen(new CartasScreen(null));
         }
     }
 

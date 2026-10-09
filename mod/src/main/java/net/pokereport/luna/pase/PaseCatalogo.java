@@ -144,7 +144,7 @@ public final class PaseCatalogo {
      */
     private static final Recompensa[] NIVELES = {
         // ================= 1-20 · PREPARACION ==============================
-        /*   1 */ p("charizard", 15, false),
+        /*   1 */ p("charizard", 15, true),
         /*   2 */ o("poke_ball", 20, Rareza.COMUN),
         /*   3 */ o("potion", 10, Rareza.COMUN),
         /*   4 */ o("oran_berry", 16, Rareza.COMUN),
@@ -269,6 +269,25 @@ public final class PaseCatalogo {
         /* 100 */ Recompensa.pokemonUnico("charizard", 50, true,
                                           Recompensa.ASPECTO_MECHA, Rareza.LEGENDARIA),
     };
+
+    /**
+     * Recompensas entregables por cobro. El nivel 100 incluye el Charizard Shiny nivel 50
+     * con aspecto mecha MÁS 1 Master Ball adicional.
+     */
+    public static List<Recompensa> entregables(int nivel) {
+        if (nivel == 100) {
+            return List.of(
+                    de(100),
+                    o("master_ball", 1, Rareza.LEGENDARIA)
+            );
+        }
+        var premio = de(nivel);
+        return premio == null ? List.of() : List.of(premio);
+    }
+
+    public static boolean esPaquete(Recompensa premio) {
+        return de(100) != null && de(100).equals(premio);
+    }
 
     /** La recompensa de ese nivel. Nunca {@code null} entre 1 y 100. */
     public static Recompensa de(int nivel) {

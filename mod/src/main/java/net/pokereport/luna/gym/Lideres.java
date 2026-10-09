@@ -263,8 +263,9 @@ public final class Lideres {
 
     public static void registrar() {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
-            Entity entidad;
-            while ((entidad = pendientesDeDeduplicar.poll()) != null) {
+            Entity e;
+            while ((e = pendientesDeDeduplicar.poll()) != null) {
+                final Entity entidad = e;
                 if (entidad.isRemoved()) continue;
                 ServerWorld mundo = (ServerWorld) entidad.getWorld();
                 

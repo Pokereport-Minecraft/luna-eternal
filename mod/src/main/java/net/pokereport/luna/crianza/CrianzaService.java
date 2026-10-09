@@ -18,6 +18,7 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
+import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -135,8 +136,18 @@ public final class CrianzaService {
 
     /** Política compartida con el cliente; las ranuras de rango no son un prefijo. */
     public static int escalonQuePide(int slotIdx) {
+        if (!net.pokereport.luna.progression.ProgressionBalanceConfig.isEnabled()) {
+            return switch (slotIdx) {
+                case 0, 1 -> 0;
+                case 2, 3, 4 -> -1;
+                case 5 -> Tablist.Rank.MAESTRO.escalon;
+                case 6 -> Tablist.Rank.LEYENDA.escalon;
+                default -> Integer.MAX_VALUE;
+            };
+        }
         return switch (slotIdx) {
-            case 0, 1 -> 0;
+            case 0 -> 0;
+            case 1 -> Tablist.Rank.ELITE.escalon;
             case 2, 3, 4 -> -1;
             case 5 -> Tablist.Rank.MAESTRO.escalon;
             case 6 -> Tablist.Rank.LEYENDA.escalon;
@@ -545,9 +556,10 @@ public final class CrianzaService {
     }
 
     private static Pokemon crearBebe(String baseEspecie, Pokemon madre, Pokemon padre, Pokemon principal) {
-        // Herencia de Aspecto Regional (Everstone)
-        boolean everMadre = madre != null && tieneObjeto(madre, "everstone");
-        boolean everPadre = padre != null && tieneObjeto(padre, "everstone");
+        String itemMadre = getObjetoEquipado(madre);
+        String itemPadre = getObjetoEquipado(padre);
+        boolean everMadre = CrianzaReglas.esEverstone(itemMadre);
+        boolean everPadre = CrianzaReglas.esEverstone(itemPadre);
         boolean madreEsDitto = madre != null && madre.getSpecies().getName().equalsIgnoreCase("ditto");
         boolean padreEsDitto = padre != null && padre.getSpecies().getName().equalsIgnoreCase("ditto");
 
@@ -574,13 +586,14 @@ public final class CrianzaService {
             baby.updateForm();
         }
 
-        // Herencia de Naturaleza
-        if (everMadre && !everPadre) {
-            baby.setNature(madre.getNature());
-        } else if (everPadre && !everMadre) {
-            baby.setNature(padre.getNature());
-        } else if (everMadre && everPadre) {
-            baby.setNature(Math.random() < 0.5 ? madre.getNature() : padre.getNature());
+        // Herencia de Naturaleza (Piedra Eterna / Everstone)
+        var natHeredada = CrianzaReglas.determinarNaturalezaHeredada(
+                madre != null ? madre.getNature() : null, itemMadre,
+                padre != null ? padre.getNature() : null, itemPadre,
+                Math.random()
+        );
+        if (natHeredada != null) {
+            baby.setNature(natHeredada);
         }
 
         // Herencia de Habilidad Oculta (60% si el progenitor válido tiene HO)
@@ -596,21 +609,18 @@ public final class CrianzaService {
         // Herencia de Movimientos Huevo
         heredarMovimientosHuevo(baby, madre, padre);
 
-        // Herencia de IVs (3 normales, o 5 con Lazo Destino)
-        boolean destinyKnot = (madre != null && tieneObjeto(madre, "destiny_knot"))
-                || (padre != null && tieneObjeto(padre, "destiny_knot"));
-        int numHeredar = destinyKnot ? 5 : 3;
+        // Herencia de IVs (Garantía de Objetos Recios / Brazales + Lazo Destino)
+        var decisionesIV = CrianzaReglas.resolverHerenciaIVs(itemMadre, itemPadre, new java.util.Random());
+        for (var entry : decisionesIV.entrySet()) {
+            String statNombre = entry.getKey();
+            boolean deMadre = entry.getValue();
+            Stat statCobblemon = statDesdeNombre(statNombre);
+            if (statCobblemon == null) continue;
 
-        var statsList = new ArrayList<>(List.of(
-                Stats.HP, Stats.ATTACK, Stats.DEFENCE,
-                Stats.SPECIAL_ATTACK, Stats.SPECIAL_DEFENCE, Stats.SPEED
-        ));
-        Collections.shuffle(statsList);
-        for (int i = 0; i < numHeredar; i++) {
-            var stat = statsList.get(i);
-            Pokemon donante = (padre == null || (madre != null && Math.random() < 0.5)) ? madre : padre;
+            Pokemon donante = deMadre ? (madre != null ? madre : padre) : (padre != null ? padre : madre);
             if (donante != null) {
-                baby.getIvs().set(stat, donante.getIvs().getOrDefault(stat));
+                int ivValor = donante.getIvs().getOrDefault(statCobblemon);
+                baby.getIvs().set(statCobblemon, ivValor);
             }
         }
 
@@ -749,6 +759,9 @@ public final class CrianzaService {
             // Confirmar entrega en base de datos
             marcarEntregaCompletada(entrega.deliveryId());
 
+            // Notificar a oficios y misiones (Quest HATCH / Path CRIADOR / Pase de Batalla)
+            net.pokereport.luna.progression.OficiosListener.anotarEclosion(player);
+
             // Avanzar el ciclo de crianza en la ranura
             long nuevoInicio = System.currentTimeMillis();
             guardarProgenitores(uuidStr, entrega.slotIdx(), actual.madreUuid, actual.padreUuid,
@@ -829,12 +842,33 @@ public final class CrianzaService {
         return new CompatibilidadInfo(true, "Compatibles: Grupo " + compartido.getShowdownID());
     }
 
-    private static boolean tieneObjeto(Pokemon p, String subcadena) {
-        if (p == null) return false;
+    public static String getObjetoEquipado(Pokemon p) {
+        if (p == null) return null;
         ItemStack stack = p.heldItem();
-        if (stack == null || stack.isEmpty()) return false;
-        String id = Registries.ITEM.getId(stack.getItem()).getPath();
-        return id.equals(subcadena);
+        if (stack == null || stack.isEmpty()) return null;
+        var id = Registries.ITEM.getId(stack.getItem());
+        if (id == null) return null;
+        return id.getPath().toLowerCase(Locale.ROOT);
+    }
+
+    private static Stat statDesdeNombre(String nombre) {
+        if (nombre == null) return null;
+        return switch (nombre.toLowerCase(Locale.ROOT)) {
+            case "hp" -> Stats.HP;
+            case "attack" -> Stats.ATTACK;
+            case "defence" -> Stats.DEFENCE;
+            case "special_attack" -> Stats.SPECIAL_ATTACK;
+            case "special_defence" -> Stats.SPECIAL_DEFENCE;
+            case "speed" -> Stats.SPEED;
+            default -> null;
+        };
+    }
+
+    private static boolean tieneObjeto(Pokemon p, String subcadena) {
+        String obj = getObjetoEquipado(p);
+        if (obj == null) return false;
+        String clean = CrianzaReglas.normalizarItemId(subcadena);
+        return obj.equalsIgnoreCase(clean) || obj.contains(clean);
     }
 
     public static Pokemon buscarPokemon(ServerPlayerEntity player, String uuidStr) {

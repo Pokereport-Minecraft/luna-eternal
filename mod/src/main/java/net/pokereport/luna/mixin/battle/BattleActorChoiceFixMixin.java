@@ -45,18 +45,19 @@ public abstract class BattleActorChoiceFixMixin {
                 return;
             }
 
-            // Caso 2: Si es una IA y se le pide elegir pero aún no tiene respuestas,
-            // aseguramos que genere su respuesta inmediatamente si el request no es de espera.
+            // Caso 2: Si es una IA y se le pide elegir pero aún no tiene respuestas:
             BattleActor self = (BattleActor) (Object) this;
             if (self instanceof AIBattleActor ai) {
                 ShowdownActionRequest req = this.getRequest();
-                if (req != null && !req.getWait()) {
-                    try {
-                        ai.onChoiceRequested();
-                    } catch (Throwable ignored) {}
-                    if (!this.getResponses().isEmpty()) {
-                        ci.cancel();
-                    }
+                if (req == null || req.getWait()) {
+                    ci.cancel();
+                    return;
+                }
+                try {
+                    ai.onChoiceRequested();
+                } catch (Throwable ignored) {}
+                if (!this.getResponses().isEmpty()) {
+                    ci.cancel();
                 }
             }
         }

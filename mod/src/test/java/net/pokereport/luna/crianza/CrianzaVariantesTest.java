@@ -152,4 +152,92 @@ public class CrianzaVariantesTest {
         assertFalse(heredados.contains("Tackle"), "Tackle no es egg move");
         assertFalse(heredados.contains("Growl"), "Growl no es egg move");
     }
+
+    @Test
+    @DisplayName("Madre con Brazal Recio (power_bracer) garantiza herencia de Ataque de la madre")
+    void testPowerBracerMadreGarantizaAtaque() {
+        var rng = new java.util.Random(12345L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs("power_bracer", null, rng);
+
+        assertEquals(3, herencia.size(), "Debe heredar 3 estadísticas sin Lazo Destino");
+        assertTrue(herencia.containsKey("attack"), "Ataque debe estar en las estadísticas heredadas");
+        assertTrue(herencia.get("attack"), "Ataque debe provenir 100% de la madre con Brazal Recio");
+    }
+
+    @Test
+    @DisplayName("Padre con Franja Recia (power_anklet) garantiza herencia de Velocidad del padre")
+    void testPowerAnkletPadreGarantizaVelocidad() {
+        var rng = new java.util.Random(54321L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs(null, "cobblemon:power_anklet", rng);
+
+        assertEquals(3, herencia.size(), "Debe heredar 3 estadísticas sin Lazo Destino");
+        assertTrue(herencia.containsKey("speed"), "Velocidad debe estar en las estadísticas heredadas");
+        assertFalse(herencia.get("speed"), "Velocidad debe provenir 100% del padre con Franja Recia");
+    }
+
+    @Test
+    @DisplayName("Madre con Brazal Recio y Padre con Lazo Destino garantiza Ataque de madre y 5 stats en total")
+    void testPowerBracerConLazoDestinoGarantizaAtaqueY5Stats() {
+        var rng = new java.util.Random(99999L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs("power_bracer", "destiny_knot", rng);
+
+        assertEquals(5, herencia.size(), "Con Lazo Destino debe heredar exactamente 5 estadísticas");
+        assertTrue(herencia.containsKey("attack"), "Ataque debe estar garantizado por el Brazal Recio");
+        assertTrue(herencia.get("attack"), "Ataque debe provenir de la madre");
+    }
+
+    @Test
+    @DisplayName("Ambos padres con objetos recios distintos garantizan ambas estadísticas de sus respectivos padres")
+    void testAmbosObjetosReciosDistintosGarantizanAmbos() {
+        var rng = new java.util.Random(42L);
+        // Madre lleva Pesa Recia (hp), Padre lleva Franja Recia (speed)
+        var herencia = CrianzaReglas.resolverHerenciaIVs("power_weight", "power_anklet", rng);
+
+        assertEquals(3, herencia.size(), "Debe heredar 3 estadísticas en total");
+        assertTrue(herencia.containsKey("hp"), "HP debe estar garantizado");
+        assertTrue(herencia.get("hp"), "HP debe provenir de la madre con Pesa Recia");
+        assertTrue(herencia.containsKey("speed"), "Velocidad debe estar garantizada");
+        assertFalse(herencia.get("speed"), "Velocidad debe provenir del padre con Franja Recia");
+    }
+
+    @Test
+    @DisplayName("Ambos padres con el mismo objeto recio garantizan la estadística")
+    void testAmbosMismoObjetoRecioGarantizaStat() {
+        var rng = new java.util.Random(777L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs("power_lens", "power_lens", rng);
+
+        assertEquals(3, herencia.size(), "Debe heredar 3 estadísticas en total");
+        assertTrue(herencia.containsKey("special_attack"), "Ataque Especial debe estar garantizado");
+    }
+
+    @Test
+    @DisplayName("Sin objetos equipados hereda exactamente 3 estadísticas aleatorias")
+    void testSinObjetosHereda3Stats() {
+        var rng = new java.util.Random(888L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs(null, null, rng);
+
+        assertEquals(3, herencia.size(), "Sin objetos debe heredar exactamente 3 estadísticas");
+    }
+
+    @Test
+    @DisplayName("Solo Lazo Destino hereda exactamente 5 estadísticas aleatorias")
+    void testSoloLazoDestinoHereda5Stats() {
+        var rng = new java.util.Random(111L);
+        var herencia = CrianzaReglas.resolverHerenciaIVs("cobblemon:destiny_knot", null, rng);
+
+        assertEquals(5, herencia.size(), "Con Lazo Destino debe heredar exactamente 5 estadísticas");
+    }
+
+    @Test
+    @DisplayName("Piedra Eterna (everstone) hereda naturaleza correctamente")
+    void testEverstoneHeredaNaturaleza() {
+        String nat = CrianzaReglas.determinarNaturalezaHeredada("adamant", "everstone", "modest", null, 0.5);
+        assertEquals("adamant", nat, "Debe heredar naturaleza Firme de la madre con Everstone");
+
+        String natPadre = CrianzaReglas.determinarNaturalezaHeredada("adamant", null, "modest", "cobblemon:everstone", 0.5);
+        assertEquals("modest", natPadre, "Debe heredar naturaleza Modesta del padre con Everstone");
+
+        String sinEver = CrianzaReglas.determinarNaturalezaHeredada("adamant", "power_bracer", "modest", "destiny_knot", 0.5);
+        assertNull(sinEver, "Sin Everstone no debe forzar naturaleza (retorna null para dejar la aleatoria)");
+    }
 }

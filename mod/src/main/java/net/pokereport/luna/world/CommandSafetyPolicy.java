@@ -21,7 +21,7 @@ public final class CommandSafetyPolicy {
             "gimnasio", "decorar", "naranja", "puerta", "traje", "pase", "torre_batalla",
             "paradas", "comercio", "enfermera", "kits", "rotacion", "reiniciarmision",
             "reiniciarinicial", "reiniciarmedalla", "darmedalla", "darmedallas", "via",
-            "rotarcazas", "probar", "lunita", "quienpokemon");
+            "rotarcazas", "probar", "lunita", "quienpokemon", "borde");
     private static final Set<String> TERRAIN = Set.of("fill", "fillbiome", "clone", "setblock", "data",
             "execute", "function", "summon", "place", "item", "loot", "schedule");
     // These commands can target another dimension regardless of the source world.
