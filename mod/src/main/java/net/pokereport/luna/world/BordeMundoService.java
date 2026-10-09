@@ -30,7 +30,7 @@ import java.util.List;
  */
 public final class BordeMundoService {
 
-    public static final double RADIO_HOGAR = 5000.0;
+    public static final double RADIO_HOGAR = 29999984.0;
     public static final double RADIO_SALVAJE = 3000.0;
 
     private BordeMundoService() {}
