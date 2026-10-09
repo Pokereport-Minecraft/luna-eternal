@@ -70,6 +70,9 @@ public final class SabrinaParkourService {
             if (jugador.isSpectator() || !jugador.isAlive()) {
                 continue;
             }
+            if (GymChallengePolicy.isStaffExempt(jugador)) {
+                continue;
+            }
 
             Ranuras.Asignacion asig = Ranuras.asignacionDe(jugador.getUuid());
             if (asig == null || !"sabrina".equalsIgnoreCase(asig.gymId())) {

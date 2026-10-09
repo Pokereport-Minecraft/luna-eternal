@@ -131,6 +131,7 @@ public final class GymChallengeService {
         if (server == null || server.getTicks() % 4 != 0) return;
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             if (player.isSpectator() || player.isCreative()) continue;
+            if (GymChallengePolicy.isStaffExempt(player)) continue;
             if (GymChallengePolicy.isChallengeActive(player)) {
                 // Bloqueo estricto de vuelo en supervivencia durante el reto
                 if (player.getAbilities().flying) {

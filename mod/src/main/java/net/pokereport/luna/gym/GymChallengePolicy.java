@@ -40,9 +40,20 @@ public final class GymChallengePolicy {
                 || LunaDimensions.ISLAS_NARANJA.equals(key);
     }
 
+    public static boolean isStaffExempt(ServerPlayerEntity player) {
+        if (player == null) return false;
+        if (player.isSpectator()) return true;
+        if (player.isCreative()) return true;
+        if (player.hasPermissionLevel(2)) return true;
+        if (net.pokereport.luna.spectate.StaffSpectateService.isSpectating(player.getUuid())) return true;
+        var rank = net.pokereport.luna.rank.RankService.enCache(player.getUuid());
+        if (rank != null && (rank.esStaff() || rank.equipo)) return true;
+        return false;
+    }
+
     public static boolean isChallengeActive(ServerPlayerEntity player) {
         if (player == null) return false;
-        if (player.hasPermissionLevel(2) && player.isCreative()) return false;
+        if (isStaffExempt(player)) return false;
         Ranuras.Asignacion asig = Ranuras.asignacionDe(player.getUuid());
         return asig != null || isInGymDimension(player.getWorld());
     }
@@ -69,8 +80,11 @@ public final class GymChallengePolicy {
             return true;
         }
 
-        if ("clan".equals(root) && parts.length > 1 && "home".equals(parts[1])) {
-            return true;
+        if ("clan".equals(root) && parts.length > 1) {
+            String sub = parts[1];
+            if ("home".equals(sub) || "sethome".equals(sub)) {
+                return true;
+            }
         }
 
         return false;
