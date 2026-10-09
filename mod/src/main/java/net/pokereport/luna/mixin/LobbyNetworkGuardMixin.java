@@ -26,6 +26,11 @@ public abstract class LobbyNetworkGuardMixin {
 
     @Inject(method = "onChatMessage", at = @At("HEAD"), cancellable = true)
     private void pokereport$bloquearChatLobby(ChatMessageC2SPacket packet, CallbackInfo ci) {
+        if (net.pokereport.luna.chat.ChatDimensionPolicy.isLobby(player)) {
+            player.sendMessage(Text.literal("§6§lPOKEREPORT §8» §7El chat estará disponible cuando ingreses a la aventura."), false);
+            ci.cancel();
+            return;
+        }
         if (Puerta.bloqueado(player)) {
             ci.cancel();
         }

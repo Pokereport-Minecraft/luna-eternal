@@ -387,6 +387,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             net.pokereport.luna.economy.SessionManager.onJoin(handler.player);
+            net.pokereport.luna.chat.ServerAnnouncementService.onPlayerJoin(handler.player);
 
             var player = handler.getPlayer();
             Tablist.onJoin(server, player);
@@ -609,6 +610,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
 
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             net.pokereport.luna.economy.SessionManager.onLeave(handler.player);
+            net.pokereport.luna.chat.ServerAnnouncementService.onPlayerDisconnect(handler.player.getUuid());
+            net.pokereport.luna.chat.ChatChannelService.onPlayerDisconnect(handler.player.getUuid());
 
             var player = handler.getPlayer();
             
@@ -702,6 +705,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             net.pokereport.luna.gym.ZonaVenenoKoga.tick(server);
             // Detección y reinicio por caída en el parkour de Sabrina
             net.pokereport.luna.gym.SabrinaParkourService.tick(server);
+            // Anuncios oficiales periódicos
+            net.pokereport.luna.chat.ServerAnnouncementService.tick(server);
 
             if (server.getTicks() % 20 != 0) return;
             // ⚠ La cuenta atras de los viajes va AQUI, en el corte de 20 ticks:
@@ -781,6 +786,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.command.EventCommand.registrar(dispatcher);
                 net.pokereport.luna.command.StaffSpectateCommand.registrar(dispatcher);
                 net.pokereport.luna.command.ModerationCommands.registrar(dispatcher);
+                net.pokereport.luna.command.ChatCommands.registrar(dispatcher);
             });
         net.pokereport.luna.world.SafeInteractionPolicy.registrar();
     }

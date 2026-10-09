@@ -275,7 +275,7 @@ public final class Tablist {
     }
 
     /** Tag con degradado real por carácter; nunca interpreta códigos § del usuario. */
-    private static MutableText tagText(ClanInfo clan) {
+    public static MutableText tagText(ClanInfo clan) {
         int inicio = parseHex(clan.colorInicio(), legacyRgb(clan.color()));
         int fin = parseHex(clan.colorFin(), inicio);
         int[] puntos = clan.etiqueta().codePoints().toArray();
