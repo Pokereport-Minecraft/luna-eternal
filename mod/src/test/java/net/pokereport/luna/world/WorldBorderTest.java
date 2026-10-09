@@ -109,4 +109,25 @@ class WorldBorderTest {
         assertEquals(6000.0, salvajeBorder.getSize());
         assertEquals(10000.0, overworldBorder.getSize());
     }
+
+    @Test
+    @DisplayName("Gimnasios con X > 5000 (Sabrina, Blaine, Giovanni, Johto) están dentro del borde liberado")
+    void testGymCoordinatesInsideLiberatedBorder() {
+        WorldBorder border = new WorldBorder();
+        border.setCenter(0.0, 0.0);
+        border.setSize(59999968.0);
+
+        // Koga: 4096 (entraba antes)
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(4096, 64, 0)));
+        // Sabrina: 5120 (quedaba fuera con radio 5000)
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(5120, 64, 0)));
+        // Blaine: 6144
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(6144, 64, 0)));
+        // Giovanni: 7168
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(7168, 64, 0)));
+        // Pegaso: 14336
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(14336, 64, 0)));
+        // Lance: 22528
+        assertTrue(border.contains(new net.minecraft.util.math.BlockPos(22528, 64, 0)));
+    }
 }

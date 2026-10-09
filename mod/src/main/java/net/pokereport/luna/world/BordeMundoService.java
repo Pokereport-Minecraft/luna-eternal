@@ -46,6 +46,14 @@ public final class BordeMundoService {
 
         WorldBorder overworldBorder = overworld.getWorldBorder();
 
+        // ⚠ Desvincular todas las dimensiones del syncer de Overworld ANTES de modificar el tamaño
+        // de Overworld, para que no propague el radio de 5.000 a gimnasios o dimensiones personalizadas.
+        for (ServerWorld sw : server.getWorlds()) {
+            if (sw != overworld) {
+                desincronizar(overworldBorder, sw.getWorldBorder());
+            }
+        }
+
         // 1. Configurar Overworld (Hogar): Radio 5.000, Diámetro 10.000
         overworldBorder.setCenter(0.0, 0.0);
         overworldBorder.setSize(RADIO_HOGAR * 2.0);
@@ -60,11 +68,6 @@ public final class BordeMundoService {
             if (salvaje == null) continue;
 
             WorldBorder salvajeBorder = salvaje.getWorldBorder();
-
-            // Desvincular syncer del Overworld hacia este mundo
-            desincronizar(overworldBorder, salvajeBorder);
-
-            // Fijar tamaño y centro independientes
             salvajeBorder.setCenter(0.0, 0.0);
             salvajeBorder.setSize(RADIO_SALVAJE * 2.0);
             salvajeBorder.setDamagePerBlock(0.2);
@@ -73,8 +76,28 @@ public final class BordeMundoService {
             salvajesConfigurados++;
         }
 
+        // 3. Dimensiones de gimnasios, islas naranja, ciudadela, torre y lobby:
+        // Deben tener el tamaño máximo vanilla (59999968.0) para que no limiten
+        // gimnasios que están en X=5120..23000 (Sabrina, Blaine, Giovanni, Johto).
+        RegistryKey<World>[] customDims = new RegistryKey[]{
+            LunaDimensions.GIMNASIOS,
+            LunaDimensions.ISLAS_NARANJA,
+            LunaDimensions.GIMNASIO_MORTI,
+            LunaDimensions.CIUDADELA,
+            LunaDimensions.TORRE,
+            LunaDimensions.LOBBY
+        };
+        for (RegistryKey<World> dimKey : customDims) {
+            ServerWorld dimWorld = server.getWorld(dimKey);
+            if (dimWorld == null) continue;
+            WorldBorder b = dimWorld.getWorldBorder();
+            b.setCenter(0.0, 0.0);
+            b.setSize(59999968.0);
+            b.setDamagePerBlock(0.0);
+        }
+
         LunaEternal.LOG.info("BordeMundo: Hogar fijado en radio {} (tamaño {}). "
-                        + "{} mundos salvajes fijados en radio {} (tamaño {}).",
+                        + "{} mundos salvajes fijados en radio {} (tamaño {}). Dimensiones de gimnasios y ciudadela liberadas.",
                 (long) RADIO_HOGAR, (long) (RADIO_HOGAR * 2.0),
                 salvajesConfigurados, (long) RADIO_SALVAJE, (long) (RADIO_SALVAJE * 2.0));
     }
