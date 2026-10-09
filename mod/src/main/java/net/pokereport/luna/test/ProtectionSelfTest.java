@@ -163,6 +163,9 @@ public final class ProtectionSelfTest {
             check("OP4 Creative sin editmode no edita", !WorldProtectionManager.canModifyWorld(player, world));
             WorldProtectionManager.setEditing(player, true);
             check("OP4 autorizado Creative EditMode edita", WorldProtectionManager.canModifyWorld(player, world));
+            player.changeGameMode(GameMode.SURVIVAL);
+            check("OP4 autorizado Survival EditMode edita", WorldProtectionManager.canModifyWorld(player, world));
+            player.changeGameMode(GameMode.CREATIVE);
             // CommandManager queues nested commands until this outer selftest returns.
             // The direct dispatcher runs the authorized vanilla operation synchronously,
             // so cleanup cannot race a deferred write after the assertion.

@@ -29,6 +29,7 @@
     "StaffOnlyJoinMessageMixin",
     "ChatFormatMixin",
     "battle.RequestInstructionFixMixin",
+    "battle.BattleTickIsolationMixin",
     "battle.BattleActorChoiceFixMixin",
     "battle.BattleChoiceRecoveryMixin",
     "battle.ErrorInstructionRecoveryMixin",

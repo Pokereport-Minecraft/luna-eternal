@@ -132,6 +132,7 @@ public final class Combate {
      * lección que las paradas del moto taxi.
      */
     public static void registrarClic() {
+        TrainerStateRecovery.register();
         // El acceso a Lance es un salto de fe al volcán. Mientras el jugador
         // tenga su ranura del Campeón de Johto reservada, ni caída, lava ni
         // fuego pueden dañarlo; al salir o acabar se libera la ranura y vuelve
@@ -166,6 +167,8 @@ public final class Combate {
                     }
                     var g = Lideres.gimnasioDe(entidad);
                     if (g == null) {
+                        sp.sendMessage(Text.literal("§cEste líder tiene una configuración incompleta. Informa al staff."), true);
+                        LunaEternal.LOG.warn("[GYM-NPC] Tagged leader {} has no valid gym: {}", entidad.getUuid(), tags);
                         return net.minecraft.util.ActionResult.SUCCESS;
                     }
                     if (tags.contains(Lideres.MARCA_ARENA)
@@ -173,6 +176,9 @@ public final class Combate {
                         empezar(sp, mob, g);
                     } else if (tags.contains(Lideres.MARCA_RECEPCION)) {
                         net.pokereport.luna.net.Red.enviarGimnasio(sp, g);
+                    } else {
+                        sp.sendMessage(Text.literal("§cEste líder no tiene definida su función de arena o recepción."), true);
+                        LunaEternal.LOG.warn("[GYM-NPC] Leader {} missing role tags: {}", entidad.getUuid(), tags);
                     }
                     return net.minecraft.util.ActionResult.SUCCESS;
                 });
@@ -628,20 +634,35 @@ public final class Combate {
                                Gimnasio.Gimnasio_ g) {
         int mia = Ranuras.ranuraDe(g, jugador.getUuid());
         if (mia < 0) {
+            var rank = net.pokereport.luna.rank.RankService.enCache(jugador.getUuid());
+            if (jugador.hasPermissionLevel(2) || (rank != null && rank.esStaff())) {
+                String error = probar(jugador, g);
+                jugador.sendMessage(Text.literal(error == null
+                        ? "§bArena de prueba preparada. Habla con el líder de tu copia; no otorga progreso."
+                        : "§c" + error), false);
+                return;
+            }
             jugador.sendMessage(
                     Text.translatable("gimnasio.lunaeternal.no.no_es_tuya"), true);
             return;
         }
-        if (mob.isInBattle() || RCTMod.getInstance().isInBattle(jugador)) {
-            var b = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(jugador.getUuid());
-            if (b == null || b.getEnded()) {
-                LunaEternal.LOG.warn("[COMBATE-REMEDY] Estado en combate obsoleto para {} o {}. Restableciendo...",
-                        jugador.getName().getString(), g.id());
-                try { mob.cancelBattle(); } catch (Throwable ignored) {}
-                try { RCTMod.getInstance().getTrainerManager().removeBattle(jugador.getUuid()); } catch (Throwable ignored) {}
-            } else {
-                return;
-            }
+        int slotNpc = Math.floorDiv(mob.getBlockZ() - Gimnasio.origen(g, 0).getZ()
+                + (g.region() == Gimnasio.Region.NARANJA ? 112 : 0), Gimnasio.pasoRanura(g));
+        if (slotNpc != mia) {
+            jugador.sendMessage(Text.translatable("gimnasio.lunaeternal.no.no_es_tuya"), true);
+            return;
+        }
+        if (!TrainerStateRecovery.available(mob, jugador.getServer())) {
+            jugador.sendMessage(Text.literal("§eEste entrenador está disputando otro combate."), true);
+            return;
+        }
+        var activeBattle = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(jugador.getUuid());
+        if (activeBattle != null && !activeBattle.getEnded()) {
+            jugador.sendMessage(Text.literal("§eYa estás disputando un combate."), true);
+            return;
+        }
+        if (RCTMod.getInstance().isInBattle(jugador)) {
+            RCTMod.getInstance().getTrainerManager().removeBattle(jugador.getUuid());
         }
         int sobreNivel = primerSobreNivel(jugador, g.nivel());
         if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengePolicy.isStaffExempt(jugador) && sobreNivel > 0) {

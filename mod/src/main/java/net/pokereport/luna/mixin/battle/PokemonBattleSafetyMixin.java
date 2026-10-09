@@ -5,7 +5,6 @@ import com.cobblemon.mod.common.api.battles.model.actor.AIBattleActor;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
-import com.cobblemon.mod.common.battles.PassActionResponse;
 import com.cobblemon.mod.common.battles.ShowdownActionRequest;
 import com.cobblemon.mod.common.battles.ShowdownActionResponse;
 import com.cobblemon.mod.common.battles.ShowdownInterpreter;
@@ -234,57 +233,11 @@ public abstract class PokemonBattleSafetyMixin {
                 // 1. Si es IA y no ha respondido:
                 if (actor instanceof AIBattleActor ai && actor.getResponses().isEmpty()) {
                     try {
-                        Field f = ai.getClass().getDeclaredField("requests");
-                        f.setAccessible(true);
-                        Object s = f.get(ai);
-                        if (s instanceof Set<?> set) {
-                            set.clear();
-                        }
-                    } catch (Throwable ignored) {}
-
-                    try {
-                        ai.onChoiceRequested();
-                    } catch (Throwable ignored) {}
-
-                    // Rescate directo si sigue vacío
-                    if (actor.getResponses().isEmpty()) {
-                        try {
-                            List<ShowdownActionResponse> choices = req.iterate(ai.getActivePokemon(), (active, moves, forced) -> {
-                                try {
-                                    return ai.getBattleAI().choose(active, ai.getBattle(), ai.getSide(), moves, forced);
-                                } catch (Throwable t2) {
-                                    return TrainerBattleAI.forcedChoice(active, ai.getSide(), moves, forced);
-                                }
-                            });
-                            if (choices != null && !choices.isEmpty()) {
-                                actor.setActionResponses(choices);
-                            }
-                        } catch (Throwable ignored) {}
+                        net.pokereport.luna.battle.BattleRequestRecovery.choose(ai, req);
+                    } catch (RuntimeException | LinkageError | StackOverflowError failure) {
+                        net.pokereport.luna.battle.BattleRequestRecovery.abort((PokemonBattle) (Object) this, failure);
+                        return;
                     }
-
-                    // Rescate con Pokémon vivo de banquillo o pase seguro
-                    if (actor.getResponses().isEmpty()) {
-                        BattlePokemon vivo = null;
-                        for (BattlePokemon bp : actor.getPokemonList()) {
-                            if (bp != null && bp.getHealth() > 0 && !bp.isSentOut() && !bp.getWillBeSwitchedIn()) {
-                                vivo = bp;
-                                break;
-                            }
-                        }
-                        if (vivo != null) {
-                            vivo.setWillBeSwitchedIn(true);
-                            actor.getResponses().add(new SwitchActionResponse(vivo.getUuid()));
-                        } else {
-                            actor.getResponses().add(PassActionResponse.INSTANCE);
-                        }
-                    }
-
-                    for (BattlePokemon bp : actor.getPokemonList()) {
-                        if (bp != null && !bp.isSentOut()) {
-                            bp.setWillBeSwitchedIn(false);
-                        }
-                    }
-                    actor.setMustChoose(false);
                 }
 
                 // 2. Si es Jugador y el flag mustChoose quedó apagado pero necesita elegir:

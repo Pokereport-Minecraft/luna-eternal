@@ -1,3 +1,5 @@
+> **2026-10-09 — Reparación de gimnasios y aislamiento de combates:** rama `codex/production-gym-battle-hardening` desde `719ada14`, sin sustituir cambios del principal. Editmode permite Survival con OP4/grants; Sabrina cubre las ocho ranuras físicas hasta Y80.5; pruebas administrativas reservan copia sin progreso; recuperación NPC comprueba su oponente. Setter IA sin reentrada y límite por batalla para LinkageError. Charizard mecha original pasa del premio100 al1. Validación y estado de despliegue en [docs/PRODUCTION_GYM_HARDENING_2026-10-09.md](docs/PRODUCTION_GYM_HARDENING_2026-10-09.md).
+
 > **2026-10-04 — Nether/End:** acceso bloqueado para jugadores por portales y teletransportes; OP con rol staff conserva mantenimiento. Posiciones antiguas se corrigen al lobby. 242 PASS / 2 SKIPPED; staging 803 autotests y 53 ensayos PASS. Ver docs/RESTRICTED_DIMENSIONS.md.
 
 > **2026-10-03 — PC remoto:** tecla P y /pc exigen rango comercial Campeón/Maestro/Leyenda, incluso para OP/staff. PCs físicos siguen accesibles. Se elimina la excepción administrativa anterior; ver docs/REMOTE_PC_COMMERCIAL_RANK.md.

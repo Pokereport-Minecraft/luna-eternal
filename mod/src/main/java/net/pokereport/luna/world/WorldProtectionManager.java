@@ -47,8 +47,12 @@ public final class WorldProtectionManager {
     }
 
     public static boolean canModifyWorld(ServerPlayerEntity player, World world) {
-        return !isProtectedDimension(world) || (hasAdministrativeEditAccess(player)
-                && player.isCreative() && EDITING.contains(player.getUuid()));
+        return !isProtectedDimension(world) || permitsEditing(hasAdministrativeEditAccess(player),
+                EDITING.contains(player.getUuid()), player.isSpectator());
+    }
+
+    public static boolean permitsEditing(boolean authorized, boolean editMode, boolean spectator) {
+        return authorized && editMode && !spectator;
     }
 
     public static boolean editing(ServerPlayerEntity player) {

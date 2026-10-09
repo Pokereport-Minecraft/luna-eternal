@@ -11,17 +11,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SabrinaParkourServiceFixTest {
 
-    private static final double MIN_X = 5170.0;
-    private static final double MAX_X = 5204.0;
-    private static final double REL_MIN_Z = 20.0;
-    private static final double REL_MAX_Z = 94.0;
-    private static final double MAX_Y = 78.0;
+    private static final double MIN_X = 5180.479;
+    private static final double MAX_X = 5200.551;
 
-    private boolean estaEnZonaCaida(double px, double py, double pz, int slot) {
-        int paso = Gimnasio.pasoRanura(Gimnasio.de("sabrina"));
-        double minZ = REL_MIN_Z + slot * paso;
-        double maxZ = REL_MAX_Z + slot * paso;
-        return px >= MIN_X && px <= MAX_X && pz >= minZ && pz <= maxZ && py <= MAX_Y;
+    private boolean estaEnZonaCaida(double x, double y, double z, int slot) {
+        return SabrinaParkourService.enFoso(x, y, z, slot);
+    }
+
+    @Test
+    void measuredBoundsAndAllPhysicalSlots() {
+        for (int r = 0; r < 8; r++) {
+            double offset = r * 128;
+            assertEquals(r, SabrinaParkourService.calcularRanuraDesdeZ(20.597 + offset));
+            assertEquals(r, SabrinaParkourService.calcularRanuraDesdeZ(93.691 + offset));
+            assertTrue(estaEnZonaCaida(MIN_X, 80.5, 20.597 + offset, r));
+            assertTrue(estaEnZonaCaida(MAX_X, 79.0, 93.691 + offset, r));
+            assertFalse(estaEnZonaCaida(MAX_X, 80.501, 90 + offset, r));
+            assertEquals(-1, SabrinaParkourService.calcularRanuraDesdeZ(100 + offset));
+        }
+        assertEquals(-1, SabrinaParkourService.calcularRanuraDesdeZ(Double.NaN));
+        assertEquals(-1, SabrinaParkourService.calcularRanuraDesdeZ(90 + 8 * 128));
+        assertFalse(estaEnZonaCaida(5180.478, 79, 50, 0));
     }
 
     @Test
@@ -39,8 +49,8 @@ public class SabrinaParkourServiceFixTest {
                 "Un jugador que cae al foso en ranura 1 debe ser detectado");
 
         // Los extremos del foso en ranura 1
-        assertTrue(estaEnZonaCaida(5171.0, 65.0, 150.0, 1), "Extremo norte-oeste");
-        assertTrue(estaEnZonaCaida(5203.0, 65.0, 220.0, 1), "Extremo sur-este");
+        assertTrue(estaEnZonaCaida(MIN_X, 65.0, 150.0, 1), "Extremo norte-oeste");
+        assertTrue(estaEnZonaCaida(MAX_X, 65.0, 220.0, 1), "Extremo sur-este");
 
         // Entrada en ranura 1: Y = 95.0, no debe ser zona de caída
         Vec3d entradaSlot1 = Gimnasio.entrada(sabrina, 1);

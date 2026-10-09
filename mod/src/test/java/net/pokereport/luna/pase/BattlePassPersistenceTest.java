@@ -17,7 +17,7 @@ public class BattlePassPersistenceTest {
 
         List<Recompensa> entregables = PaseCatalogo.entregables(100);
         assertEquals(2, entregables.size(), "Nivel 100 entrega exactamente Charizard Shiny y Master Ball");
-        assertTrue(entregables.contains(r100), "Debe contener el Charizard Shiny 50 con casco mecha");
+        assertTrue(entregables.contains(r100), "Debe contener el Charizard Shiny 15");
     }
 
     @Test

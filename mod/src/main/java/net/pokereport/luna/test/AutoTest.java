@@ -192,6 +192,10 @@ public final class AutoTest {
     }
 
     private void testWorldProtection() {
+        check("Edición autorizada con modo activo permite Survival/Creative",
+                net.pokereport.luna.world.WorldProtectionManager.permitsEditing(true, true, false));
+        check("Modo activo no sustituye autorización",
+                !net.pokereport.luna.world.WorldProtectionManager.permitsEditing(false, true, false));
         var dimensions = java.util.List.of(
                 net.pokereport.luna.world.LunaDimensions.CIUDADELA,
                 net.pokereport.luna.world.LunaDimensions.LOBBY,
@@ -1300,8 +1304,13 @@ public final class AutoTest {
         check("el impuesto nunca se come el precio entero", taxBelowPrice);
         check("un precio pequeño paga el tramo bajo",
               net.pokereport.luna.gts.GtsService.taxFor(1_000) == 50);
-        check("la tasa de publicación es el 1 %",
-              net.pokereport.luna.gts.GtsService.listingFee(100_000) == 1_000);
+        var configuredGts = net.pokereport.luna.progression.ProgressionBalanceConfig.get().gts;
+        double listingPercent = configuredGts == null ? 1.0 : configuredGts.listingFeePercent;
+        double listingMultiplier = LunaEternal.economicController() == null ? 1.0
+                : LunaEternal.economicController().getTaxMultiplier();
+        check("la tasa de publicación respeta el balance configurado",
+              net.pokereport.luna.gts.GtsService.listingFee(100_000)
+                      == Math.max(1, (long) (100_000 * (listingPercent / 100.0) * listingMultiplier)));
         check("la tasa mínima es 1, nunca 0",
               net.pokereport.luna.gts.GtsService.listingFee(1) >= 1);
     }
@@ -2323,6 +2332,22 @@ public final class AutoTest {
      * si fuera una copia.
      */
     private void testGimnasios() {
+        for (int slot = 0; slot < 8; slot++) {
+            double z = 90.78 + slot * 128;
+            check("Sabrina ranura física " + slot,
+                    net.pokereport.luna.gym.SabrinaParkourService.calcularRanuraDesdeZ(z) == slot);
+            check("Sabrina barrera Y80 ranura " + slot,
+                    net.pokereport.luna.gym.SabrinaParkourService.enFoso(5189.95, 80.0, z, slot));
+            check("Sabrina inicio seguro ranura " + slot,
+                    !net.pokereport.luna.gym.SabrinaParkourService.enFoso(5189.95, 95.0, z, slot));
+        }
+        try {
+            check("Cobblemon PassActionResponse inicializa sin error",
+                    com.cobblemon.mod.common.battles.PassActionResponse.INSTANCE.getType()
+                            == com.cobblemon.mod.common.battles.ShowdownActionResponseType.PASS);
+        } catch (LinkageError failure) {
+            check("Cobblemon PassActionResponse inicializa sin error", false);
+        }
         var todos_ = net.pokereport.luna.gym.Gimnasio.TODOS;
         check("hay gimnasios declarados", !todos_.isEmpty());
 
@@ -5311,15 +5336,15 @@ public final class AutoTest {
         var primero = net.pokereport.luna.pase.PaseCatalogo.de(1);
         var ultimo = net.pokereport.luna.pase.PaseCatalogo.de(
                 net.pokereport.luna.pase.PaseNivel.MAX);
-        check("el nivel 1 da un Charizard shiny de nivel 15",
+        check("el nivel 1 da el Charizard shiny mecha de nivel 50",
               primero != null
                   && primero.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
-                  && "charizard".equals(primero.id()) && primero.nivel() == 15
+                  && "charizard".equals(primero.id()) && primero.nivel() == 50
                   && primero.shiny());
-        check("EL NIVEL 100 DA UN CHARIZARD SHINY DE NIVEL 50",
+        check("EL NIVEL 100 DA UN CHARIZARD SHINY DE NIVEL 15",
               ultimo != null
                   && ultimo.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
-                  && "charizard".equals(ultimo.id()) && ultimo.nivel() == 50
+                  && "charizard".equals(ultimo.id()) && ultimo.nivel() == 15
                   && ultimo.shiny());
         check("el nivel 100 entrega Master Ball adicional",
               net.pokereport.luna.pase.PaseCatalogo.entregables(100).stream()
@@ -5329,12 +5354,12 @@ public final class AutoTest {
         //    ASPECTO FORZADO que el pack de cosmeticos (dentro de lunaneon.jar)
         //    convierte en modelo y textura. Son DOS ficheros de dos jars --la
         //    constante de Java y el resolver del pack-- y nada los obliga a
-        //    decir la misma cadena: si divergieran, el nivel 100 entregaria un
+        //    decir la misma cadena: si divergieran, el nivel 1 entregaria un
         //    shiny normal SIN NINGUN ERROR. Aqui se lee el resolver DEL JAR
         //    (todos los mods comparten classloader en Fabric) y se busca dentro.
         String aspectoMecha = net.pokereport.luna.pase.Recompensa.ASPECTO_MECHA;
-        check("EL NIVEL 100 LLEVA EL ASPECTO DEL CASCO MECHA",
-              ultimo != null && aspectoMecha.equals(ultimo.aspecto()));
+        check("EL NIVEL 1 LLEVA EL ASPECTO DEL CASCO MECHA",
+              primero != null && aspectoMecha.equals(primero.aspecto()));
         int conAspecto = 0;
         for (int n = 1; n <= net.pokereport.luna.pase.PaseNivel.MAX; n++) {
             var r = net.pokereport.luna.pase.PaseCatalogo.de(n);
@@ -5347,10 +5372,10 @@ public final class AutoTest {
         // El aspecto NO entra en las propiedades: `PokemonProperties.parse` no
         // lo entiende, y si se colara ahi crearia un Pokemon sin nivel ni shiny.
         check("sus propiedades siguen siendo las de un Charizard shiny de 50",
-              ultimo != null && "charizard level=50 shiny=true".equals(ultimo.propiedades()));
+              primero != null && "charizard level=50 shiny=true".equals(primero.propiedades()));
         check("y la tarjeta lo dibuja con shiny Y casco",
-              ultimo != null
-                  && ultimo.aspectos().equals(java.util.Set.of("shiny", aspectoMecha)));
+              primero != null
+                  && primero.aspectos().equals(java.util.Set.of("shiny", aspectoMecha)));
 
         String pack = "/resourcepacks/cosmeticos/assets/cobblemon/";
         String resolverMecha = recurso(pack

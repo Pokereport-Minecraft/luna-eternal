@@ -23,14 +23,14 @@ import net.pokereport.luna.world.LunaDimensions;
  *
  * <p>Delimitación exacta de la zona de caída por ranura:
  * <ul>
- *   <li>X: [5182.564, 5200.490]</li>
- *   <li>Z: [153.509 + r*128, 221.492 + r*128]</li>
- *   <li>Y: <= 77.0</li>
+ *   <li>X: [5180.479, 5200.551]</li>
+ *   <li>Z: [20.597 + r*128, 93.691 + r*128]</li>
+ *   <li>Y: <= 80.5</li>
  * </ul>
  *
  * <p>Reglas estrictas de ejecución:
  * <ul>
- *   <li>Solo aplica a jugadores con ranura activa en el gimnasio de Sabrina ({@code Ranuras.asignacionDe}).</li>
+ *   <li>Sin reserva, infiere la ranura física; esto no reserva ni concede progreso.</li>
  *   <li>NO interfiere si el jugador ya está en combate con Sabrina ({@code RCTMod.isInBattle}).</li>
  *   <li>Teletransporta de vuelta al inicio de la sala ({@code Gimnasio.entrada}), anula la distancia de caída y velocidad.</li>
  *   <li>Incluye debounce de 1500 ms para evitar bucles o falsos disparos sucesivos.</li>
@@ -38,16 +38,32 @@ import net.pokereport.luna.world.LunaDimensions;
  */
 public final class SabrinaParkourService {
 
-    private static final double MIN_X = 5170.0;
-    private static final double MAX_X = 5204.0;
-    private static final double REL_MIN_Z = 20.0;
-    private static final double REL_MAX_Z = 94.0;
-    private static final double MAX_Y = 78.0;
+    private static final double MIN_X = 5180.479;
+    private static final double MAX_X = 5200.551;
+    private static final double REL_MIN_Z = 20.597;
+    private static final double REL_MAX_Z = 93.691;
+    private static final double MAX_Y = 80.5;
 
     private static final long DEBOUNCE_MS = 1500L;
     private static final Map<UUID, Long> ULTIMA_CAIDA = new ConcurrentHashMap<>();
 
     private SabrinaParkourService() {}
+
+    public static int calcularRanuraDesdeZ(double z) {
+        if (!Double.isFinite(z)) return -1;
+        for (int r = 0; r < Gimnasio.RANURAS; r++) {
+            double offset = r * Gimnasio.PASO_RANURA;
+            if (z >= REL_MIN_Z + offset && z <= REL_MAX_Z + offset) return r;
+        }
+        return -1;
+    }
+
+    public static boolean enFoso(double x, double y, double z, int ranura) {
+        double offset = ranura * Gimnasio.PASO_RANURA;
+        return ranura >= 0 && ranura < Gimnasio.RANURAS
+                && x >= MIN_X && x <= MAX_X && y <= MAX_Y
+                && z >= REL_MIN_Z + offset && z <= REL_MAX_Z + offset;
+    }
 
     public static void tick(MinecraftServer server) {
         if (server.getTicks() % 2 != 0) {
@@ -72,7 +88,7 @@ public final class SabrinaParkourService {
             }
 
             Ranuras.Asignacion asig = Ranuras.asignacionDe(jugador.getUuid());
-            if (asig == null || !"sabrina".equalsIgnoreCase(asig.gymId())) {
+            if (asig != null && !"sabrina".equalsIgnoreCase(asig.gymId())) {
                 continue;
             }
 
@@ -81,15 +97,12 @@ public final class SabrinaParkourService {
                 continue;
             }
 
-            int ranura = asig.ranura();
-            double minZ = REL_MIN_Z + ranura * Gimnasio.PASO_RANURA;
-            double maxZ = REL_MAX_Z + ranura * Gimnasio.PASO_RANURA;
-
+            int ranura = asig == null ? calcularRanuraDesdeZ(jugador.getZ()) : asig.ranura();
             double px = jugador.getX();
             double py = jugador.getY();
             double pz = jugador.getZ();
 
-            if (px >= MIN_X && px <= MAX_X && pz >= minZ && pz <= maxZ && py <= MAX_Y) {
+            if (enFoso(px, py, pz, ranura)) {
                 Long ultima = ULTIMA_CAIDA.get(jugador.getUuid());
                 if (ultima != null && (ahora - ultima) < DEBOUNCE_MS) {
                     continue;
@@ -104,8 +117,8 @@ public final class SabrinaParkourService {
     private static void reiniciarParkour(ServerPlayerEntity jugador, ServerWorld mundo,
                                         Gimnasio.Gimnasio_ g, int ranura) {
         GymChallengeService.registrarFallo(jugador.getUuid(), "sabrina");
-        Vec3d destino = Gimnasio.entrada(g, ranura);
-        float yaw = Gimnasio.giroEntrada(g);
+        Vec3d destino = new Vec3d(5189.95, 95.0, 90.78 + ranura * Gimnasio.PASO_RANURA);
+        float yaw = 180.0f;
 
         // Efecto de partículas de desvanecimiento en el punto de caída
         mundo.spawnParticles(jugador, ParticleTypes.PORTAL, true,

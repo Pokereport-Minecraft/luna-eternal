@@ -51,8 +51,8 @@ import net.pokereport.luna.pase.Recompensa.Rareza;
  * <h2>&#9888;&#9888;&#9888; HAY DOS POKEMON Y SON EXACTAMENTE LOS QUE PIDIO EL
  * USUARIO</h2>
  *
- * Nivel 1 un <b>Charizard de nivel 15</b> y nivel 100 un <b>Charizard shiny de
- * nivel 50</b>. Y no hay mas.
+ * Nivel 1 un <b>Charizard shiny mecha de nivel 50</b> y nivel 100 un
+ * <b>Charizard shiny de nivel 15</b>. Y no hay mas.
  *
  * <p>&#9888;&#9888; LA PRIMERA VERSION METIA TRES MAS &mdash;Gengar en el 25,
  * Tyranitar en el 50 y Dragonite en el 75&mdash; «para que la mitad del carril
@@ -144,7 +144,8 @@ public final class PaseCatalogo {
      */
     private static final Recompensa[] NIVELES = {
         // ================= 1-20 · PREPARACION ==============================
-        /*   1 */ p("charizard", 15, true),
+        /*   1 */ Recompensa.pokemonUnico("charizard", 50, true,
+                                          Recompensa.ASPECTO_MECHA, Rareza.LEGENDARIA),
         /*   2 */ o("poke_ball", 20, Rareza.COMUN),
         /*   3 */ o("potion", 10, Rareza.COMUN),
         /*   4 */ o("oran_berry", 16, Rareza.COMUN),
@@ -260,19 +261,13 @@ public final class PaseCatalogo {
         /*  97 */ o("pp_max", 2, Rareza.LEGENDARIA),
         /*  98 */ luna(100, Rareza.LEGENDARIA),
         /*  99 */ o("master_ball", 1, Rareza.LEGENDARIA),
-        // ⚠⚠ EL PREMIO MAYOR, y es orden directa del usuario: un Charizard shiny
-        //    de nivel 50 CON EL CASCO MECHA, que solo se da aqui. No es una
-        //    especie ni una forma nueva: es un Charizard shiny con todo lo que
-        //    tiene un Charizard shiny --habilidades, megas, crianza-- mas un
-        //    aspecto forzado que el pack de cosmeticos dibuja como casco.
-        //    ⚠ Es la UNICA fila con aspecto; el autotest lo exige.
-        /* 100 */ Recompensa.pokemonUnico("charizard", 50, true,
-                                          Recompensa.ASPECTO_MECHA, Rareza.LEGENDARIA),
+        // The user moved the original unique reward to level 1; keep the other Charizard here.
+        /* 100 */ p("charizard", 15, true),
     };
 
     /**
-     * Recompensas entregables por cobro. El nivel 100 incluye el Charizard Shiny nivel 50
-     * con aspecto mecha MÁS 1 Master Ball adicional.
+     * Recompensas entregables por cobro. El nivel 100 incluye el Charizard shiny nivel 15 MÁS 1 Master Ball adicional.
+     * El mecha original ahora se entrega en el nivel 1, conservando nivel y aspecto.
      */
     public static List<Recompensa> entregables(int nivel) {
         if (nivel == 100) {
