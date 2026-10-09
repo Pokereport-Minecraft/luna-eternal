@@ -389,6 +389,7 @@ public final class Combate {
                     jugador.getPos(), jugador.getYaw()));
             RETANDO.put(jugador.getUuid(), g.id());
             PRUEBAS.add(jugador.getUuid());
+            GymChallengeService.iniciarReto(jugador, g, ranura);
             if (!Arenas.llevar(jugador, g, ranura)) {
                 soltar(jugador, g.id());
                 return "No se pudo llevarte a la arena.";
@@ -438,6 +439,7 @@ public final class Combate {
                     jugador.getServerWorld().getRegistryKey(),
                     jugador.getPos(), jugador.getYaw()));
             RETANDO.put(jugador.getUuid(), g.id());
+            GymChallengeService.iniciarReto(jugador, g, ranura);
             if (!Arenas.llevar(jugador, g, ranura)) {
                 soltar(jugador, g.id());
                 // ⚠ Ya no se puede devolver un motivo: la pantalla se cerro
@@ -653,6 +655,11 @@ public final class Combate {
             jugador.sendMessage(Text.literal(
                     "§c§l¡COMBATE BLOQUEADO! §r§7Necesitas al menos §e" + minimo
                     + " Pokémon conscientes§7 para retar a " + g.lider() + "."), false);
+            return;
+        }
+        if (!PRUEBAS.contains(jugador.getUuid()) && !GymChallengeService.esRutaCompletada(jugador.getUuid(), g.id())) {
+            jugador.sendMessage(Text.literal(
+                    "§c§l¡DESAFÍO INCOMPLETO! §r§7Debes superar el desafío y los obstáculos del gimnasio antes de retar a " + g.lider() + "."), false);
             return;
         }
         limpiarReservasDeRanura(g, mia);
@@ -942,6 +949,7 @@ public final class Combate {
             return;   // no estaba retando a nadie: es un combate cualquiera
         }
         var g = Gimnasio.de(cual);
+        GymChallengeService.finalizarReto(uuid);
         if (g == null) {
             return;
         }
@@ -1119,6 +1127,7 @@ public final class Combate {
         }
         Ranuras.soltar(jugador.getUuid());
         SabrinaParkourService.limpiar(jugador.getUuid());
+        GymChallengeService.finalizarReto(jugador.getUuid());
     }
 
     // ------------------------------------------------------------ ciclo de vida

@@ -658,6 +658,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             } else {
                 net.pokereport.luna.gym.Ranuras.alSalir(player);
             }
+            net.pokereport.luna.gym.GymChallengeService.alSalir(player.getUuid());
             net.pokereport.luna.gym.MedallaService.olvidar(player.getUuid());
             net.pokereport.luna.progression.TrainerLicenseService.clearCache(player.getUuid());
             // ⚠ Y su cuenta atras, que ademas SUELTA lo que tuviera reservado:
@@ -705,6 +706,8 @@ public final class LunaEternal implements DedicatedServerModInitializer {
             net.pokereport.luna.gym.ZonaVenenoKoga.tick(server);
             // Detección y reinicio por caída en el parkour de Sabrina
             net.pokereport.luna.gym.SabrinaParkourService.tick(server);
+            // Control del reto de gimnasios (anti-bypass, monturas, vuelo y completado de ruta)
+            net.pokereport.luna.gym.GymChallengeService.tick(server);
             // Anuncios oficiales periódicos
             net.pokereport.luna.chat.ServerAnnouncementService.tick(server);
 
@@ -787,6 +790,7 @@ public final class LunaEternal implements DedicatedServerModInitializer {
                 net.pokereport.luna.command.StaffSpectateCommand.registrar(dispatcher);
                 net.pokereport.luna.command.ModerationCommands.registrar(dispatcher);
                 net.pokereport.luna.command.ChatCommands.registrar(dispatcher);
+                net.pokereport.luna.command.GymCommands.registrar(dispatcher);
             });
         net.pokereport.luna.world.SafeInteractionPolicy.registrar();
     }

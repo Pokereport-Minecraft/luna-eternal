@@ -53,6 +53,11 @@ public abstract class LobbyNetworkGuardMixin {
 
     @Inject(method = "onCommandExecution", at = @At("HEAD"), cancellable = true)
     private void pokereport$bloquearComandoLobby(CommandExecutionC2SPacket packet, CallbackInfo ci) {
+        if (net.pokereport.luna.gym.GymChallengePolicy.isCommandBlocked(player, packet.command())) {
+            player.sendMessage(Text.literal("§c§lGIMNASIO §8» §7No puedes usar este comando durante un reto de gimnasio. Usa §e/gym leave §7para abandonar."), false);
+            ci.cancel();
+            return;
+        }
         if (debeBloquear(packet.command())) {
             avisar();
             ci.cancel();
@@ -62,6 +67,11 @@ public abstract class LobbyNetworkGuardMixin {
     @Inject(method = "onChatCommandSigned", at = @At("HEAD"), cancellable = true)
     private void pokereport$bloquearComandoFirmadoLobby(ChatCommandSignedC2SPacket packet,
                                                         CallbackInfo ci) {
+        if (net.pokereport.luna.gym.GymChallengePolicy.isCommandBlocked(player, packet.command())) {
+            player.sendMessage(Text.literal("§c§lGIMNASIO §8» §7No puedes usar este comando durante un reto de gimnasio. Usa §e/gym leave §7para abandonar."), false);
+            ci.cancel();
+            return;
+        }
         if (debeBloquear(packet.command())) {
             avisar();
             ci.cancel();

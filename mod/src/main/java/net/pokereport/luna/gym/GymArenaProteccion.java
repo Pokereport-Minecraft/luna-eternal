@@ -108,8 +108,8 @@ public final class GymArenaProteccion {
             }
             if (esZonaProtegida(mundo, sp.getBlockPos())) {
                 var stack = sp.getStackInHand(mano);
-                if (esItemPeligroso(stack.getItem())) {
-                    avisar(sp);
+                if (esItemPeligroso(stack.getItem()) || GymChallengePolicy.isItemBlocked(stack)) {
+                    avisarItem(sp, stack);
                     return TypedActionResult.fail(stack);
                 }
             }
@@ -127,6 +127,16 @@ public final class GymArenaProteccion {
                 || item instanceof net.minecraft.item.FlintAndSteelItem
                 || item instanceof net.minecraft.item.SpawnEggItem
                 || item instanceof net.minecraft.item.EndCrystalItem;
+    }
+
+    private static void avisarItem(ServerPlayerEntity sp, net.minecraft.item.ItemStack stack) {
+        if (!Toque.repetido(sp.getUuid(), "gym_protect")) {
+            if (GymChallengePolicy.isItemBlocked(stack)) {
+                sp.sendMessage(Text.literal("§c§lGIMNASIO §r§7— El uso de perlas de ender y frutas del coro está prohibido durante el reto."), true);
+            } else {
+                avisar(sp);
+            }
+        }
     }
 
     private static void avisar(ServerPlayerEntity sp) {

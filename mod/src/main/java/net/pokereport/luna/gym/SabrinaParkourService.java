@@ -103,6 +103,7 @@ public final class SabrinaParkourService {
 
     private static void reiniciarParkour(ServerPlayerEntity jugador, ServerWorld mundo,
                                         Gimnasio.Gimnasio_ g, int ranura) {
+        GymChallengeService.registrarFallo(jugador.getUuid(), "sabrina");
         Vec3d destino = Gimnasio.entrada(g, ranura);
         float yaw = Gimnasio.giroEntrada(g);
 
