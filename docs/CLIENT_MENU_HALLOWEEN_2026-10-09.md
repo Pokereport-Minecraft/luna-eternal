@@ -26,3 +26,7 @@ Publicación: `https://pokereport.online/client/0.2.0-halloween-menu-20261009/`.
 Para futuras actualizaciones, publicar una carpeta inmutable por versión, el MRPACK completo y un ZIP con todos los archivos propios que hayan cambiado. Si cambian dependencias o requisitos, describirlos y actualizar ambos manifiestos antes de anunciarlo. No repartir indiscriminadamente JAR ajenos: conservar sus URL oficiales en el índice. Cerrar Minecraft, guardar la copia fuera de `mods` y retirar la versión anterior antes de añadir la nueva; nunca dejar dos JAR de Luna Eternal. Mantener mundos y configuración.
 
 El anuncio de Discord queda preparado por separado; no se envía automáticamente a un canal.
+
+## Verificación de publicación
+
+Bundle 0.1.3 publicado y firma Ed25519 verificada desde el endpoint público. Launcher y fallback apuntan a `manifest-0573817c70.json`; 163 entradas ajenas a Luna Eternal conservadas. MRPACK SHA256: `cf9c9194c23ee4af250a56241d346eee4fa3f20aa0356d3f6f0596071e3760aa`; exactamente una entrada modificada. ZIP manual SHA256: `328ec2164ca141068647f29496f5e958f9ddfdf55c947e5d8578331b1729ce6c`. JAR, MRPACK, ZIP y checksum respondieron HTTP 200 con tamaños correctos. Producción conserva su hash anterior y staging quedó detenido tras guardar sus mundos y cerrar SQL.
