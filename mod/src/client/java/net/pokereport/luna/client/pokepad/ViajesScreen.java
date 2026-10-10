@@ -274,14 +274,14 @@ public class ViajesScreen extends Screen {
             if (!dentro) {
                 // Fuera de la ciudadela se apaga, no se esconde: que exista y
                 // no se pueda usar ES informacion.
-                ctx.fill(px(cx), py(cy), px(cx + w), py(cy + h), 0xB4101828);
+                PadTheme.fill(ctx, px(cx), py(cy), px(cx + w), py(cy + h), 0xB4101828);
             } else if (enc) {
-                ctx.fill(px(cx), py(cy), px(cx + w), py(cy + h), 0x22FFFFFF);
+                PadTheme.fill(ctx, px(cx), py(cy), px(cx + w), py(cy + h), 0x22FFFFFF);
             }
             // ⚠ Una banda más oscura abajo para el nombre: sobre un color plano
             //   el texto se lee, pero la banda es lo que separa «el cuadro» de
             //   «lo que dice el cuadro» y hace que la rejilla se lea como fichas.
-            ctx.fill(px(cx), py(cy + h - 46), px(cx + w), py(cy + h), 0x66000000);
+            PadTheme.fill(ctx, px(cx), py(cy + h - 46), px(cx + w), py(cy + h), 0x66000000);
             marco(ctx, px(cx), py(cy), pl(w), pl(h),
                     sel && dentro ? BORDE_ENCIMA
                                   : (dentro ? aclarar(p.color()) : 0xFF2A3040),
@@ -331,7 +331,7 @@ public class ViajesScreen extends Screen {
         int u = (ARTE_LADO - regW) / 2, v = (ARTE_LADO - regH) / 2;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, u, v, regW, regH,
+        PadTheme.texture(ctx, tex, x, y, w, h, u, v, regW, regH,
                 ARTE_LADO, ARTE_LADO);
         RenderSystem.disableBlend();
     }
@@ -345,7 +345,7 @@ public class ViajesScreen extends Screen {
         // Un recuadro con el color y el icono del destino: es lo que ata el
         // panel a la ficha que acabas de pulsar.
         int rw = PANEL_W - 60, rh = 120;
-        ctx.fill(px(PANEL_X + 30), py(y), px(PANEL_X + 30 + rw), py(y + rh),
+        PadTheme.fill(ctx, px(PANEL_X + 30), py(y), px(PANEL_X + 30 + rw), py(y + rh),
                 listo() ? p.color() : 0xFF3A4050);
         marco(ctx, px(PANEL_X + 30), py(y), pl(rw), pl(rh), 0xFF20283C,
                 Math.max(2, pl(2)));
@@ -453,7 +453,7 @@ public class ViajesScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (enc ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -486,18 +486,18 @@ public class ViajesScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, 0);
     }
@@ -512,16 +512,14 @@ public class ViajesScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -530,10 +528,10 @@ public class ViajesScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -541,7 +539,7 @@ public class ViajesScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

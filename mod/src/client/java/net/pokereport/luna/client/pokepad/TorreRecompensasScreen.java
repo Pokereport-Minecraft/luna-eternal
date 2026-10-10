@@ -182,7 +182,7 @@ public class TorreRecompensasScreen extends Screen {
         int cardH = 78;
         int cardX = PANEL_X + 18;
 
-        ctx.fill(px(cardX), py(cardY), px(cardX + cardW), py(cardY + cardH), 0xFF141C2B);
+        PadTheme.fill(ctx, px(cardX), py(cardY), px(cardX + cardW), py(cardY + cardH), 0xFF141C2B);
         marco(ctx, px(cardX), py(cardY), pl(cardW), pl(cardH), 0xFF2C394F, 1);
 
         texto(ctx, Text.literal("RÉCORD DE TEMPORADA"), cx, cardY + 9, 14, TEXTO_SUAVE, true, true);
@@ -206,7 +206,7 @@ public class TorreRecompensasScreen extends Screen {
                 : GRIS_INACTIVO;
         int bordeBtn = puedeReclamarTodo ? (hoverBtn ? 0xFFFFFFFF : 0xFF144D25) : 0xFF2D384D;
 
-        ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), colorBtn);
+        PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), colorBtn);
         marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), bordeBtn, Math.max(1, pl(hoverBtn ? 2 : 1)));
 
         String txtBoton = puedeReclamarTodo
@@ -255,7 +255,7 @@ public class TorreRecompensasScreen extends Screen {
             int fondo = activa ? 0xFF2A374F : (hover ? 0xFF202A3C : 0xFF141D2B);
             int borde = activa ? BORDE_ENCIMA : (hover ? BORDE_BASE : 0xFF253145);
 
-            ctx.fill(px(tabX), py(tabY), px(tabX + tabW), py(tabY + tabH), fondo);
+            PadTheme.fill(ctx, px(tabX), py(tabY), px(tabX + tabW), py(tabY + tabH), fondo);
             marco(ctx, px(tabX), py(tabY), pl(tabW), pl(tabH), borde, Math.max(1, pl(activa ? 2 : 1)));
 
             int colorTexto = activa ? ORO : (hover ? 0xFFFFFFFF : 0xFF8FA0C8);
@@ -306,12 +306,12 @@ public class TorreRecompensasScreen extends Screen {
                     ? (cardHover ? BORDE_ENCIMA : ORO)
                     : (esReclamada ? 0xFF242F42 : 0xFF1E2636);
 
-            ctx.fill(px(cx), py(cy), px(cx + cardW), py(cy + cardH), fondoCard);
+            PadTheme.fill(ctx, px(cx), py(cy), px(cx + cardW), py(cy + cardH), fondoCard);
             marco(ctx, px(cx), py(cy), pl(cardW), pl(cardH), bordeCard, Math.max(1, pl(puedeReclamar ? 2 : 1)));
 
             // Tira vertical de estado en el borde izquierdo (4 px)
             int colorTira = puedeReclamar ? ORO : (esReclamada ? 0xFF38A169 : 0xFF2D3748);
-            ctx.fill(px(cx), py(cy), px(cx + 4), py(cy + cardH), colorTira);
+            PadTheme.fill(ctx, px(cx), py(cy), px(cx + 4), py(cy + cardH), colorTira);
 
             // =================================================================
             // FILA SUPERIOR: Encabezado (Ronda, Hito y Bonus de Divisa)
@@ -328,7 +328,7 @@ public class TorreRecompensasScreen extends Screen {
                 int bdrHito = r == 100 ? 0x80FFD65C : (r == 50 || r == 70 || r == 90 ? 0x8055FFFF : 0x80FFA07A);
                 Text hitoText = Text.literal(info.tituloHito());
                 int hitoW = anchoTexto(hitoText, 12) + 10;
-                ctx.fill(px(tx), py(cy + 7), px(tx + hitoW), py(cy + 21), bgHito);
+                PadTheme.fill(ctx, px(tx), py(cy + 7), px(tx + hitoW), py(cy + 21), bgHito);
                 marco(ctx, px(tx), py(cy + 7), pl(hitoW), pl(14), bdrHito, 1);
                 texto(ctx, hitoText, tx + 5, cy + 8, 12, colorHito, false, true);
                 tx += hitoW + 6;
@@ -340,7 +340,7 @@ public class TorreRecompensasScreen extends Screen {
                 if (info.lunacoins() > 0) bonoStr += "+50 LC";
                 Text bonoText = Text.literal(bonoStr.trim());
                 int bonoW = anchoTexto(bonoText, 12) + 10;
-                ctx.fill(px(tx), py(cy + 7), px(tx + bonoW), py(cy + 21), 0x3048BB78);
+                PadTheme.fill(ctx, px(tx), py(cy + 7), px(tx + bonoW), py(cy + 21), 0x3048BB78);
                 marco(ctx, px(tx), py(cy + 7), pl(bonoW), pl(14), 0x8048BB78, 1);
                 texto(ctx, bonoText, tx + 5, cy + 8, 12, 0xFF68D391, false, true);
             } else if (r < 4) {
@@ -368,7 +368,7 @@ public class TorreRecompensasScreen extends Screen {
                     }
 
                     // Fondo de hueco de objeto (rehundido)
-                    ctx.fill(px(sx), py(sy), px(sx + sw), py(sy + sh), 0xFF0D121B);
+                    PadTheme.fill(ctx, px(sx), py(sy), px(sx + sw), py(sy + sh), 0xFF0D121B);
                     marco(ctx, px(sx), py(sy), pl(sw), pl(sh),
                             slotHover ? 0xFFFFFFFF : 0xFF28364D, 1);
 
@@ -379,7 +379,7 @@ public class TorreRecompensasScreen extends Screen {
                         int ph = 11;
                         int px1 = sx + sw - pw;
                         int py1 = sy + sh - ph;
-                        ctx.fill(px(px1), py(py1), px(sx + sw - 1), py(sy + sh - 1), 0xDD000000);
+                        PadTheme.fill(ctx, px(px1), py(py1), px(sx + sw - 1), py(sy + sh - 1), 0xDD000000);
                         texto(ctx, Text.literal(String.valueOf(premio.cantidad())),
                                 px1 + pw / 2, py1 + 1, 10, 0xFFFFFFFF, true, true);
                     }
@@ -395,25 +395,25 @@ public class TorreRecompensasScreen extends Screen {
             int btnY = cy + 32;
 
             if (r < 4) {
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), 0xFF1E2634, 1);
                 texto(ctx, Text.literal("✔ Superada"), btnX + btnW / 2, btnY + 11, 12,
                         0xFF718096, true, true);
             } else if (esReclamada) {
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF14202D);
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF14202D);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), 0xFF24364D, 1);
                 texto(ctx, Text.literal("✔ RECLAMADO"), btnX + btnW / 2, btnY + 11, 12,
                         0xFF4FD07A, true, true);
             } else if (puedeReclamar) {
                 boolean btnHover = dentro(rx, ry, px(btnX), py(btnY), pl(btnW), pl(btnH));
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH),
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH),
                         btnHover ? VERDE_BOTON_ENCIMA : VERDE_BOTON);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH),
                         btnHover ? 0xFFFFFFFF : 0xFF144D25, Math.max(1, pl(btnHover ? 2 : 1)));
                 texto(ctx, Text.literal("¡RECLAMAR!"), btnX + btnW / 2, btnY + 10, 14,
                         0xFFFFFFFF, true, true);
             } else {
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), 0xFF1E2634, 1);
                 texto(ctx, Text.literal("🔒 Bloqueado"), btnX + btnW / 2, btnY + 5, 11,
                         0xFF718096, true, true);
@@ -430,7 +430,7 @@ public class TorreRecompensasScreen extends Screen {
         // Botón Anterior
         boolean puedeAnt = pagina > 0;
         boolean hoverAnt = puedeAnt && dentro(rx, ry, px(PANT_X + MARGEN), py(pagY), pl(btnPagW), pl(btnPagH));
-        ctx.fill(px(PANT_X + MARGEN), py(pagY), px(PANT_X + MARGEN + btnPagW), py(pagY + btnPagH),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(pagY), px(PANT_X + MARGEN + btnPagW), py(pagY + btnPagH),
                 hoverAnt ? 0xFF24334C : (puedeAnt ? 0xFF182232 : 0xFF121722));
         marco(ctx, px(PANT_X + MARGEN), py(pagY), pl(btnPagW), pl(btnPagH),
                 hoverAnt ? BORDE_ENCIMA : (puedeAnt ? 0xFF2F3E56 : 0xFF1E2736), 1);
@@ -447,7 +447,7 @@ public class TorreRecompensasScreen extends Screen {
         int nextX = PANT_X + PANT_W - MARGEN - btnPagW;
         boolean puedeSig = pagina < 1;
         boolean hoverSig = puedeSig && dentro(rx, ry, px(nextX), py(pagY), pl(btnPagW), pl(btnPagH));
-        ctx.fill(px(nextX), py(pagY), px(nextX + btnPagW), py(pagY + btnPagH),
+        PadTheme.fill(ctx, px(nextX), py(pagY), px(nextX + btnPagW), py(pagY + btnPagH),
                 hoverSig ? 0xFF24334C : (puedeSig ? 0xFF182232 : 0xFF121722));
         marco(ctx, px(nextX), py(pagY), pl(btnPagW), pl(btnPagH),
                 hoverSig ? BORDE_ENCIMA : (puedeSig ? 0xFF2F3E56 : 0xFF1E2736), 1);
@@ -515,11 +515,11 @@ public class TorreRecompensasScreen extends Screen {
         int heroW = PANT_W - (2 * MARGEN);
         int heroH = 92;
 
-        ctx.fill(px(heroX), py(heroY), px(heroX + heroW), py(heroY + heroH), 0xFF141C2B);
+        PadTheme.fill(ctx, px(heroX), py(heroY), px(heroX + heroW), py(heroY + heroH), 0xFF141C2B);
         marco(ctx, px(heroX), py(heroY), pl(heroW), pl(heroH), 0xFF354664, 1);
 
         // Header interior
-        ctx.fill(px(heroX + 1), py(heroY + 1), px(heroX + heroW - 1), py(heroY + 28), 0xFF1C273A);
+        PadTheme.fill(ctx, px(heroX + 1), py(heroY + 1), px(heroX + heroW - 1), py(heroY + 28), 0xFF1C273A);
         texto(ctx, Text.literal("🏆 MAESTRÍA INFINITA (RONDAS 101 EN ADELANTE)"),
                 heroX + 16, heroY + 6, 18, ORO, false, true);
 
@@ -527,7 +527,7 @@ public class TorreRecompensasScreen extends Screen {
         int hSlotX = heroX + 16;
         int hSlotY = heroY + 36;
         int hSlotS = 46;
-        ctx.fill(px(hSlotX), py(hSlotY), px(hSlotX + hSlotS), py(hSlotY + hSlotS), 0xFF0D121B);
+        PadTheme.fill(ctx, px(hSlotX), py(hSlotY), px(hSlotX + hSlotS), py(hSlotY + hSlotS), 0xFF0D121B);
         marco(ctx, px(hSlotX), py(hSlotY), pl(hSlotS), pl(hSlotS), 0xFF2D3C56, 1);
 
         if (dentro(rx, ry, px(hSlotX), py(hSlotY), pl(hSlotS), pl(hSlotS))) {
@@ -566,11 +566,11 @@ public class TorreRecompensasScreen extends Screen {
                     : (esReclamada ? 0xFF141924 : 0xFF11151F);
             int bordeCard = puedeReclamar ? (cardHover ? BORDE_ENCIMA : ORO) : 0xFF1E2636;
 
-            ctx.fill(px(cx), py(cy), px(cx + cardW), py(cy + cardH), fondoCard);
+            PadTheme.fill(ctx, px(cx), py(cy), px(cx + cardW), py(cy + cardH), fondoCard);
             marco(ctx, px(cx), py(cy), pl(cardW), pl(cardH), bordeCard, Math.max(1, pl(puedeReclamar ? 2 : 1)));
 
             int colorTira = puedeReclamar ? ORO : (esReclamada ? 0xFF38A169 : 0xFF2D3748);
-            ctx.fill(px(cx), py(cy), px(cx + 4), py(cy + cardH), colorTira);
+            PadTheme.fill(ctx, px(cx), py(cy), px(cx + 4), py(cy + cardH), colorTira);
 
             // FILA 1: Textos (Ronda, Infinito y Bonus)
             int tx = cx + 14;
@@ -580,7 +580,7 @@ public class TorreRecompensasScreen extends Screen {
 
             Text hitoText = Text.literal("⭐ INFINITO");
             int hitoW = anchoTexto(hitoText, 12) + 10;
-            ctx.fill(px(tx), py(cy + 8), px(tx + hitoW), py(cy + 22), 0x3055FFFF);
+            PadTheme.fill(ctx, px(tx), py(cy + 8), px(tx + hitoW), py(cy + 22), 0x3055FFFF);
             marco(ctx, px(tx), py(cy + 8), pl(hitoW), pl(14), 0x8055FFFF, 1);
             texto(ctx, hitoText, tx + 5, cy + 9, 12, CIAN, false, true);
             tx += hitoW + 6;
@@ -592,7 +592,7 @@ public class TorreRecompensasScreen extends Screen {
                 if (info.lunacoins() > 0) bono += "+50 LC";
                 Text bonoText = Text.literal(bono.trim());
                 int bonoW = anchoTexto(bonoText, 12) + 10;
-                ctx.fill(px(tx), py(cy + 8), px(tx + bonoW), py(cy + 22), 0x3048BB78);
+                PadTheme.fill(ctx, px(tx), py(cy + 8), px(tx + bonoW), py(cy + 22), 0x3048BB78);
                 marco(ctx, px(tx), py(cy + 8), pl(bonoW), pl(14), 0x8048BB78, 1);
                 texto(ctx, bonoText, tx + 5, cy + 9, 12, 0xFF68D391, false, true);
             }
@@ -601,7 +601,7 @@ public class TorreRecompensasScreen extends Screen {
             int sx = cx + 14;
             int sy = cy + 34;
             int ss = 34;
-            ctx.fill(px(sx), py(sy), px(sx + ss), py(sy + ss), 0xFF0D121B);
+            PadTheme.fill(ctx, px(sx), py(sy), px(sx + ss), py(sy + ss), 0xFF0D121B);
             marco(ctx, px(sx), py(sy), pl(ss), pl(ss), 0xFF28364D, 1);
 
             if (dentro(rx, ry, px(sx), py(sy), pl(ss), pl(ss))) {
@@ -617,20 +617,20 @@ public class TorreRecompensasScreen extends Screen {
             int btnY = cy + 34;
 
             if (esReclamada) {
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF14202D);
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF14202D);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), 0xFF24364D, 1);
                 texto(ctx, Text.literal("✔ RECLAMADO"), btnX + btnW / 2, btnY + 11, 12,
                         0xFF4FD07A, true, true);
             } else if (puedeReclamar) {
                 boolean btnHover = dentro(rx, ry, px(btnX), py(btnY), pl(btnW), pl(btnH));
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH),
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH),
                         btnHover ? VERDE_BOTON_ENCIMA : VERDE_BOTON);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH),
                         btnHover ? 0xFFFFFFFF : 0xFF144D25, 1);
                 texto(ctx, Text.literal("¡RECLAMAR!"), btnX + btnW / 2, btnY + 10, 14,
                         0xFFFFFFFF, true, true);
             } else {
-                ctx.fill(px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
+                PadTheme.fill(ctx, px(btnX), py(btnY), px(btnX + btnW), py(btnY + btnH), 0xFF121620);
                 marco(ctx, px(btnX), py(btnY), pl(btnW), pl(btnH), 0xFF1E2634, 1);
                 texto(ctx, Text.literal("🔒 Bloqueado"), btnX + btnW / 2, btnY + 5, 11,
                         0xFF718096, true, true);
@@ -884,12 +884,12 @@ public class TorreRecompensasScreen extends Screen {
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 24), py(artY), px(PANEL_X + PANEL_W - 24),
+        PadTheme.fill(ctx, px(PANEL_X + 24), py(artY), px(PANEL_X + PANEL_W - 24),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private int anchoTexto(Text linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     /**
@@ -904,10 +904,10 @@ public class TorreRecompensasScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int ancho = textRenderer.getWidth(linea);
+        int ancho = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? ancho / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        ctx.drawText(textRenderer, linea, tx, ty, color, sombra);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, sombra);
         m.pop();
     }
 
@@ -919,10 +919,10 @@ public class TorreRecompensasScreen extends Screen {
      * Dibuja un marco de 4 aristas limpias sin rellenar nunca el interior.
      */
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);                 // Arista superior
-        ctx.fill(x, y + h - g, x + w, y + h, color);         // Arista inferior
-        ctx.fill(x, y + g, x + g, y + h - g, color);         // Arista izquierda
-        ctx.fill(x + w - g, y + g, x + w, y + h - g, color); // Arista derecha
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);                 // Arista superior
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);         // Arista inferior
+        PadTheme.fill(ctx, x, y + g, x + g, y + h - g, color);         // Arista izquierda
+        PadTheme.fill(ctx, x + w - g, y + g, x + w, y + h - g, color); // Arista derecha
     }
 
     private static void dibujarTextura(DrawContext ctx, Identifier tex,
@@ -930,7 +930,7 @@ public class TorreRecompensasScreen extends Screen {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

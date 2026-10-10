@@ -453,7 +453,7 @@ public class TesorosScreen extends Screen {
         //   PNG también, así que apenas se recorta. Se dibuja dentro del marco
         //   con 3 px de holgura para que el borde no quede pisado.
         int bandaW = PANEL_W - 60, bandaH = 110;
-        ctx.fill(px(PANEL_X + 30), py(y), px(PANEL_X + 30 + bandaW),
+        PadTheme.fill(ctx, px(PANEL_X + 30), py(y), px(PANEL_X + 30 + bandaW),
                 py(y + bandaH), 0x33000000);
         arte(ctx, c.id(), px(PANEL_X + 33), py(y + 3),
                 pl(bandaW - 6), pl(bandaH - 6), bandaW - 6, bandaH - 6);
@@ -566,10 +566,10 @@ public class TesorosScreen extends Screen {
             //    rejilla cambie de tamaño, y nadie lo notaría.
             arte(ctx, c.id(), px(cx), py(cy), pl(w), pl(h), w, h);
             if (enc) {
-                ctx.fill(px(cx), py(cy), px(cx + w), py(cy + h), 0x22FFFFFF);
+                PadTheme.fill(ctx, px(cx), py(cy), px(cx + w), py(cy + h), 0x22FFFFFF);
             }
             // La banda del nombre: sobre una ilustración el texto se pierde.
-            ctx.fill(px(cx), py(cy + h - 40), px(cx + w), py(cy + h), 0x99000000);
+            PadTheme.fill(ctx, px(cx), py(cy + h - 40), px(cx + w), py(cy + h), 0x99000000);
             marco(ctx, px(cx), py(cy), pl(w), pl(h),
                     sel ? BORDE_ENCIMA : aclarar(COLOR[Math.min(i, COLOR.length - 1)]),
                     Math.max(2, pl(sel ? 4 : 2)));
@@ -637,7 +637,7 @@ public class TesorosScreen extends Screen {
             int n = i - desde;
             int cx = PANT_X + MARGEN + (n % PREMIO_COLS) * (w + 10);
             int cy = PANT_Y + MARGEN + 46 + (n / PREMIO_COLS) * (h + 10);
-            ctx.fill(px(cx), py(cy), px(cx + w), py(cy + h),
+            PadTheme.fill(ctx, px(cx), py(cy), px(cx + w), py(cy + h),
                     pr.mayor() ? 0x33F2C14E : 0x1A000000);
             if (pr.mayor()) {
                 marco(ctx, px(cx), py(cy), pl(w), pl(h), ORO, Math.max(2, pl(2)));
@@ -654,7 +654,7 @@ public class TesorosScreen extends Screen {
             //    mismo contraste y no toca la forma de la letra.
             int anchoPct = anchoArte(String.format(java.util.Locale.ROOT,
                     "%.2f%%", pct), 20);
-            ctx.fill(px(cx + w / 2 - anchoPct / 2 - 6), py(cy + h - 52),
+            PadTheme.fill(ctx, px(cx + w / 2 - anchoPct / 2 - 6), py(cy + h - 52),
                      px(cx + w / 2 + anchoPct / 2 + 6), py(cy + h - 27),
                      0xAA0A0E18);
             texto(ctx, Text.literal(String.format(java.util.Locale.ROOT,
@@ -769,7 +769,7 @@ public class TesorosScreen extends Screen {
         int n = lista.size();
 
         // el velo: apaga lo de debajo y deja claro que ahora manda esto
-        ctx.fill(px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
+        PadTheme.fill(ctx, px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
                 0xE6101828);
 
         long t = System.currentTimeMillis() - giroDesde;
@@ -799,7 +799,7 @@ public class TesorosScreen extends Screen {
         int tiraW = 380;
 
         // la ventana
-        ctx.fill(px(tiraX - 6), py(centroY - VISIBLES * FICHA / 2 - 6),
+        PadTheme.fill(ctx, px(tiraX - 6), py(centroY - VISIBLES * FICHA / 2 - 6),
                 px(tiraX + tiraW + 6), py(centroY + VISIBLES * FICHA / 2 + 6),
                 0xFF0A0E18);
 
@@ -816,7 +816,7 @@ public class TesorosScreen extends Screen {
                 continue;
             }
             boolean centrado = Math.abs(dy) < FICHA / 2;
-            ctx.fill(px(tiraX), py(cy), px(tiraX + tiraW), py(cy + FICHA - 4),
+            PadTheme.fill(ctx, px(tiraX), py(cy), px(tiraX + tiraW), py(cy + FICHA - 4),
                     pr.mayor() ? 0x66F2C14E : (centrado ? 0x44FFFFFF : 0x22FFFFFF));
             if (pr.tipo() != Cofre.Tipo.POKEMON) {
                 icono(ctx, pilaDe(pr), px(tiraX + 46), py(cy + FICHA / 2 - 2), pl(46));
@@ -896,7 +896,7 @@ public class TesorosScreen extends Screen {
             int ex = cxr + (int) (Math.cos(ang) * largo);
             int ey = cyr + (int) (Math.sin(ang) * largo * 0.45);
             // Un rayo es un rectángulo pequeño en el extremo: barato y se lee.
-            ctx.fill(px(ex - 4), py(ey - 4), px(ex + 4), py(ey + 4),
+            PadTheme.fill(ctx, px(ex - 4), py(ey - 4), px(ex + 4), py(ey + 4),
                     (mayor ? 0x55F2C14E : 0x337CE8A8));
         }
 
@@ -907,7 +907,7 @@ public class TesorosScreen extends Screen {
         int alto = (int) (30 * rebote);
         int anchoT = anchoArte(titulo.getString(), alto);
         int ty = PANT_Y + 26;
-        ctx.fill(px(PANT_X + PANT_W / 2 - anchoT / 2 - 16), py(ty - 6),
+        PadTheme.fill(ctx, px(PANT_X + PANT_W / 2 - anchoT / 2 - 16), py(ty - 6),
                  px(PANT_X + PANT_W / 2 + anchoT / 2 + 16), py(ty + alto + 8),
                  0xAA0A0E18);
         texto(ctx, titulo, PANT_X + PANT_W / 2, ty, alto, color, true,
@@ -917,7 +917,7 @@ public class TesorosScreen extends Screen {
         int ny = centroY + VISIBLES * FICHA / 2 + 22;
         var nom = nombreDe(pr);
         int anchoN = anchoArte(nom.getString(), 26);
-        ctx.fill(px(PANT_X + PANT_W / 2 - anchoN / 2 - 14), py(ny - 5),
+        PadTheme.fill(ctx, px(PANT_X + PANT_W / 2 - anchoN / 2 - 14), py(ny - 5),
                  px(PANT_X + PANT_W / 2 + anchoN / 2 + 14), py(ny + 32),
                  0xAA0A0E18);
         texto(ctx, nom, PANT_X + PANT_W / 2, ny, 26, 0xFFFFFFFF, true,
@@ -1101,7 +1101,7 @@ public class TesorosScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int bx, int by,
                        int bw, int bh, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(bx), py(by), pl(bw), pl(bh));
-        ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh),
+        PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh),
                 activo ? (enc ? aclarar(color) : color) : GRIS);
         marco(ctx, px(bx), py(by), pl(bw), pl(bh),
                 activo ? 0x66FFFFFF : 0x33FFFFFF, Math.max(1, pl(2)));
@@ -1144,7 +1144,7 @@ public class TesorosScreen extends Screen {
         int u = (ARTE_W - regW) / 2, v = (ARTE_H - regH) / 2;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, u, v, regW, regH, ARTE_W, ARTE_H);
+        PadTheme.texture(ctx, tex, x, y, w, h, u, v, regW, regH, ARTE_W, ARTE_H);
         RenderSystem.disableBlend();
     }
 
@@ -1190,7 +1190,7 @@ public class TesorosScreen extends Screen {
     }
 
     private int anchoArte(String s, int alto) {
-        return Math.round(textRenderer.getWidth(s)
+        return Math.round(PadTypography.width(textRenderer, s)
                 * (alto / (float) textRenderer.fontHeight));
     }
 
@@ -1211,16 +1211,14 @@ public class TesorosScreen extends Screen {
         try {
             m.translate(x0, y0, 0);
             m.scale(escala, escala, 1f);
-            int anchoTexto = textRenderer.getWidth(linea);
+            int anchoTexto = PadTypography.width(textRenderer, linea);
             int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
             int ty = Math.round(arriba * k / escala);
             if (contorno != 0) {
-                ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-                ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-                ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-                ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
             }
-            ctx.drawText(textRenderer, linea, tx, ty, color, false);
+            PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         } finally {
             m.pop();
         }
@@ -1232,10 +1230,10 @@ public class TesorosScreen extends Screen {
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h,
                               int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ {@code enableBlend()} a mano: regla 1 de dibujado.md. */
@@ -1244,7 +1242,7 @@ public class TesorosScreen extends Screen {
                                        int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

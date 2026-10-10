@@ -400,7 +400,7 @@ public class ProteccionesScreen extends Screen {
             }
 
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA_ALTO));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
                     encima ? FILA_ENCIMA : FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), FILA_BORDE, Math.max(1, pl(2)));
 
@@ -511,7 +511,7 @@ public class ProteccionesScreen extends Screen {
             boolean activa = i == pestana;
             int bx = pestanaX(i);
             boolean encima = dentro(rx, ry, px(bx), py(PEST_Y), pl(PEST_ANCHO), pl(PEST_ALTO));
-            ctx.fill(px(bx), py(PEST_Y), px(bx + PEST_ANCHO), py(PEST_Y + PEST_ALTO),
+            PadTheme.fill(ctx, px(bx), py(PEST_Y), px(bx + PEST_ANCHO), py(PEST_Y + PEST_ALTO),
                     activa ? 0xFFFFF0DC : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(bx), py(PEST_Y), pl(PEST_ANCHO), pl(PEST_ALTO),
                     activa ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(activa ? 3 : 2)));
@@ -585,7 +585,7 @@ public class ProteccionesScreen extends Screen {
             var q = d.permisos().get(i);
             int x = permisoX(i), y = permisoY(i);
             boolean encima = dentro(rx, ry, px(x), py(y), pl(370), pl(40));
-            ctx.fill(px(x), py(y), px(x + 370), py(y + 40),
+            PadTheme.fill(ctx, px(x), py(y), px(x + 370), py(y + 40),
                     encima ? FILA_ENCIMA : FILA_FONDO);
             marco(ctx, px(x), py(y), pl(370), pl(40), FILA_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.translatable("pokepad.lunaeternal.protecciones.flag." + q.clave()),
@@ -594,7 +594,7 @@ public class ProteccionesScreen extends Screen {
             //   «prohibido» con un símbolo se confunden, y aquí equivocarse es
             //   dejar la casa abierta.
             int bx = x + 282;
-            ctx.fill(px(bx), py(y + 5), px(bx + 76), py(y + 35),
+            PadTheme.fill(ctx, px(bx), py(y + 5), px(bx + 76), py(y + 35),
                     q.valor() ? VERDE : 0xFF9E3A32);
             texto(ctx, Text.translatable(q.valor()
                             ? "pokepad.lunaeternal.protecciones.si"
@@ -618,7 +618,7 @@ public class ProteccionesScreen extends Screen {
         for (int i = 0; i < d.miembros().size() && i < 5; i++) {
             var m = d.miembros().get(i);
             int y = miembroY(i);
-            ctx.fill(px(ax), py(y), px(ax + 470), py(y + 38), FILA_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + 470), py(y + 38), FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(470), pl(38), FILA_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.literal(m.nombre()), ax + 14, y + 10, 20,
                     TEXTO_OSCURO, false, false);
@@ -870,7 +870,7 @@ public class ProteccionesScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw, int ah,
                        Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? 0xFF6E7899 : (encima ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF20283C, Math.max(1, pl(2)));
         // ⚠ La letra se encoge SOLO si no cabe. Escrita a un tamaño fijo, la
@@ -923,16 +923,16 @@ public class ProteccionesScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void separador2(DrawContext ctx, int ax, int aw, int artY) {
-        ctx.fill(px(ax), py(artY), px(ax + aw), py(artY) + Math.max(1, pl(2)), SEPARADOR);
+        PadTheme.fill(ctx, px(ax), py(artY), px(ax + aw), py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void texto(DrawContext ctx, Text linea, int cx, int arriba, int alto,
@@ -945,16 +945,10 @@ public class ProteccionesScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -963,10 +957,10 @@ public class ProteccionesScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -974,7 +968,7 @@ public class ProteccionesScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

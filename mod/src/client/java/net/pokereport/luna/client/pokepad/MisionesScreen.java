@@ -353,7 +353,7 @@ public class MisionesScreen extends Screen {
         String estado = estadoDe(elegida);
         int estadoAncho = Math.min(PANEL_W - 48, Math.max(118, anchoArte(estado, 16) + 26));
         int estadoX = PANEL_X + (PANEL_W - estadoAncho) / 2;
-        ctx.fill(px(estadoX), py(y - 5), px(estadoX + estadoAncho), py(y + 21),
+        PadTheme.fill(ctx, px(estadoX), py(y - 5), px(estadoX + estadoAncho), py(y + 21),
                 colorEstado(elegida));
         marco(ctx, px(estadoX), py(y - 5), pl(estadoAncho), pl(26),
                 0xFF1B2438, Math.max(1, pl(2)));
@@ -382,9 +382,9 @@ public class MisionesScreen extends Screen {
         if (Math.abs(objetivo - mostrado) < 0.002f) mostrado = objetivo;
         progresoVisible.put(elegida.id(), mostrado);
         int bx = PANEL_X + 28, bw = PANEL_W - 56, bh = 18;
-        ctx.fill(px(bx), py(y), px(bx + bw), py(y) + pl(bh), 0xFF2B3240);
+        PadTheme.fill(ctx, px(bx), py(y), px(bx + bw), py(y) + pl(bh), 0xFF2B3240);
         if (mostrado > 0) {
-            ctx.fill(px(bx), py(y), px(bx) + (int) Math.round(pl(bw) * mostrado), py(y) + pl(bh),
+            PadTheme.fill(ctx, px(bx), py(y), px(bx) + (int) Math.round(pl(bw) * mostrado), py(y) + pl(bh),
                     elegida.completada() ? NODO_HECHO : 0xFF4F7BD0);
         }
         marco(ctx, px(bx), py(y), pl(bw), pl(bh), SEPARADOR, Math.max(1, pl(2)));
@@ -442,7 +442,7 @@ public class MisionesScreen extends Screen {
         }
         int bx = PANEL_X + 40, by = PANEL_Y + PANEL_H - 76, bw = PANEL_W - 80, bh = 44;
         boolean encima = dentro(rx, ry, px(bx), py(by), pl(bw), pl(bh));
-        ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh), encima ? 0xFFFFD65C : 0xFFE8A317);
+        PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh), encima ? 0xFFFFD65C : 0xFFE8A317);
         marco(ctx, px(bx), py(by), pl(bw), pl(bh), 0xFF8A5C00, Math.max(1, pl(2)));
         texto(ctx, Text.translatable("pokepad.lunaeternal.cobrar"),
                 PANEL_X + PANEL_W / 2, by + 12, 24, 0xFF2A1C00, true, false);
@@ -456,7 +456,7 @@ public class MisionesScreen extends Screen {
             boolean activa = i == pestana;
             boolean encima = dentro(rx, ry, px(x), py(PANT_Y + MARGEN), pl(pw - 6),
                     pl(PESTANA_ALTO));
-            ctx.fill(px(x), py(PANT_Y + MARGEN), px(x + pw - 6), py(PANT_Y + MARGEN + PESTANA_ALTO),
+            PadTheme.fill(ctx, px(x), py(PANT_Y + MARGEN), px(x + pw - 6), py(PANT_Y + MARGEN + PESTANA_ALTO),
                     activa ? 0xFFFFF0DC : (encima ? 0xFFD3DCF2 : NODO_ABIERTO));
             marco(ctx, px(x), py(PANT_Y + MARGEN), pl(pw - 6), pl(PESTANA_ALTO),
                     activa ? BORDE_ENCIMA : BORDE, Math.max(1, pl(activa ? 3 : 2)));
@@ -512,13 +512,13 @@ public class MisionesScreen extends Screen {
             //   sobre un fondo azul claro, y practicamente no se veia. Un arbol
             //   sin aristas visibles es una cuadricula.
             int grosor = Math.max(2, pl(6));
-            ctx.fill(px(Math.min(a[0], medio)), py(a[1]) - grosor / 2,
+            PadTheme.fill(ctx, px(Math.min(a[0], medio)), py(a[1]) - grosor / 2,
                     px(Math.max(a[0], medio)), py(a[1]) + grosor / 2,
                     padre.completada() ? LINEA_HECHA : LINEA);
-            ctx.fill(px(medio) - grosor / 2, py(Math.min(a[1], b[1])),
+            PadTheme.fill(ctx, px(medio) - grosor / 2, py(Math.min(a[1], b[1])),
                     px(medio) + grosor / 2, py(Math.max(a[1], b[1])),
                     padre.completada() ? LINEA_HECHA : LINEA);
-            ctx.fill(px(Math.min(medio, b[0])), py(b[1]) - grosor / 2,
+            PadTheme.fill(ctx, px(Math.min(medio, b[0])), py(b[1]) - grosor / 2,
                     px(Math.max(medio, b[0])), py(b[1]) + grosor / 2,
                     padre.completada() ? LINEA_HECHA : LINEA);
         }
@@ -568,12 +568,12 @@ public class MisionesScreen extends Screen {
         // ⚠ SOMBRA BAJO EL NODO. Sin ella los cuadros se funden con el fondo
         //   claro de la pantalla y el arbol parece una cuadricula plana. Dos
         //   pixeles bastan: es profundidad, no decoracion.
-        ctx.fill(x + pl(3), y + pl(3), x + w + pl(3), y + h + pl(3), 0x40000000);
-        ctx.fill(x, y, x + w, y + h, fondo);
+        PadTheme.fill(ctx, x + pl(3), y + pl(3), x + w + pl(3), y + h + pl(3), 0x40000000);
+        PadTheme.fill(ctx, x, y, x + w, y + h, fondo);
         // Un brillo arriba y una sombra abajo, DENTRO del cuadro: es lo que hace
         // que se lea como un boton y no como un rectangulo pintado.
-        ctx.fill(x, y, x + w, y + pl(3), 0x35FFFFFF);
-        ctx.fill(x, y + h - pl(3), x + w, y + h, 0x30000000);
+        PadTheme.fill(ctx, x, y, x + w, y + pl(3), 0x35FFFFFF);
+        PadTheme.fill(ctx, x, y + h - pl(3), x + w, y + h, 0x30000000);
         marco(ctx, x, y, w, h, resaltada ? BORDE_ENCIMA : BORDE,
                 Math.max(1, pl(resaltada ? 4 : 3)));
 
@@ -622,8 +622,8 @@ public class MisionesScreen extends Screen {
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
         Text etiqueta = Text.literal((pestana + 1) + " / " + cadenas.size());
-        ctx.drawText(textRenderer, etiqueta,
-                Math.round(cx * k / escala) - textRenderer.getWidth(etiqueta) / 2,
+        PadTypography.draw(ctx, textRenderer, etiqueta,
+                Math.round(cx * k / escala) - PadTypography.width(textRenderer, etiqueta) / 2,
                 Math.round((PAG_Y + PAG_H / 2) * k / escala) - textRenderer.fontHeight / 2,
                 0xFFFFFFFF, true);
         m.pop();
@@ -813,11 +813,11 @@ public class MisionesScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -831,16 +831,10 @@ public class MisionesScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -849,10 +843,10 @@ public class MisionesScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: es la regla 1 de dibujado.md. */
@@ -860,7 +854,7 @@ public class MisionesScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

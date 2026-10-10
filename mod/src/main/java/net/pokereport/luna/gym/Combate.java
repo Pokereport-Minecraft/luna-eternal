@@ -102,6 +102,10 @@ public final class Combate {
     private static final java.util.Set<UUID> PRUEBAS =
             ConcurrentHashMap.newKeySet();
 
+    public static boolean esPrueba(UUID jugador) {
+        return PRUEBAS.contains(jugador);
+    }
+
     /**
      * Último recurso para una implementación de Cobblemon que publique el
      * evento antes de poblar la lista de activos. La clave incluye el lado, de

@@ -508,7 +508,7 @@ public class GtsScreen extends Screen {
 
         // Hueco del retrato: se marca aunque el modelo lo tape, para que se vea
         // que ahí va algo mientras carga.
-        ctx.fill(px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + retAlto()),
+        PadTheme.fill(ctx, px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + retAlto()),
                 0x33000000);
         marco(ctx, px(RET_X), py(RET_Y), pl(RET_W), pl(retAlto()), 0x556A7398,
                 Math.max(1, pl(2)));
@@ -584,7 +584,7 @@ public class GtsScreen extends Screen {
                 int bx = PANEL_X + 30 + i * (bw + 6);
                 boolean act = horas == DURACIONES[i];
                 boolean enc = dentro(rx, ry, px(bx), py(PANEL_Y + 578), pl(bw), pl(30));
-                ctx.fill(px(bx), py(PANEL_Y + 578), px(bx + bw), py(PANEL_Y + 608),
+                PadTheme.fill(ctx, px(bx), py(PANEL_Y + 578), px(bx + bw), py(PANEL_Y + 608),
                         act ? BORDE_ENCIMA : (enc ? 0xFF5E86D8 : 0xFF3A4560));
                 marco(ctx, px(bx), py(PANEL_Y + 578), pl(bw), pl(30),
                         act ? 0xFFFFC46B : 0xFF20283C, Math.max(1, pl(2)));
@@ -624,7 +624,7 @@ public class GtsScreen extends Screen {
         for (int i = 0; i < 3; i++) {
             int bx = PANEL_X + 30 + i * (anchoTab + 6);
             boolean act = i == pestanaDetalle;
-            ctx.fill(px(bx), py(y), px(bx + anchoTab), py(y + 24),
+            PadTheme.fill(ctx, px(bx), py(y), px(bx + anchoTab), py(y + 24),
                     act ? 0xFF3A3020 : 0x33000000);
             marco(ctx, px(bx), py(y), pl(anchoTab), pl(24),
                     act ? BORDE_ENCIMA : 0x556A7398, Math.max(1, pl(2)));
@@ -692,13 +692,13 @@ public class GtsScreen extends Screen {
             texto(ctx, Text.literal(SIGLAS[i]), PANEL_X + 30, fy + 2, 14,
                     TEXTO_SUAVE, false, false);
             int bx = PANEL_X + 66, bw = PANEL_W - 66 - 66;
-            ctx.fill(px(bx), py(fy), px(bx + bw), py(fy + 14), 0xFF2A3145);
+            PadTheme.fill(ctx, px(bx), py(fy), px(bx + bw), py(fy + 14), 0xFF2A3145);
             int lleno = Math.round(bw * Math.min(1f, v / (float) max));
             // Verde a tope, ámbar por encima de la mitad, gris el resto. Un 31
             // se tiene que ver DISTINTO, no un poco más largo.
             int color = v >= max ? 0xFF4FD07A : v >= max / 2 ? 0xFFE0A845 : 0xFF6E7899;
             if (lleno > 0) {
-                ctx.fill(px(bx), py(fy), px(bx + lleno), py(fy + 14), color);
+                PadTheme.fill(ctx, px(bx), py(fy), px(bx + lleno), py(fy + 14), color);
             }
             textoDer(ctx, Text.literal(String.valueOf(v)), PANEL_X + PANEL_W - 30,
                     fy + 2, 14, v >= max ? SHINY : 0xFFE8EEF8, false);
@@ -769,7 +769,7 @@ public class GtsScreen extends Screen {
             if (encima) {
                 encimaDe = b.etiqueta();
             }
-            ctx.fill(px(ax), py(ay), px(ax + BOT), py(ay + BOT),
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + BOT), py(ay + BOT),
                     marcado ? BORDE_ENCIMA : (encima ? 0xFF5E86D8 : 0xFF3A4560));
             marco(ctx, px(ax), py(ay), pl(BOT), pl(BOT),
                     marcado ? 0xFFFFC46B : 0xFF20283C, Math.max(1, pl(2)));
@@ -799,7 +799,7 @@ public class GtsScreen extends Screen {
             int a = anchoArte(et.getString(), 15) + 20;
             int bx = PANT_X + PANT_W - MARGEN - a;
             int by = PANT_Y + MARGEN + BOT + 4;
-            ctx.fill(px(bx), py(by), px(bx + a), py(by + 26), 0xF0121722);
+            PadTheme.fill(ctx, px(bx), py(by), px(bx + a), py(by + 26), 0xF0121722);
             marco(ctx, px(bx), py(by), pl(a), pl(26), ORO, Math.max(1, pl(2)));
             texto(ctx, et, bx + 10, by + 6, 15, 0xFFFFE08A, false, 0);
         }
@@ -851,7 +851,7 @@ public class GtsScreen extends Screen {
 
             boolean sel = i == elegido;
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA - 6));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA - 6),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA - 6),
                     sel ? FILA_SEL : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA - 6),
                     sel ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(sel ? 3 : 2)));
@@ -886,7 +886,7 @@ public class GtsScreen extends Screen {
             if (perfectos > 0) {
                 int c = perfectos >= 5 ? 0xFF1F7A3C : perfectos >= 3
                         ? 0xFF6B5200 : TEXTO_SUAVE;
-                ctx.fill(px(ax + 296), py(y + 36), px(ax + 296 + 74), py(y + 53),
+                PadTheme.fill(ctx, px(ax + 296), py(y + 36), px(ax + 296 + 74), py(y + 53),
                         perfectos >= 5 ? 0x331F7A3C : 0x22000000);
                 texto(ctx, Text.literal(perfectos + " × 31"), ax + 333, y + 38,
                         14, c, true, false);
@@ -969,7 +969,7 @@ public class GtsScreen extends Screen {
             if (activa || encima) {
                 // ⚠ La activa va OSCURA con el texto claro. Al reves --naranja
                 //   claro con texto oro-- no se lee: son el mismo tono.
-                ctx.fill(px(ax - 4), py(hy - 3), px(ax - 4 + c.ancho()), py(hy + 17),
+                PadTheme.fill(ctx, px(ax - 4), py(hy - 3), px(ax - 4 + c.ancho()), py(hy + 17),
                         activa ? 0xCC1E2438 : 0x22FFFFFF);
             }
             String flecha = !activa ? " —" : orden.equals(c.asc()) ? " ▲" : " ▼";
@@ -1004,10 +1004,10 @@ public class GtsScreen extends Screen {
      * y el jugador creería que compró lo que no era.
      */
     private void dibujarConfirmacion(DrawContext ctx, int rx, int ry) {
-        ctx.fill(x0, y0, x0 + ancho, y0 + alto, 0xC0000000);
+        PadTheme.fill(ctx, x0, y0, x0 + ancho, y0 + alto, 0xC0000000);
         int aw = 480, ah = 200;
         int ax = (NAT_ANCHO - aw) / 2, ay = (NAT_ALTO - ah) / 2;
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), 0xFF121722);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), 0xFF121722);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), BORDE_ENCIMA, Math.max(1, pl(3)));
 
         String nombre = confirmando.mote().isBlank()
@@ -1072,7 +1072,7 @@ public class GtsScreen extends Screen {
 
             boolean sel = m.uuid().equals(elegidoUuid);
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA - 6));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA - 6),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA - 6),
                     sel ? FILA_SEL : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA - 6),
                     sel ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(sel ? 3 : 2)));
@@ -1114,7 +1114,7 @@ public class GtsScreen extends Screen {
     private void dibujarFiltros(DrawContext ctx, int rx, int ry) {
         int ax = PANT_X + MARGEN, aw = PANT_W - 2 * MARGEN;
         int ay = PANT_Y + MARGEN + 44, ah = PANT_H - MARGEN - 60;
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), 0xF0121722);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), 0xF0121722);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), BORDE_ENCIMA, Math.max(1, pl(2)));
 
         texto(ctx, Text.translatable("pokepad.lunaeternal.gts.filtros"),
@@ -1150,7 +1150,7 @@ public class GtsScreen extends Screen {
         // Shiny: una casilla, no un desplegable de tres estados. «Solo shiny» o
         // «todo» es la pregunta real; «solo NO shiny» no la hace nadie.
         int sy = PANT_Y + 316;
-        ctx.fill(px(PANT_X + 30), py(sy), px(PANT_X + 54), py(sy + 24),
+        PadTheme.fill(ctx, px(PANT_X + 30), py(sy), px(PANT_X + 54), py(sy + 24),
                 soloShiny ? SHINY : 0x33FFFFFF);
         marco(ctx, px(PANT_X + 30), py(sy), pl(24), pl(24), 0x88FFFFFF,
                 Math.max(1, pl(2)));
@@ -1201,7 +1201,7 @@ public class GtsScreen extends Screen {
             int bx = PANT_X + MARGEN + i * (CONM_W + 4);
             boolean enc = dentro(rx, ry, px(bx), py(PANT_Y + MARGEN),
                     pl(CONM_W), pl(BOT));
-            ctx.fill(px(bx), py(PANT_Y + MARGEN), px(bx + CONM_W),
+            PadTheme.fill(ctx, px(bx), py(PANT_Y + MARGEN), px(bx + CONM_W),
                     py(PANT_Y + MARGEN + BOT),
                     act ? BORDE_ENCIMA : (enc ? 0xFF4F6FB0 : 0xFF2A3145));
             marco(ctx, px(bx), py(PANT_Y + MARGEN), pl(CONM_W), pl(BOT),
@@ -1617,7 +1617,7 @@ public class GtsScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (encima ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -1627,7 +1627,7 @@ public class GtsScreen extends Screen {
     private void botonPeq(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                           int ah, Text etiqueta, boolean activo, boolean marcado) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : marcado ? BORDE_ENCIMA
                         : (encima ? 0xFF5E86D8 : 0xFF4F6FB0));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF20283C, Math.max(1, pl(2)));
@@ -1665,11 +1665,11 @@ public class GtsScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -1688,14 +1688,14 @@ public class GtsScreen extends Screen {
     /** ⚠ Con color de contorno: el fondo decide, ver `CONTORNO_CLARO`. */
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color, int contorno) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, contorno);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color, boolean contorno) {
-        int ancho = Math.round(textRenderer.getWidth(linea) * alto
+        int ancho = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - ancho, arriba, alto, color, false, contorno);
     }
@@ -1859,7 +1859,7 @@ public class GtsScreen extends Screen {
     private int insignia(DrawContext ctx, Tipo tipo, int ax, int ay, int altoArte) {
         int alto = 13;
         int ancho = anchoArte(tipo.nombre(), alto) + 16;
-        ctx.fill(px(ax), py(ay), px(ax + ancho), py(ay + altoArte), tipo.color());
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + ancho), py(ay + altoArte), tipo.color());
         marco(ctx, px(ax), py(ay), pl(ancho), pl(altoArte), 0x66000000,
                 Math.max(1, pl(1)));
         // ⚠ El texto va BLANCO CON CONTORNO OSCURO y no negro: los tipos van del
@@ -1918,16 +1918,14 @@ public class GtsScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1936,10 +1934,10 @@ public class GtsScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -1947,7 +1945,7 @@ public class GtsScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

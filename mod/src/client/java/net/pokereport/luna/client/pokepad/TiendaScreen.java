@@ -425,7 +425,7 @@ public class TiendaScreen extends Screen {
             lineas.add(Text.translatable("pokepad.lunaeternal.tienda.tienes", mios)
                     .formatted(net.minecraft.util.Formatting.DARK_GRAY));
         }
-        ctx.drawTooltip(textRenderer, lineas, rx, ry);
+        PadTypography.tooltip(ctx, textRenderer, lineas, rx, ry);
     }
 
     /**
@@ -502,7 +502,7 @@ public class TiendaScreen extends Screen {
             boolean activa = i == categoria;
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(CAT_ALTO));
 
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + CAT_ALTO),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + CAT_ALTO),
                     activa ? 0xFFFFF0DC : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(CAT_ALTO),
                     activa ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(activa ? 3 : 2)));
@@ -568,7 +568,7 @@ public class TiendaScreen extends Screen {
             boolean puede = atras ? paginaCat > 0 : paginaCat < paginasCat() - 1;
             int bx = pagerX(atras);
             boolean encima = puede && dentro(rx, ry, px(bx), py(y), pl(32), pl(26));
-            ctx.fill(px(bx), py(y), px(bx + 32), py(y + 26),
+            PadTheme.fill(ctx, px(bx), py(y), px(bx + 32), py(y + 26),
                     encima ? FILA_ENCIMA : FILA_FONDO);
             marco(ctx, px(bx), py(y), pl(32), pl(26),
                     encima ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(2)));
@@ -642,7 +642,7 @@ public class TiendaScreen extends Screen {
             }
 
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA_ALTO));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
                     encima ? FILA_ENCIMA : FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), FILA_BORDE, Math.max(1, pl(2)));
 
@@ -710,7 +710,7 @@ public class TiendaScreen extends Screen {
             int bx = PANT_X + MARGEN + 90 + i * 78;
             boolean activa = i == cantidad;
             boolean encima = dentro(rx, ry, px(bx), py(y), pl(70), pl(36));
-            ctx.fill(px(bx), py(y), px(bx + 70), py(y + 36),
+            PadTheme.fill(ctx, px(bx), py(y), px(bx + 70), py(y + 36),
                     activa ? 0xFFF35C0C : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(bx), py(y), pl(70), pl(36), FILA_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.literal("x" + CANTIDADES[i]), bx + 35, y + 10, 20,
@@ -948,7 +948,7 @@ public class TiendaScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw, int ah,
                        Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (encima ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF20283C, Math.max(1, pl(2)));
         int alto = 18;
@@ -1007,11 +1007,11 @@ public class TiendaScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -1025,16 +1025,10 @@ public class TiendaScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1043,10 +1037,10 @@ public class TiendaScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -1054,7 +1048,7 @@ public class TiendaScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

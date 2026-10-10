@@ -42,6 +42,7 @@
     "StaffOnlyDeathNoticeMixin",
     "StaffOnlyAdvancementNoticeMixin",
     "SuccessfulFishingMixin",
+    "SaccharineHivePlaceholderMixin",
     "RestrictedDimensionsMixin"
   ],
   "injectors": {

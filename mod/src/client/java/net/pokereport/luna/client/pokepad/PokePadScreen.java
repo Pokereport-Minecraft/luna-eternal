@@ -530,16 +530,16 @@ public class PokePadScreen extends Screen {
         if (client == null) {
             return;
         }
-        client.getTextureManager().getTexture(CHASIS).setFilter(suave, false);
+        client.getTextureManager().getTexture(PadTheme.resolve(CHASIS)).setFilter(suave, false);
         for (String b : BOTONES) {
-            client.getTextureManager().getTexture(tex("boton_" + b)).setFilter(suave, false);
+            client.getTextureManager().getTexture(PadTheme.resolve(tex("boton_" + b))).setFilter(suave, false);
         }
         for (App app : App.TODAS) {
-            client.getTextureManager().getTexture(app.icono()).setFilter(suave, false);
+            client.getTextureManager().getTexture(PadTheme.resolve(app.icono())).setFilter(suave, false);
         }
-        client.getTextureManager().getTexture(CANDADO).setFilter(suave, false);
-        client.getTextureManager().getTexture(MONEDA).setFilter(suave, false);
-        client.getTextureManager().getTexture(PLATA).setFilter(suave, false);
+        client.getTextureManager().getTexture(PadTheme.resolve(CANDADO)).setFilter(suave, false);
+        client.getTextureManager().getTexture(PadTheme.resolve(MONEDA)).setFilter(suave, false);
+        client.getTextureManager().getTexture(PadTheme.resolve(PLATA)).setFilter(suave, false);
     }
 
     /** El juego sigue corriendo detrás: es un menú, no una pausa. */
@@ -631,12 +631,12 @@ public class PokePadScreen extends Screen {
         // En modo de ordenar, la ayuda dice qué hacer en vez de qué es cada
         // aplicación: ahí no vas a abrir nada, vas a moverlo.
         if (ordenando) {
-            ctx.drawTooltip(textRenderer,
+            PadTypography.tooltip(ctx, textRenderer,
                     Text.translatable(cogida < 0 ? "pokepad.lunaeternal.ordenar.coge"
                                                  : "pokepad.lunaeternal.ordenar.suelta"),
                     ratonX, ratonY);
         } else if (bajoElRaton != null) {
-            ctx.drawTooltip(textRenderer, bajoElRaton.descripcion(), ratonX, ratonY);
+            PadTypography.tooltip(ctx, textRenderer, bajoElRaton.descripcion(), ratonX, ratonY);
         }
     }
 
@@ -789,13 +789,13 @@ public class PokePadScreen extends Screen {
         // La cabeza del jugador. Sale de su propia skin, así que no hace falta
         // pedirle nada al servidor.
         int lado = Math.round(CARA_LADO * k);
-        ctx.drawTexture(client.player.getSkinTextures().texture(),
+        PadTheme.texture(ctx, client.player.getSkinTextures().texture(),
                 x0 + Math.round(CARA_X * k), y0 + Math.round(CARA_Y * k),
                 lado, lado, 8f, 8f, 8, 8, 64, 64);
 
         // Y el sombrero, la segunda capa. Sin ella, a quien lleve gorra en la
         // skin se le ve la cabeza pelada.
-        ctx.drawTexture(client.player.getSkinTextures().texture(),
+        PadTheme.texture(ctx, client.player.getSkinTextures().texture(),
                 x0 + Math.round(CARA_X * k), y0 + Math.round(CARA_Y * k),
                 lado, lado, 40f, 8f, 8, 8, 64, 64);
 
@@ -917,8 +917,8 @@ public class PokePadScreen extends Screen {
         int b = Math.round(MAS_BRAZO * k);
         int cx = c[0] + c[2] / 2, cy = c[1] + c[3] / 2;
         int tinta = vivo ? (encima ? BORDE_ENCIMA : 0xFFE8EDF8) : 0xFF7C859B;
-        ctx.fill(cx - b / 2, cy - g / 2, cx + b / 2, cy + g / 2, tinta);
-        ctx.fill(cx - g / 2, cy - b / 2, cx + g / 2, cy + b / 2, tinta);
+        PadTheme.fill(ctx, cx - b / 2, cy - g / 2, cx + b / 2, cy + g / 2, tinta);
+        PadTheme.fill(ctx, cx - g / 2, cy - b / 2, cx + g / 2, cy + b / 2, tinta);
     }
 
     /**
@@ -958,7 +958,7 @@ public class PokePadScreen extends Screen {
     }
 
     private int altoQueCabe(Text texto, int preferido, int minimo, int anchoMaximo) {
-        int anchoFuente = Math.max(1, textRenderer.getWidth(texto));
+        int anchoFuente = Math.max(1, PadTypography.width(textRenderer, texto));
         int limite = Math.max(minimo,
                 (int)Math.floor(anchoMaximo * (double)textRenderer.fontHeight / anchoFuente));
         return Math.max(minimo, Math.min(preferido, limite));
@@ -1087,8 +1087,8 @@ public class PokePadScreen extends Screen {
     private static void celda(DrawContext ctx, int x, int y, int w, int h,
                               int grosor, int mordida, int fondo, int borde,
                               int fuera) {
-        ctx.fill(x, y, x + w, y + h, borde);
-        ctx.fill(x + grosor, y + grosor, x + w - grosor, y + h - grosor, fondo);
+        PadTheme.fill(ctx, x, y, x + w, y + h, borde);
+        PadTheme.fill(ctx, x + grosor, y + grosor, x + w - grosor, y + h - grosor, fondo);
         // Las cuatro esquinas, PINTADAS DEL COLOR DEL FONDO DE DEBAJO.
         //
         // Antes se rellenaban con 0x00000000 y no hacian nada: `fill` mezcla, y
@@ -1096,10 +1096,10 @@ public class PokePadScreen extends Screen {
         // esquina no se mordia; solo lo parecia porque a 1 px no se distingue
         // el efecto de su ausencia. A 4 px si se distingue, asi que hay que
         // pintar de verdad.
-        ctx.fill(x, y, x + mordida, y + mordida, fuera);
-        ctx.fill(x + w - mordida, y, x + w, y + mordida, fuera);
-        ctx.fill(x, y + h - mordida, x + mordida, y + h, fuera);
-        ctx.fill(x + w - mordida, y + h - mordida, x + w, y + h, fuera);
+        PadTheme.fill(ctx, x, y, x + mordida, y + mordida, fuera);
+        PadTheme.fill(ctx, x + w - mordida, y, x + w, y + mordida, fuera);
+        PadTheme.fill(ctx, x, y + h - mordida, x + mordida, y + h, fuera);
+        PadTheme.fill(ctx, x + w - mordida, y + h - mordida, x + w, y + h, fuera);
     }
 
 
@@ -1137,7 +1137,7 @@ public class PokePadScreen extends Screen {
         // `natW/natH` son el tamaño REAL de la PNG, y hay que pasarlos: con el
         // tamaño en pantalla, Minecraft tomaría solo esa esquina de la textura
         // en lugar de la textura entera.
-        ctx.drawTexture(textura, x, y, ancho, alto, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, textura, x, y, ancho, alto, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
         if (tenido) {
             ctx.setShaderColor(1f, 1f, 1f, 1f);
@@ -1169,7 +1169,7 @@ public class PokePadScreen extends Screen {
      */
     private int altoEtiqueta(Text etiqueta) {
         int maximo = CELDA - 12;
-        int ancho = textRenderer.getWidth(etiqueta);
+        int ancho = PadTypography.width(textRenderer, etiqueta);
         for (int alto = TEXTO_ALTO; alto >= 12; alto -= 2) {
             if (Math.ceil(ancho * (alto / (double) textRenderer.fontHeight)) <= maximo) {
                 return alto;
@@ -1210,35 +1210,13 @@ public class PokePadScreen extends Screen {
         // ella: lo que se pide en pixeles del arte acaba cayendo donde toca.
         // Y el centrado se hace a mano porque la version "conSombra" no deja
         // apagar la sombra, y aqui hace falta contorno en vez de sombra.
-        int ancho = textRenderer.getWidth(linea);
+        int ancho = PadTypography.width(textRenderer, linea);
         int px = Math.round(cx * k / escala)
                 - (centrado ? ancho / 2 : derecha ? ancho : 0);
         int py = Math.round(arriba * k / escala);
 
-        // ⚠ CONTORNO, NO SOMBRA.
-        //
-        // La sombra de Minecraft es una copia desplazada en diagonal: sobre un
-        // fondo oscuro se lee, pero estas celdas son CLARAS y el nombre quedaba
-        // gris sobre claro, ilegible.
-        //
-        // Un contorno cierra la letra sobre CUALQUIER fondo, que es la unica
-        // garantia que sirve aqui: la celda cambia de color al pasar el raton, y
-        // encima cada aplicacion tendra el suyo algun dia.
-        //
-        // El color del contorno es el CONTRARIO del texto, y por eso los dos son
-        // constantes: en el chasis v4 pasaron de negro/blanco a claro/oscuro de
-        // golpe, y si el negro estuviera escrito aqui a mano se habria quedado.
-        //
-        // EN CRUZ Y NO EN LAS OCHO DIRECCIONES. Con las diagonales el contorno
-        // sale grueso y el nombre se emborrona; en cruz cierra igual la letra y
-        // pesa la mitad.
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, px - 1, py, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px + 1, py, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px, py - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px, py + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, px, py, color, false);
+        // Unified TTF rendering supplies contrast without duplicated outlines.
+        PadTypography.draw(ctx, textRenderer, linea, px, py, color, false);
         m.pop();
     }
 

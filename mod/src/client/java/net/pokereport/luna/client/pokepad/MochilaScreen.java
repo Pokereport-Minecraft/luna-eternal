@@ -64,10 +64,10 @@ public class MochilaScreen extends HandledScreen<MochilaHandler> {
     @Override
     protected void drawBackground(DrawContext ctx, float delta, int mx, int my) {
         int x = this.x, y = this.y;
-        ctx.fill(x - 1, y - 1, x + backgroundWidth + 1, y + backgroundHeight + 1, BORDE);
-        ctx.fill(x, y, x + backgroundWidth, y + backgroundHeight, FONDO);
-        ctx.fill(x, y, x + backgroundWidth, y + 1, MARCO_CLARO);
-        ctx.fill(x, y, x + 1, y + backgroundHeight, MARCO_CLARO);
+        PadTheme.fill(ctx, x - 1, y - 1, x + backgroundWidth + 1, y + backgroundHeight + 1, BORDE);
+        PadTheme.fill(ctx, x, y, x + backgroundWidth, y + backgroundHeight, FONDO);
+        PadTheme.fill(ctx, x, y, x + backgroundWidth, y + 1, MARCO_CLARO);
+        PadTheme.fill(ctx, x, y, x + 1, y + backgroundHeight, MARCO_CLARO);
 
         // --- los huecos de la mochila
         for (int fila = 0; fila < Mochila.FILAS_MAX; fila++) {
@@ -90,26 +90,26 @@ public class MochilaScreen extends HandledScreen<MochilaHandler> {
     }
 
     private void dibujarHueco(DrawContext ctx, int hx, int hy, boolean abierto) {
-        ctx.fill(hx - 1, hy - 1, hx + 17, hy + 17, HUECO_BORDE);
-        ctx.fill(hx, hy, hx + 16, hy + 16, abierto ? HUECO : CANDADO_FONDO);
+        PadTheme.fill(ctx, hx - 1, hy - 1, hx + 17, hy + 17, HUECO_BORDE);
+        PadTheme.fill(ctx, hx, hy, hx + 16, hy + 16, abierto ? HUECO : CANDADO_FONDO);
         if (abierto) {
             return;
         }
         // ⚠ Una barra diagonal, no un candado dibujado: a 16 px un candado es
         //   una mancha. Lo que se lee de un vistazo es «esto está tachado».
         for (int i = 0; i < 16; i++) {
-            ctx.fill(hx + i, hy + 15 - i, hx + i + 1, hy + 16 - i, CANDADO);
+            PadTheme.fill(ctx, hx + i, hy + 15 - i, hx + i + 1, hy + 16 - i, CANDADO);
         }
-        ctx.fill(hx, hy, hx + 16, hy + 1, CANDADO);
-        ctx.fill(hx, hy + 15, hx + 16, hy + 16, CANDADO);
-        ctx.fill(hx, hy, hx + 1, hy + 16, CANDADO);
-        ctx.fill(hx + 15, hy, hx + 16, hy + 16, CANDADO);
+        PadTheme.fill(ctx, hx, hy, hx + 16, hy + 1, CANDADO);
+        PadTheme.fill(ctx, hx, hy + 15, hx + 16, hy + 16, CANDADO);
+        PadTheme.fill(ctx, hx, hy, hx + 1, hy + 16, CANDADO);
+        PadTheme.fill(ctx, hx + 15, hy, hx + 16, hy + 16, CANDADO);
     }
 
     @Override
     protected void drawForeground(DrawContext ctx, int mx, int my) {
-        ctx.drawText(textRenderer, title, titleX, titleY, TITULO, false);
-        ctx.drawText(textRenderer, playerInventoryTitle, titleX,
+        PadTypography.draw(ctx, textRenderer, title, titleX, titleY, TITULO, false);
+        PadTypography.draw(ctx, textRenderer, playerInventoryTitle, titleX,
                 playerInventoryTitleY, TEXTO_SUAVE, false);
     }
 
@@ -144,7 +144,7 @@ public class MochilaScreen extends HandledScreen<MochilaHandler> {
             //   se pasa como literal y Minecraft la pinta. Ponerle un color
             //   encima la dejaría toda de un tono.
             lineas.add(rango.conNombre());
-            ctx.drawTooltip(textRenderer, lineas, mx, my);
+            PadTypography.tooltip(ctx, textRenderer, lineas, mx, my);
             return;
         }
         drawMouseoverTooltip(ctx, mx, my);

@@ -209,7 +209,7 @@ public class CurarScreen extends Screen {
         int by = PANEL_Y + PANEL_H - 76;
         boolean encima = activo && dentro(rx, ry, px(PANEL_X + 40), py(by),
                 pl(PANEL_W - 80), pl(46));
-        ctx.fill(px(PANEL_X + 40), py(by), px(PANEL_X + PANEL_W - 40), py(by + 46),
+        PadTheme.fill(ctx, px(PANEL_X + 40), py(by), px(PANEL_X + PANEL_W - 40), py(by + 46),
                 !activo ? APAGADO : (encima ? 0xFF4FD07A : 0xFF2E9E56));
         marco(ctx, px(PANEL_X + 40), py(by), pl(PANEL_W - 80), pl(46),
                 0xFF10331E, Math.max(1, pl(2)));
@@ -243,7 +243,7 @@ public class CurarScreen extends Screen {
             int ax = PANT_X + MARGEN + (i % COLS) * (aw + 16);
             int ay = PANT_Y + MARGEN + (i / COLS) * (ah + 14);
 
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), FILA_FONDO);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), FILA_FONDO);
             marco(ctx, px(ax), py(ay), pl(aw), pl(ah), FILA_BORDE, Math.max(1, pl(2)));
 
             String nombre = p.apodo() == null || p.apodo().isBlank()
@@ -254,7 +254,7 @@ public class CurarScreen extends Screen {
 
             // ---- LA BARRA DE VIDA
             int bx = ax + 12, bw = aw - 24, by = ay + 42, bh = 14;
-            ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh), 0xFF2A3145);
+            PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh), 0xFF2A3145);
             int vidaMax = Math.max(1, p.vidaMax());
             int llena = Math.round(bw * Math.min(1f, p.vida() / (float) vidaMax));
             // ⚠ Verde, ámbar y rojo por TRAMOS, como en los juegos. Un degradado
@@ -263,7 +263,7 @@ public class CurarScreen extends Screen {
             float frac = p.vida() / (float) vidaMax;
             int color = frac > 0.5f ? VERDE : (frac > 0.2f ? AMBAR : ROJO);
             if (llena > 0) {
-                ctx.fill(px(bx), py(by), px(bx + llena), py(by + bh), color);
+                PadTheme.fill(ctx, px(bx), py(by), px(bx + llena), py(by + bh), color);
             }
             marco(ctx, px(bx), py(by), pl(bw), pl(bh), 0xFF141926, Math.max(1, pl(1)));
 
@@ -275,7 +275,7 @@ public class CurarScreen extends Screen {
             if (p.estado() != null && !p.estado().isEmpty()) {
                 String etiqueta = estadoCorto(p.estado());
                 int ex = ax + aw - 12 - 54;
-                ctx.fill(px(ex), py(ay + 60), px(ex + 54), py(ay + 80), colorEstado(p.estado()));
+                PadTheme.fill(ctx, px(ex), py(ay + 60), px(ex + 54), py(ay + 80), colorEstado(p.estado()));
                 marco(ctx, px(ex), py(ay + 60), pl(54), pl(20), 0xFF141926,
                         Math.max(1, pl(1)));
                 texto(ctx, Text.literal(etiqueta), ex + 27, ay + 63, 15,
@@ -389,11 +389,11 @@ public class CurarScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -407,16 +407,10 @@ public class CurarScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -425,10 +419,10 @@ public class CurarScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -436,7 +430,7 @@ public class CurarScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

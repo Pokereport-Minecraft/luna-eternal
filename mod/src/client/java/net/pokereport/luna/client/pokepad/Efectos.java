@@ -120,10 +120,10 @@ public final class Efectos {
                 continue;
             }
             int c = conAlfa(color, alfa);
-            ctx.fill(x - i, y - i, x + w + i, y - i + 1, c);
-            ctx.fill(x - i, y + h + i - 1, x + w + i, y + h + i, c);
-            ctx.fill(x - i, y - i, x - i + 1, y + h + i, c);
-            ctx.fill(x + w + i - 1, y - i, x + w + i, y + h + i, c);
+            PadTheme.fill(ctx, x - i, y - i, x + w + i, y - i + 1, c);
+            PadTheme.fill(ctx, x - i, y + h + i - 1, x + w + i, y + h + i, c);
+            PadTheme.fill(ctx, x - i, y - i, x - i + 1, y + h + i, c);
+            PadTheme.fill(ctx, x + w + i - 1, y - i, x + w + i, y + h + i, c);
         }
     }
 
@@ -154,7 +154,7 @@ public final class Efectos {
                 continue;
             }
             float alfa = fuerza * (1 - d / radio) * (1 - d / radio);
-            ctx.fill(fx, y, Math.min(x + w, fx + ancho), y + h,
+            PadTheme.fill(ctx, fx, y, Math.min(x + w, fx + ancho), y + h,
                     conAlfa(color, alfa));
         }
     }
@@ -200,10 +200,10 @@ public final class Efectos {
             int p = a - ini;
             int q = b - ini;
             switch (lado) {
-                case 0 -> ctx.fill(x + p, y, x + q, y + g, color);
-                case 1 -> ctx.fill(x + w - g, y + p, x + w, y + q, color);
-                case 2 -> ctx.fill(x + w - q, y + h - g, x + w - p, y + h, color);
-                default -> ctx.fill(x, y + h - q, x + g, y + h - p, color);
+                case 0 -> PadTheme.fill(ctx, x + p, y, x + q, y + g, color);
+                case 1 -> PadTheme.fill(ctx, x + w - g, y + p, x + w, y + q, color);
+                case 2 -> PadTheme.fill(ctx, x + w - q, y + h - g, x + w - p, y + h, color);
+                default -> PadTheme.fill(ctx, x, y + h - q, x + g, y + h - p, color);
             }
         }
     }
@@ -229,7 +229,7 @@ public final class Efectos {
             double a = -Math.PI / 2 + (i / (double) total) * Math.PI * 2;
             int x = cx + (int) Math.round(Math.cos(a) * radio);
             int y = cy + (int) Math.round(Math.sin(a) * radio);
-            ctx.fill(x - grosor / 2, y - grosor / 2,
+            PadTheme.fill(ctx, x - grosor / 2, y - grosor / 2,
                      x + (grosor + 1) / 2, y + (grosor + 1) / 2, color);
         }
     }
@@ -237,12 +237,12 @@ public final class Efectos {
     /** Una barra con relleno y, opcionalmente, un brillo que la recorre. */
     public static void barra(DrawContext ctx, int x, int y, int w, int h,
                              double fraccion, int fondo, int color, boolean viva) {
-        ctx.fill(x, y, x + w, y + h, fondo);
+        PadTheme.fill(ctx, x, y, x + w, y + h, fondo);
         int lleno = (int) Math.round(Math.max(0, Math.min(1, fraccion)) * w);
         if (lleno <= 0) {
             return;
         }
-        ctx.fill(x, y, x + lleno, y + h, color);
+        PadTheme.fill(ctx, x, y, x + lleno, y + h, color);
         if (viva && lleno > h * 2) {
             brillo(ctx, x, y, lleno, h, rampa(2600), 0xFFFFFFFF, 0.45f);
         }
@@ -257,10 +257,10 @@ public final class Efectos {
     public static void destello(DrawContext ctx, int cx, int cy, int r, int color) {
         for (int i = 0; i < r; i++) {
             int semi = Math.max(1, (r - i) / 3);
-            ctx.fill(cx - semi, cy - r + i, cx + semi, cy - r + i + 1, color);
-            ctx.fill(cx - semi, cy + r - i - 1, cx + semi, cy + r - i, color);
-            ctx.fill(cx - r + i, cy - semi, cx - r + i + 1, cy + semi, color);
-            ctx.fill(cx + r - i - 1, cy - semi, cx + r - i, cy + semi, color);
+            PadTheme.fill(ctx, cx - semi, cy - r + i, cx + semi, cy - r + i + 1, color);
+            PadTheme.fill(ctx, cx - semi, cy + r - i - 1, cx + semi, cy + r - i, color);
+            PadTheme.fill(ctx, cx - r + i, cy - semi, cx - r + i + 1, cy + semi, color);
+            PadTheme.fill(ctx, cx + r - i - 1, cy - semi, cx + r - i, cy + semi, color);
         }
     }
 
@@ -330,7 +330,7 @@ public final class Efectos {
                 // Gravedad: sube y cae.
                 int py = (int) (c.y + c.vy * t * 60 + 90 * t * t);
                 float alfa = 1 - (ahora - c.nace) / (float) c.vida;
-                ctx.fill(px, py, px + c.lado, py + c.lado,
+                PadTheme.fill(ctx, px, py, px + c.lado, py + c.lado,
                         conAlfa(c.color, alfa * alfa));
             }
             return vivas.size();

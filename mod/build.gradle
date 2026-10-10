@@ -113,8 +113,16 @@ tasks.named('compileTestJava') {
 
 processResources {
     inputs.property 'version', project.version
+    inputs.property 'sqlLineEndings', 'lf'
     filesMatching('fabric.mod.json') {
         expand 'version': project.version
+    }
+    // Windows checkout endings must not change the checksums of applied SQL.
+    // Normalize only line endings in the packaged migrations; never touch the database.
+    filesMatching('db/migration/*.sql') {
+        filter(org.apache.tools.ant.filters.FixCrLfFilter,
+                eol: org.apache.tools.ant.filters.FixCrLfFilter.CrLf.newInstance('lf'),
+                fixlast: false)
     }
 }
 

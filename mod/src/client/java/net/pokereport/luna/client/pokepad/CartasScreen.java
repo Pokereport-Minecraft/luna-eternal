@@ -318,13 +318,13 @@ public class CartasScreen extends Screen {
             boolean activa = activa(z);
             boolean encima = dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
 
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                     encima ? 0xFFCBD6F0 : 0xFFBFCBE8);
             marco(ctx, px(ax), py(ay), pl(aw), pl(ah),
                     encima ? z.color : 0xFF7C89B4, Math.max(1, pl(2)));
 
             // La banda de color: lo que distingue las tres de un vistazo.
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + 6), z.color);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + 6), z.color);
 
             texto(ctx, Text.translatable("pokepad.lunaeternal.cartas." + z.name().toLowerCase()),
                     ax + aw / 2, ay + 20, 22, TEXTO_OSCURO, true, true);
@@ -367,7 +367,7 @@ public class CartasScreen extends Screen {
             //
             // ⚠ Se APAGA, no desaparece. Que la zona exista y hoy no puedas
             //   usarla ES información; que no exista es otra pantalla.
-            ctx.fill(px(ax + 16), py(by), px(ax + aw - 16), py(by + 40),
+            PadTheme.fill(ctx, px(ax + 16), py(by), px(ax + aw - 16), py(by + 40),
                     !activa ? APAGADO : (encima ? 0xFF4FD07A : 0xFF2E9E56));
             marco(ctx, px(ax + 16), py(by), pl(aw - 32), pl(40),
                     0xFF10331E, Math.max(1, pl(2)));
@@ -485,11 +485,11 @@ public class CartasScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -503,16 +503,10 @@ public class CartasScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -521,10 +515,10 @@ public class CartasScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -532,7 +526,7 @@ public class CartasScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

@@ -391,17 +391,17 @@ public class SantuarioScreen extends Screen {
         if (hayArte(arteId)) {
             arte(ctx, arteId, px(ax), py(ay), pl(aw), pl(imgH), aw, imgH);
         } else {
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + imgH), colorAcento);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + imgH), colorAcento);
         }
         
-        ctx.fill(px(ax), py(ay + imgH), px(ax + aw), py(ay + ah), enc ? CARD_FONDO_HOVER : CARD_FONDO);
-        ctx.fill(px(ax), py(ay + imgH), px(ax + aw), py(ay + imgH + 2), colorAcento);
+        PadTheme.fill(ctx, px(ax), py(ay + imgH), px(ax + aw), py(ay + ah), enc ? CARD_FONDO_HOVER : CARD_FONDO);
+        PadTheme.fill(ctx, px(ax), py(ay + imgH), px(ax + aw), py(ay + imgH + 2), colorAcento);
         
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah),
                 enc ? CARD_BORDE_ENCIMA : (enc ? 0xFF8FA0C8 : 0xFF20283C), Math.max(2, pl(enc ? 4 : 2)));
 
         if (enc) {
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + imgH), 0x11FFFFFF);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + imgH), 0x11FFFFFF);
         }
 
         texto(ctx, titulo, ax + aw / 2, ay + imgH + 20, 26, TEXTO_BLANCO, true, 0);
@@ -424,7 +424,7 @@ public class SantuarioScreen extends Screen {
         int u = (512 - regW) / 2, v = (512 - regH) / 2;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, u, v, regW, regH, 512, 512);
+        PadTheme.texture(ctx, tex, x, y, w, h, u, v, regW, regH, 512, 512);
         RenderSystem.disableBlend();
     }
 
@@ -456,9 +456,9 @@ public class SantuarioScreen extends Screen {
         var paseo = EstadoCliente.paseo();
         int ax = PANT_X + 11, aw = PANT_W - 22;
 
-        ctx.fill(px(ax), py(y), px(ax + aw), py(y + PASEO_ALTO), CARD_FONDO);
+        PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + PASEO_ALTO), CARD_FONDO);
         marco(ctx, px(ax), py(y), pl(aw), pl(PASEO_ALTO), CARD_BORDE, Math.max(1, pl(2)));
-        ctx.fill(px(ax), py(y), px(ax + 6), py(y + PASEO_ALTO), ORO);
+        PadTheme.fill(ctx, px(ax), py(y), px(ax + 6), py(y + PASEO_ALTO), ORO);
 
         // Cabecera: Título y pista de XP del pase
         texto(ctx, Text.translatable("pokepad.lunaeternal.santuario.paseo"),
@@ -473,7 +473,7 @@ public class SantuarioScreen extends Screen {
 
         // Separador sutil entre cabecera y barras/acción
         int sepY = y + 38;
-        ctx.fill(px(ax + 16), py(sepY), px(ax + aw - 16), py(sepY + 1), 0x33283854);
+        PadTheme.fill(ctx, px(ax + 16), py(sepY), px(ax + aw - 16), py(sepY + 1), 0x33283854);
 
         int topeV = net.pokereport.luna.pase.PaseXp.VISITAS_DIA;
         int topeH = net.pokereport.luna.santuario.SantuarioService.HONORES_PREMIO;
@@ -514,10 +514,10 @@ public class SantuarioScreen extends Screen {
         texto(ctx, rotulo, x, y, 14, TEXTO_CLARO, false, 0);
         int barY = y + 18;
         int barH = 14;
-        ctx.fill(px(x), py(barY), px(x + w), py(barY + barH), CARD_SUBFONDO);
+        PadTheme.fill(ctx, px(x), py(barY), px(x + w), py(barY + barH), CARD_SUBFONDO);
         int lleno = tope <= 0 ? 0 : (int) Math.min((long) w, ((long) w * hecho / tope));
         if (lleno > 0) {
-            ctx.fill(px(x), py(barY), px(x + lleno), py(barY + barH), color);
+            PadTheme.fill(ctx, px(x), py(barY), px(x + lleno), py(barY + barH), color);
         }
         marco(ctx, px(x), py(barY), pl(w), pl(barH), CARD_BORDE, Math.max(1, pl(1)));
         if (subtitulo != null && !subtitulo.isEmpty()) {
@@ -560,17 +560,17 @@ public class SantuarioScreen extends Screen {
         if (hayArte(arteId)) {
             arte(ctx, arteId, px(ax), py(ay), pl(aw), pl(imgH), aw, imgH);
         } else {
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + imgH), colorAcento);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + imgH), colorAcento);
         }
         
-        ctx.fill(px(ax), py(ay + imgH), px(ax + aw), py(ay + ah), enc ? CARD_FONDO_HOVER : CARD_FONDO);
-        ctx.fill(px(ax), py(ay + imgH), px(ax + aw), py(ay + imgH + 2), colorAcento);
+        PadTheme.fill(ctx, px(ax), py(ay + imgH), px(ax + aw), py(ay + ah), enc ? CARD_FONDO_HOVER : CARD_FONDO);
+        PadTheme.fill(ctx, px(ax), py(ay + imgH), px(ax + aw), py(ay + imgH + 2), colorAcento);
         
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah),
                 enc ? CARD_BORDE_ENCIMA : (enc ? 0xFF8FA0C8 : 0xFF20283C), Math.max(2, pl(enc ? 4 : 2)));
 
         if (enc) {
-            ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + imgH), 0x11FFFFFF);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + imgH), 0x11FFFFFF);
         }
 
         texto(ctx, titulo, ax + 16, ay + imgH + 14, 24, TEXTO_BLANCO, false, 0);
@@ -585,7 +585,7 @@ public class SantuarioScreen extends Screen {
         int badgeW = 160, badgeH = 34;
         int badgeX = ax + aw - badgeW - 12;
         int badgeY = ay + imgH + (ah - imgH - badgeH) / 2;
-        ctx.fill(px(badgeX), py(badgeY), px(badgeX + badgeW), py(badgeY + badgeH), 0xDD0C1320);
+        PadTheme.fill(ctx, px(badgeX), py(badgeY), px(badgeX + badgeW), py(badgeY + badgeH), 0xDD0C1320);
         marco(ctx, px(badgeX), py(badgeY), pl(badgeW), pl(badgeH), colorAcento, Math.max(1, pl(2)));
 
         dibujarTextura(ctx, iconoMoneda, px(badgeX + 8), py(badgeY + 5), pl(24), pl(24), 48, 48);
@@ -638,8 +638,8 @@ public class SantuarioScreen extends Screen {
             int y = filaY(n);
             boolean enc = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA_ALTO));
 
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), enc ? CARD_FONDO_HOVER : CARD_FONDO);
-            ctx.fill(px(ax), py(y), px(ax + 6), py(y + FILA_ALTO), compraPermanente ? ORO_OSCURO : AZUL_ZAFIRO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), enc ? CARD_FONDO_HOVER : CARD_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + 6), py(y + FILA_ALTO), compraPermanente ? ORO_OSCURO : AZUL_ZAFIRO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), enc ? CARD_BORDE_ENCIMA : CARD_BORDE, Math.max(1, pl(2)));
 
             // Nombre y coordenadas
@@ -686,8 +686,8 @@ public class SantuarioScreen extends Screen {
             int y = filaY(n);
             boolean enc = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA_ALTO));
 
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), enc ? CARD_FONDO_HOVER : CARD_FONDO);
-            ctx.fill(px(ax), py(y), px(ax + 6), py(y + FILA_ALTO),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), enc ? CARD_FONDO_HOVER : CARD_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + 6), py(y + FILA_ALTO),
                     estado.dueno().isEmpty() ? VERDE_ESMERALDA : (estado.mio() ? ORO_OSCURO : AZUL_ZAFIRO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), enc ? CARD_BORDE_ENCIMA : CARD_BORDE, Math.max(1, pl(2)));
 
@@ -700,7 +700,7 @@ public class SantuarioScreen extends Screen {
                 dibujarFoto(ctx, foto, thumbX, thumbY, thumbSize, thumbSize);
                 marco(ctx, px(thumbX), py(thumbY), pl(thumbSize), pl(thumbSize), ORO_OSCURO, Math.max(1, pl(1)));
             } else {
-                ctx.fill(px(thumbX), py(thumbY), px(thumbX + thumbSize), py(thumbY + thumbSize), CARD_SUBFONDO);
+                PadTheme.fill(ctx, px(thumbX), py(thumbY), px(thumbX + thumbSize), py(thumbY + thumbSize), CARD_SUBFONDO);
                 marco(ctx, px(thumbX), py(thumbY), pl(thumbSize), pl(thumbSize), CARD_BORDE, Math.max(1, pl(1)));
                 texto(ctx, Text.literal("✦"), thumbX + thumbSize / 2, thumbY + 18, 26, TEXTO_MUTED, true, 0);
             }
@@ -835,7 +835,7 @@ public class SantuarioScreen extends Screen {
             dibujarFoto(ctx, actual, fx, y + 26, 180, 150);
             marco(ctx, px(fx), py(y + 26), pl(180), pl(150), ORO_OSCURO, Math.max(1, pl(2)));
         } else {
-            ctx.fill(px(fx), py(y + 26), px(fx + 180), py(y + 176), CARD_SUBFONDO);
+            PadTheme.fill(ctx, px(fx), py(y + 26), px(fx + 180), py(y + 176), CARD_SUBFONDO);
             marco(ctx, px(fx), py(y + 26), pl(180), pl(150), CARD_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.translatable("pokepad.lunaeternal.santuario.sin_foto"),
                     fx + 90, y + 86, 16, TEXTO_MUTED, true, 0);
@@ -900,7 +900,7 @@ public class SantuarioScreen extends Screen {
         int dy = py(ay + (ah - dh) / 2);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(foto.textura(), dx, dy, pl(dw), pl(dh), 0f, 0f,
+        PadTheme.texture(ctx, foto.textura(), dx, dy, pl(dw), pl(dh), 0f, 0f,
                 foto.ancho(), foto.alto(), foto.ancho(), foto.alto());
         RenderSystem.disableBlend();
     }
@@ -928,7 +928,7 @@ public class SantuarioScreen extends Screen {
         for (var f : pend.fotos()) {
             if (y + tarjetaH > PANT_Y + PANT_H - 10) break;
 
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + tarjetaH), CARD_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + tarjetaH), CARD_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(tarjetaH), CARD_BORDE, Math.max(1, pl(2)));
 
             // Foto grande a la izquierda (200 x 180 px)
@@ -936,7 +936,7 @@ public class SantuarioScreen extends Screen {
             var foto = net.pokereport.luna.client.TexturasFoto.lista(f.sha1());
             if (foto == null) {
                 net.pokereport.luna.client.TexturasFoto.pedir(f.sha1());
-                ctx.fill(px(ax + 16), py(y + 20), px(ax + 16 + fotoW), py(y + 20 + fotoH), CARD_SUBFONDO);
+                PadTheme.fill(ctx, px(ax + 16), py(y + 20), px(ax + 16 + fotoW), py(y + 20 + fotoH), CARD_SUBFONDO);
                 texto(ctx, Text.translatable("pokepad.lunaeternal.cargando"),
                         ax + 16 + fotoW / 2, y + 20 + fotoH / 2 - 10, 16, TEXTO_MUTED, true, 0);
             } else {
@@ -1335,7 +1335,7 @@ public class SantuarioScreen extends Screen {
             int alfa = (int) ((arriba ? (1 - f) : f) * 210);
             int y1 = py(ay) + i * altoPx / pasos;
             int y2 = py(ay) + (i + 1) * altoPx / pasos;
-            ctx.fill(px(ax), y1, px(ax + aw), y2, (alfa << 24));
+            PadTheme.fill(ctx, px(ax), y1, px(ax + aw), y2, (alfa << 24));
         }
     }
 
@@ -1344,7 +1344,7 @@ public class SantuarioScreen extends Screen {
         int tw = anchoArte(texto, 13);
         int pw = tw + 16;
         int ph = 20;
-        ctx.fill(px(ax), py(ay), px(ax + pw), py(ay + ph), 0xCC0A101A);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + pw), py(ay + ph), 0xCC0A101A);
         marco(ctx, px(ax), py(ay), pl(pw), pl(ph), colorAcento, Math.max(1, pl(1)));
         texto(ctx, Text.literal(texto), ax + pw / 2, ay + 3, 13, colorAcento, true, 0);
     }
@@ -1362,7 +1362,7 @@ public class SantuarioScreen extends Screen {
                        Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
         int bg = !activo ? 0xFF2A364C : (encima ? aclarar(color) : color);
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), bg);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), bg);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), encima ? CARD_BORDE_ENCIMA : 0xFF0A0E18, Math.max(1, pl(2)));
 
         int t = 18;
@@ -1399,11 +1399,11 @@ public class SantuarioScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), 0xFF24344E);
     }
 
@@ -1415,16 +1415,14 @@ public class SantuarioScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contornoColor != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contornoColor, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contornoColor, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contornoColor, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contornoColor, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1433,17 +1431,17 @@ public class SantuarioScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y + g, x + g, y + h - g, color);
-        ctx.fill(x + w - g, y + g, x + w, y + h - g, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y + g, x + g, y + h - g, color);
+        PadTheme.fill(ctx, x + w - g, y + g, x + w, y + h - g, color);
     }
 
     private static void dibujarTextura(DrawContext ctx, Identifier tex,
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 
@@ -1536,7 +1534,7 @@ public class SantuarioScreen extends Screen {
         int bx = ax + aw - bw, by = PANT_Y + MARGEN - 8;
         colocar(campoBuscar, bx + 6, by + 7, bw - 12, bh - 12);
 
-        ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh), CARD_SUBFONDO);
+        PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh), CARD_SUBFONDO);
         marco(ctx, px(bx), py(by), pl(bw), pl(bh),
                 getFocused() == campoBuscar ? CARD_BORDE_ENCIMA : CARD_BORDE,
                 Math.max(1, pl(2)));

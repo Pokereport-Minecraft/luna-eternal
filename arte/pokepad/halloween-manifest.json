@@ -1,0 +1,726 @@
+{
+  "tool": "built-in image_gen",
+  "variants": [
+    {
+      "original": "medallas/naranja_caracol.png",
+      "seasonal": "pokepad/themes/halloween/medallas/naranja_caracol.png",
+      "generation": "edit of original",
+      "size": [
+        64,
+        64
+      ],
+      "sha256": "16b77323bf1ee4fdc997ebd61f9b96bcf4f40a364a0dfc6f1cd05517b42437eb"
+    },
+    {
+      "original": "medallas/naranja_jade.png",
+      "seasonal": "pokepad/themes/halloween/medallas/naranja_jade.png",
+      "generation": "edit of original",
+      "size": [
+        64,
+        64
+      ],
+      "sha256": "6b88dedd23825e44d4311fdbcba83ac874a0eb747af4cbeb961855909104ff37"
+    },
+    {
+      "original": "medallas/naranja_ojo_coral.png",
+      "seasonal": "pokepad/themes/halloween/medallas/naranja_ojo_coral.png",
+      "generation": "edit of original",
+      "size": [
+        64,
+        64
+      ],
+      "sha256": "d188d3583a56c0fe456bae9dbc2b373affd53870d4471fc0f52554e72df40823"
+    },
+    {
+      "original": "medallas/naranja_rubi_marino.png",
+      "seasonal": "pokepad/themes/halloween/medallas/naranja_rubi_marino.png",
+      "generation": "edit of original",
+      "size": [
+        64,
+        64
+      ],
+      "sha256": "d1667e4c05a6e279e456f1475b7f9de8c712ba69dc6b45846ca805100fbc59b0"
+    },
+    {
+      "original": "medallas/naranja_trofeo.png",
+      "seasonal": "pokepad/themes/halloween/medallas/naranja_trofeo.png",
+      "generation": "edit of original",
+      "size": [
+        64,
+        64
+      ],
+      "sha256": "397afb60ab92e898e6c942bddbc50a3bd42d044d179248106894896946d989bb"
+    },
+    {
+      "original": "pokepad/boton_adelante.png",
+      "seasonal": "pokepad/themes/halloween/boton_adelante.png",
+      "generation": "edit of original",
+      "size": [
+        60,
+        48
+      ],
+      "sha256": "0985ac6b170e7730a833293892f934555a3d578dfdd733aa252500462b6968f2"
+    },
+    {
+      "original": "pokepad/boton_ajustes.png",
+      "seasonal": "pokepad/themes/halloween/boton_ajustes.png",
+      "generation": "edit of original",
+      "size": [
+        80,
+        64
+      ],
+      "sha256": "25ce3fb58a025a471e79c425b0eb51e52d8574e86394c599b0b5da48c764063f"
+    },
+    {
+      "original": "pokepad/boton_atras.png",
+      "seasonal": "pokepad/themes/halloween/boton_atras.png",
+      "generation": "edit of original",
+      "size": [
+        60,
+        48
+      ],
+      "sha256": "7713c18503840de1bf4ffe91cf982879d42b9863b553fc8ee79cc66c8055a9fc"
+    },
+    {
+      "original": "pokepad/boton_cerrar.png",
+      "seasonal": "pokepad/themes/halloween/boton_cerrar.png",
+      "generation": "edit of original",
+      "size": [
+        80,
+        64
+      ],
+      "sha256": "e9b6af62ba56bf60c29f746d2f76413b8a9a6a30f9b38db47aee87461a28ca91"
+    },
+    {
+      "original": "pokepad/boton_mas.png",
+      "seasonal": "pokepad/themes/halloween/boton_mas.png",
+      "generation": "edit of original",
+      "size": [
+        50,
+        40
+      ],
+      "sha256": "2abdfb17883cd8c0569a659da66a34ce4e66b768650197ff2d9f235eb1cbc2ee"
+    },
+    {
+      "original": "pokepad/boton_mas_luna.png",
+      "seasonal": "pokepad/themes/halloween/boton_mas_luna.png",
+      "generation": "edit of original",
+      "size": [
+        58,
+        58
+      ],
+      "sha256": "340ca0640ac085572b9c5f97848b5f6b43009366c78fc155bdacb4b63b3bf958"
+    },
+    {
+      "original": "pokepad/candado.png",
+      "seasonal": "pokepad/themes/halloween/candado.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "d0018ae09a17df1228c1b4e78df0b2d9b7915cd3edebf70559f6faea1f8329be"
+    },
+    {
+      "original": "pokepad/cartas.png",
+      "seasonal": "pokepad/themes/halloween/cartas.png",
+      "generation": "new functional alternative",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "30bddc630ced54cba81ab8cb11fb68e66d90eba7b7e85eaf6d148651c0168574"
+    },
+    {
+      "original": "pokepad/cazas.png",
+      "seasonal": "pokepad/themes/halloween/cazas.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "f7ef5a473e15a26fd2a4d18ab0a05b6ff8317ce9cc19decc8531256818e39d55"
+    },
+    {
+      "original": "pokepad/clan.png",
+      "seasonal": "pokepad/themes/halloween/clan.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "42f6b4964a8ddc4d0e31f9a81e4b35c64817713021d1f04e6479db2c4edc760f"
+    },
+    {
+      "original": "pokepad/cosmeticos.png",
+      "seasonal": "pokepad/themes/halloween/cosmeticos.png",
+      "generation": "new functional alternative",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "4599c5e38d2b50480429937c9abe82218e3c766259950cd121ea8b82be5a9958"
+    },
+    {
+      "original": "pokepad/crianza.png",
+      "seasonal": "pokepad/themes/halloween/crianza.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "9a027771fe80f5184cbaec4e867f84613bb71e983ff3b53b568f100ea4504ac0"
+    },
+    {
+      "original": "pokepad/curar.png",
+      "seasonal": "pokepad/themes/halloween/curar.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "f8d8515e23c10d9bbab17f2a166ac74791b6a5ea3a6188bae560628cdc687d57"
+    },
+    {
+      "original": "pokepad/estrella.png",
+      "seasonal": "pokepad/themes/halloween/estrella.png",
+      "generation": "edit of original",
+      "size": [
+        14,
+        14
+      ],
+      "sha256": "91755dc492cfbdaa7c21afcf45f27948d0a6bc6672c97583369c79507eef2827"
+    },
+    {
+      "original": "pokepad/estrella_vacia.png",
+      "seasonal": "pokepad/themes/halloween/estrella_vacia.png",
+      "generation": "edit of original",
+      "size": [
+        14,
+        14
+      ],
+      "sha256": "698cd523ae45564f5ddea6fbdcfa902c43421e727bab1b3f50e807af45a03bba"
+    },
+    {
+      "original": "pokepad/explorar.png",
+      "seasonal": "pokepad/themes/halloween/explorar.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "7fc91cc82e989467e15a35b8a3162f108d64cdba81b7df3f9bdb6ade57278334"
+    },
+    {
+      "original": "pokepad/fila_clan.png",
+      "seasonal": "pokepad/themes/halloween/fila_clan.png",
+      "generation": "edit of original",
+      "size": [
+        36,
+        36
+      ],
+      "sha256": "1fafb6f74e88b564804ab235f9954b24359f654da4a3ad505f5a0cb982164704"
+    },
+    {
+      "original": "pokepad/fila_division.png",
+      "seasonal": "pokepad/themes/halloween/fila_division.png",
+      "generation": "edit of original",
+      "size": [
+        36,
+        36
+      ],
+      "sha256": "6bb79f8fdaa76da7aaa0bc9b5cb5a8332d056bf393eb1d4588ea6c681f6d0624"
+    },
+    {
+      "original": "pokepad/fila_trabajo.png",
+      "seasonal": "pokepad/themes/halloween/fila_trabajo.png",
+      "generation": "edit of original",
+      "size": [
+        36,
+        36
+      ],
+      "sha256": "3bbca32bc9f9a3cf8ffedc2ed38e84737db4b5bd8cb33fb371afa180c199aff7"
+    },
+    {
+      "original": "pokepad/gts.png",
+      "seasonal": "pokepad/themes/halloween/gts.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "d04ee467530f78f972182c7f3b37483b398a81946dbf6ec985e5c3c64b38abdc"
+    },
+    {
+      "original": "pokepad/gyms.png",
+      "seasonal": "pokepad/themes/halloween/gyms.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "3e5054afd0e94c079b6299690fe896e0272769839016c6e8ea29b7fd9a16f4f9"
+    },
+    {
+      "original": "pokepad/hembra_slot.png",
+      "seasonal": "pokepad/themes/halloween/hembra_slot.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "9c6e5e3a7c93d0d1d5eec168ccbb220f3444023bdf40ccf557133af08d22900d"
+    },
+    {
+      "original": "pokepad/huevo_crianza.png",
+      "seasonal": "pokepad/themes/halloween/huevo_crianza.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "f67df23b73413daeffe715574a74efe5ff465bc708c734611846ed55f68af4f6"
+    },
+    {
+      "original": "pokepad/kits.png",
+      "seasonal": "pokepad/themes/halloween/kits.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "8699182d5b68ddce210d03d9bd2cab1c06ddef672c174719d2c28bafbbc04012"
+    },
+    {
+      "original": "pokepad/lunacoin.png",
+      "seasonal": "pokepad/themes/halloween/lunacoin.png",
+      "generation": "edit of original",
+      "size": [
+        40,
+        40
+      ],
+      "sha256": "fcd46642eac9c8a214d25f1394e3538ecabda9adf101b3e1d8baa1c97c9c6ac5"
+    },
+    {
+      "original": "pokepad/lunacoin_oro.png",
+      "seasonal": "pokepad/themes/halloween/lunacoin_oro.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "f3b3ec0fdb741c3fa19a890c0d3531ed20f37a53c8bba490475c9d1c01f2b791"
+    },
+    {
+      "original": "pokepad/macho_slot.png",
+      "seasonal": "pokepad/themes/halloween/macho_slot.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "190811e1613c4750632f7a14a25ac8875f313d3919223a4868d406a3bd62ccf1"
+    },
+    {
+      "original": "pokepad/mercado_negro.png",
+      "seasonal": "pokepad/themes/halloween/mercado_negro.png",
+      "generation": "edit of original",
+      "size": [
+        1620,
+        971
+      ],
+      "sha256": "24871ba76bad1ba19ac9fd1a920429e8cc2c2ab5edfc80c6c7932ea764cdaa75"
+    },
+    {
+      "original": "pokepad/misiones.png",
+      "seasonal": "pokepad/themes/halloween/misiones.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "f02fd3919ee28944599cc6f8cf24c34b3abd3c22f5ab755e14f0607faf99654e"
+    },
+    {
+      "original": "pokepad/mochila.png",
+      "seasonal": "pokepad/themes/halloween/mochila.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "243cfc0b8f3254187a5f3763072a28249e3a72577f2d8d7b93a63df338bade6c"
+    },
+    {
+      "original": "pokepad/mundo_hogar.png",
+      "seasonal": "pokepad/themes/halloween/mundo_hogar.png",
+      "generation": "edit of original",
+      "size": [
+        768,
+        512
+      ],
+      "sha256": "57a2f08a6437e44e60fcaf2e5b9c7aeb9232e6a4161596452a184cee0489a65b"
+    },
+    {
+      "original": "pokepad/mundo_salvaje.png",
+      "seasonal": "pokepad/themes/halloween/mundo_salvaje.png",
+      "generation": "edit of original",
+      "size": [
+        768,
+        512
+      ],
+      "sha256": "9248edd1a5de93f654a3443e2ea5131c38591f97a3875e883bc4299812131b6f"
+    },
+    {
+      "original": "pokepad/pase.png",
+      "seasonal": "pokepad/themes/halloween/pase.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "7265f32631bdb6daa770ae464a3a4dba3ec14b86b883c42abb1207d492eae941"
+    },
+    {
+      "original": "pokepad/plata.png",
+      "seasonal": "pokepad/themes/halloween/plata.png",
+      "generation": "edit of original",
+      "size": [
+        40,
+        40
+      ],
+      "sha256": "59883ae24f925aabec70e370d2cbd23d088d32073aab6a6b88f64f438e49e3f2"
+    },
+    {
+      "original": "pokepad/pokedex.png",
+      "seasonal": "pokepad/themes/halloween/pokedex.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "8ac158f8748298b9bec1fbc5ad8d0c80ebb4ec7e121371795573308f05da2afb"
+    },
+    {
+      "original": "pokepad/pokepad.png",
+      "seasonal": "pokepad/themes/halloween/pokepad.png",
+      "generation": "edit of original",
+      "size": [
+        1380,
+        828
+      ],
+      "sha256": "068b0fb49e019cecf493e8b969ff79e43438c9b9598703f1abddbb63cf2b6d40"
+    },
+    {
+      "original": "pokepad/pokepad_cosmeticos.png",
+      "seasonal": "pokepad/themes/halloween/pokepad_cosmeticos.png",
+      "generation": "edit of original",
+      "size": [
+        1380,
+        828
+      ],
+      "sha256": "d4360a4accbda10c618339b4a27350cf75e370cc5de9ac43d86166caa46447f9"
+    },
+    {
+      "original": "pokepad/pokevoice.png",
+      "seasonal": "pokepad/themes/halloween/pokevoice.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "e8cba9b053d7ebab82b8f5e7fd150afc3d9a529aef12b59c1c999837130335eb"
+    },
+    {
+      "original": "pokepad/protecciones.png",
+      "seasonal": "pokepad/themes/halloween/protecciones.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "c9e1a0b9ec45655924b714c53159f71926a68685e88e84608c6d3b940222aacb"
+    },
+    {
+      "original": "pokepad/santuario.png",
+      "seasonal": "pokepad/themes/halloween/santuario.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "8db87357e003e10a5ef5ab1c5d2960c9f4986084618a52e3e4a97636f9471806"
+    },
+    {
+      "original": "pokepad/sobre_diario.png",
+      "seasonal": "pokepad/themes/halloween/sobre_diario.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "b922a79598ebb7834baa0dcf411358a35a9a29f16a903de4ab67c0ceb7816478"
+    },
+    {
+      "original": "pokepad/sobre_luna.png",
+      "seasonal": "pokepad/themes/halloween/sobre_luna.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "0bb4a555fdba52a790968d41f95c4b643b3546faa5249bd42b5e9fd1a16edd06"
+    },
+    {
+      "original": "pokepad/sobre_plata.png",
+      "seasonal": "pokepad/themes/halloween/sobre_plata.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "7e821dda2e35e2b2f22e7128d8d7f9e9c68aa71c10952c62005ab812c9b6d5c1"
+    },
+    {
+      "original": "pokepad/tesoros.png",
+      "seasonal": "pokepad/themes/halloween/tesoros.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "11cc3e63719ca6fcf5f324c608e8ec57bd0b91467653b66b9f165c8654099064"
+    },
+    {
+      "original": "pokepad/tienda.png",
+      "seasonal": "pokepad/themes/halloween/tienda.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "93e8fd82bb1a4a3b75e2208ce423266d5688f782c3fb8c791fd0a6f0a8e7d38a"
+    },
+    {
+      "original": "pokepad/torre_batalla.png",
+      "seasonal": "pokepad/themes/halloween/torre_batalla.png",
+      "generation": "edit of original",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "87e1f0827d2a3b576bc66c5c40ad73254a660d0c906b9aa00eff1aea85e0d60d"
+    },
+    {
+      "original": "pokepad/torre_modo_1vs1.png",
+      "seasonal": "pokepad/themes/halloween/torre_modo_1vs1.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "31e2183ac613dbd649f350848e6e4cab854ba5378aba7e70fb6fdb2199100085"
+    },
+    {
+      "original": "pokepad/torre_modo_2vs2.png",
+      "seasonal": "pokepad/themes/halloween/torre_modo_2vs2.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "e72a3461d7c969a41685b51be75c009be2b22a2d73508fe5144e77119c6e1beb"
+    },
+    {
+      "original": "pokepad/torre_modo_aleatorio.png",
+      "seasonal": "pokepad/themes/halloween/torre_modo_aleatorio.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "1912cc1f7eedc4d1f7d3ffc0933e37955424b1d1580498084348e3524abaf971"
+    },
+    {
+      "original": "pokepad/trabajos.png",
+      "seasonal": "pokepad/themes/halloween/trabajos.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "697bf7fe4a5cf8295c919d1361d6038b6aabcd7f9d05fb580649ec3b538f4086"
+    },
+    {
+      "original": "pokepad/warps.png",
+      "seasonal": "pokepad/themes/halloween/warps.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "4257d752ba9a236ef71ca81ef92e8896309b4127fe4806e93de814d287e20077"
+    },
+    {
+      "original": "pokepad/wiki.png",
+      "seasonal": "pokepad/themes/halloween/wiki.png",
+      "generation": "edit of original",
+      "size": [
+        100,
+        100
+      ],
+      "sha256": "ea36840a72d44f091a2575cb82407d05894af130c2be1db538cf9ded22c26e6f"
+    },
+    {
+      "original": "santuario/alquiler_temporal.png",
+      "seasonal": "pokepad/themes/halloween/santuario/alquiler_temporal.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "8041375b95a2437996e8c042d9f90780d92b87ad458051a5e169d1d0b288b385"
+    },
+    {
+      "original": "santuario/compra_espacio.png",
+      "seasonal": "pokepad/themes/halloween/santuario/compra_espacio.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "08a41f906fd6f1484d14e1d72a12d6a98ad4c5bab1cccf45f95b4258ba28db31"
+    },
+    {
+      "original": "santuario/compra_permanente.png",
+      "seasonal": "pokepad/themes/halloween/santuario/compra_permanente.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "5c22b07ce0341512e4c3134bec21ae17bacfe84704b9f93419e9db070e142e10"
+    },
+    {
+      "original": "santuario/nichos_jugadores.png",
+      "seasonal": "pokepad/themes/halloween/santuario/nichos_jugadores.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "74d1da0b15a1f93346a1437edc9c5e7b0244cb31120482ef48a4cf044ecaba5b"
+    },
+    {
+      "original": "tesoros/gacha_diario.png",
+      "seasonal": "pokepad/themes/halloween/tesoros/gacha_diario.png",
+      "generation": "edit of original",
+      "size": [
+        1024,
+        512
+      ],
+      "sha256": "3c0a031e67913626d0c12890bbd56a048bef604a7fc59a69c103855c9d8ebf16"
+    },
+    {
+      "original": "tesoros/gachapon.png",
+      "seasonal": "pokepad/themes/halloween/tesoros/gachapon.png",
+      "generation": "edit of original",
+      "size": [
+        1024,
+        512
+      ],
+      "sha256": "973f67987f6273ffee5fbbc1fd22c9b93f80ccd7bf5c606d5ba60208a89c83ea"
+    },
+    {
+      "original": "tesoros/legendario.png",
+      "seasonal": "pokepad/themes/halloween/tesoros/legendario.png",
+      "generation": "edit of original",
+      "size": [
+        1024,
+        512
+      ],
+      "sha256": "d679db0c9771e74838a8c815a760394ba7b4902912f55f6cbf53149879982a8b"
+    },
+    {
+      "original": "tesoros/legendario_shiny.png",
+      "seasonal": "pokepad/themes/halloween/tesoros/legendario_shiny.png",
+      "generation": "edit of original",
+      "size": [
+        1024,
+        512
+      ],
+      "sha256": "c069f7db5382a4a6c63175078eed3bae559496ad3215a63277c8e06249a502b3"
+    },
+    {
+      "original": "viajes/centro_curacion.png",
+      "seasonal": "pokepad/themes/halloween/viajes/centro_curacion.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "80fcd0a9b0caf8842e82636865f71e8e9188f30d90549f708e744a77d26e2984"
+    },
+    {
+      "original": "viajes/laboratorio.png",
+      "seasonal": "pokepad/themes/halloween/viajes/laboratorio.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "bf64eddf55d5320433da73c87521fa724ef03d9e95de7c0a5554b8caa55b5851"
+    },
+    {
+      "original": "viajes/montana.png",
+      "seasonal": "pokepad/themes/halloween/viajes/montana.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "64840d2c6ee25275abf2b0d0e7a3315d0b461b37476d3ce1cf50b85cef0e6baf"
+    },
+    {
+      "original": "viajes/palacio.png",
+      "seasonal": "pokepad/themes/halloween/viajes/palacio.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "7f4673325320d9861e9ad283c18270ab461ef14a3c758ab723590d091721dc9b"
+    },
+    {
+      "original": "viajes/santuario.png",
+      "seasonal": "pokepad/themes/halloween/viajes/santuario.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "516fc81ece7eb7c0477648a0428da6f388c0ebbb92cd941b77a42b7bc1f49346"
+    },
+    {
+      "original": "viajes/torre_batalla.png",
+      "seasonal": "pokepad/themes/halloween/viajes/torre_batalla.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "db956c73650b133292fe33b6dde5eab8bc41ea8b1ca68731b6bb53e1f08f3ed0"
+    },
+    {
+      "original": "viajes/torre_comercial.png",
+      "seasonal": "pokepad/themes/halloween/viajes/torre_comercial.png",
+      "generation": "edit of original",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "e7b141178ff86d1e92add21ca5e0b9c99f682174a32c7e568292d32a1c006f0f"
+    }
+  ],
+  "preservedOriginalFiles": 125
+}

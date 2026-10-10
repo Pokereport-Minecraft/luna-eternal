@@ -211,7 +211,7 @@ public class TorreScreen extends Screen {
         int fondoBtn = hoverRec ? 0xFF2D3B55 : 0xFF1E283C;
         int bordeBtn = hoverRec ? ORO : (pendientes > 0 ? 0xFF35A854 : BORDE_BASE);
 
-        ctx.fill(px(btnRecX), py(btnRecY), px(btnRecX + btnRecW), py(btnRecY + btnRecH), fondoBtn);
+        PadTheme.fill(ctx, px(btnRecX), py(btnRecY), px(btnRecX + btnRecW), py(btnRecY + btnRecH), fondoBtn);
         marco(ctx, px(btnRecX), py(btnRecY), pl(btnRecW), pl(btnRecH), bordeBtn, Math.max(1, pl(hoverRec ? 2 : 1)));
 
         texto(ctx, Text.literal("🏆 RECOMPENSAS"), btnRecX + btnRecW / 2, btnRecY + 11, 16,
@@ -245,7 +245,7 @@ public class TorreScreen extends Screen {
             boolean encima = dentro(rx, ry, px(tx), py(ty), pl(CARD_W), pl(CARD_H));
 
             // Fondo de la tarjeta
-            ctx.fill(px(tx), py(ty), px(tx + CARD_W), py(ty + CARD_H),
+            PadTheme.fill(ctx, px(tx), py(ty), px(tx + CARD_W), py(ty + CARD_H),
                     encima ? FONDO_TARJETA_ENCIMA : FONDO_TARJETA);
             marco(ctx, px(tx), py(ty), pl(CARD_W), pl(CARD_H),
                     encima ? BORDE_ENCIMA : BORDE_BASE, Math.max(1, pl(encima ? 3 : 2)));
@@ -270,7 +270,7 @@ public class TorreScreen extends Screen {
 
             // Separador interno
             contentY += 16;
-            ctx.fill(px(tx + 25), py(contentY), px(tx + CARD_W - 25), py(contentY) + Math.max(1, pl(1)),
+            PadTheme.fill(ctx, px(tx + 25), py(contentY), px(tx + CARD_W - 25), py(contentY) + Math.max(1, pl(1)),
                     SEPARADOR);
             contentY += 12;
 
@@ -294,7 +294,7 @@ public class TorreScreen extends Screen {
             String textoBtn = !acceso ? "BLOQUEADO" : "ENTRAR";
             int colorTextoBtn = !acceso ? 0xFFFF8888 : 0xFFFFFFFF;
 
-            ctx.fill(px(tx + btnPadX), py(btnY), px(tx + btnPadX + btnW), py(btnY + btnH),
+            PadTheme.fill(ctx, px(tx + btnPadX), py(btnY), px(tx + btnPadX + btnW), py(btnY + btnH),
                     colorFondoBtn);
             marco(ctx, px(tx + btnPadX), py(btnY), pl(btnW), pl(btnH),
                     colorBordeBtn, Math.max(1, pl(2)));
@@ -397,11 +397,11 @@ public class TorreScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -414,16 +414,10 @@ public class TorreScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, true);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, true);
         m.pop();
     }
 
@@ -432,10 +426,10 @@ public class TorreScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     private static void dibujarTextura(DrawContext ctx, Identifier tex,
@@ -443,7 +437,7 @@ public class TorreScreen extends Screen {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

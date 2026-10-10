@@ -48,27 +48,10 @@ import net.pokereport.luna.pase.Recompensa.Rareza;
  *   81-100  MAESTRIA       mentas, Capsula y Parche de Habilidad, Master Ball
  * </pre>
  *
- * <h2>&#9888;&#9888;&#9888; HAY DOS POKEMON Y SON EXACTAMENTE LOS QUE PIDIO EL
- * USUARIO</h2>
- *
- * Nivel 1 un <b>Charizard shiny mecha de nivel 50</b> y nivel 100 un
- * <b>Charizard shiny de nivel 15</b>. Y no hay mas.
- *
- * <p>&#9888;&#9888; LA PRIMERA VERSION METIA TRES MAS &mdash;Gengar en el 25,
- * Tyranitar en el 50 y Dragonite en el 75&mdash; «para que la mitad del carril
- * tuviera a donde mirar». <b>Nadie los habia pedido.</b> El usuario lo corrigio:
- * <i>«no te dije que me dieras mas pokemons, solo charizard y charizard
- * variocolor»</i>, y tenia razon: ensanchar el encargo por tu cuenta es
- * exactamente igual de malo que recortarlo.
- *
- * <p>Los tres huecos que dejaron son ahora hitos de OBJETO del tramo que les
- * toca: Huevo Suerte (crianza), 15 Caramelos Raros (entrenamiento) y dos Capas
- * Furtivas (combate).
- *
- * <p>&#9888; El autotest comprueba que sean <b>EXACTAMENTE DOS</b> y que esten
- * en el 1 y en el 100. Sin ese numero exacto, meter un cuarto Pokemon dentro de
- * seis meses no daria ningun error &mdash; y volveria a ser una decision que no
- * es mia.
+ * El nivel 1 conserva el Charizard shiny mecha de nivel 50.
+ * Por petición del usuario, el nivel 100 contiene un kit de objetos:
+ * tres Master Balls, tres Parches Habilidad y dieciséis Caramelos Raros.
+ * No se cambia el historial de reclamaciones ni se añaden otros Pokémon.
  */
 public final class PaseCatalogo {
 
@@ -261,19 +244,19 @@ public final class PaseCatalogo {
         /*  97 */ o("pp_max", 2, Rareza.LEGENDARIA),
         /*  98 */ luna(100, Rareza.LEGENDARIA),
         /*  99 */ o("master_ball", 1, Rareza.LEGENDARIA),
-        // The user moved the original unique reward to level 1; keep the other Charizard here.
-        /* 100 */ p("charizard", 15, true),
+        /* 100 */ o("master_ball", 3, Rareza.LEGENDARIA),
     };
 
     /**
-     * Recompensas entregables por cobro. El nivel 100 incluye el Charizard shiny nivel 15 MÁS 1 Master Ball adicional.
+     * Recompensas entregables por cobro. El nivel 100 es un paquete de objetos de maestría.
      * El mecha original ahora se entrega en el nivel 1, conservando nivel y aspecto.
      */
     public static List<Recompensa> entregables(int nivel) {
         if (nivel == 100) {
             return List.of(
                     de(100),
-                    o("master_ball", 1, Rareza.LEGENDARIA)
+                    o("ability_patch", 3, Rareza.LEGENDARIA),
+                    o("rare_candy", 16, Rareza.EPICA)
             );
         }
         var premio = de(nivel);

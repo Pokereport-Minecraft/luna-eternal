@@ -122,7 +122,7 @@ public class CrianzaScreen extends Screen {
         RenderSystem.defaultBlendFunc();
         float guiScale = (float) client.getWindow().getScaleFactor();
         client.getTextureManager().getTexture(CHASIS).setFilter(Math.round(ancho * guiScale) != NAT_ANCHO || Math.round(alto * guiScale) != NAT_ALTO, false);
-        ctx.drawTexture(CHASIS, x0, y0, ancho, alto, 0f, 0f, NAT_ANCHO, NAT_ALTO, NAT_ANCHO, NAT_ALTO);
+        PadTheme.texture(ctx, CHASIS, x0, y0, ancho, alto, 0f, 0f, NAT_ANCHO, NAT_ALTO, NAT_ANCHO, NAT_ALTO);
         RenderSystem.disableBlend();
         ctx.fillGradient(px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H), 0xFF101E31, 0xFF080F1C);
 
@@ -157,7 +157,7 @@ public class CrianzaScreen extends Screen {
     private void dibujarPanelIzquierdo(DrawContext ctx, int mx, int my, Red.EstadoCrianza estado) {
         // Botón Atrás
         boolean encimaAtras = dentro(mx, my, px(PANEL_X + 18), py(PANEL_Y + 12), pl(60), pl(48));
-        ctx.drawTexture(ATRAS, px(PANEL_X + 18), py(PANEL_Y + 12), pl(60), pl(48),
+        PadTheme.texture(ctx, ATRAS, px(PANEL_X + 18), py(PANEL_Y + 12), pl(60), pl(48),
                 0f, 0f, 60, 48, 60, 48);
         if (encimaAtras) {
             marco(ctx, px(PANEL_X + 18), py(PANEL_Y + 12), pl(60), pl(48), BORDE_ENCIMA, 2);
@@ -165,7 +165,7 @@ public class CrianzaScreen extends Screen {
 
         // Botón Cerrar
         boolean encimaCerrar = dentro(mx, my, px(PANEL_X + PANEL_W - 18 - 80), py(PANEL_Y + 12), pl(80), pl(64));
-        ctx.drawTexture(CERRAR, px(PANEL_X + PANEL_W - 18 - 80), py(PANEL_Y + 12), pl(80), pl(64),
+        PadTheme.texture(ctx, CERRAR, px(PANEL_X + PANEL_W - 18 - 80), py(PANEL_Y + 12), pl(80), pl(64),
                 0f, 0f, 80, 64, 80, 64);
         if (encimaCerrar) {
             marco(ctx, px(PANEL_X + PANEL_W - 18 - 80), py(PANEL_Y + 12), pl(80), pl(64), BORDE_ENCIMA, 2);
@@ -176,7 +176,7 @@ public class CrianzaScreen extends Screen {
         int icY = PANEL_Y + 54;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(ICONO_APP, px(icX), py(icY), pl(48), pl(48), 0f, 0f, 100, 100, 100, 100);
+        PadTheme.texture(ctx, ICONO_APP, px(icX), py(icY), pl(48), pl(48), 0f, 0f, 100, 100, 100, 100);
         RenderSystem.disableBlend();
 
         // Título de la App
@@ -192,7 +192,7 @@ public class CrianzaScreen extends Screen {
         }
         int cardY = icY + 90;
         int cardH = 46;
-        ctx.fill(px(PANEL_X + 16), py(cardY), px(PANEL_X + PANEL_W - 16), py(cardY + cardH), 0x90101726);
+        PadTheme.fill(ctx, px(PANEL_X + 16), py(cardY), px(PANEL_X + PANEL_W - 16), py(cardY + cardH), 0x90101726);
         marco(ctx, px(PANEL_X + 16), py(cardY), pl(PANEL_W - 32), pl(cardH), 0xFF354466, 1);
 
         texto(ctx, Text.literal("RANURAS ACTIVAS"), PANEL_X + PANEL_W / 2, cardY + 8, 10, 0xFF8AA0C4, true, false);
@@ -210,7 +210,7 @@ public class CrianzaScreen extends Screen {
             texto(ctx, Text.literal(pasos[i][0]), gx, gy, 12, 0xFFE0EAF7, false, false);
             textoAjustado(ctx, pasos[i][1], gx, gy + 20, 12, PANEL_W - 48, TEXTO_SUAVE, false);
         }
-        ctx.fill(px(gx), py(491), px(PANEL_X + PANEL_W - 24), py(492), 0xFF354466);
+        PadTheme.fill(ctx, px(gx), py(491), px(PANEL_X + PANEL_W - 24), py(492), 0xFF354466);
         texto(ctx, Text.literal("AMPLÍA TU GUARDERÍA"), gx, 512, 13, ORO, false, false);
         String[] progreso = {"01–02   Gratis para todos", "03–05   150 LunaCoins cada una", "06         Rango Maestro", "07         Rango Leyenda"};
         for (int i = 0; i < progreso.length; i++)
@@ -222,7 +222,7 @@ public class CrianzaScreen extends Screen {
         long saldo = estado != null ? estado.saldoLuna() : (EstadoCliente.saldo() != null ? EstadoCliente.saldo().reportcoins() : 0L);
         int saldoY = PANEL_Y + PANEL_H - 64;
         int saldoH = 50;
-        ctx.fill(px(PANEL_X + 16), py(saldoY), px(PANEL_X + PANEL_W - 16), py(saldoY + saldoH), 0x90101726);
+        PadTheme.fill(ctx, px(PANEL_X + 16), py(saldoY), px(PANEL_X + PANEL_W - 16), py(saldoY + saldoH), 0x90101726);
         marco(ctx, px(PANEL_X + 16), py(saldoY), pl(PANEL_W - 32), pl(saldoH), 0xFF354466, 1);
 
         icono(ctx, MONEDA, PANEL_X + 26, saldoY + 9, 32);
@@ -247,7 +247,7 @@ public class CrianzaScreen extends Screen {
             texto(ctx, Text.literal(estado), x + tabW / 2, y + 30, 11, abierta ? color : TEXTO_SUAVE, true, false);
             if (r != null && abierta && r.compatible() && r.inicioMs() > 0) {
                 float f = Math.min(1f, Math.max(0f, (float)(System.currentTimeMillis() - r.inicioMs()) / Math.max(1L, r.duracionMs())));
-                ctx.fill(px(x + 2), py(y + 50), px(x + 2 + Math.round((tabW - 4) * f)), py(y + 53), color);
+                PadTheme.fill(ctx, px(x + 2), py(y + 50), px(x + 2 + Math.round((tabW - 4) * f)), py(y + 53), color);
             }
         }
     }
@@ -290,8 +290,8 @@ public class CrianzaScreen extends Screen {
             String tiempo = restante == 0 ? r.huevoListo() ? "Puedes recoger" : "Confirmando..." : String.format("%02d:%02d", (restante + 999) / 60000, ((restante + 999) / 1000) % 60);
             texto(ctx, Text.literal(tiempo), x + 232, y + 183, 15, CYAN, true, false);
             float f = 1f - Math.min(1f, (float)restante / Math.max(1L, r.duracionMs()));
-            ctx.fill(px(x + 176), py(y + 220), px(x + 289), py(y + 225), 0xFF30455E);
-            ctx.fill(px(x + 176), py(y + 220), px(x + 176 + Math.round(113 * f)), py(y + 225), CYAN);
+            PadTheme.fill(ctx, px(x + 176), py(y + 220), px(x + 289), py(y + 225), 0xFF30455E);
+            PadTheme.fill(ctx, px(x + 176), py(y + 220), px(x + 176 + Math.round(113 * f)), py(y + 225), CYAN);
         } else texto(ctx, Text.literal("Elige tu pareja"), x + 232, y + 187, 11, TEXTO_SUAVE, true, false);
         boolean hover = dentro(mx, my, px(x + 12), py(y + 258), pl(441), pl(46));
         tarjeta(ctx, x + 12, y + 258, 441, 46, r.huevoListo() ? hover ? 0xFF26745E : 0xFF1C5548 : 0xFF1C2D43, r.huevoListo() ? VERDE : 0xFF364B66);
@@ -299,7 +299,7 @@ public class CrianzaScreen extends Screen {
         if (!r.huevoListo() && r.compatible() && r.inicioMs() > 0) {
             float progreso = Math.min(1f, Math.max(0f, (float)(System.currentTimeMillis() - r.inicioMs()) / Math.max(1L, r.duracionMs())));
             accion = "CRIANDO · " + (int)(progreso * 100) + "% · CICLO DE " + r.duracionMs() / 60_000 + " MIN";
-            ctx.fill(px(x + 15), py(y + 297), px(x + 15 + Math.round(435 * progreso)), py(y + 302), CYAN);
+            PadTheme.fill(ctx, px(x + 15), py(y + 297), px(x + 15 + Math.round(435 * progreso)), py(y + 302), CYAN);
         }
         texto(ctx, Text.literal(accion), x + 232, y + 275, 14, r.huevoListo() ? VERDE : TEXTO_SUAVE, true, false);
         texto(ctx, Text.literal(r.compatible() ? "PAREJA COMPATIBLE" : "PREPARA TU PAREJA"), x + 20, y + 324, 12, r.compatible() ? VERDE : ORO, false, false);
@@ -343,7 +343,7 @@ public class CrianzaScreen extends Screen {
         };
         for (int i = 0; i < filas.length; i++) {
             int fy = y + 82 + i * 73;
-            ctx.fill(px(x + 18), py(fy - 10), px(x + w - 18), py(fy - 9), 0xFF31435D);
+            PadTheme.fill(ctx, px(x + 18), py(fy - 10), px(x + w - 18), py(fy - 9), 0xFF31435D);
             texto(ctx, Text.literal(filas[i][0]), x + 18, fy, 12, CYAN, false, false);
             textoAjustado(ctx, filas[i][1], x + 18, fy + 21, 12, w - 36, 0xFFE0EAF7, false);
             textoAjustado(ctx, filas[i][2], x + 18, fy + 39, 11, w - 36, TEXTO_SUAVE, false);
@@ -357,20 +357,20 @@ public class CrianzaScreen extends Screen {
     }
 
     private void tarjeta(DrawContext ctx, int x, int y, int w, int h, int fondo, int borde) {
-        ctx.fill(px(x), py(y), px(x + w), py(y + h), fondo);
+        PadTheme.fill(ctx, px(x), py(y), px(x + w), py(y + h), fondo);
         marco(ctx, px(x), py(y), pl(w), pl(h), borde, 1);
     }
 
     private void icono(DrawContext ctx, Identifier id, int x, int y, int tam) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(id, px(x), py(y), pl(tam), pl(tam), 0f, 0f, 100, 100, 100, 100);
+        PadTheme.texture(ctx, id, px(x), py(y), pl(tam), pl(tam), 0f, 0f, 100, 100, 100, 100);
         RenderSystem.disableBlend();
     }
 
     private void textoAjustado(DrawContext ctx, String valor, int x, int y, int tam, int limite, int color, boolean centrado) {
         Text t = Text.literal(valor == null ? "" : valor);
-        int size = Math.min(tam, Math.max(8, (int)(limite * 9f / Math.max(1, textRenderer.getWidth(t)))));
+        int size = Math.min(tam, Math.max(8, (int)(limite * 9f / Math.max(1, PadTypography.width(textRenderer, t)))));
         texto(ctx, t, x, y, size, color, centrado, false);
     }
 
@@ -605,10 +605,10 @@ public class CrianzaScreen extends Screen {
     }
 
     private void marco(DrawContext ctx, int x, int y, int w, int h, int color, int grosor) {
-        ctx.fill(x, y, x + w, y + grosor, color);
-        ctx.fill(x, y + h - grosor, x + w, y + h, color);
-        ctx.fill(x, y, x + grosor, y + h, color);
-        ctx.fill(x + w - grosor, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + grosor, color);
+        PadTheme.fill(ctx, x, y + h - grosor, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + grosor, y + h, color);
+        PadTheme.fill(ctx, x + w - grosor, y, x + w, y + h, color);
     }
 
     private void texto(DrawContext ctx, Text t, int x, int y, int tam, int color, boolean centrado, boolean sombra) {
@@ -617,8 +617,8 @@ public class CrianzaScreen extends Screen {
         ms.push();
         ms.translate(px(x), py(y), 0);
         ms.scale(factor, factor, 1f);
-        int tx = centrado ? -textRenderer.getWidth(t) / 2 : 0;
-        ctx.drawText(textRenderer, t, tx, 0, color, sombra);
+        int tx = centrado ? -PadTypography.width(textRenderer, t) / 2 : 0;
+        PadTypography.draw(ctx, textRenderer, t, tx, 0, color, sombra);
         ms.pop();
     }
 
@@ -628,8 +628,8 @@ public class CrianzaScreen extends Screen {
         ms.push();
         ms.translate(px(xRight), py(y), 0);
         ms.scale(factor, factor, 1f);
-        int tw = textRenderer.getWidth(t);
-        ctx.drawText(textRenderer, t, -tw, 0, color, sombra);
+        int tw = PadTypography.width(textRenderer, t);
+        PadTypography.draw(ctx, textRenderer, t, -tw, 0, color, sombra);
         ms.pop();
     }
 }

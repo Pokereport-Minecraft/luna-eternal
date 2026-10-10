@@ -35,7 +35,7 @@ public final class Iconos {
         for (int dy = -r; dy <= r; dy++) {
             int dx = (int) Math.sqrt(Math.max(0, r * r - dy * dy));
             if (dx > 0) {
-                ctx.fill(cx - dx, cy + dy, cx + dx, cy + dy + 1, color);
+                PadTheme.fill(ctx, cx - dx, cy + dy, cx + dx, cy + dy + 1, color);
             }
         }
     }
@@ -60,10 +60,10 @@ public final class Iconos {
                 continue;
             }
             if (dentro <= 0) {
-                ctx.fill(cx - fuera, cy + dy, cx + fuera, cy + dy + 1, color);
+                PadTheme.fill(ctx, cx - fuera, cy + dy, cx + fuera, cy + dy + 1, color);
             } else {
-                ctx.fill(cx - fuera, cy + dy, cx - dentro, cy + dy + 1, color);
-                ctx.fill(cx + dentro, cy + dy, cx + fuera, cy + dy + 1, color);
+                PadTheme.fill(ctx, cx - fuera, cy + dy, cx - dentro, cy + dy + 1, color);
+                PadTheme.fill(ctx, cx + dentro, cy + dy, cx + fuera, cy + dy + 1, color);
             }
         }
     }
@@ -74,13 +74,13 @@ public final class Iconos {
         int dx = x2 - x1, dy = y2 - y1;
         int pasos = Math.max(Math.abs(dx), Math.abs(dy));
         if (pasos == 0) {
-            ctx.fill(x1, y1, x1 + grosor, y1 + grosor, color);
+            PadTheme.fill(ctx, x1, y1, x1 + grosor, y1 + grosor, color);
             return;
         }
         for (int i = 0; i <= pasos; i++) {
             int x = x1 + dx * i / pasos;
             int y = y1 + dy * i / pasos;
-            ctx.fill(x, y, x + grosor, y + grosor, color);
+            PadTheme.fill(ctx, x, y, x + grosor, y + grosor, color);
         }
     }
 
@@ -90,7 +90,7 @@ public final class Iconos {
         for (int i = 0; i < alto; i++) {
             int semi = ancho / 2 - (ancho / 2) * i / Math.max(1, alto);
             if (semi > 0) {
-                ctx.fill(cx - semi, cy + i, cx + semi, cy + i + 1, color);
+                PadTheme.fill(ctx, cx - semi, cy + i, cx + semi, cy + i + 1, color);
             }
         }
     }
@@ -131,18 +131,18 @@ public final class Iconos {
         // El cono, por franjas: ancho arriba y estrecho abajo.
         for (int i = 0; i < alto; i++) {
             int w = mitad - i * mitad / Math.max(1, alto) * 3 / 4;
-            ctx.fill(cx - w, cy - mitad + i, cx + w, cy - mitad + i + 1, color);
+            PadTheme.fill(ctx, cx - w, cy - mitad + i, cx + w, cy - mitad + i + 1, color);
         }
         // El tallo.
-        ctx.fill(cx - g / 2, cy - mitad + alto, cx + (g + 1) / 2, cy + mitad, color);
+        PadTheme.fill(ctx, cx - g / 2, cy - mitad + alto, cx + (g + 1) / 2, cy + mitad, color);
     }
 
     /** MÁS: publicar algo nuevo. */
     public static void mas(DrawContext ctx, int cx, int cy, int lado, int color) {
         int b = lado / 2;
         int g = trazo(lado) + 1;
-        ctx.fill(cx - b, cy - g / 2, cx + b, cy + (g + 1) / 2, color);
-        ctx.fill(cx - g / 2, cy - b, cx + (g + 1) / 2, cy + b, color);
+        PadTheme.fill(ctx, cx - b, cy - g / 2, cx + b, cy + (g + 1) / 2, color);
+        PadTheme.fill(ctx, cx - g / 2, cy - b, cx + (g + 1) / 2, cy + b, color);
     }
 
     /**
@@ -157,8 +157,8 @@ public final class Iconos {
         int paso = lado / 3;
         for (int i = -1; i <= 1; i++) {
             int y = cy + i * paso - g / 2;
-            ctx.fill(cx - b, y, cx - b + g, y + g, color);
-            ctx.fill(cx - b + g + Math.max(2, g / 2), y, cx + b, y + g, color);
+            PadTheme.fill(ctx, cx - b, y, cx - b + g, y + g, color);
+            PadTheme.fill(ctx, cx - b + g + Math.max(2, g / 2), y, cx + b, y + g, color);
         }
     }
 
@@ -181,13 +181,13 @@ public final class Iconos {
                 if (dx > 0 && dy < 0 && dy > -r + g) {
                     continue;   // el hueco
                 }
-                ctx.fill(cx + dx, cy + dy, cx + dx + 1, cy + dy + 1, color);
+                PadTheme.fill(ctx, cx + dx, cy + dy, cx + dx + 1, cy + dy + 1, color);
             }
         }
         // La punta, un triángulo macizo en el hueco.
         int p = g + lado / 8;
         for (int i = 0; i < p; i++) {
-            ctx.fill(cx + r - p + i, cy - r + g / 2 - (p - i),
+            PadTheme.fill(ctx, cx + r - p + i, cy - r + g / 2 - (p - i),
                      cx + r - p + i + 1, cy - r + g / 2 + (p - i), color);
         }
     }
@@ -203,14 +203,14 @@ public final class Iconos {
         // Cuerpo: un cuadrado girado 45º, dibujado por franjas.
         for (int dy = -b; dy <= b; dy++) {
             int w = b - Math.abs(dy);
-            ctx.fill(cx - w, cy + dy, cx + w + 1, cy + dy + 1, color);
+            PadTheme.fill(ctx, cx - w, cy + dy, cx + w + 1, cy + dy + 1, color);
         }
         // El agujero, arriba a la izquierda del eje.
         int r = Math.max(2, lado / 8);
         disco(ctx, cx - b / 3, cy - b / 3, r, 0x00000000);
         for (int dy = -r; dy <= r; dy++) {
             int w = (int) Math.sqrt(Math.max(0, r * r - dy * dy));
-            ctx.fill(cx - b / 3 - w, cy - b / 3 + dy,
+            PadTheme.fill(ctx, cx - b / 3 - w, cy - b / 3 + dy,
                      cx - b / 3 + w + 1, cy - b / 3 + dy + 1, 0x00000000);
         }
     }
@@ -222,9 +222,9 @@ public final class Iconos {
         disco(ctx, cx, cy, r, 0xFFF2F2F2);
         for (int dy = -r; dy < 0; dy++) {
             int w = (int) Math.sqrt(Math.max(0, r * r - dy * dy));
-            ctx.fill(cx - w, cy + dy, cx + w, cy + dy + 1, 0xFFD3403A);
+            PadTheme.fill(ctx, cx - w, cy + dy, cx + w, cy + dy + 1, 0xFFD3403A);
         }
-        ctx.fill(cx - r, cy - g / 2, cx + r, cy + (g + 1) / 2, 0xFF16181D);
+        PadTheme.fill(ctx, cx - r, cy - g / 2, cx + r, cy + (g + 1) / 2, 0xFF16181D);
         disco(ctx, cx, cy, g + 2, 0xFF16181D);
         disco(ctx, cx, cy, g, 0xFFF2F2F2);
     }
@@ -233,12 +233,12 @@ public final class Iconos {
     public static void caja(DrawContext ctx, int cx, int cy, int lado, int color) {
         int b = lado / 2;
         int g = trazo(lado);
-        ctx.fill(cx - b, cy - b, cx + b, cy - b + g, color);
-        ctx.fill(cx - b, cy + b - g, cx + b, cy + b, color);
-        ctx.fill(cx - b, cy - b, cx - b + g, cy + b, color);
-        ctx.fill(cx + b - g, cy - b, cx + b, cy + b, color);
+        PadTheme.fill(ctx, cx - b, cy - b, cx + b, cy - b + g, color);
+        PadTheme.fill(ctx, cx - b, cy + b - g, cx + b, cy + b, color);
+        PadTheme.fill(ctx, cx - b, cy - b, cx - b + g, cy + b, color);
+        PadTheme.fill(ctx, cx + b - g, cy - b, cx + b, cy + b, color);
         // La cinta, que es lo que la distingue de un cuadrado.
-        ctx.fill(cx - g / 2, cy - b, cx + (g + 1) / 2, cy + b, color);
+        PadTheme.fill(ctx, cx - g / 2, cy - b, cx + (g + 1) / 2, cy + b, color);
     }
 
     /**
@@ -278,7 +278,7 @@ public final class Iconos {
                 int a = (int) Math.round(cortes.get(i));
                 int b = (int) Math.round(cortes.get(i + 1));
                 if (b > a) {
-                    ctx.fill(a, y, b, y + 1, color);
+                    PadTheme.fill(ctx, a, y, b, y + 1, color);
                 }
             }
         }

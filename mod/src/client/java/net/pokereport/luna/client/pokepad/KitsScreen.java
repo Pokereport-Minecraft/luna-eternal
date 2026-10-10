@@ -316,7 +316,7 @@ public class KitsScreen extends Screen {
             int x = PANEL_X + 28, y = pestanaY(i);
             boolean sel = i == pestana;
             boolean enc = dentro(rx, ry, px(x), py(y), pl(w), pl(h));
-            ctx.fill(px(x), py(y), px(x + w), py(y + h),
+            PadTheme.fill(ctx, px(x), py(y), px(x + w), py(y + h),
                     sel ? PESTANAS[i].color() : (enc ? 0xFF2A3145 : 0xFF1E2434));
             marco(ctx, px(x), py(y), pl(w), pl(h),
                     sel ? BORDE_ENCIMA : 0xFF39415C, Math.max(2, pl(sel ? 3 : 2)));
@@ -335,7 +335,7 @@ public class KitsScreen extends Screen {
 
     private void dibujarSaldo(DrawContext ctx, int rx, int ry) {
         int y = PANEL_Y + PANEL_H - 92, x = PANEL_X + 28, w = PANEL_W - 56, h = 64;
-        ctx.fill(px(x), py(y), px(x + w), py(y + h), 0xFF161B28);
+        PadTheme.fill(ctx, px(x), py(y), px(x + w), py(y + h), 0xFF161B28);
         marco(ctx, px(x), py(y), pl(w), pl(h), 0xFF39415C, Math.max(2, pl(2)));
         dibujarTextura(ctx, MONEDA, px(x + 10), py(y + 14), pl(36), pl(36), 100, 100);
         var s = EstadoCliente.saldo();
@@ -376,7 +376,7 @@ public class KitsScreen extends Screen {
                 PANT_X + MARGEN, PANT_Y + MARGEN + 6, 22, 0xFF16203A, false, 0);
 
         // el hueco del previsualizador, que se rellena en la segunda pasada
-        ctx.fill(px(visorX()), py(PANT_Y + MARGEN + 40),
+        PadTheme.fill(ctx, px(visorX()), py(PANT_Y + MARGEN + 40),
                 px(visorX() + visorW()), py(PANT_Y + PANT_H - MARGEN - 66), 0xFF141A28);
         marco(ctx, px(visorX()), py(PANT_Y + MARGEN + 40), pl(visorW()),
                 pl(PANT_H - 2 * MARGEN - 40 - 66), 0xFF39415C, Math.max(2, pl(2)));
@@ -389,12 +389,12 @@ public class KitsScreen extends Screen {
             boolean enc = dentro(rx, ry, px(listaX()), py(y), pl(w), pl(h));
             boolean llevo = loLleva(t);
 
-            ctx.fill(px(listaX()), py(y), px(listaX() + w), py(y + h),
+            PadTheme.fill(ctx, px(listaX()), py(y), px(listaX() + w), py(y + h),
                     sel ? 0xFF2B3550 : (enc ? 0xFF232B40 : 0xFF1A2030));
             marco(ctx, px(listaX()), py(y), pl(w), pl(h),
                     sel ? BORDE_ENCIMA : 0xFF39415C, Math.max(2, pl(sel ? 3 : 2)));
             // la pastilla de color del rango: dice de quién es sin leer
-            ctx.fill(px(listaX() + 6), py(y + 6), px(listaX() + 14), py(y + h - 6),
+            PadTheme.fill(ctx, px(listaX() + 6), py(y + 6), px(listaX() + 14), py(y + h - 6),
                     t.puede() ? COLOR_RANGO[Math.min(i, COLOR_RANGO.length - 1)]
                               : 0xFF3C4356);
 
@@ -549,7 +549,7 @@ public class KitsScreen extends Screen {
             int by = PANT_Y + 14;
             int bw = PANT_W - 2 * MARGEN;
             int bh = 30;
-            ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh), 0xFF10192A);
+            PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh), 0xFF10192A);
             marco(ctx, px(bx), py(by), pl(bw), pl(bh), 0xFF2E6E8C, pl(1));
             texto(ctx, Text.literal(tiempo), bx + bw / 2, by + 7, 13, ORO, true, CONTORNO_OSCURO);
         } else if (pestana == 2) {
@@ -557,7 +557,7 @@ public class KitsScreen extends Screen {
             int by = PANT_Y + 14;
             int bw = PANT_W - 2 * MARGEN;
             int bh = 30;
-            ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh), 0xFF18152B);
+            PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh), 0xFF18152B);
             marco(ctx, px(bx), py(by), pl(bw), pl(bh), 0xFF6B3FA0, pl(1));
             texto(ctx, Text.literal("✦ COLECCIÓN DE KITS ADQUIRIDOS ✦"), bx + bw / 2, by + 7, 13, 0xFFD8B4F8, true, CONTORNO_OSCURO);
         }
@@ -569,11 +569,11 @@ public class KitsScreen extends Screen {
             var f = lista.get(indice);
             int x = PANT_X + MARGEN + i * (w + 12), y = PANT_Y + 54;
             boolean sel = indice == kitElegido;
-            ctx.fill(px(x), py(y), px(x + w), py(y + cardH), sel ? 0xFF2B5580 : 0xFF287BB0);
+            PadTheme.fill(ctx, px(x), py(y), px(x + w), py(y + cardH), sel ? 0xFF2B5580 : 0xFF287BB0);
             marco(ctx, px(x), py(y), pl(w), pl(cardH), sel ? ORO : 0xFF65BCE8, pl(sel ? 4 : 2));
             texto(ctx, Text.literal(nombreKit(f.id())), x + w / 2, y + 24, 18, 0xFFFFFFFF, true, CONTORNO_OSCURO);
             // El hueco central se pinta en la segunda pasada con la pieza real
-            ctx.fill(px(x + 8), py(y + 40), px(x + w - 8), py(y + 306), 0xFF182033);
+            PadTheme.fill(ctx, px(x + 8), py(y + 40), px(x + w - 8), py(y + 306), 0xFF182033);
             marco(ctx, px(x + 8), py(y + 40), pl(w - 16), pl(266), 0xFF4C82A8, pl(2));
             if (pestana == 2) {
                 boolean reclamado = "reclamado".equals(f.espera()) || !f.disponible();
@@ -846,7 +846,7 @@ public class KitsScreen extends Screen {
         int navY = PANT_Y + 12;
         int btnAtrasW = 100, btnAtrasH = 28;
         boolean encAtras = dentro(rx, ry, px(PANT_X + MARGEN), py(navY), pl(btnAtrasW), pl(btnAtrasH));
-        ctx.fill(px(PANT_X + MARGEN), py(navY), px(PANT_X + MARGEN + btnAtrasW), py(navY + btnAtrasH),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(navY), px(PANT_X + MARGEN + btnAtrasW), py(navY + btnAtrasH),
                 encAtras ? 0xFF2B5580 : 0xFF1A2234);
         marco(ctx, px(PANT_X + MARGEN), py(navY), pl(btnAtrasW), pl(btnAtrasH),
                 encAtras ? ORO : 0xFF3D4E70, pl(encAtras ? 2 : 1));
@@ -869,13 +869,13 @@ public class KitsScreen extends Screen {
         int vy = PANT_Y + 48;
         int vw = 240;
         int vh = PANT_H - MARGEN - 48 - 56;
-        ctx.fill(px(vx), py(vy), px(vx + vw), py(vy + vh), 0xFF121724);
+        PadTheme.fill(ctx, px(vx), py(vy), px(vx + vw), py(vy + vh), 0xFF121724);
         marco(ctx, px(vx), py(vy), pl(vw), pl(vh), 0xFF39415C, pl(2));
 
         // Botón 360 al pie del visor
         int b360X = vx + 14, b360Y = vy + vh - 34, b360W = vw - 28, b360H = 26;
         boolean enc360 = dentro(rx, ry, px(b360X), py(b360Y), pl(b360W), pl(b360H));
-        ctx.fill(px(b360X), py(b360Y), px(b360X + b360W), py(b360Y + b360H),
+        PadTheme.fill(ctx, px(b360X), py(b360Y), px(b360X + b360W), py(b360Y + b360H),
                 rotando360 ? 0xFF287BB0 : (enc360 ? 0xFF2A344A : 0xFF1B2232));
         marco(ctx, px(b360X), py(b360Y), pl(b360W), pl(b360H),
                 rotando360 ? ORO : (enc360 ? BORDE_ENCIMA : 0xFF3D4A6B), pl(rotando360 ? 2 : 1));
@@ -888,7 +888,7 @@ public class KitsScreen extends Screen {
         int cy = vy;
         int cw = PANT_W - 2 * MARGEN - vw - 14;
         int ch = vh;
-        ctx.fill(px(cx), py(cy), px(cx + cw), py(cy + ch), 0xFF121724);
+        PadTheme.fill(ctx, px(cx), py(cy), px(cx + cw), py(cy + ch), 0xFF121724);
         marco(ctx, px(cx), py(cy), pl(cw), pl(ch), 0xFF39415C, pl(2));
 
         // Cabecera interna del panel derecho
@@ -930,7 +930,7 @@ public class KitsScreen extends Screen {
         }
 
         // Línea divisoria
-        ctx.fill(px(cx + 12), py(cy + 30), px(cx + cw - 12), py(cy + 31), 0xFF2A344A);
+        PadTheme.fill(ctx, px(cx + 12), py(cy + 30), px(cx + cw - 12), py(cy + 31), 0xFF2A344A);
 
         // Cuadrícula espaciosa de items grandes con desplazamiento vertical (scroll)
         var items = itemsDelKit(f.id());
@@ -979,7 +979,7 @@ public class KitsScreen extends Screen {
                     && dentro(rx, ry, scissorX1, scissorY1, scissorX2 - scissorX1, scissorY2 - scissorY1);
             ItemStack stack = items.get(i);
 
-            ctx.fill(boxX, boxY, boxX + boxW, boxY + boxH, enc ? 0xFF283650 : 0xFF192030);
+            PadTheme.fill(ctx, boxX, boxY, boxX + boxW, boxY + boxH, enc ? 0xFF283650 : 0xFF192030);
             marco(ctx, boxX, boxY, boxW, boxH, enc ? ORO : 0xFF364463, pl(enc ? 2 : 1));
 
             float targetSize = Math.max(26f, Math.min(boxW - pl(12), boxH - pl(12)));
@@ -996,18 +996,18 @@ public class KitsScreen extends Screen {
 
             if (stack.getCount() > 1) {
                 String countStr = String.valueOf(stack.getCount());
-                int strW = textRenderer.getWidth(countStr);
+                int strW = PadTypography.width(textRenderer, countStr);
                 matrices.push();
                 matrices.translate(0, 0, 200);
-                ctx.drawText(textRenderer, countStr, boxX + boxW - strW - pl(5), boxY + boxH - textRenderer.fontHeight - pl(3), 0xFFFFFFFF, true);
+                PadTypography.draw(ctx, textRenderer, countStr, boxX + boxW - strW - pl(5), boxY + boxH - textRenderer.fontHeight - pl(3), 0xFFFFFFFF, true);
                 matrices.pop();
             } else if (stack.isDamaged()) {
                 int barW = boxW - pl(12);
                 int barX = boxX + pl(6);
                 int barY = boxY + boxH - pl(6);
                 float ratio = (float) (stack.getMaxDamage() - stack.getDamage()) / (float) stack.getMaxDamage();
-                ctx.fill(barX, barY, barX + barW, barY + pl(2), 0xFF000000);
-                ctx.fill(barX, barY, barX + Math.round(barW * ratio), barY + pl(1), 0xFF00FF00);
+                PadTheme.fill(ctx, barX, barY, barX + barW, barY + pl(2), 0xFF000000);
+                PadTheme.fill(ctx, barX, barY, barX + Math.round(barW * ratio), barY + pl(1), 0xFF00FF00);
             }
 
             if (enc) {
@@ -1025,7 +1025,7 @@ public class KitsScreen extends Screen {
             int sbH = pl(ch - 42);
 
             // Pista
-            ctx.fill(sbX, sbY, sbX + sbW, sbY + sbH, 0xFF141926);
+            PadTheme.fill(ctx, sbX, sbY, sbX + sbW, sbY + sbH, 0xFF141926);
             marco(ctx, sbX, sbY, sbW, sbH, 0xFF28344A, 1);
 
             // Control deslizante
@@ -1033,7 +1033,7 @@ public class KitsScreen extends Screen {
             int thumbY = sbY + Math.round((sbH - thumbH) * (scrollDetalle / maxScrollDetalle));
             boolean encThumb = dentro(rx, ry, sbX - 2, thumbY, sbW + 4, thumbH);
             int colThumb = arrastrandoScroll ? ORO : (encThumb ? 0xFF65BCE8 : 0xFF3D5A80);
-            ctx.fill(sbX, thumbY, sbX + sbW, thumbY + thumbH, colThumb);
+            PadTheme.fill(ctx, sbX, thumbY, sbX + sbW, thumbY + thumbH, colThumb);
             marco(ctx, sbX, thumbY, sbW, thumbH, arrastrandoScroll || encThumb ? ORO : 0xFF5278A6, 1);
         }
 
@@ -1584,7 +1584,7 @@ public class KitsScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (enc ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 11, 22,
@@ -1617,7 +1617,7 @@ public class KitsScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
@@ -1631,16 +1631,14 @@ public class KitsScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1649,10 +1647,10 @@ public class KitsScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -1660,7 +1658,7 @@ public class KitsScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 

@@ -432,7 +432,7 @@ public class CosmeticosScreen extends Screen {
             boolean activa = i == pestana;
             boolean encima = dentro(rx, ry, x, y, w, h);
 
-            ctx.fill(x, y, x + w, y + h, activa || encima ? CELDA_ENCIMA : CELDA_FONDO);
+            PadTheme.fill(ctx, x, y, x + w, y + h, activa || encima ? CELDA_ENCIMA : CELDA_FONDO);
             marco(ctx, x, y, w, h, activa || encima ? BORDE_ENCIMA : CELDA_BORDE,
                     Math.max(1, pl(activa ? 4 : 2)));
             texto(ctx, Text.translatable("pokepad.lunaeternal.cat." + categorias.get(i)),
@@ -518,7 +518,7 @@ public class CosmeticosScreen extends Screen {
         boolean elegido = enfocado != null && enfocado.id().equals(c.id());
         boolean marcado = encima || elegido || c.equipado();
 
-        ctx.fill(x, y, x + w, y + h, encima ? CELDA_ENCIMA : CELDA_FONDO);
+        PadTheme.fill(ctx, x, y, x + w, y + h, encima ? CELDA_ENCIMA : CELDA_FONDO);
         marco(ctx, x, y, w, h, marcado ? BORDE_ENCIMA : CELDA_BORDE,
                 Math.max(1, pl(marcado ? 4 : 2)));
 
@@ -594,7 +594,7 @@ public class CosmeticosScreen extends Screen {
             case SIN_POKEMON -> 0xFF8A8FA3;
         };
         int tinta = 0xFFFFFFFF;
-        ctx.fill(px(bx), py(ay + 4), px(bx + bw), py(ay + ah - 4), relleno);
+        PadTheme.fill(ctx, px(bx), py(ay + 4), px(bx + bw), py(ay + ah - 4), relleno);
         texto(ctx, etiqueta, bx + bw / 2, ay + ah / 2 - altoBoton / 2, altoBoton,
                 tinta, true, false);
     }
@@ -875,17 +875,10 @@ public class CosmeticosScreen extends Screen {
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
 
-        int ancho = textRenderer.getWidth(linea);
+        int ancho = PadTypography.width(textRenderer, linea);
         int px = Math.round(cx * k / escala) - (centrado ? ancho / 2 : 0);
         int py = Math.round(arriba * k / escala);
-
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, px - 1, py, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px + 1, py, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px, py - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, px, py + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, px, py, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, px, py, color, false);
         m.pop();
     }
 
@@ -918,18 +911,18 @@ public class CosmeticosScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int ancho = textRenderer.getWidth(linea);
+        int ancho = PadTypography.width(textRenderer, linea);
         int px = Math.round(cx * k / escala) - ancho / 2;
         int py = Math.round(centroY * k / escala) - textRenderer.fontHeight / 2;
         // Sombra en vez de contorno: la dibuja el propio drawText a UN pixel de
         // pantalla, asi que no se emborrona, y sobre naranja basta para separar.
-        ctx.drawText(textRenderer, linea, px, py, color, true);
+        PadTypography.draw(ctx, textRenderer, linea, px, py, color, true);
         m.pop();
     }
 
     /** Ancho de un texto EN PIXELES DEL ARTE, para poder comprobar que cabe. */
     private int anchoArte(Text linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private static final int TEXTO_CONTORNO = 0xFFF2F6FF;
@@ -940,10 +933,10 @@ public class CosmeticosScreen extends Screen {
 
     /** Marco de N px por dentro de la caja. */
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /**
@@ -959,7 +952,7 @@ public class CosmeticosScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(textura, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, textura, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

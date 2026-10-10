@@ -17,6 +17,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.pokereport.luna.world.LunaDimensions;
+import net.pokereport.luna.world.WorldProtectionManager;
 
 /**
  * Servicio de detección y reinicio por caída en el parkour de Sabrina (Gimnasio Psíquico).
@@ -32,7 +33,7 @@ import net.pokereport.luna.world.LunaDimensions;
  * <ul>
  *   <li>Sin reserva, infiere la ranura física; esto no reserva ni concede progreso.</li>
  *   <li>NO interfiere si el jugador ya está en combate con Sabrina ({@code RCTMod.isInBattle}).</li>
- *   <li>Teletransporta de vuelta al inicio de la sala ({@code Gimnasio.entrada}), anula la distancia de caída y velocidad.</li>
+ *   <li>Teletransporta a la plataforma medida (5189.95, 95, 90.78 + r*128), anula caída y velocidad.</li>
  *   <li>Incluye debounce de 1500 ms para evitar bucles o falsos disparos sucesivos.</li>
  * </ul>
  */
@@ -65,6 +66,11 @@ public final class SabrinaParkourService {
                 && z >= REL_MIN_Z + offset && z <= REL_MAX_Z + offset;
     }
 
+    /** Only active editing exempts builders; /luna probar always exercises the parkour. */
+    public static boolean debeDetectar(boolean espectador, boolean editando, boolean prueba, boolean vivo) {
+        return vivo && !espectador && (!editando || prueba);
+    }
+
     public static void tick(MinecraftServer server) {
         if (server.getTicks() % 2 != 0) {
             return;
@@ -83,7 +89,8 @@ public final class SabrinaParkourService {
         long ahora = System.currentTimeMillis();
 
         for (ServerPlayerEntity jugador : mundo.getPlayers()) {
-            if (jugador.isSpectator() || jugador.isCreative() || !jugador.isAlive()) {
+            if (!debeDetectar(jugador.isSpectator(), WorldProtectionManager.editing(jugador),
+                    Combate.esPrueba(jugador.getUuid()), jugador.isAlive())) {
                 continue;
             }
 

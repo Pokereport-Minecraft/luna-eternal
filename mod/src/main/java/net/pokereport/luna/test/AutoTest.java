@@ -2332,6 +2332,8 @@ public final class AutoTest {
      * si fuera una copia.
      */
     private void testGimnasios() {
+        check("Sabrina modo prueba detecta caída incluso con editmode activo",
+                net.pokereport.luna.gym.SabrinaParkourService.debeDetectar(false, true, true, true));
         for (int slot = 0; slot < 8; slot++) {
             double z = 90.78 + slot * 128;
             check("Sabrina ranura física " + slot,
@@ -5326,8 +5328,8 @@ public final class AutoTest {
         //    dejado pasar ese mismo error dentro de seis meses sin decir nada:
         //    lo que hay que fijar es EL NUMERO EXACTO, porque cuantos Pokemon
         //    da el pase no es una decision mia.
-        check("EL PASE DA EXACTAMENTE DOS POKEMON",
-              pokemon == 2
+        check("EL PASE DA UN SOLO POKEMON: EL MECHA DEL NIVEL 1",
+              pokemon == 1
                   && pokemon == net.pokereport.luna.pase.PaseCatalogo.cuantosPokemon());
 
         // ⚠⚠ EL NIVEL 1 Y EL 100 LOS FIJO EL USUARIO, y son lo unico de esta
@@ -5341,11 +5343,10 @@ public final class AutoTest {
                   && primero.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
                   && "charizard".equals(primero.id()) && primero.nivel() == 50
                   && primero.shiny());
-        check("EL NIVEL 100 DA UN CHARIZARD SHINY DE NIVEL 15",
+        check("EL NIVEL 100 DA TRES MASTER BALLS SIN POKEMON",
               ultimo != null
-                  && ultimo.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.POKEMON
-                  && "charizard".equals(ultimo.id()) && ultimo.nivel() == 15
-                  && ultimo.shiny());
+                  && ultimo.tipo() == net.pokereport.luna.pase.Recompensa.Tipo.OBJETO
+                  && "cobblemon:master_ball".equals(ultimo.id()) && ultimo.cantidad() == 3);
         check("el nivel 100 entrega Master Ball adicional",
               net.pokereport.luna.pase.PaseCatalogo.entregables(100).stream()
                   .anyMatch(r -> "cobblemon:master_ball".equals(r.id())));

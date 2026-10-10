@@ -151,7 +151,7 @@ public class MemorialScreen extends Screen {
         // ---- izquierda: la foto, grande, sin deformar, con marco doble
         int fw = 340, fh = 310;
         int fx = ax + 10, fy = PANT_Y + MARGEN + 10;
-        ctx.fill(px(fx), py(fy), px(fx + fw), py(fy + fh), FILA_FONDO);
+        PadTheme.fill(ctx, px(fx), py(fy), px(fx + fw), py(fy + fh), FILA_FONDO);
         marco(ctx, px(fx) - pl(3), py(fy) - pl(3), pl(fw) + pl(6), pl(fh) + pl(6),
                 0xFF20283C, pl(3));
         marco(ctx, px(fx), py(fy), pl(fw), pl(fh), FILA_BORDE, Math.max(1, pl(2)));
@@ -171,7 +171,7 @@ public class MemorialScreen extends Screen {
                 int dh = Math.round(foto.alto() * kFoto);
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
-                ctx.drawTexture(foto.textura(), px(fx + (fw - dw) / 2), py(fy + (fh - dh) / 2),
+                PadTheme.texture(ctx, foto.textura(), px(fx + (fw - dw) / 2), py(fy + (fh - dh) / 2),
                         pl(dw), pl(dh), 0f, 0f, foto.ancho(), foto.alto(),
                         foto.ancho(), foto.alto());
                 RenderSystem.disableBlend();
@@ -364,7 +364,7 @@ public class MemorialScreen extends Screen {
 
     /** La linea fina que separa la foto del contador de honores. */
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
                 py(artY) + Math.max(1, pl(2)), 0xFF9AA6C4);
     }
 
@@ -393,13 +393,13 @@ public class MemorialScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw, int ah,
                        Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? 0xFF6E7899 : (encima ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF20283C, Math.max(1, pl(2)));
         int t = 19;
@@ -427,16 +427,10 @@ public class MemorialScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -445,10 +439,10 @@ public class MemorialScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -456,7 +450,7 @@ public class MemorialScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

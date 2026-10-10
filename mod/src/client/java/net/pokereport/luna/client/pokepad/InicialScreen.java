@@ -271,7 +271,7 @@ public class InicialScreen extends Screen {
     // ---- el panel de la izquierda ------------------------------------------
 
     private void dibujarPanel(DrawContext ctx, int rx, int ry) {
-        ctx.fill(px(PANEL_X), py(PANEL_Y),
+        PadTheme.fill(ctx, px(PANEL_X), py(PANEL_Y),
                 px(PANEL_X + PANEL_W), py(PANEL_Y + PANEL_H), FONDO);
         marco(ctx, px(PANEL_X), py(PANEL_Y), pl(PANEL_W), pl(PANEL_H),
                 BORDE, Math.max(1, pl(2)));
@@ -296,7 +296,7 @@ public class InicialScreen extends Screen {
         // El hueco del modelo grande: entre el titulo y la ficha. Se reserva
         // aqui y se pinta en la segunda pasada.
         int hueco = PANEL_Y + 112;
-        ctx.fill(px(PANEL_X + 18), py(hueco),
+        PadTheme.fill(ctx, px(PANEL_X + 18), py(hueco),
                 px(PANEL_X + PANEL_W - 18), py(hueco + 250), 0xFF0A1020);
         int tipo = colorTipo(elegida.tipo());
         Efectos.marcoVivo(ctx, px(PANEL_X + 18), py(hueco),
@@ -327,7 +327,7 @@ public class InicialScreen extends Screen {
             Efectos.halo(ctx, px(bx), py(by), pl(bw), pl(bh),
                     Math.max(2, pl(6)), ORO, 0.25f + 0.25f * Efectos.pulso(2000));
         }
-        ctx.fill(px(bx), py(by), px(bx + bw), py(by + bh),
+        PadTheme.fill(ctx, px(bx), py(by), px(bx + bw), py(by + bh),
                 enviado ? 0xFF3A4358 : (encima ? 0xFFFFE08A : 0xFFE8A317));
         marco(ctx, px(bx), py(by), pl(bw), pl(bh), 0xFF8A5C00, Math.max(1, pl(2)));
         texto(ctx, Text.translatable(enviado
@@ -360,7 +360,7 @@ public class InicialScreen extends Screen {
                 Efectos.halo(ctx, px(ax), py(ay), pl(c[2]), pl(c[3]),
                         Math.max(2, pl(7)), tipo, 0.55f);
             }
-            ctx.fill(px(ax), py(ay), px(ax + c[2]), py(ay + c[3]),
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + c[2]), py(ay + c[3]),
                     encima || puesta ? CARTA_ENCIMA : CARTA);
 
             if (puesta) {
@@ -373,7 +373,7 @@ public class InicialScreen extends Screen {
 
             // La cinta del tipo, arriba: es lo que hace que la columna se lea
             // como una columna sin tener que leer los nombres.
-            ctx.fill(px(ax), py(ay), px(ax + c[2]), py(ay) + pl(5), tipo);
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + c[2]), py(ay) + pl(5), tipo);
 
             texto(ctx, Text.literal(op.nombre()), ax + c[2] / 2, ay + c[3] - 50, 22,
                     puesta ? ORO : TEXTO, true);
@@ -462,7 +462,7 @@ public class InicialScreen extends Screen {
      * la confirmacion no tiene que repetir el nombre en grande.
      */
     private void dibujarTapa(DrawContext ctx, int rx, int ry) {
-        ctx.fill(px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
+        PadTheme.fill(ctx, px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
                 FONDO);
         int tipo = elegida == null ? ORO : colorTipo(elegida.tipo());
         Efectos.marcoVivo(ctx, px(PANT_X), py(PANT_Y), pl(PANT_W), pl(PANT_H),
@@ -491,7 +491,7 @@ public class InicialScreen extends Screen {
         int ax2 = ax1 + bw + SEP_BOTON;
 
         boolean e1 = dentro(rx, ry, px(ax1), py(by), pl(bw), pl(bh));
-        ctx.fill(px(ax1), py(by), px(ax1 + bw), py(by + bh),
+        PadTheme.fill(ctx, px(ax1), py(by), px(ax1 + bw), py(by + bh),
                 e1 ? 0xFF2A3550 : 0xFF1B2438);
         marco(ctx, px(ax1), py(by), pl(bw), pl(bh), BORDE, Math.max(1, pl(2)));
         texto(ctx, Text.translatable("pokepad.lunaeternal.inicial.volver"),
@@ -500,7 +500,7 @@ public class InicialScreen extends Screen {
         boolean e2 = dentro(rx, ry, px(ax2), py(by), pl(bw), pl(bh));
         Efectos.halo(ctx, px(ax2), py(by), pl(bw), pl(bh), Math.max(2, pl(6)),
                 VERDE, 0.30f + 0.22f * Efectos.pulso(1500));
-        ctx.fill(px(ax2), py(by), px(ax2 + bw), py(by + bh),
+        PadTheme.fill(ctx, px(ax2), py(by), px(ax2 + bw), py(by + bh),
                 e2 ? 0xFF6FE08A : 0xFF3FA85C);
         marco(ctx, px(ax2), py(by), pl(bw), pl(bh), 0xFF1E5E33, Math.max(1, pl(2)));
         texto(ctx, Text.translatable("pokepad.lunaeternal.inicial.confirmar"),
@@ -689,7 +689,7 @@ public class InicialScreen extends Screen {
         StringBuilder actual = new StringBuilder();
         for (String palabra : texto.split(" ")) {
             String prueba = actual.isEmpty() ? palabra : actual + " " + palabra;
-            if (Math.round(textRenderer.getWidth(prueba) * altoArte
+            if (Math.round(PadTypography.width(textRenderer, prueba) * altoArte
                     / (float) textRenderer.fontHeight) > anchoArte && !actual.isEmpty()) {
                 salida.add(actual.toString());
                 actual = new StringBuilder(palabra);
@@ -704,7 +704,7 @@ public class InicialScreen extends Screen {
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), BORDE);
     }
 
@@ -730,10 +730,10 @@ public class InicialScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -742,10 +742,10 @@ public class InicialScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** &#9888; `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -753,7 +753,7 @@ public class InicialScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

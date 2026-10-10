@@ -460,7 +460,7 @@ public class MercadoScreen extends Screen {
     private void dibujarPanel(DrawContext ctx, int rx, int ry) {
         // El marco del retrato siempre, tenga algo dentro o no: un hueco vacío
         // dice «aquí va algo» y una nada dice «esta pantalla está a medias».
-        ctx.fill(px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + retAlto()),
+        PadTheme.fill(ctx, px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + retAlto()),
                 0xFF12161F);
         marco(ctx, px(RET_X), py(RET_Y), pl(RET_W), pl(retAlto()),
                 0xFF39415C, Math.max(1, pl(2)));
@@ -674,7 +674,7 @@ public class MercadoScreen extends Screen {
             if (encima) {
                 encimaDe = b.etiqueta();
             }
-            ctx.fill(px(ax), py(ay), px(ax + BOT), py(ay + BOT),
+            PadTheme.fill(ctx, px(ax), py(ay), px(ax + BOT), py(ay + BOT),
                     marcado ? BORDE_ENCIMA : (encima ? 0xFF5E86D8 : 0xFF3A4560));
             marco(ctx, px(ax), py(ay), pl(BOT), pl(BOT),
                     marcado ? 0xFFFFC46B : 0xFF20283C, Math.max(1, pl(2)));
@@ -709,7 +709,7 @@ public class MercadoScreen extends Screen {
             boolean act = (i == 0) == ES_POKEMON;
             int bx = PANT_X + MARGEN + i * (CONM_W + 4);
             boolean enc = dentro(rx, ry, px(bx), py(PANT_Y + MARGEN), pl(CONM_W), pl(BOT));
-            ctx.fill(px(bx), py(PANT_Y + MARGEN), px(bx + CONM_W),
+            PadTheme.fill(ctx, px(bx), py(PANT_Y + MARGEN), px(bx + CONM_W),
                     py(PANT_Y + MARGEN + BOT),
                     act ? BORDE_ENCIMA : (enc ? 0xFF4F6FB0 : 0xFF2A3145));
             marco(ctx, px(bx), py(PANT_Y + MARGEN), pl(CONM_W), pl(BOT),
@@ -764,7 +764,7 @@ public class MercadoScreen extends Screen {
             if (activa || encima) {
                 // ⚠ La activa va OSCURA con el texto claro. Al revés —naranja
                 //   claro con texto oro— no se lee: son el mismo tono.
-                ctx.fill(px(ax - 4), py(hy - 3), px(ax - 4 + c.ancho()), py(hy + 17),
+                PadTheme.fill(ctx, px(ax - 4), py(hy - 3), px(ax - 4 + c.ancho()), py(hy + 17),
                         activa ? 0xCC1E2438 : 0x22FFFFFF);
             }
             String flecha = !activa ? " —" : orden.equals(c.asc()) ? " ▲" : " ▼";
@@ -810,7 +810,7 @@ public class MercadoScreen extends Screen {
 
             boolean sel = desde + n == elegido;
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA - 6));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA - 6),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA - 6),
                     sel ? FILA_SEL : (encima ? 0xFFD3DDF3 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA - 6),
                     sel ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(2)));
@@ -871,7 +871,7 @@ public class MercadoScreen extends Screen {
 
             boolean sel = m.item().equals(elegidoItem);
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA - 6));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA - 6),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA - 6),
                     sel ? FILA_SEL : (encima ? 0xFFD3DDF3 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA - 6),
                     sel ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(2)));
@@ -933,10 +933,10 @@ public class MercadoScreen extends Screen {
      * fuera acabaría comprando otra cosa.
      */
     private void dibujarConfirmacion(DrawContext ctx, int rx, int ry) {
-        ctx.fill(x0, y0, x0 + ancho, y0 + alto, 0xC0000000);
+        PadTheme.fill(ctx, x0, y0, x0 + ancho, y0 + alto, 0xC0000000);
         int aw = 620, ah = 260;
         int ax = (NAT_ANCHO - aw) / 2, ay = (NAT_ALTO - ah) / 2;
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), 0xFF161B29);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), 0xFF161B29);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), ORO, Math.max(2, pl(3)));
 
         texto(ctx, Text.translatable("pokepad.lunaeternal.gts.confirmar_titulo"),
@@ -1306,7 +1306,7 @@ public class MercadoScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (encima ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -1316,7 +1316,7 @@ public class MercadoScreen extends Screen {
     private void botonPeq(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                           int ah, Text etiqueta, boolean activo, boolean marcado) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : marcado ? BORDE_ENCIMA
                         : (encima ? 0xFF5E86D8 : 0xFF4F6FB0));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF20283C, Math.max(1, pl(2)));
@@ -1396,12 +1396,12 @@ public class MercadoScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -1413,14 +1413,14 @@ public class MercadoScreen extends Screen {
     /** ⚠ Con color de contorno: el fondo decide, ver `CONTORNO_CLARO`. */
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color, int contorno) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, contorno);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color, boolean contorno) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, contorno);
     }
@@ -1442,16 +1442,14 @@ public class MercadoScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1460,10 +1458,10 @@ public class MercadoScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -1471,7 +1469,7 @@ public class MercadoScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

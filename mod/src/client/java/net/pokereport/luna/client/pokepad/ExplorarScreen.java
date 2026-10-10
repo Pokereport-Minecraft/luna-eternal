@@ -231,7 +231,7 @@ public class ExplorarScreen extends Screen {
                 velo(ctx, tx, ty, TARJETA_W, 74, true);
                 velo(ctx, tx, ty + TARJETA_H - 78, TARJETA_W, 78, false);
             } else {
-                ctx.fill(px(tx), py(ty), px(tx + TARJETA_W), py(ty + TARJETA_H),
+                PadTheme.fill(ctx, px(tx), py(ty), px(tx + TARJETA_W), py(ty + TARJETA_H),
                         salvaje ? VERDE_SALVAJE : AZUL_HOGAR);
             }
             // ⚠ El resalte va en el MARCO y no en el relleno: cambiar el relleno
@@ -277,7 +277,7 @@ public class ExplorarScreen extends Screen {
             var m = ms.get(i);
             int bx = tx + 20 + i * (ancho + 8);
             boolean yoAqui = estado != null && estado.miMundo() == m.numero();
-            ctx.fill(px(bx), py(ty), px(bx + ancho), py(ty + 44),
+            PadTheme.fill(ctx, px(bx), py(ty), px(bx + ancho), py(ty + 44),
                     m.lleno() ? 0xFF5A3030 : 0xFF1D3326);
             marco(ctx, px(bx), py(ty), pl(ancho), pl(44),
                     yoAqui ? ORO : 0xFF3D5C48, Math.max(1, pl(2)));
@@ -353,7 +353,7 @@ public class ExplorarScreen extends Screen {
             int fy = y + i * 34;
             boolean sel = c.nombre().equals(companero);
             boolean enc = dentro(rx, ry, px(PANT_X + MARGEN), py(fy), pl(aw), pl(30));
-            ctx.fill(px(PANT_X + MARGEN), py(fy), px(PANT_X + MARGEN + aw), py(fy + 30),
+            PadTheme.fill(ctx, px(PANT_X + MARGEN), py(fy), px(PANT_X + MARGEN + aw), py(fy + 30),
                     sel ? 0xFF3D4E2E : (enc ? 0xFF2E3750 : 0xFF232A3C));
             marco(ctx, px(PANT_X + MARGEN), py(fy), pl(aw), pl(30),
                     sel ? BORDE_ENCIMA : 0xFF39415C, Math.max(1, pl(2)));
@@ -462,7 +462,7 @@ public class ExplorarScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (enc ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -484,7 +484,7 @@ public class ExplorarScreen extends Screen {
             int alfa = (int) ((arriba ? (1 - f) : f) * 210);
             int y1 = py(ay) + i * altoPx / pasos;
             int y2 = py(ay) + (i + 1) * altoPx / pasos;
-            ctx.fill(px(ax), y1, px(ax + aw), y2, (alfa << 24));
+            PadTheme.fill(ctx, px(ax), y1, px(ax + aw), y2, (alfa << 24));
         }
     }
 
@@ -514,18 +514,18 @@ public class ExplorarScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, 0);
     }
@@ -540,16 +540,14 @@ public class ExplorarScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -558,10 +556,10 @@ public class ExplorarScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -569,7 +567,7 @@ public class ExplorarScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

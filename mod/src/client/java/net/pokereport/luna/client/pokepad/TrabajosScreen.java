@@ -331,7 +331,7 @@ public class TrabajosScreen extends Screen {
 
     /** Una línea fina de lado a lado del panel. Separa sin meter una caja más. */
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -362,7 +362,7 @@ public class TrabajosScreen extends Screen {
 
     /** Ancho de un texto EN PIXELES DEL ARTE, para poder comprobar que cabe. */
     private int anchoArte(Text linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void dibujarFilas(DrawContext ctx, int rx, int ry) {
@@ -413,8 +413,8 @@ public class TrabajosScreen extends Screen {
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
         Text etiqueta = Text.literal((pagina + 1) + " / " + total);
-        ctx.drawText(textRenderer, etiqueta,
-                Math.round(cx * k / escala) - textRenderer.getWidth(etiqueta) / 2,
+        PadTypography.draw(ctx, textRenderer, etiqueta,
+                Math.round(cx * k / escala) - PadTypography.width(textRenderer, etiqueta) / 2,
                 Math.round((PAG_Y + PAG_H / 2) * k / escala) - textRenderer.fontHeight / 2,
                 0xFFFFFFFF, true);
         m.pop();
@@ -438,14 +438,14 @@ public class TrabajosScreen extends Screen {
         boolean seleccionada = via == viaSeleccionada;
         int nivel = estado == null ? 0 : estado.nivel();
 
-        ctx.fill(x, y, x + w, y + h, encima || seleccionada ? FILA_ENCIMA : FILA_FONDO);
+        PadTheme.fill(ctx, x, y, x + w, y + h, encima || seleccionada ? FILA_ENCIMA : FILA_FONDO);
         marco(ctx, x, y, w, h, encima || seleccionada ? BORDE_ENCIMA : FILA_BORDE,
                 Math.max(1, pl(encima || seleccionada ? 4 : 2)));
 
         // ⚠ Una PESTAÑA DE COLOR a la izquierda, no la fila entera teñida. Cinco
         //   filas de cinco colores distintos convierten la pantalla en un
         //   semáforo y el texto deja de leerse sobre la mitad de ellos.
-        ctx.fill(x, y, x + pl(8), y + h, color(via));
+        PadTheme.fill(ctx, x, y, x + pl(8), y + h, color(via));
 
         // El icono de la Vía: un objeto de verdad, dibujado por el juego. Así
         // hereda su propio modelo 3D y no hace falta arte nuevo.
@@ -491,7 +491,7 @@ public class TrabajosScreen extends Screen {
     private void dibujarBarra(DrawContext ctx, Red.ViaEstado estado, Path via,
                               int ax, int ay, int aw, int ah) {
         int x = px(ax), y = py(ay), w = pl(aw), h = pl(ah);
-        ctx.fill(x, y, x + w, y + h, BARRA_HUECO);
+        PadTheme.fill(ctx, x, y, x + w, y + h, BARRA_HUECO);
 
         long xp = estado == null ? 0 : estado.xp();
         long falta = estado == null ? 0 : estado.xpSiguiente();
@@ -502,7 +502,7 @@ public class TrabajosScreen extends Screen {
         //   empezando, que es lo contrario de lo que ha pasado.
         double frac = tope ? 1.0 : (falta <= 0 ? 0.0 : Math.min(1.0, xp / (double) falta));
         if (frac > 0) {
-            ctx.fill(x, y, x + (int) Math.round(w * frac), y + h, color(via));
+            PadTheme.fill(ctx, x, y, x + (int) Math.round(w * frac), y + h, color(via));
         }
         marco(ctx, x, y, w, h, FILA_BORDE, Math.max(1, pl(2)));
 
@@ -678,16 +678,10 @@ public class TrabajosScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -696,10 +690,10 @@ public class TrabajosScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /**
@@ -711,7 +705,7 @@ public class TrabajosScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(textura, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, textura, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

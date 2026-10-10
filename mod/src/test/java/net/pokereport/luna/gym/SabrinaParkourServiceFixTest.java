@@ -11,6 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SabrinaParkourServiceFixTest {
 
+    @Test
+    void testSessionsAndDirectVisitsExerciseParkourButActiveEditorsAreExempt() {
+        assertTrue(SabrinaParkourService.debeDetectar(false, true, true, true));
+        assertTrue(SabrinaParkourService.debeDetectar(false, false, false, true));
+        assertFalse(SabrinaParkourService.debeDetectar(false, true, false, true));
+        assertFalse(SabrinaParkourService.debeDetectar(true, true, true, true));
+        assertFalse(SabrinaParkourService.debeDetectar(false, false, true, false));
+    }
+
     private static final double MIN_X = 5180.479;
     private static final double MAX_X = 5200.551;
 

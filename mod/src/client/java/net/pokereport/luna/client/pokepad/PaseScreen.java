@@ -115,7 +115,7 @@ public class PaseScreen extends Screen {
     private static final int SEPARADOR = 0xFF3C4250;
     private static final int TEXTO = 0xFFF2F6FF;
     private static final int TEXTO_SUAVE = 0xFF9FB0D4;
-    private static final int GRIS = 0xFF5A6678;
+    private static final int GRIS = 0xFF9DACBE;
     private static final int ORO = 0xFFFFD65C;
     private static final int VERDE = 0xFF2E9E56;
     private static final int VERDE_CLARO = 0xFF5BE08C;
@@ -432,7 +432,7 @@ public class PaseScreen extends Screen {
                     pl(PANEL_W - 44), pl(BOTON_RECLAMAR_H), pl(7), VERDE_CLARO,
                     0.20f + 0.16f * Efectos.pulso(1100));
         }
-        ctx.fill(px(PANEL_X + 22), py(BOTON_RECLAMAR_Y),
+        PadTheme.fill(ctx, px(PANEL_X + 22), py(BOTON_RECLAMAR_Y),
                 px(PANEL_X + PANEL_W - 22), py(BOTON_RECLAMAR_Y + BOTON_RECLAMAR_H),
                 fondo);
         if (hay) {
@@ -461,7 +461,7 @@ public class PaseScreen extends Screen {
         int y = CAJA_PASE_Y;
         boolean tiene = e != null && e.premium();
 
-        ctx.fill(px(PANEL_X + 22), py(y), px(PANEL_X + PANEL_W - 22),
+        PadTheme.fill(ctx, px(PANEL_X + 22), py(y), px(PANEL_X + PANEL_W - 22),
                 py(y + CAJA_PASE_H), tiene ? 0xFF241B3B : FONDO_HUNDIDO);
 
         if (tiene) {
@@ -492,7 +492,7 @@ public class PaseScreen extends Screen {
                     pl(BOTON_COMPRAR_H), pl(6), LUNA,
                     0.18f + 0.14f * Efectos.pulso(1600));
         }
-        ctx.fill(px(PANEL_X + 28), py(by), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(by), px(PANEL_X + PANEL_W - 28),
                 py(by + BOTON_COMPRAR_H),
                 !puede ? 0xFF262B38 : (sobre ? 0xFF3A2C63 : 0xFF2B2050));
         if (puede) {
@@ -563,10 +563,10 @@ public class PaseScreen extends Screen {
 
         // Cabecera: el tramo manda, porque es lo que dice QUE clase de premios
         // hay delante. Con cien niveles, «nivel 63» no dice nada; «COMBATE» si.
-        ctx.fill(px(PANT_X + MARGEN), py(PANT_Y + 14),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(PANT_Y + 14),
                 px(PANT_X + MARGEN + 8), py(PANT_Y + 54), tramo.color());
         texto(ctx, Text.literal(tramo.nombre()), PANT_X + MARGEN + 20,
-                PANT_Y + 12, 24, tramo.color(), false);
+                PANT_Y + 12, 24, PadTypography.onLight(tramo.color()), false);
         texto(ctx, Text.literal(tramo.lema()), PANT_X + MARGEN + 20,
                 PANT_Y + 40, 14, 0xFF41506E, false);
 
@@ -616,20 +616,20 @@ public class PaseScreen extends Screen {
         int x = PANT_X + MARGEN;
         int w = PANT_W - 2 * MARGEN;
         int h = 22;
-        ctx.fill(px(x), py(MAPA_Y), px(x + w), py(MAPA_Y + h), FONDO_HUNDIDO);
+        PadTheme.fill(ctx, px(x), py(MAPA_Y), px(x + w), py(MAPA_Y + h), FONDO_HUNDIDO);
 
         // Los cinco tramos, cada uno de su color y apagados.
         for (var t : PaseCatalogo.TRAMOS) {
             int a = x + (t.desde() - 1) * w / PaseNivel.MAX;
             int b = x + t.hasta() * w / PaseNivel.MAX;
-            ctx.fill(px(a), py(MAPA_Y), px(b) - Math.max(1, pl(1)), py(MAPA_Y + h),
+            PadTheme.fill(ctx, px(a), py(MAPA_Y), px(b) - Math.max(1, pl(1)), py(MAPA_Y + h),
                     Efectos.conAlfa(t.color(), 0.22f));
         }
         // Lo conseguido.
         int nivel = nivel();
         if (nivel > 0) {
             int fin = x + nivel * w / PaseNivel.MAX;
-            ctx.fill(px(x), py(MAPA_Y), px(fin), py(MAPA_Y + h),
+            PadTheme.fill(ctx, px(x), py(MAPA_Y), px(fin), py(MAPA_Y + h),
                     Efectos.conAlfa(ORO, 0.55f));
             Efectos.brillo(ctx, px(x), py(MAPA_Y), px(fin) - px(x), pl(h),
                     Efectos.rampa(3400), 0xFFFFFFFF, 0.35f);
@@ -637,7 +637,7 @@ public class PaseScreen extends Screen {
         // La ventana que se esta mirando.
         int va = x + (desde - 1) * w / PaseNivel.MAX;
         int vb = x + Math.min(PaseNivel.MAX, desde + COLS - 1) * w / PaseNivel.MAX;
-        ctx.fill(px(va), py(MAPA_Y - 3), px(vb), py(MAPA_Y + h + 3),
+        PadTheme.fill(ctx, px(va), py(MAPA_Y - 3), px(vb), py(MAPA_Y + h + 3),
                 Efectos.conAlfa(0xFFFFFFFF, 0.18f));
         marco(ctx, px(va), py(MAPA_Y - 3), px(vb) - px(va), pl(h + 6),
                 0xFFFFFFFF, Math.max(1, pl(2)));
@@ -696,11 +696,11 @@ public class PaseScreen extends Screen {
 
         int fondo = cobrado ? FONDO_COBRADO
                 : (sobre ? FONDO_TARJETA_ENCIMA : FONDO_TARJETA);
-        ctx.fill(x, y, x + w, y + h, fondo);
+        PadTheme.fill(ctx, x, y, x + w, y + h, fondo);
 
         // La cinta del nivel, del color de su tramo.
         int cinta = pl(36);
-        ctx.fill(x, y, x + w, y + cinta,
+        PadTheme.fill(ctx, x, y, x + w, y + cinta,
                 cobrado ? 0xFF1E2A22 : Efectos.conAlfa(tramo.color(), 0.92f));
         textoP(ctx, Text.literal("NIVEL " + lvl), tx + CARD_W / 2.0, CARDS_Y + 9,
                 19, cobrado ? 0xFF7FB894 : 0xFF0D121B, true, sobre);
@@ -714,7 +714,7 @@ public class PaseScreen extends Screen {
         int hueco = 108;
         int hx = (int) Math.round(tx + (CARD_W - hueco) / 2.0);
         int hy = CARDS_Y + 66;
-        ctx.fill(pxd(hx), py(hy) + (sobre ? -pl(3) : 0), pxd(hx + hueco),
+        PadTheme.fill(ctx, pxd(hx), py(hy) + (sobre ? -pl(3) : 0), pxd(hx + hueco),
                 py(hy + hueco) + (sobre ? -pl(3) : 0), FONDO_HUNDIDO);
         marco(ctx, pxd(hx), py(hy) + (sobre ? -pl(3) : 0), pl(hueco), pl(hueco),
                 cobrado ? BORDE_HUNDIDO : Efectos.conAlfa(rareza, 0.6f),
@@ -723,19 +723,28 @@ public class PaseScreen extends Screen {
         // El nombre, hasta dos lineas y a 15 px: es lo que el usuario decia que
         // no se leia.
         int ty = CARDS_Y + 186;
-        for (String linea : partir(nombre(r), CARD_W - 18, 15, 2)) {
+        for (String linea : partir(lvl == 100 ? "Kit de Maestría" : nombre(r), CARD_W - 18, 15, 2)) {
             textoP(ctx, Text.literal(linea), tx + CARD_W / 2.0, ty, 15,
                     cobrado ? TEXTO_SUAVE : TEXTO, true, sobre);
             ty += 19;
         }
-        if (r.cantidad() > 1) {
+        if (lvl == 100) {
+            var kit = PaseCatalogo.entregables(lvl);
+            for (int i = 0; i < kit.size(); i++) {
+                var componente = kit.get(i);
+                textoP(ctx, Text.literal("x" + componente.cantidad() + " " + nombre(componente)),
+                        tx + CARD_W / 2.0, CARDS_Y + 228 + i * 16,
+                        13, i == 0 ? ORO : TEXTO, true, sobre);
+            }
+        } else if (r.cantidad() > 1) {
             textoP(ctx, Text.literal("x" + r.cantidad()), tx + CARD_W / 2.0,
                     CARDS_Y + 228, 17, ORO, true, sobre);
         } else if (r.tipo() == Recompensa.Tipo.POKEMON) {
-            textoP(ctx, Text.literal((r.shiny() ? "✦ VARIOCOLOR  ·  " : "")
-                            + "Nivel " + r.nivel()),
+            textoP(ctx, Text.literal(r.shiny() ? "✦ VARIOCOLOR" : "POKÉMON"),
                     tx + CARD_W / 2.0, CARDS_Y + 228, 15,
                     r.shiny() ? ORO : TEXTO_SUAVE, true, sobre);
+            textoP(ctx, Text.literal("Nivel " + r.nivel()), tx + CARD_W / 2.0,
+                    CARDS_Y + 248, 14, TEXTO_SUAVE, true, sobre);
         } else {
             // ⚠ Un premio de UNO dejaba este renglon vacio y la tarjeta se veia
             //   a medias. Con la categoria, el hueco dice algo: PARA QUE sirve
@@ -772,7 +781,7 @@ public class PaseScreen extends Screen {
             colorPie = GRIS;
             rotulo = "BLOQUEADO";
         }
-        ctx.fill(pxd(tx + 12), fpy, pxd(tx + CARD_W - 12), fpy + pl(pieH), fondoPie);
+        PadTheme.fill(ctx, pxd(tx + 12), fpy, pxd(tx + CARD_W - 12), fpy + pl(pieH), fondoPie);
         if (cobrable) {
             Efectos.brillo(ctx, pxd(tx + 12), fpy, pl(CARD_W - 24), pl(pieH),
                     Efectos.rampa(1800), 0xFFFFFFFF, 0.35f);
@@ -840,8 +849,7 @@ public class PaseScreen extends Screen {
         if (r.tipo() == Recompensa.Tipo.POKEMON) {
             // ⚠ La CLAVE tiene que ser distinta por tarjeta: dos sitios que
             //   dibujen la misma especie con la misma clave comparten el estado
-            //   de animacion y se pisan la orientacion. Aqui hay DOS Charizard
-            //   (niveles 1 y 100), asi que la clave lleva el nivel.
+            //   de animacion y se pisan la orientacion. La recompensa mecha del nivel 1, asi que la clave lleva el nivel.
             // ⚠ Los aspectos los da la recompensa (`aspectos()`): shiny Y el casco
             //   del nivel 100. Componerlos aqui seria un segundo sitio donde
             //   decidir que se dibuja, y la tarjeta podria enseñar un Charizard
@@ -886,7 +894,7 @@ public class PaseScreen extends Screen {
     private void dibujarAyuda(DrawContext ctx, int rx, int ry) {
         // Opaco del todo: un velo deja ver el carril por debajo y el ojo
         // intenta leer las dos cosas a la vez.
-        ctx.fill(px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
+        PadTheme.fill(ctx, px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H),
                 0xFF0A0E16);
         marco(ctx, px(PANT_X), py(PANT_Y), pl(PANT_W), pl(PANT_H), LUNA,
                 Math.max(1, pl(2)));
@@ -902,7 +910,7 @@ public class PaseScreen extends Screen {
         for (int i = 0; i < FUENTES.length; i++) {
             int cx = PANT_X + 24 + (i % 2) * col;
             int fy = y + (i / 2) * 34;
-            ctx.fill(px(cx), py(fy - 4), px(cx + col - 16), py(fy + 24),
+            PadTheme.fill(ctx, px(cx), py(fy - 4), px(cx + col - 16), py(fy + 24),
                     0xFF141A26);
             texto(ctx, Text.literal(FUENTES[i][0]), cx + 12, fy, 15, TEXTO, false);
             texto(ctx, Text.literal(FUENTES[i][1]), cx + col - 28, fy, 15, ORO,
@@ -912,7 +920,7 @@ public class PaseScreen extends Screen {
         int cerrar = PANT_Y + PANT_H - 54;
         boolean sobre = dentro(rx, ry, px(PANT_X + PANT_W / 2 - 90), py(cerrar),
                 pl(180), pl(40));
-        ctx.fill(px(PANT_X + PANT_W / 2 - 90), py(cerrar),
+        PadTheme.fill(ctx, px(PANT_X + PANT_W / 2 - 90), py(cerrar),
                 px(PANT_X + PANT_W / 2 + 90), py(cerrar + 40),
                 sobre ? 0xFF3A2C63 : 0xFF241B3B);
         marco(ctx, px(PANT_X + PANT_W / 2 - 90), py(cerrar), pl(180), pl(40),
@@ -1132,14 +1140,14 @@ public class PaseScreen extends Screen {
     // =======================================================================
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 26), py(artY), px(PANEL_X + PANEL_W - 26),
+        PadTheme.fill(ctx, px(PANEL_X + 26), py(artY), px(PANEL_X + PANEL_W - 26),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void flecha(DrawContext ctx, int rx, int ry, int x, int y,
                         boolean derecha, boolean activa) {
         boolean sobre = activa && dentro(rx, ry, px(x), py(y), pl(44), pl(34));
-        ctx.fill(px(x), py(y), px(x + 44), py(y + 34),
+        PadTheme.fill(ctx, px(x), py(y), px(x + 44), py(y + 34),
                 sobre ? 0xFF2A3550 : FONDO_HUNDIDO);
         marco(ctx, px(x), py(y), pl(44), pl(34),
                 activa ? (sobre ? NARANJA : BORDE_HUNDIDO) : 0xFF232A38,
@@ -1150,7 +1158,7 @@ public class PaseScreen extends Screen {
         for (int i = 0; i < lado; i++) {
             int semi = lado - i;
             int dx = derecha ? cx - lado / 2 + i : cx + lado / 2 - i;
-            ctx.fill(dx, cy - semi, dx + Math.max(1, pl(2)), cy + semi,
+            PadTheme.fill(ctx, dx, cy - semi, dx + Math.max(1, pl(2)), cy + semi,
                     activa ? TEXTO : GRIS);
         }
     }
@@ -1179,7 +1187,7 @@ public class PaseScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
@@ -1219,7 +1227,7 @@ public class PaseScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = (int) Math.round(cx * k / escala);
         if (centrado) {
             tx -= anchoTexto / 2;
@@ -1244,7 +1252,7 @@ public class PaseScreen extends Screen {
         //    sobre un relleno SOLIDO --tarjetas oscuras, panel oscuro, la
         //    pantalla clara del chasis--, asi que el contraste ya lo da el
         //    fondo. La sombra solo existe para leer sobre algo que se mueve.
-        ctx.drawText(textRenderer, linea, tx,
+        PadTypography.draw(ctx, textRenderer, linea, tx,
                 Math.round((arriba + dy) * k / escala), color, false);
         m.pop();
     }
@@ -1264,10 +1272,10 @@ public class PaseScreen extends Screen {
      */
     private static void marco(DrawContext ctx, int x, int y, int w, int h,
                               int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /**
@@ -1282,7 +1290,7 @@ public class PaseScreen extends Screen {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

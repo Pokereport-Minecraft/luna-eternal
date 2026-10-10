@@ -399,7 +399,7 @@ public final class Mascota3D {
             int px = cx + (int) Math.round(Math.cos(giro) * radio);
             int py = cy + (int) Math.round(Math.sin(giro) * radio * 0.45)
                     + (int) Math.round(Math.sin(t * 0.03 + i) * 4);
-            ctx.fill(px - 1, py - 1, px + 2, py + 2, color);
+            PadTheme.fill(ctx, px - 1, py - 1, px + 2, py + 2, color);
         }
     }
 

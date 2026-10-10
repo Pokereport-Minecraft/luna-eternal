@@ -262,7 +262,7 @@ public class CazasScreen extends Screen {
     }
 
     private void dibujarPanel(DrawContext ctx, int rx, int ry) {
-        ctx.fill(px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + RET_H), 0xFF12161F);
+        PadTheme.fill(ctx, px(RET_X), py(RET_Y), px(RET_X + RET_W), py(RET_Y + RET_H), 0xFF12161F);
         marco(ctx, px(RET_X), py(RET_Y), pl(RET_W), pl(RET_H), 0xFF39415C,
                 Math.max(1, pl(2)));
 
@@ -272,7 +272,7 @@ public class CazasScreen extends Screen {
         //   servidor mandara «faltan N horas», el número se quedaría viejo en
         //   cuanto pasara un minuto y el reloj mentiría hasta reabrir.
         int cy = RET_Y + RET_H + 6;
-        ctx.fill(px(RET_X), py(cy), px(RET_X + RET_W), py(cy + 58), 0xFF10141F);
+        PadTheme.fill(ctx, px(RET_X), py(cy), px(RET_X + RET_W), py(cy + 58), 0xFF10141F);
         marco(ctx, px(RET_X), py(cy), pl(RET_W), pl(58), 0xFF4A5578, Math.max(1, pl(2)));
         // ⚠ El rótulo va CLARO, no en `TEXTO_SUAVE`: ese gris azulado está
         //   pensado para las filas claras y sobre casi negro desaparece.
@@ -390,11 +390,11 @@ public class CazasScreen extends Screen {
 
     private void progreso(DrawContext ctx, int ax, int y, int aw, int ah,
                           Red.ObjetivoCaza o) {
-        ctx.fill(px(ax), py(y), px(ax + aw), py(y + ah), 0xFF20283C);
+        PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + ah), 0xFF20283C);
         int lleno = o.necesarios() <= 0 ? 0
                 : Math.min(aw, aw * o.hechos() / o.necesarios());
         if (lleno > 0) {
-            ctx.fill(px(ax), py(y), px(ax + lleno), py(y + ah),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + lleno), py(y + ah),
                     o.completo() ? VERDE : 0xFF4F6FB0);
         }
         marco(ctx, px(ax), py(y), pl(aw), pl(ah), 0xFF39415C, Math.max(1, pl(2)));
@@ -411,7 +411,7 @@ public class CazasScreen extends Screen {
             int bx = PANT_X + MARGEN + i * (PEST_W + 6);
             boolean enc = dentro(rx, ry, px(bx), py(PANT_Y + MARGEN),
                     pl(PEST_W), pl(PEST_H));
-            ctx.fill(px(bx), py(PANT_Y + MARGEN), px(bx + PEST_W),
+            PadTheme.fill(ctx, px(bx), py(PANT_Y + MARGEN), px(bx + PEST_W),
                     py(PANT_Y + MARGEN + PEST_H),
                     act ? BORDE_ENCIMA : (enc ? 0xFF4F6FB0 : 0xFF2A3145));
             marco(ctx, px(bx), py(PANT_Y + MARGEN), pl(PEST_W), pl(PEST_H),
@@ -474,7 +474,7 @@ public class CazasScreen extends Screen {
             if (enc) {
                 encima = n;
             }
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA - 8),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA - 8),
                     sel ? FILA_SEL : (enc ? 0xFFD3DDF3 : FILA_FONDO));
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA - 8),
                     sel ? BORDE_ENCIMA : FILA_BORDE, Math.max(1, pl(2)));
@@ -567,7 +567,7 @@ public class CazasScreen extends Screen {
         int ay = Math.min(my + 12, PANT_Y + PANT_H - ah - 4);
         ay = Math.max(ay, PANT_Y + 4);
 
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), 0xF0161B29);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), 0xF0161B29);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), ORO, Math.max(2, pl(2)));
 
         texto(ctx, Text.translatable("pokepad.lunaeternal.caza.recompensa"),
@@ -730,7 +730,7 @@ public class CazasScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (enc ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF10331E, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -740,7 +740,7 @@ public class CazasScreen extends Screen {
     private void botonPeq(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                           int ah, Text etiqueta, boolean activo, boolean marcado) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : marcado
                         ? (enc ? aclarar(VERDE) : VERDE)
                         : (enc ? 0xFF5E86D8 : 0xFF4F6FB0));
@@ -806,18 +806,18 @@ public class CazasScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color, int contorno) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, contorno);
     }
@@ -839,16 +839,14 @@ public class CazasScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -857,10 +855,10 @@ public class CazasScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -868,7 +866,7 @@ public class CazasScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

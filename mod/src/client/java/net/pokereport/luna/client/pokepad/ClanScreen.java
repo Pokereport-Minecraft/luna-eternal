@@ -311,8 +311,8 @@ public class ClanScreen extends Screen {
         int x = PANT_X + 82, y = PANT_Y + 250, w = PANT_W - 164, h = 210;
         // Capa semitransparente: mantiene el contexto del clan, pero hace que la
         // decisión no se confunda con una pulsación normal del panel.
-        ctx.fill(px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H), 0xB8000000);
-        ctx.fill(px(x), py(y), px(x + w), py(y + h), 0xFF171C2B);
+        PadTheme.fill(ctx, px(PANT_X), py(PANT_Y), px(PANT_X + PANT_W), py(PANT_Y + PANT_H), 0xB8000000);
+        PadTheme.fill(ctx, px(x), py(y), px(x + w), py(y + h), 0xFF171C2B);
         marco(ctx, px(x), py(y), pl(w), pl(h), ROJO, Math.max(1, pl(3)));
         texto(ctx, Text.literal("¿DISOLVER CLAN?"), x + w / 2, y + 24, 25, ROJO, true, false);
         String nombre = estado != null && estado.mio() != null ? estado.mio().nombre() : "este clan";
@@ -460,7 +460,7 @@ public class ClanScreen extends Screen {
             boolean activa = i == pestana;
             boolean encima = dentro(rx, ry, px(x), py(PANT_Y + MARGEN), pl(pw - 6),
                     pl(PESTANA_ALTO));
-            ctx.fill(px(x), py(PANT_Y + MARGEN), px(x + pw - 6),
+            PadTheme.fill(ctx, px(x), py(PANT_Y + MARGEN), px(x + pw - 6),
                     py(PANT_Y + MARGEN + PESTANA_ALTO),
                     activa ? 0xFFFFF0DC : (encima ? 0xFFD3DCF2 : FILA_FONDO));
             marco(ctx, px(x), py(PANT_Y + MARGEN), pl(pw - 6), pl(PESTANA_ALTO),
@@ -640,13 +640,13 @@ public class ClanScreen extends Screen {
             var m = lista.get(desde + n);
             int ax = PANT_X + MARGEN, aw = PANT_W - 2 * MARGEN;
             boolean encima = dentro(rx, ry, px(ax), py(y), pl(aw), pl(FILA_ALTO));
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO),
                     encima ? FILA_ENCIMA : FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), FILA_BORDE, Math.max(1, pl(2)));
 
             // Un punto verde si está conectado. Es lo primero que se mira en una
             // lista de clan: con quién puedes contar ahora.
-            ctx.fill(px(ax + 12), py(y + FILA_ALTO / 2 - 5), px(ax + 22),
+            PadTheme.fill(ctx, px(ax + 12), py(y + FILA_ALTO / 2 - 5), px(ax + 22),
                     py(y + FILA_ALTO / 2 + 5), m.conectado() ? 0xFF3FBF5F : 0xFF8A93A8);
 
             texto(ctx, Text.literal(m.nombre()), ax + 34, y + 12, 22, TEXTO_OSCURO,
@@ -752,7 +752,7 @@ public class ClanScreen extends Screen {
             var m = movs.get(i);
             int ax = PANT_X + MARGEN, aw = PANT_W - 2 * MARGEN;
             if (i % 2 == 0) {
-                ctx.fill(px(ax), py(hy - 2), px(ax + aw), py(hy + 18), 0x22FFFFFF);
+                PadTheme.fill(ctx, px(ax), py(hy - 2), px(ax + aw), py(hy + 18), 0x22FFFFFF);
             }
             boolean entra = m.delta() > 0;
             // ⚠ El signo va DELANTE y con color. Una lista de cantidades sin
@@ -791,7 +791,7 @@ public class ClanScreen extends Screen {
             int i = desde + n;
             var l = lineas.get(i);
             if (i % 2 == 0) {
-                ctx.fill(px(ax), py(y - 2), px(ax + aw), py(y + 20), 0x22FFFFFF);
+                PadTheme.fill(ctx, px(ax), py(y - 2), px(ax + aw), py(y + 20), 0x22FFFFFF);
             }
             texto(ctx, Text.translatable("pokepad.lunaeternal.clan.log." + l.accion()),
                     ax + 4, y, 16, colorAccion(l.accion()), false, true);
@@ -838,7 +838,7 @@ public class ClanScreen extends Screen {
     }
 
     private void separadorPantalla(DrawContext ctx, int artY) {
-        ctx.fill(px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
                 py(artY) + Math.max(1, pl(2)), 0x44000000);
     }
 
@@ -854,7 +854,7 @@ public class ClanScreen extends Screen {
         for (int n = 0; n < capacidadPagina() && desde + n < lista.size(); n++) {
             var inv = lista.get(desde + n);
             int ax = PANT_X + MARGEN, aw = PANT_W - 2 * MARGEN;
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), FILA_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), FILA_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.literal("[" + inv.etiqueta() + "] " + inv.nombre()),
                     ax + 14, y + 8, 20, TEXTO_OSCURO, false, true);
@@ -881,7 +881,7 @@ public class ClanScreen extends Screen {
         for (int n = 0; n < capacidadPagina() && desde + n < lista.size(); n++) {
             var c = lista.get(desde + n);
             int ax = PANT_X + MARGEN, aw = PANT_W - 2 * MARGEN;
-            ctx.fill(px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), FILA_FONDO);
+            PadTheme.fill(ctx, px(ax), py(y), px(ax + aw), py(y + FILA_ALTO), FILA_FONDO);
             marco(ctx, px(ax), py(y), pl(aw), pl(FILA_ALTO), FILA_BORDE, Math.max(1, pl(2)));
             texto(ctx, Text.literal("[" + c.etiqueta() + "]"), ax + 14, y + 14, 20,
                     colorDe(c.color()), false, true);
@@ -1259,7 +1259,7 @@ public class ClanScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw, int ah,
                        Text etiqueta, boolean activo) {
         boolean encima = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? 0xFF6E7899 : (encima ? 0xFFFFD65C : 0xFFE8A317));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF8A5C00, Math.max(1, pl(2)));
         texto(ctx, etiqueta, ax + aw / 2, ay + ah / 2 - 12, 24,
@@ -1269,7 +1269,7 @@ public class ClanScreen extends Screen {
     private void botonPeq(DrawContext ctx, int rx, int ry, int ax, int ay, int aw, int ah,
                           Text etiqueta) {
         boolean encima = dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah), encima ? 0xFF5E86D8 : 0xFF4F6FB0);
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah), encima ? 0xFF5E86D8 : 0xFF4F6FB0);
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), 0xFF2E4270, Math.max(1, pl(2)));
         int alto = 17;
         while (alto > 10 && anchoArte(etiqueta.getString(), alto) > aw - 12) {
@@ -1311,11 +1311,11 @@ public class ClanScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto / (float) textRenderer.fontHeight);
+        return Math.round(PadTypography.width(textRenderer, linea) * alto / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
@@ -1329,16 +1329,10 @@ public class ClanScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
-        if (contorno) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, TEXTO_CONTORNO, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, TEXTO_CONTORNO, false);
-        }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -1347,10 +1341,10 @@ public class ClanScreen extends Screen {
     }
 
     private static void marco(DrawContext ctx, int x, int y, int w, int h, int color, int g) {
-        ctx.fill(x, y, x + w, y + g, color);
-        ctx.fill(x, y + h - g, x + w, y + h, color);
-        ctx.fill(x, y, x + g, y + h, color);
-        ctx.fill(x + w - g, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + g, color);
+        PadTheme.fill(ctx, x, y + h - g, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + g, y + h, color);
+        PadTheme.fill(ctx, x + w - g, y, x + w, y + h, color);
     }
 
     /** ⚠ `enableBlend()` a mano: regla 1 de dibujado.md. */
@@ -1358,7 +1352,7 @@ public class ClanScreen extends Screen {
                                        int x, int y, int w, int h, int natW, int natH) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, natW, natH, natW, natH);
         RenderSystem.disableBlend();
     }
 }

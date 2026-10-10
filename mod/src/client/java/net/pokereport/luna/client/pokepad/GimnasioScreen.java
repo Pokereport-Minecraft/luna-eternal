@@ -349,7 +349,7 @@ public class GimnasioScreen extends Screen {
     private void boton(DrawContext ctx, int rx, int ry, int ax, int ay, int aw,
                        int ah, Text etiqueta, boolean activo, int color) {
         boolean enc = activo && dentro(rx, ry, px(ax), py(ay), pl(aw), pl(ah));
-        ctx.fill(px(ax), py(ay), px(ax + aw), py(ay + ah),
+        PadTheme.fill(ctx, px(ax), py(ay), px(ax + aw), py(ay + ah),
                 !activo ? APAGADO : (enc ? aclarar(color) : color));
         marco(ctx, px(ax), py(ay), pl(aw), pl(ah), CONTORNO_OSCURO,
                 Math.max(1, pl(2)));
@@ -383,23 +383,23 @@ public class GimnasioScreen extends Screen {
     }
 
     private int anchoArte(String linea, int alto) {
-        return Math.round(textRenderer.getWidth(linea) * alto
+        return Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
     }
 
     private void separador(DrawContext ctx, int artY) {
-        ctx.fill(px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
+        PadTheme.fill(ctx, px(PANEL_X + 28), py(artY), px(PANEL_X + PANEL_W - 28),
                 py(artY) + Math.max(1, pl(2)), SEPARADOR);
     }
 
     private void separadorPantalla(DrawContext ctx, int artY) {
-        ctx.fill(px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
+        PadTheme.fill(ctx, px(PANT_X + MARGEN), py(artY), px(PANT_X + PANT_W - MARGEN),
                 py(artY) + Math.max(1, pl(2)), 0x33000000);
     }
 
     private void textoDer(DrawContext ctx, Text linea, int derecha, int arriba,
                           int alto, int color) {
-        int a = Math.round(textRenderer.getWidth(linea) * alto
+        int a = Math.round(PadTypography.width(textRenderer, linea) * alto
                 / (float) textRenderer.fontHeight);
         texto(ctx, linea, derecha - a, arriba, alto, color, false, 0);
     }
@@ -414,16 +414,14 @@ public class GimnasioScreen extends Screen {
         m.push();
         m.translate(x0, y0, 0);
         m.scale(escala, escala, 1f);
-        int anchoTexto = textRenderer.getWidth(linea);
+        int anchoTexto = PadTypography.width(textRenderer, linea);
         int tx = Math.round(cx * k / escala) - (centrado ? anchoTexto / 2 : 0);
         int ty = Math.round(arriba * k / escala);
         if (contorno != 0) {
-            ctx.drawText(textRenderer, linea, tx - 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx + 1, ty, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty - 1, contorno, false);
-            ctx.drawText(textRenderer, linea, tx, ty + 1, contorno, false);
+
+
         }
-        ctx.drawText(textRenderer, linea, tx, ty, color, false);
+        PadTypography.draw(ctx, textRenderer, linea, tx, ty, color, false);
         m.pop();
     }
 
@@ -433,10 +431,10 @@ public class GimnasioScreen extends Screen {
 
     private void marco(DrawContext ctx, int x, int y, int w, int h, int color,
                        int grosor) {
-        ctx.fill(x, y, x + w, y + grosor, color);
-        ctx.fill(x, y + h - grosor, x + w, y + h, color);
-        ctx.fill(x, y, x + grosor, y + h, color);
-        ctx.fill(x + w - grosor, y, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + w, y + grosor, color);
+        PadTheme.fill(ctx, x, y + h - grosor, x + w, y + h, color);
+        PadTheme.fill(ctx, x, y, x + grosor, y + h, color);
+        PadTheme.fill(ctx, x + w - grosor, y, x + w, y + h, color);
     }
 
     private void dibujarTextura(DrawContext ctx, Identifier tex, int x, int y,
@@ -463,7 +461,7 @@ public class GimnasioScreen extends Screen {
         }
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        ctx.drawTexture(tex, x, y, w, h, 0f, 0f, nw, nh, nw, nh);
+        PadTheme.texture(ctx, tex, x, y, w, h, 0f, 0f, nw, nh, nw, nh);
         RenderSystem.disableBlend();
         if (tenido) {
             ctx.setShaderColor(1f, 1f, 1f, 1f);

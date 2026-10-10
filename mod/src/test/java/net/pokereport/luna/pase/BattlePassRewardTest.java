@@ -22,23 +22,21 @@ public class BattlePassRewardTest {
     }
 
     @Test
-    @DisplayName("Nivel 100 otorga Charizard Shiny 15 y entrega Master Ball adicional")
-    void testNivel100CharizardShinyYMasterBall() {
+    @DisplayName("Nivel 100 entrega kit de maestría sin Pokémon")
+    void testNivel100KitMaestria() {
         Recompensa r100 = PaseCatalogo.de(100);
         assertNotNull(r100, "El nivel 100 debe existir");
-        assertEquals(Recompensa.Tipo.POKEMON, r100.tipo(), "El nivel 100 debe ser un Pokémon");
-        assertEquals("charizard", r100.id(), "Debe ser Charizard");
-        assertEquals(15, r100.nivel(), "Intercambio con la recompensa anterior del nivel 1");
-        assertTrue(r100.shiny(), "El Charizard del nivel 100 DEBE ser Shiny");
-        assertTrue(r100.aspecto().isEmpty(), "El mecha es exclusivo del nivel 1");
+        assertEquals(Recompensa.Tipo.OBJETO, r100.tipo());
+        assertEquals("cobblemon:master_ball", r100.id());
+        assertEquals(3, r100.cantidad());
 
         List<Recompensa> entregables = PaseCatalogo.entregables(100);
         assertNotNull(entregables, "Entregables del nivel 100 no deben ser nulos");
-        assertTrue(entregables.size() >= 2, "El nivel 100 debe entregar al menos 2 recompensas (Charizard + Master Ball)");
-        assertTrue(entregables.stream().anyMatch(r -> r.tipo() == Recompensa.Tipo.POKEMON && r.shiny() && r.nivel() == 15),
-                "Debe entregar el Charizard Shiny nivel 15");
-        assertTrue(entregables.stream().anyMatch(r -> "cobblemon:master_ball".equals(r.id()) && r.cantidad() >= 1),
-                "Debe entregar 1 Master Ball adicional");
+        assertEquals(3, entregables.size());
+        assertTrue(entregables.stream().allMatch(r -> r.tipo() == Recompensa.Tipo.OBJETO));
+        assertTrue(entregables.stream().anyMatch(r -> "cobblemon:ability_patch".equals(r.id()) && r.cantidad() == 3));
+        assertTrue(entregables.stream().anyMatch(r -> "cobblemon:rare_candy".equals(r.id()) && r.cantidad() == 16));
+        assertEquals(1, PaseCatalogo.cuantosPokemon());
     }
 
     @Test

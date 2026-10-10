@@ -133,7 +133,7 @@ public final class Escalado {
         boolean exacto = Math.abs(escala - Math.round(escala)) < 1e-6;
         if (client != null) {
             for (Identifier t : texturas) {
-                client.getTextureManager().getTexture(t).setFilter(!exacto, false);
+                client.getTextureManager().getTexture(PadTheme.resolve(t)).setFilter(!exacto, false);
             }
         }
         return new Medidas(k, ancho, alto, x0, y0, exacto);
