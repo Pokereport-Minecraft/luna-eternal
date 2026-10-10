@@ -25,6 +25,15 @@ public final class TrainerBattleAI implements BattleAI {
         double score = -Double.MAX_VALUE;
         for (BattlePokemon p : active.getActor().getPokemonList()) {
             if (p.getHealth() <= 0 || p.isSentOut() || p.getWillBeSwitchedIn()) continue;
+            var request = active.getActor().getRequest();
+            if (request != null && request.getSide() != null) {
+                // Showdown's roster is authoritative while switch animations lag behind.
+                var row = request.getSide().getPokemon().stream()
+                        .filter(entry -> entry.getUuid().equals(p.getUuid())).findFirst();
+                if (row.isEmpty() || row.get().getActive()
+                        || row.get().getCondition().contains("fnt")
+                        || row.get().getCondition().startsWith("0/")) continue;
+            }
             double candidate = matchup(p, side);
             if (candidate > score) { best = p; score = candidate; }
         }

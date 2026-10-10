@@ -3,24 +3,15 @@ package net.pokereport.luna.mixin.battle;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.AIBattleActor;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
-import com.cobblemon.mod.common.api.events.CobblemonEvents;
-import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.battles.ShowdownActionRequest;
-import com.cobblemon.mod.common.battles.ShowdownActionResponse;
-import com.cobblemon.mod.common.battles.ShowdownInterpreter;
-import com.cobblemon.mod.common.battles.SwitchActionResponse;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.dispatch.BattleDispatch;
 import com.cobblemon.mod.common.battles.dispatch.DispatchResult;
-import com.cobblemon.mod.common.battles.dispatch.DispatchResultKt;
-import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleMakeChoicePacket;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleQueueRequestPacket;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
-import net.minecraft.text.Text;
 import net.pokereport.luna.LunaEternal;
-import net.pokereport.luna.battle.TrainerBattleAI;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,11 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -41,9 +28,9 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  *
  * Supervisa los combates en curso para evitar bloqueos por desincronización o paquetes perdidos:
  * 1. Garantiza que la IA y el jugador tengan sus opciones activas en cada turno (tanto cambios forzados como turnos regulares).
- * 2. Si un actor IA se atasca, rescata su elección y limpia el conjunto de solicitudes de RCT.
+ * 2. Recupera decisiones de IA cuando la cola está ociosa.
  * 3. Si un combate termina (por victoria, derrota, huida, empate o forzado), limpia de forma determinista el estado de TrainerMob y RCT.
- * 4. Resuelve empates y victorias estancadas si Showdown deja de responder.
+ * 4. Observa la cola sin alterar sus barreras; un fallo se cierra sin inventar un ganador.
  */
 @Mixin(value = PokemonBattle.class, priority = 9999, remap = false)
 public abstract class PokemonBattleSafetyMixin {
@@ -76,28 +63,17 @@ public abstract class PokemonBattleSafetyMixin {
     public abstract List<?> getCaptureActions();
 
     @Shadow(remap = false)
-    public abstract void setWinners(List<? extends BattleActor> winners);
-
-    @Shadow(remap = false)
-    public abstract void setLosers(List<? extends BattleActor> losers);
-
-    @Shadow(remap = false)
     public abstract UUID getBattleId();
-
-    @Shadow(remap = false)
-    public abstract void setDispatchResult(DispatchResult dispatchResult);
-
-    @Shadow(remap = false)
-    public abstract void broadcastChatMessage(Text text);
 
     @Unique
     private int pokeReport$safetyTicks = 0;
 
     @Unique
-    private int pokeReport$deadStallTicks = 0;
+    private final net.pokereport.luna.battle.BattleQueueWatchdog pokeReport$queueWatchdog =
+            new net.pokereport.luna.battle.BattleQueueWatchdog();
 
-    @Unique
-    private int pokeReport$stuckTicks = 0;
+    @Shadow(remap = false)
+    public abstract int getTurn();
 
     /**
      * Limpieza completa de entrenadores y estado de batalla al finalizar cualquier combate.
@@ -188,30 +164,24 @@ public abstract class PokemonBattleSafetyMixin {
         }
 
         DispatchResult dr = this.getDispatchResult();
-        if (dr != null && !dr.canProceed()) {
-            this.pokeReport$stuckTicks++;
-            if (this.pokeReport$stuckTicks >= 200) {
-                LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} atascada en DispatchResult por {} ticks. Desatascando...",
-                        this.getBattleId(), this.pokeReport$stuckTicks);
-                this.pokeReport$stuckTicks = 0;
-                this.setDispatchResult(DispatchResultKt.getGO());
-            }
+        boolean blocked = dr != null && !dr.canProceed();
+        boolean waitingForPlayer = com.google.common.collect.Streams.stream(this.getActors()).anyMatch(a -> {
+            var request = a.getRequest();
+            return a instanceof PlayerBattleActor && request != null && !request.getWait()
+                    && a.getResponses().isEmpty();
+        });
+        var observation = pokeReport$queueWatchdog.observe(dr, this.getDispatches().peek(),
+                getTurn(), blocked || !this.getDispatches().isEmpty(), waitingForPlayer);
+        if (observation == net.pokereport.luna.battle.BattleQueueWatchdog.Result.WARN) {
+            LunaEternal.LOG.warn("[BATTLE-QUEUE] battle={} turn={} barrier={} queued={}; preserving protocol order",
+                    getBattleId(), getTurn(), dr == null ? "null" : dr.getClass().getSimpleName(), getDispatches().size());
+        } else if (observation == net.pokereport.luna.battle.BattleQueueWatchdog.Result.ABORT) {
+            net.pokereport.luna.battle.BattleRequestRecovery.abort((PokemonBattle)(Object)this,
+                    new IllegalStateException("Battle queue made no progress for 1200 ticks"));
             return;
         }
-
-        if (!this.getDispatches().isEmpty()) {
-            this.pokeReport$stuckTicks++;
-            if (this.pokeReport$stuckTicks >= 200) {
-                LunaEternal.LOG.warn("[BATTLE TRACE] Batalla {} con {} dispatches atascados por {} ticks. Desatascando...",
-                        this.getBattleId(), this.getDispatches().size(), this.pokeReport$stuckTicks);
-                this.pokeReport$stuckTicks = 0;
-                this.setDispatchResult(DispatchResultKt.getGO());
-                this.getDispatches().poll();
-            }
-            return;
-        }
-
-        this.pokeReport$stuckTicks = 0;
+        // A blocked dispatch owns this sequence. Never choose, release or discard through it.
+        if (blocked || !this.getDispatches().isEmpty()) return;
         this.pokeReport$safetyTicks++;
 
         // Ejecutar revisión cada 10 ticks (0.5 s) en estado ocioso
@@ -266,81 +236,6 @@ public abstract class PokemonBattleSafetyMixin {
             }
         }
 
-        // Detección de fin de combate si Showdown quedó estancado
-        int actoresConVida = 0;
-        int totalActores = 0;
-        BattleActor ultimoConVida = null;
-
-        for (BattleActor actor : this.getActors()) {
-            totalActores++;
-            boolean tieneVida = false;
-            for (BattlePokemon bp : actor.getPokemonList()) {
-                if (bp != null && bp.getHealth() > 0) {
-                    tieneVida = true;
-                    break;
-                }
-            }
-            if (tieneVida) {
-                actoresConVida++;
-                ultimoConVida = actor;
-            }
-        }
-
-        // Caso A: Ambos bandos perdieron todos sus Pokémon
-        if (actoresConVida == 0 && totalActores > 0) {
-            this.pokeReport$deadStallTicks++;
-            if (this.pokeReport$deadStallTicks >= 4) { // ~2 segundos en estancamiento total
-                this.pokeReport$resolverEmpate();
-            }
-        } else if (actoresConVida == 1 && totalActores > 1 && ultimoConVida != null) {
-            // Caso B: Exactamente un bando tiene vida y el resto no tiene Pokémon
-            this.pokeReport$deadStallTicks++;
-            if (this.pokeReport$deadStallTicks >= 6) { // ~3 segundos en espera
-                this.pokeReport$resolverVictoria(ultimoConVida);
-            }
-        } else {
-            this.pokeReport$deadStallTicks = 0;
-        }
-    }
-
-    @Unique
-    private void pokeReport$resolverEmpate() {
-        if (this.getEnded()) return;
-        List<BattleActor> allActors = new ArrayList<>();
-        for (BattleActor a : this.getActors()) {
-            allActors.add(a);
-        }
-
-        this.broadcastChatMessage(Text.literal("§e¡El combate ha terminado en empate!"));
-        this.setWinners(Collections.emptyList());
-        this.setLosers(allActors);
-        ((PokemonBattle) (Object) this).end();
-        try {
-            CobblemonEvents.BATTLE_VICTORY.emit(new BattleVictoryEvent[]{
-                new BattleVictoryEvent((PokemonBattle)(Object)this, Collections.emptyList(), allActors, false)
-            });
-        } catch (Throwable ignored) {}
-        ShowdownInterpreter.INSTANCE.getLastCauser().remove(this.getBattleId());
-    }
-
-    @Unique
-    private void pokeReport$resolverVictoria(BattleActor ganador) {
-        if (this.getEnded()) return;
-        List<BattleActor> winners = List.of(ganador);
-        List<BattleActor> losers = new ArrayList<>();
-        for (BattleActor a : this.getActors()) {
-            if (!a.equals(ganador)) losers.add(a);
-        }
-
-        this.broadcastChatMessage(Text.literal("§6¡" + ganador.getName().getString() + " ha ganado el combate!"));
-        this.setWinners(winners);
-        this.setLosers(losers);
-        ((PokemonBattle) (Object) this).end();
-        try {
-            CobblemonEvents.BATTLE_VICTORY.emit(new BattleVictoryEvent[]{
-                new BattleVictoryEvent((PokemonBattle)(Object)this, winners, losers, false)
-            });
-        } catch (Throwable ignored) {}
-        ShowdownInterpreter.INSTANCE.getLastCauser().remove(this.getBattleId());
+        // Only Showdown can declare a winner; local HP is not an outcome protocol.
     }
 }

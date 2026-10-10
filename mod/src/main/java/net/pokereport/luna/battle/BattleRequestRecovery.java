@@ -34,6 +34,8 @@ public final class BattleRequestRecovery {
     public static void abort(PokemonBattle battle, Throwable cause) {
         LunaEternal.LOG.error("[BATTLE-ISOLATION] Closing failed battle {} without victory", battle.getBattleId(), cause);
         try {
+            try { battle.saveBattleLog(); }
+            catch (RuntimeException logging) { LunaEternal.LOG.warn("[BATTLE-ISOLATION] Could not save protocol for {}", battle.getBattleId(), logging); }
             if (!battle.getEnded()) battle.end();
             for (var player : battle.getPlayers()) {
                 var assignment = net.pokereport.luna.gym.Ranuras.asignacionDe(player.getUuid());

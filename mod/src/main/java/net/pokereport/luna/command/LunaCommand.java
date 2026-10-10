@@ -1075,6 +1075,11 @@ public final class LunaCommand {
                 .requires(s -> s.hasPermissionLevel(4) && s.getEntity() == null)
                 .executes(ctx -> autotest(ctx.getSource())))
 
+            .then(literal("battle_regression")
+                .requires(s -> s.hasPermissionLevel(4) && s.getEntity() == null)
+                .executes(ctx -> net.pokereport.luna.test.BattleTurnRegression.run(ctx.getSource()))
+                .then(literal("engine").executes(ctx -> net.pokereport.luna.test.BattleTurnRegression.engine(ctx.getSource()))))
+
             .then(literal("kits")
                 .requires(s -> s.hasPermissionLevel(2))
                 .then(literal("rotacion")

@@ -22,9 +22,12 @@ import java.util.List;
 @Mixin(value = BattleActor.class, remap = false)
 public abstract class BattleChoiceRecoveryMixin implements BattleChoiceRecovery {
     @Unique private ShowdownActionRequest pokeReport$submittedRequest;
+    @Unique private int pokeReport$aiRejectedChoices;
 
     @Override public void pokeReport$rememberSubmittedRequest() {
-        pokeReport$submittedRequest = ((BattleActor)(Object)this).getRequest();
+        var request = ((BattleActor)(Object)this).getRequest();
+        if (request != pokeReport$submittedRequest) pokeReport$aiRejectedChoices = 0;
+        pokeReport$submittedRequest = request;
     }
 
     @Inject(method = "writeShowdownResponse", at = @At("HEAD"))
@@ -54,6 +57,11 @@ public abstract class BattleChoiceRecoveryMixin implements BattleChoiceRecovery 
         ShowdownActionRequest request = actor.getRequest();
         if (request == null) request = pokeReport$submittedRequest;
         if (request == null || request.getWait()) return false;
+        if (actor instanceof AIBattleActor && ++pokeReport$aiRejectedChoices > 2) {
+            net.pokereport.luna.battle.BattleRequestRecovery.abort(actor.getBattle(),
+                    new IllegalStateException("AI repeatedly rejected for the same request: " + error));
+            return true;
+        }
         // Showdown's explicit single-slot replacement error is authoritative,
         // even if the client submitted from an obsolete regular-turn request.
         if (error.contains("Can't pass: You need to switch in a Pokémon to replace")
@@ -75,8 +83,9 @@ public abstract class BattleChoiceRecoveryMixin implements BattleChoiceRecovery 
             actor.sendUpdate(new BattleMadeInvalidChoicePacket());
             actor.sendUpdate(new BattleMakeChoicePacket());
         }
-        LunaEternal.LOG.warn("[BATTLE-CHOICE] Reopened rejected choice battle={} actor={} error={}",
-                actor.getBattle().getBattleId(), actor.getUuid(), error);
+        LunaEternal.LOG.warn("[BATTLE-CHOICE] Reopened rejected choice battle={} turn={} actor={} type={} error={}",
+                actor.getBattle().getBattleId(), actor.getBattle().getTurn(), actor.getUuid(),
+                actor.getClass().getSimpleName(), error);
         return true;
     }
 }
