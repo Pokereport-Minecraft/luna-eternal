@@ -12,6 +12,8 @@
     "MainMenuMixin",
     "ConnectScreenMixin",
     "DownloadingTerrainScreenMixin",
+    "TransitionScreenMixin",
+    "MessageScreenBackgroundMixin",
     "SplashOverlayMixin",
     "SplashOverlayAccessor",
     "SplashOverlayInvoker",

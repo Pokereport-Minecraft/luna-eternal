@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.resource.ResourceReload;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.pokereport.luna.client.menu.MenuBackground;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -57,11 +58,11 @@ public class SplashOverlayMixin {
         int height = client.getWindow().getScaledHeight();
 
         if (client.getResourceManager().getResource(TITLE_TEXTURE).isEmpty()) {
-            ci.cancel();
+            // Initial reload may not expose custom textures yet: let vanilla finish it.
             return;
         }
 
-        context.fill(0, 0, width, height, 0xFF0B0E14);
+        MenuBackground.renderLoading(context, width, height);
 
         float scale = Math.min((float) width / TITLE_TEXTURE_WIDTH, (float) height / TITLE_TEXTURE_HEIGHT) * TITLE_SCALE;
         int drawW = Math.round(TITLE_TEXTURE_WIDTH * scale);
@@ -88,19 +89,18 @@ public class SplashOverlayMixin {
 
         ((SplashOverlayInvoker) this).invokeDrawProgressBar(context, barMinX, barMinY, barMaxX, barMaxY, 1.0F);
 
-        if (reload.isComplete()) {
+        if (reload.isComplete() && this.overlayEndTime == -1L) {
+            Optional<Throwable> failure = Optional.empty();
             try {
                 reload.throwException();
-                this.exceptionHandler.accept(Optional.empty());
             } catch (Throwable t) {
-                this.exceptionHandler.accept(Optional.of(t));
+                failure = Optional.of(t);
             }
-            if (this.overlayEndTime == -1L) {
-                this.overlayEndTime = System.currentTimeMillis();
-            }
-            if (System.currentTimeMillis() - this.overlayEndTime > this.delayDuration) {
-                client.setOverlay(null);
-            }
+            this.overlayEndTime = System.currentTimeMillis();
+            this.exceptionHandler.accept(failure);
+        }
+        if (this.overlayEndTime != -1L && System.currentTimeMillis() - this.overlayEndTime > this.delayDuration) {
+            client.setOverlay(null);
         }
         ci.cancel();
     }

@@ -18,7 +18,7 @@ public abstract class DownloadingTerrainScreenMixin extends Screen {
 
     @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
     private void pokereport$customTerrainBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        MenuBackground.render(context, this.width, this.height);
+        MenuBackground.renderLoading(context, this.width, this.height);
         ci.cancel();
     }
 }

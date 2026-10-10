@@ -17,6 +17,6 @@ public abstract class ConnectScreenMixin extends Screen {
     // Adding the override preserves the background without requiring a missing method.
     @Override
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
-        MenuBackground.render(context, this.width, this.height);
+        MenuBackground.renderLoading(context, this.width, this.height);
     }
 }
