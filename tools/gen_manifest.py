@@ -302,7 +302,7 @@ def rama_por_defecto() -> str:
 RAMA = rama_por_defecto()
 BASE_RAW = f"https://raw.githubusercontent.com/{REPO_PUBLICO}/{RAMA}"
 
-VERSION_PACK = "0.2.0"
+VERSION_PACK = "0.3.0"
 
 # MODS NUESTROS que van en el CLIENTE.
 #

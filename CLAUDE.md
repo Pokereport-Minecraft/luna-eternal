@@ -16,6 +16,8 @@
 
 Rama `codex/pokevoice`, base `a74d626d`. Simple Voice Chat Fabric 1.21.1 2.6.22, API 2.6.20; consentimiento por UUID en V057. Nuevo módulo `voice`, app PokéPad `pokevoice`; filtro exclusivo SOURCE_PROXIMITY. No SQL en audio. Estado de promoción BLOCKED hasta audio real con dos equipos y carga. Cliente publicado automáticamente y principal desplegado por solicitud expresa: UDP 24591/allocation 22. Arranque/UDP PASS, audio real y QA visual aún NOT RUN. Ver `docs/pokevoice/RELEASE_REPORT.md` y `docs/pokevoice/POKEVOICE_QA.md`; no contar microbenchmark como multiplayer.
 
+> **2026-10-10 — Cobblemon 1.8.1:** migración dirigida y probada con el Luna actual, sin promover el parche pendiente de batallas. Base cliente0.3.0/bundle0.1.4; Cobblemon/TMCraft/Tim Core/Capture XP alineados; Chat Heads/ChatAnimation solo cliente. Conserva todos los overrides del MRPACK, premios y Halloween. Ver [docs/COBBLEMON_181_MIGRATION.md](docs/COBBLEMON_181_MIGRATION.md) y [revisión de mods](docs/MOD_SECURITY_DIosesmon_2026-10-09.md).
+
 # CLAUDE.md — PokeReport: Luna Eternal
 
 > **2026-10-02 — Puertas y roles:** por petición del usuario, clic normal en puertas con bloques en mano conserva interacción nativa y protección de colocación. `/pradmin rol asignar <jugador conectado> <rol>` gestiona OP/grants y etiqueta operativa persistente, sin cambiar rango comercial. Detalles y validación en [docs/DOORS_AND_STAFF_ROLES.md](docs/DOORS_AND_STAFF_ROLES.md).

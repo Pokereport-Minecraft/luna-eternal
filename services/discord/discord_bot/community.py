@@ -235,6 +235,15 @@ class Community:
                '**Actualización manual:** sigue el LEEME del ZIP si está disponible; retira el JAR anterior de `mods` antes de añadir el nuevo. Conserva los otros mods, configuración y mundos.')
         await self.deliver('cliente:'+release.version,release.digest,self.config.channels['updates'],embed,links(self.config,release),
                            notify_role=self.config.roles['updates_alert'])
+        if self.config.channels.get('manual_downloads'):
+            manual=discord.Embed(title=f'Descargas manuales · Base {release.base}',color=GOLD,
+                description='**Opción recomendada:** importa el MRPACK completo en tu launcher favorito.\n'
+                '**Instancia existente:** sigue el LEEME del ZIP. Puede requerir sustituir otros mods además de Luna Eternal; no mezcles versiones.\n'
+                '**JAR principal:** el botón descarga Luna Eternal directamente. Por sí solo no actualiza Cobblemon ni TMCraft.\n'
+                'Cierra Minecraft antes de cambiar archivos. Conserva tus mundos y configuración y guarda los JAR antiguos fuera de `mods`.')
+            view=links(self.config,release)
+            if release.jar:view.add_item(discord.ui.Button(label='JAR Luna Eternal',url=release.jar))
+            await self.deliver('manual:'+release.version,release.digest,self.config.channels['manual_downloads'],manual,view)
         self.last_release=release.version;self.last_check=int(time.time())
 
     async def engagement(self,now=None):

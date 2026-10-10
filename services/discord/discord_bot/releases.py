@@ -46,6 +46,7 @@ class Release:
     mrpack:str
     manual:str | None
     base:str
+    jar:str | None = None
 
 def discover():
     raw=request(ROOT+'client-latest.json')
@@ -61,7 +62,7 @@ def discover():
     mrpack=official(latest['mrpackUrl'])
     if request(mrpack,head=True)<1000:raise ValueError('MRPACK unavailable')
     directory=entry['url'].rsplit('/',1)[0]+'/'
-    manual=directory+'PokeReport-Actualizacion-Cliente-'+version+'.zip'
+    manual=official(latest.get('manualUrl') or directory+'PokeReport-Actualizacion-Cliente-'+version+'.zip')
     try:
         if request(manual,head=True)<1000:manual=None
     except urllib.error.HTTPError as exc:
@@ -70,4 +71,4 @@ def discover():
     notes=manifest.get('releaseNotes') or {}
     return Release(version,hashlib.sha256(raw).hexdigest(),str(notes.get('title') or 'Actualización de cliente')[:180],
                    str(notes.get('summary') or 'Actualización verificada del cliente disponible.')[:1200],
-                   mrpack,manual,str(latest['basePackVersion']))
+                   mrpack,manual,str(latest['basePackVersion']),official(entry['url']))

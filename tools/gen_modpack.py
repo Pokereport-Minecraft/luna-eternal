@@ -524,6 +524,9 @@ OVERRIDES_FUERA = (
 # `iris`, `yacl`, `sodium`, `lithium`, `ferrite-core`, `entityculling` y
 # `modmenu` ya vienen en la base: no se repiten aqui.
 EXTRA_JUGADOR = [
+    # Solo cliente; versiones comprobadas con la base 0.3.0 en carga nativa.
+    "chat-heads",
+    "chatanimation",
     "simple-voice-chat",
     # Animaciones de primera persona. Es estrictamente CLIENTE: no registra
     # contenido ni paquetes de red, por lo que nunca se instala en el servidor.
@@ -748,6 +751,8 @@ FIJADOS = {}
 #   forma de comprobarlo es la de siempre: abrir el jar y mirar si su
 #   `MixinSodiumRenderSectionManager` sigue nombrando `prepareRender`.
 CLAVADOS = {
+    "chat-heads": {"version": "0.15.1", "motivo": "cliente base 0.3.0: verificacion nativa, sin paquetes ni contenido de servidor"},
+    "chatanimation": {"version": "1.1.3", "motivo": "cliente base 0.3.0: animacion de chat validada con Chat Heads"},
     "simple-voice-chat": {"version": "fabric-1.21.1-2.6.22", "motivo": "PokeVoice: Release fijo compatible, QA cliente/servidor"},
     "flashback": {"version": "0.39.8", "motivo": "Constructor: 0.39.9 exige voz beta >=2.6.23; conservar SVC Release 2.6.22"},
     "axiom": "5.4.2",
@@ -778,20 +783,20 @@ CLAVADOS = {
                      "motivo": "clavado al servidor; ver CLAVADOS"},
     "xaeros-world-map": {"version": "fabric-1.21.1-1.45.0",
                          "motivo": "clavado al servidor; ver CLAVADOS"},
-    "cobblemon": {"version": "1.8.0",
-                  "motivo": "clavado a 1.8.0: el servidor y tmcraft exigen exactamente 1.8.0"},
-    "cobblemon-tim-core": {"version": "1.8.0-fabric-1.32.0",
-                           "motivo": "clavado a 1.8.0 compatible con Cobblemon 1.8.0"},
-    "cobblemon-capture-xp": {"version": "1.8.0-fabric-1.3.0",
-                             "motivo": "clavado a 1.8.0 compatible con Cobblemon 1.8.0"},
+    "cobblemon": {"version": "1.8.1",
+                  "motivo": "actualizacion dirigida 2026-10-10; TMCraft debe ser 1.4.19+1.8.1; ver docs/COBBLEMON_181_MIGRATION.md"},
+    "cobblemon-tim-core": {"version": "1.8.1-fabric-1.32.1",
+                           "motivo": "port a 1.8.1 con refmap renombrado para evitar conflicto con Cobblemon"},
+    "cobblemon-capture-xp": {"version": "1.8.1-fabric-1.3.0",
+                             "motivo": "port a 1.8.1; dependencia exacta de Cobblemon y Tim Core"},
     "euphoria-patches": {"version": "1.10.0-r5.9-fabric",
                          "motivo": "clavado a 1.10.0-r5.9-fabric"},
     "rctapi": {"version": "0.16.0-beta",
                "motivo": "clavado al servidor; ver CLAVADOS"},
     "cobblemonraiddens": {"version": "0.12.1+1.21.1",
                            "motivo": "compatibilidad oficial con Cobblemon 1.8; spawn natural desactivado"},
-    "tmcraft": {"version": "1.4.19+1.8.0",
-                 "motivo": "clavado al servidor y a Cobblemon 1.8.0"},
+    "tmcraft": {"version": "1.4.19+1.8.1",
+                 "motivo": "dependencia exacta de Cobblemon 1.8.1, validada en staging"},
     "rechiseled": {"version": "1.2.5-fabric-mc1.21",
                    "motivo": "clavado al servidor; ver CLAVADOS"},
     "catch-rate-display": {"version": "2.11.0+fabric",

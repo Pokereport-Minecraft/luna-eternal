@@ -87,6 +87,18 @@ class PublicationTests(unittest.TestCase):
             release=releases.discover()
         self.assertEqual(release.version,'0.1.3');self.assertIn('0.1.3.zip',release.manual)
 
+    def test_base_update_manual_is_not_derived_from_unchanged_luna_directory(self):
+        self.latest['manualUrl']='https://pokereport.online/client/base-030/update-014.zip'
+        with patch.object(releases,'request',self.request),patch.object(releases,'verify_signature'):
+            release=releases.discover()
+        self.assertEqual(release.manual,self.latest['manualUrl'])
+        self.assertEqual(release.jar,self.manifest['files'][0]['url'])
+
+    def test_manual_location_must_stay_official(self):
+        self.latest['manualUrl']='https://evil.example/update.zip'
+        with patch.object(releases,'request',self.request),patch.object(releases,'verify_signature'):
+            with self.assertRaisesRegex(ValueError,'Unofficial'):releases.discover()
+
     def test_reject_external_or_plaintext_downloads(self):
         for url in ['http://pokereport.online/client/a.jar','https://example.com/client/a.jar',
                     'https://pokereport.online.evil.com/client/a.jar','https://pokereport.online@evil.com/client/a.jar']:
