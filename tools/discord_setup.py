@@ -36,9 +36,9 @@ RAIZ = Path(__file__).resolve().parent.parent
 # Bits de permiso de Discord. Solo los que se usan aqui.
 VER = 1 << 10            # VIEW_CHANNEL
 ESCRIBIR = 1 << 11       # SEND_MESSAGES
-HILOS = 1 << 15          # CREATE_PUBLIC_THREADS
-HILOS_PRIV = 1 << 16
-ESCRIBIR_HILO = 1 << 18
+HILOS = 1 << 35          # CREATE_PUBLIC_THREADS
+HILOS_PRIV = 1 << 36
+ESCRIBIR_HILO = 1 << 38
 ADJUNTAR = 1 << 15       # (ATTACH_FILES = 1<<15 en canales de texto)
 REACCIONAR = 1 << 6
 HISTORIAL = 1 << 16
