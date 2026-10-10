@@ -39,6 +39,7 @@ SALIDA = RAIZ / "build"
 UA = {"User-Agent": "PokeReport-LunaEternal/0.1 (dev)"}
 
 MC = "1.21.1"
+VERSION_PACK = "0.3.0"
 # El nombre que sale en la lista de multijugador (MARCA-001, 2026-08-23).
 #
 # ⚠ SOLO LO VE QUIEN INSTALE DE CERO. `servers.dat` va marcado `once` en el
@@ -73,7 +74,7 @@ LOADER_MINIMO = (0, 17, 2)
 # SE SUBE A MANO, y solo cuando se sepa que la gente ya tiene ese loader (o
 # cuando el launcher aprenda a reinstalarlo). Subirlo por costumbre es
 # exactamente el fallo que esta linea evita.
-LOADER_INSTALADO = "0.19.3"
+LOADER_INSTALADO = "0.19.5"  # Cliente oficial/QA real 2026-10-10; servidor sigue 0.18.4.
 
 # ---------------------------------------------------------------------------
 # LA BASE (D-031, sustituye a D-024)
@@ -1390,14 +1391,14 @@ def construir(nombre_pack, extra, sufijo, resumen):
     verificar_dependencias(ficheros)
 
     index = {
-        "formatVersion": 1, "game": "minecraft", "versionId": "0.1.0",
+        "formatVersion": 1, "game": "minecraft", "versionId": VERSION_PACK,
         "name": nombre_pack,
         "summary": resumen,
         "files": ficheros,
         "dependencies": {"minecraft": MC, "fabric-loader": loader_estable()}}
 
     SALIDA.mkdir(parents=True, exist_ok=True)
-    destino = SALIDA / f"PokeReport-LunaEternal{sufijo}-0.1.0.mrpack"
+    destino = SALIDA / f"PokeReport-LunaEternal{sufijo}-{VERSION_PACK}.mrpack"
     with zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED) as salida:
         salida.writestr("modrinth.index.json",
                         json.dumps(index, indent=2, ensure_ascii=False))
