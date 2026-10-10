@@ -19,7 +19,9 @@ def audit(directory: Path) -> dict:
             with zipfile.ZipFile(path) as archive:
                 if 'fabric.mod.json' not in archive.namelist():
                     continue
-                metadata = json.loads(archive.read('fabric.mod.json'))
+                # Fabric's Gson accepts literal newlines inside description strings.
+                # Match that tolerance; otherwise valid third-party mods are rejected.
+                metadata = json.loads(archive.read('fabric.mod.json'), strict=False)
                 candidates.setdefault(metadata['id'], []).append({
                     'file': path.name, 'version': metadata['version'],
                     'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),

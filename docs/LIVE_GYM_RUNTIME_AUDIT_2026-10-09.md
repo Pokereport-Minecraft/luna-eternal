@@ -26,3 +26,11 @@ Se conserva el respaldo fuera de `mods`, en `backups/quarantined-mods/20261009-d
 `tools/audit_mod_jars.py` es un preflight de solo lectura que falla ante IDs Fabric duplicados, incluso con la misma versión. Debe ejecutarse contra el directorio real de producción antes de cada arranque/despliegue. No mueve ni elimina archivos automáticamente.
 
 La confirmación final necesita el mensaje nuevo de arranque, un único candidato Luna, las consultas de borde reales y una interacción del usuario en vivo; no basta con los autotests de staging.
+
+## Resultado de la recarga
+
+Parada del proceso anterior: guardado de todas las dimensiones y cierre del pool SQL confirmados; SIGTERM normal después del guardado para hilos residuales. No reapareció la excepción de descarga durante esta parada. Se conserva intacto el JAR actualizado y el hash del respaldo trasladado. Nuevo arranque: `Done` a 01:50:11 UTC (20:50:11 del 9 de octubre en Colombia). A 01:50:17 aparece por primera vez el mensaje nuevo: Hogar radio 29.999.984, diámetro 59.999.968, dimensiones de gimnasios y ciudadela liberadas. Consulta del comando propio confirma ese radio y mantiene Salvajes en radio 3.000.
+
+Auditoría completa posterior: 72 candidatos Fabric, cero IDs duplicados y cero JAR inválidos. El lector de metadata admite saltos literales en descripciones como el Gson de Fabric; no se modificaron los JAR de terceros por diferencias de tolerancia JSON. Prueba del auditor con dos JAR de igual id/versión y exclusión de un respaldo sin extensión `.jar`: PASS.
+
+La interacción humana de Sabrina/Blaine se está observando en vivo; falta su confirmación para dar el problema jugable por cerrado. La caída de Sabrina ya fue confirmada por el usuario antes de esta recarga. Los premios, PNG, DB y resto de mods se mantienen.
