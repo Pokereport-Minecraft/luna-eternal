@@ -42,4 +42,10 @@ Canal opcional manual `1558346924715675658`, sin ampliar cinco canales iniciales
 
 ## Estado de despliegue
 
-QA y candidatos completados. Promoción pendiente al escribir este registro; actualizar con evidencia real antes de cerrar.
+Producción migrada: arranque real `Done (3.722s)` a05:31UTC del10octubre (00:31Bogotá), Cobblemon1.8.1+1.21.1 y TMCraft1.4.19+1.8.1 confirmados en log.70 JAR ajenos idénticos, Luna conserva hash. Respaldo de binarios fuera de mods: `/root/backups_predeploy/cobblemon181-20261010`. No se reinició de nuevo para completar la publicación.
+
+Launcher/publicación web completados tras reanudar la tarea; manifiesto SHA1 `213990cf8e480737dd88bccb626133c958a69598`, fallback de master idéntico. Descarga HTTPS INTEGRA del MRPACK validada por SHA256 y ZIP; firma Ed25519 pública válida; botones de entrada apuntan a0.3.0. Las versiones anteriores siguen como artefactos históricos; ninguna restauración de datos.
+
+Bot v4 activo,14 tests PASS, gateway/tickets/DB sanos; tarjeta cliente0.1.4 y tarjeta manual con cinco botones, incluido JAR directo. Anuncio único `1558390719260004445` con imagen, mention_everyone=true y rol Entrenador `1555769436378759268`; no se duplicó al recuperar el envío. Link: https://discord.com/channels/1537115743898832906/1537117626927554682/1558390719260004445.
+
+Muestra08:11:44UTC (03:11Bogotá):0 jugadores,20TPS en5s/10s/1m/5m/15m, mediana0.7ms, p95 de tick1.1ms; memoria de contenedor7.702GiB, CPU Docker10.19% de un core y Spark1% de capacidad total. No comparar directamente con la muestra anterior de7 jugadores ni atribuir la diferencia de RAM a una optimización demostrada. Prueba de combate humano y medición GPU/FPS siguen pendientes.

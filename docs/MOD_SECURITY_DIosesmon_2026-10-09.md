@@ -4,7 +4,7 @@ Repositorios descargados como datos y leídos; no se ejecutaron sus builds ni se
 
 ## CobblemonPatches
 
-Optimiza spawn, entidades, PC/party, guardados y skins y modifica batallas. Compila contra 1.8.1 y exige >=1.8.1; incompatibilidad directa con nuestro 1.8.0. Configuración no permite desactivar individualmente mixins; required=true/defaultRequire=1. Cambiar a 1.8.1 no valida automáticamente su convivencia con Luna/RCT.
+Optimiza spawn, entidades, PC/party, guardados y skins y modifica batallas. Compila contra1.8.1 y exige>=1.8.1: era incompatible con el1.8.0 al iniciar la revisión. La migración posterior satisface ese mínimo, pero no resuelve los riesgos siguientes. Configuración no permite desactivar individualmente mixins; required=true/defaultRequire=1. Cambiar a1.8.1 no valida automáticamente su convivencia con Luna/RCT.
 
 Hallazgos en código:
 

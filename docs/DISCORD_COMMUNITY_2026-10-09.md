@@ -1,5 +1,7 @@
 # Comunidad Discord — 2026-10-09 America/Bogota
 
+Actualización10octubre: v4 activo,14 tests PASS; canal opcional📦・descargas-manuales publica una ficha por versión, JAR directo y ZIP/MRPACK, sin ping. Se añadió manualUrl para migraciones de base con Luna sin cambios. Base0.3.0/bundle0.1.4 y anuncio Halloween con imagen, @everyone/@Entrenador por instrucción expresa; permiso de menciones SOLO en anuncios confirmado. Los avisos automáticos habituales continúan voluntarios. Detalles en COBBLEMON_181_MIGRATION.md. El texto siguiente documenta la etapa del9octubre.
+
 Bot real del VPS importado y preservado. Activo en `/opt/pokereport-discord/releases/20261009-community-v3`. Configuración y backups de tickets/comunidad privados, ambas SQLite con integrity_check satisfactorio. No se reinició Minecraft; entrenadores pendientes por decisión del usuario.
 
 Cinco canales iniciales, nombres legibles con emojis y canales adicionales mediante intereses opcionales. Bienvenidas nuevas en canal secundario. No se eliminaron canales ni roles; normas, guías y paneles de roles conservados.

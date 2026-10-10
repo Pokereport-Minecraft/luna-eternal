@@ -48,7 +48,7 @@ class Ledger:
 def links(config,release=None):
     view=discord.ui.View(timeout=None)
     view.add_item(discord.ui.Button(label='Instalar y jugar',url='https://pokereport.online/jugar/'))
-    view.add_item(discord.ui.Button(label='Modpack completo',url=release.mrpack if release else 'https://pokereport.online/client/PokeReport-Base-0.2.0.mrpack'))
+    view.add_item(discord.ui.Button(label='Modpack completo',url=release.mrpack if release else 'https://pokereport.online/client/PokeReport-Base-0.3.0.mrpack'))
     if release and release.manual:view.add_item(discord.ui.Button(label='Actualizar manualmente',url=release.manual))
     view.add_item(discord.ui.Button(label='Ayuda privada',url=f'https://discord.com/channels/{config.guild_id}/{config.channels["support_panel"]}'))
     return view
@@ -73,7 +73,7 @@ def start_embed(config):
                    '**3 · Encuentra tu sitio.** Saluda con tu objetivo o busca compañeros; no hace falta escribir una presentación larga.')
     for title,key in [('Habla con la comunidad','general'),('Encuentra compañeros','team'),('Consulta cambios y descargas','updates'),('Pregunta o pide ayuda','help')]:
         if config.channels.get(key):embed.add_field(name=title,value=f'<#{config.channels[key]}>',inline=True)
-    embed.add_field(name='Tú eliges los avisos',value='Usa `/avisos` o Canales y roles. Sin mensajes privados automáticos ni avisos a todo el servidor.',inline=False)
+    embed.add_field(name='Tú eliges los avisos',value='Usa `/avisos` o Canales y roles. Sin mensajes privados automáticos. Los anuncios importantes del staff pueden avisar a todo el servidor.',inline=False)
     embed.set_footer(text='PokeReport · Ruta de entrada v1')
     return embed
 
@@ -224,7 +224,7 @@ class Community:
 
     async def panels(self):
         await self.deliver('entrada:v1','v1',self.config.channels['start'],start_embed(self.config),links(self.config))
-        embed=discord.Embed(title='Elige qué quieres recibir',description='Pulsa el botón para activar o quitar avisos. Los intereses y canales opcionales están en **Canales y roles**.\n\nNo enviamos mensajes privados automáticos ni usamos `@everyone`.',color=GOLD)
+        embed=discord.Embed(title='Elige qué quieres recibir',description='Pulsa el botón para activar o quitar avisos. Los intereses y canales opcionales están en **Canales y roles**.\n\nNo enviamos mensajes privados automáticos. Los anuncios importantes del staff pueden mencionar al servidor; los avisos habituales son voluntarios.',color=GOLD)
         await self.deliver('preferencias:v1','v1',self.config.channels['roles'],embed,PreferencesButton(self.client))
 
     async def releases(self):
