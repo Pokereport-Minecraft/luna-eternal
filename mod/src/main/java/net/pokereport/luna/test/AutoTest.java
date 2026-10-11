@@ -2529,6 +2529,9 @@ public final class AutoTest {
                 //    entonces la comprobacion que protege a los gimnasios
                 //    dejaria de proteger a nadie sin avisar.
                 boolean esSuyo = !net.pokereport.luna.gym.Repertorio.esDeUnTipo(gid);
+                // Explicit server design: Giovanni's mandatory ace is Mewtwo.
+                // All other members retain the leader's type constraint.
+                esSuyo |= "giovanni".equals(gid) && "mewtwo".equals(f.especie()) && f.firma();
                 for (String x : tp) {
                     if (x != null && !esSuyo && x.equalsIgnoreCase(
                             net.pokereport.luna.gym.Repertorio.tipoDe(gid))) {
@@ -2564,7 +2567,7 @@ public final class AutoTest {
         check("cada especie del repertorio existe", especies);
         check("cada habilidad es de esa especie", habilidades);
         check("cada ficha declara al menos 4 ataques", ataques);
-        check("todo el repertorio es del tipo de su lider", suTipo);
+        check("repertorios respetan el tipo del líder salvo Mewtwo de Giovanni", suTipo);
         check("cada repertorio llega a 6, que es lo que puede traer un jugador",
               bastantes);
 

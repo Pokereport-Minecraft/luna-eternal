@@ -430,6 +430,9 @@ public final class Repertorio {
     /** El repertorio de GIOVANNI. Generado y validado: ver el javadoc de
      *  la clase. */
     private static final List<Ficha> GIOVANNI = List.of(
+        // First signature is mandatory in ordenarEquipo, even against a bad matchup.
+        f("mewtwo",       "pressure",      "timid",    "leftovers", true,
+          "psystrike", "icebeam", "aurasphere", "shadowball", "recover", "calmmind"),
         f("rhydon",       "lightningrod",  "adamant",  "life_orb", true,
           "earthquake", "rockslide", "megahorn", "hammerarm", "stomp", "drillrun"),
         f("nidoking",     "poisonpoint",   "adamant",  "life_orb", true,

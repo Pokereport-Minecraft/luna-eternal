@@ -52,10 +52,17 @@ public final class TrainerAdaptationSelfTest {
             if (variants.size() > 1) responsive++;
         }
         check.accept("Los 23 retos responden a perfiles distintos", responsive == Gimnasio.TODOS.size());
+        for (var profile : profiles) {
+            for (int size = 4; size <= 6; size++) {
+                var team = Adaptador.prepararEquipo(Gimnasio.de("giovanni"), profile.subList(0, size));
+                check.accept("Giovanni conserva exactamente un Mewtwo con " + size + " participantes",
+                        team.stream().filter(p -> "mewtwo".equals(p.getSpecies())).count() == 1);
+            }
+        }
         var fainted = PokemonProperties.Companion.parse("totodile level=15").create();
         fainted.setCurrentHealth(0);
         var full = new ArrayList<>(profiles.getLast()); full.set(0, fainted);
-        check.accept("Brock cuenta seis Pokémon que la batalla curará", Adaptador.prepararEquipo(Gimnasio.de("brock"), full).size() == 6);
+        check.accept("Brock cuenta los cinco participantes que RCT no excluye por KO", Adaptador.prepararEquipo(Gimnasio.de("brock"), full).size() == 5);
         check.accept("Brock conserva paridad con un Pokémon", Adaptador.prepararEquipo(Gimnasio.de("brock"), profiles.getFirst().subList(0, 1)).size() == 1);
         check.accept("Misty conserva paridad con dos Pokémon", Adaptador.prepararEquipo(Gimnasio.de("misty"), profiles.getFirst().subList(0, 2)).size() == 2);
         check.accept("Adaptación conserva Pokémon originales", fainted.getCurrentHealth() == 0

@@ -16,46 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class BattleTurnRegression {
     private BattleTurnRegression() {}
 
-    public static int engine(ServerCommandSource source) {
-        try {
-            var config = net.pokereport.luna.LunaConfig.load();
-            if (source.getEntity() != null || !source.hasPermissionLevel(4)
-                    || !config.jdbcUrl.contains("/prelaunch_20261002?")) {
-                source.sendError(Text.literal("Battle regression is restricted to isolated staging console."));
-                return 0;
-            }
-            var leader = actor("arcanine", "magmar", "ninetales", "rapidash", "flareon", "growlithe");
-            var challenger = actor("aerodactyl", "donphan", "mismagius", "blastoise", "gengar", "umbreon");
-            BattleRegistry.startBattle(com.gitlab.srcmc.rctapi.api.battle.BattleFormat.GEN_9_SINGLES.getCobblemonBattleFormat(),
-                    new BattleSide(leader), new BattleSide(challenger), false).ifSuccessful(battle -> {
-                source.sendFeedback(() -> Text.literal("[BATTLE-ENGINE-QA] started " + battle.getBattleId()), false);
-                observe(source, battle, 0);
-                return Unit.INSTANCE;
-            }).ifErrored(error -> {
-                source.sendError(Text.literal("[BATTLE-ENGINE-QA] start failed " + error));
-                return Unit.INSTANCE;
-            });
-            return 1;
-        } catch (RuntimeException | java.io.IOException failure) {
-            source.sendError(Text.literal("[BATTLE-ENGINE-QA] ERROR " + failure));
-            return 0;
-        }
-    }
-
-    private static void observe(ServerCommandSource source, PokemonBattle battle, int seconds) {
-        net.pokereport.luna.gym.Programador.en(20, () -> {
-            if (battle.getEnded()) {
-                battle.saveBattleLog();
-                source.sendFeedback(() -> Text.literal("[BATTLE-ENGINE-QA] ended " + battle.getBattleId()
-                        + " turns=" + battle.getTurn() + " winners=" + battle.getWinners().size()), false);
-            } else if (seconds >= 180) {
-                battle.saveBattleLog();
-                battle.end();
-                source.sendError(Text.literal("[BATTLE-ENGINE-QA] TIMEOUT " + battle.getBattleId()));
-            } else observe(source, battle, seconds + 1);
-        });
-    }
-
     public static int run(ServerCommandSource source) {
         try {
             var config = net.pokereport.luna.LunaConfig.load();
@@ -107,8 +67,62 @@ public final class BattleTurnRegression {
                     && s.getNewPokemonId().equals(actor.getPokemonList().get(1).getUuid());
             report(source, "showdown_active_excluded_during_animation", legal);
             if (legal) passed++;
+            var doublesActor = actor("arcanine", "magmar", "ninetales", "rapidash");
+            var doublesBattle = fixture(doublesActor, actor("blastoise", "lapras"));
+            doublesActor.getActivePokemon().clear();
+            doublesActor.getActivePokemon().add(new ActiveBattlePokemon(doublesActor, doublesActor.getPokemonList().get(0)));
+            doublesActor.getActivePokemon().add(new ActiveBattlePokemon(doublesActor, doublesActor.getPokemonList().get(1)));
+            var doublesSide = new ShowdownSide();
+            doublesSide.setName(doublesActor.getUuid()); doublesSide.setId("p1");
+            var doublesRows = new ArrayList<ShowdownPokemon>();
+            for (int i = 0; i < doublesActor.getPokemonList().size(); i++) {
+                var pokemon = doublesActor.getPokemonList().get(i);
+                var row = new ShowdownPokemon();
+                row.setIdent("p1: " + pokemon.getUuid());
+                row.setDetails(pokemon.getOriginalPokemon().getSpecies().getName() + ", " + pokemon.getUuid());
+                row.setCondition("100/100"); row.setActive(i < 2); doublesRows.add(row);
+            }
+            doublesSide.setPokemon(doublesRows);
+            doublesActor.setRequest(new ShowdownActionRequest(false, null, List.of(true, true), true, doublesSide));
+            var lifecycle = (net.pokereport.luna.battle.BattleChoiceRecovery)doublesActor;
+            boolean beforeUpdate = !lifecycle.pokeReport$isRequestReady();
+            doublesActor.postUpdate();
+            boolean afterUpdate = lifecycle.pokeReport$isRequestReady();
+            var processedRequest = doublesActor.getRequest();
+            doublesActor.setRequest(new ShowdownActionRequest(false, null, List.of(true, true), true, null));
+            boolean newRequestWaits = !lifecycle.pokeReport$isRequestReady();
+            doublesActor.setRequest(processedRequest);
+            report(source, "request_requires_its_own_completed_update", beforeUpdate && afterUpdate && newRequestWaits);
+            if (beforeUpdate && afterUpdate && newRequestWaits) passed++;
+            doublesActor.setRequest(new ShowdownActionRequest(false, null, List.of(), false, null));
+            doublesActor.postUpdate();
+            boolean regularReady = lifecycle.pokeReport$isRequestReady();
+            report(source, "normal_request_activates_at_early_postUpdate_return", regularReady);
+            if (regularReady) passed++;
+            doublesActor.setRequest(processedRequest);
+            doublesBattle.setDispatchResult(() -> false);
+            doublesActor.onChoiceRequested();
+            boolean deferred = doublesActor.getResponses().isEmpty();
+            report(source, "native_ai_defers_choice_during_animation", deferred);
+            if (deferred) passed++;
+            boolean rejected = false;
+            try {
+                doublesActor.setActionResponses(List.of(
+                        new SwitchActionResponse(doublesActor.getPokemonList().get(2).getUuid()),
+                        new SwitchActionResponse(doublesActor.getPokemonList().get(0).getUuid())));
+            } catch (com.cobblemon.mod.common.exception.IllegalActionChoiceException expected) { rejected = true; }
+            boolean atomic = rejected && doublesActor.getResponses().isEmpty();
+            report(source, "native_double_choice_rejection_is_atomic", atomic);
+            if (atomic) passed++;
+            int[] adaptation = {0, 0};
+            TrainerAdaptationSelfTest.run((name, success) -> {
+                adaptation[success ? 0 : 1]++;
+                if (!success) report(source, name, false);
+            });
+            source.sendFeedback(() -> Text.literal("[TRAINER-ADAPTATION] PASS=" + adaptation[0]
+                    + " FAIL=" + adaptation[1]), false);
             source.sendFeedback(() -> Text.literal("[BATTLE-REGRESSION] fixtures complete; no production players touched."), false);
-            return passed == 3 ? 1 : 0;
+            return passed == 7 && adaptation[1] == 0 ? 1 : 0;
         } catch (RuntimeException | java.io.IOException failure) {
             net.pokereport.luna.LunaEternal.LOG.error("[BATTLE-REGRESSION] fixture failed", failure);
             source.sendError(Text.literal("[BATTLE-REGRESSION] ERROR " + failure));

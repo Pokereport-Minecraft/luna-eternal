@@ -1,14 +1,10 @@
 package net.pokereport.luna.mixin.battle;
 
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
-import com.cobblemon.mod.common.api.battles.model.actor.AIBattleActor;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
-import com.cobblemon.mod.common.battles.ShowdownActionRequest;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.dispatch.BattleDispatch;
 import com.cobblemon.mod.common.battles.dispatch.DispatchResult;
-import com.cobblemon.mod.common.net.messages.client.battle.BattleMakeChoicePacket;
-import com.cobblemon.mod.common.net.messages.client.battle.BattleQueueRequestPacket;
 import com.gitlab.srcmc.rctmod.api.RCTMod;
 import com.gitlab.srcmc.rctmod.world.entities.TrainerMob;
 import net.pokereport.luna.LunaEternal;
@@ -66,9 +62,6 @@ public abstract class PokemonBattleSafetyMixin {
     public abstract UUID getBattleId();
 
     @Unique
-    private int pokeReport$safetyTicks = 0;
-
-    @Unique
     private final net.pokereport.luna.battle.BattleQueueWatchdog pokeReport$queueWatchdog =
             new net.pokereport.luna.battle.BattleQueueWatchdog();
 
@@ -81,9 +74,12 @@ public abstract class PokemonBattleSafetyMixin {
     @Inject(method = "end", at = @At("HEAD"), remap = false)
     private void pokeReport$onBattleEndCleanTrainers(CallbackInfo ci) {
         PokemonBattle battle = (PokemonBattle) (Object) this;
+        if (!net.pokereport.luna.battle.BattleInputCoordinator.manages(battle)) return;
         try {
             for (BattleActor actor : battle.getActors()) {
                 for (UUID pUuid : actor.getPlayerUUIDs()) {
+                    var current = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(pUuid);
+                    if (current != null && current != battle && !current.getEnded()) continue;
                     try {
                         var bOpt = RCTMod.getInstance().getTrainerManager().getBattle(pUuid);
                         if (bOpt.isPresent()) {
@@ -115,6 +111,7 @@ public abstract class PokemonBattleSafetyMixin {
      */
     @Inject(method = "checkForInputDispatch", at = @At("HEAD"), cancellable = true, remap = false)
     private void pokeReport$checkForInputDispatch(CallbackInfo ci) {
+        if (!net.pokereport.luna.battle.BattleInputCoordinator.manages((PokemonBattle)(Object)this)) return;
         if (this.checkForfeit()) {
             ci.cancel();
             return;
@@ -124,42 +121,14 @@ public abstract class PokemonBattleSafetyMixin {
             return;
         }
 
-        List<BattleActor> livingActors = com.google.common.collect.Streams.stream(this.getActors())
-                .filter(a -> a.getPokemonList().stream().anyMatch(p -> p.getHealth() > 0))
-                .toList();
-
-        if (livingActors.isEmpty()) {
-            ci.cancel();
-            return;
-        }
-
-        // Un actor está listo para input si:
-        // 1. Ya tiene respuestas preparadas (!responses.isEmpty()) -> LISTO (sin importar mustChoose).
-        // 2. O no debe elegir (!mustChoose) Y su solicitud es nula o de espera (req == null || req.getWait()).
-        boolean readyToInput = livingActors.stream().allMatch(a -> {
-            if (!a.getResponses().isEmpty()) {
-                return true;
-            }
-            ShowdownActionRequest req = a.getRequest();
-            return !a.getMustChoose() && (req == null || req.getWait());
-        });
-
-        if (readyToInput && this.getCaptureActions().isEmpty()) {
-            livingActors.forEach(a -> {
-                if (!a.getResponses().isEmpty()) {
-                    a.setMustChoose(false);
-                    a.writeShowdownResponse();
-                } else {
-                    a.setRequest(null);
-                }
-            });
-        }
+        net.pokereport.luna.battle.BattleInputCoordinator.dispatch((PokemonBattle)(Object)this);
         ci.cancel();
     }
 
     @Inject(method = "tick", at = @At("TAIL"), remap = false)
     private void pokeReport$onTickSafety(CallbackInfo ci) {
-        if (!this.getStarted() || this.getEnded()) {
+        if (!this.getStarted() || this.getEnded()
+                || !net.pokereport.luna.battle.BattleInputCoordinator.manages((PokemonBattle)(Object)this)) {
             return;
         }
 
@@ -168,7 +137,8 @@ public abstract class PokemonBattleSafetyMixin {
         boolean waitingForPlayer = com.google.common.collect.Streams.stream(this.getActors()).anyMatch(a -> {
             var request = a.getRequest();
             return a instanceof PlayerBattleActor && request != null && !request.getWait()
-                    && a.getResponses().isEmpty();
+                    && a.getResponses().isEmpty() && a.getMustChoose()
+                    && ((net.pokereport.luna.battle.BattleChoiceRecovery)a).pokeReport$isRequestReady();
         });
         var observation = pokeReport$queueWatchdog.observe(dr, this.getDispatches().peek(),
                 getTurn(), blocked || !this.getDispatches().isEmpty(), waitingForPlayer);
@@ -180,62 +150,7 @@ public abstract class PokemonBattleSafetyMixin {
                     new IllegalStateException("Battle queue made no progress for 1200 ticks"));
             return;
         }
-        // A blocked dispatch owns this sequence. Never choose, release or discard through it.
         if (blocked || !this.getDispatches().isEmpty()) return;
-        this.pokeReport$safetyTicks++;
-
-        // Ejecutar revisión cada 10 ticks (0.5 s) en estado ocioso
-        if (this.pokeReport$safetyTicks >= 10) {
-            this.pokeReport$safetyTicks = 0;
-            this.pokeReport$revisarCombate();
-        }
-    }
-
-    @Unique
-    private void pokeReport$revisarCombate() {
-        boolean algunaSolicitudPendiente = false;
-
-        for (BattleActor actor : this.getActors()) {
-            ShowdownActionRequest req = actor.getRequest();
-            if (req != null && !req.getWait()) {
-                algunaSolicitudPendiente = true;
-
-                // 1. Si es IA y no ha respondido:
-                if (actor instanceof AIBattleActor ai && actor.getResponses().isEmpty()) {
-                    try {
-                        net.pokereport.luna.battle.BattleRequestRecovery.choose(ai, req);
-                    } catch (RuntimeException | LinkageError | StackOverflowError failure) {
-                        net.pokereport.luna.battle.BattleRequestRecovery.abort((PokemonBattle) (Object) this, failure);
-                        return;
-                    }
-                }
-
-                // 2. Si es Jugador y el flag mustChoose quedó apagado pero necesita elegir:
-                if (actor instanceof PlayerBattleActor && !actor.getMustChoose() && actor.getResponses().isEmpty()) {
-                    actor.setMustChoose(true);
-                    actor.sendUpdate(new BattleMakeChoicePacket());
-                    actor.sendUpdate(new BattleQueueRequestPacket(req));
-                }
-            }
-        }
-
-        // Si hay solicitudes activas y todos los actores con solicitud ya tienen respuestas preparadas:
-        if (algunaSolicitudPendiente) {
-            boolean listosParaEnviar = true;
-            for (BattleActor a : this.getActors()) {
-                ShowdownActionRequest req = a.getRequest();
-                if (req != null && !req.getWait()) {
-                    if (a.getResponses().isEmpty()) {
-                        listosParaEnviar = false;
-                        break;
-                    }
-                }
-            }
-            if (listosParaEnviar) {
-                this.checkForInputDispatch();
-            }
-        }
-
-        // Only Showdown can declare a winner; local HP is not an outcome protocol.
+        net.pokereport.luna.battle.BattleInputCoordinator.onIdle((PokemonBattle)(Object)this);
     }
 }

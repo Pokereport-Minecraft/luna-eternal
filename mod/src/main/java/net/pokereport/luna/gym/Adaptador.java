@@ -29,46 +29,11 @@ import net.pokereport.luna.LunaEternal;
 import net.pokereport.luna.gym.Gimnasio.Gimnasio_;
 
 /**
- * EL COMBATE DE GIMNASIO: MISMO NIVEL, MISMA CANTIDAD, Y EL LÍDER SE PREPARA.
- *
- * <p>Diseño completo y auditoría en {@code docs/pokemon/combate-gimnasios.md}.
- *
- * <h2>Qué hace, en orden</h2>
- *
- * <ol>
- *   <li>mira el equipo del jugador: cuántos van sanos y de qué tipos son;</li>
- *   <li>puntúa el repertorio del líder contra eso y se queda con los mejores,
- *       <b>tantos como traiga el jugador</b>;</li>
- *   <li>a cada uno le elige los cuatro ataques que mejor cubren lo que viene,
- *       y le pone los EVs donde hagan falta;</li>
- *   <li>lo registra como un entrenador <b>propio de este combate</b> y empieza
- *       la pelea, con los dos lados al nivel del gimnasio.</li>
- * </ol>
- *
- * <h2>⚠⚠⚠ NO SE TOCA EL POKÉMON DEL JUGADOR. Comprobado antes de escribirlo</h2>
- *
- * La igualdad de nivel la hace {@code BattleFormat.setAdjustLevel}, y rctapi lo
- * aplica llamando a {@code setLevel} sobre {@code getEffectedPokemon()}. Leído
- * del bytecode: cuando {@code adjustLevel > 0}, {@code toBattlePokemons} hace
- * {@code original.clone(true, null)}, le marca {@code BattleCloneProperty} y
- * {@code UncatchableProperty}, y construye
- * {@code new BattlePokemon(original, clon, …)}. <b>El que cambia de nivel es el
- * clon</b>, y el clon se tira al acabar.
- *
- * <p>Si esto fuera falso, el gimnasio le bajaría el nivel a la gente <b>de
- * verdad</b> y no habría vuelta atrás. Por eso se comprobó y no se supuso.
- *
- * <h2>⚠⚠⚠ UN ENTRENADOR POR COMBATE, Y HAY QUE BORRARLO</h2>
- *
- * El {@code TrainerNPC} del registro es <b>uno por identificador</b>. Si dos
- * jugadores retaran a Brock a la vez y compartieran el suyo, el segundo le
- * cambiaría el equipo al primero <b>en mitad del combate</b> — y eso no daría
- * ningún error: daría un combate en el que salen Pokémon que no estaban.
- *
- * <p>Por eso el identificador lleva el UUID del jugador. Y por eso
- * {@link #soltar} tiene que llamarse <b>en los tres caminos</b>: ganar, perder y
- * desconectarse. Sin el tercero el registro crece para siempre, que es la misma
- * lista de tres que ya tienen las ranuras.
+ * Builds a detached trainer team before starting one RCT battle per challenger.
+ * Species, legal moves and defensive EVs adapt to the conscious party; levels
+ * remain gym level / gym level - 1. The player's level is never adjusted.
+ * RCT 0.16 excludes fainted party members before healing participants.
+ * Each dynamic NPC registration is released on victory, defeat or disconnect.
  */
 public final class Adaptador {
 
@@ -264,9 +229,9 @@ public final class Adaptador {
         var party = com.cobblemon.mod.common.Cobblemon.INSTANCE
                 .getStorage().getParty(jugador);
         for (Pokemon p : party) {
-            // BattleRules heals the entire party before starting. Include the
-            // currently fainted members too, or the player can fight 6 vs 1.
-            if (p == null) {
+            // RCT 0.16 filters fainted Pokemon in toBattlePokemons BEFORE
+            // initParty heals. Match the actual participants, not party slots.
+            if (p == null || p.isFainted()) {
                 continue;
             }
             Species s = p.getSpecies();
@@ -585,10 +550,11 @@ public final class Adaptador {
     public static List<PokemonModel> prepararEquipo(Gimnasio_ g, List<Pokemon> rival) {
         var tipos = new ArrayList<Enemigo>();
         for (Pokemon pokemon : rival) {
+            if (pokemon == null || pokemon.isFainted()) continue;
             var t = Tipos.deEspecie(pokemon.getSpecies());
             tipos.add(new Enemigo(t[0], t[1], Tipos.pegaFisico(pokemon.getSpecies())));
         }
-        return componer(repertorioDe(g), tipos, Math.min(6, Math.max(Gimnasio.equipoMinimo(g), rival.size())), g.nivel());
+        return componer(repertorioDe(g), tipos, Math.min(6, Math.max(Gimnasio.equipoMinimo(g), tipos.size())), g.nivel());
     }
 
     /** Tower keeps random variety but selects a complementary team from 24 candidates. */

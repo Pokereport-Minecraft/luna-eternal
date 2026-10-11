@@ -94,6 +94,7 @@ public final class Combate {
 
     /** Quién está retando a quién, para saber a qué gimnasio darle la medalla. */
     private static final Map<UUID, String> RETANDO = new ConcurrentHashMap<>();
+    private static final GymBattleSessions BATALLAS = new GymBattleSessions();
 
     /**
      * Retos abiertos por administración. Mantienen el ciclo real de arena y
@@ -665,6 +666,7 @@ public final class Combate {
             jugador.sendMessage(Text.literal("§eYa estás disputando un combate."), true);
             return;
         }
+        BATALLAS.remove(jugador.getUuid());
         if (RCTMod.getInstance().isInBattle(jugador)) {
             RCTMod.getInstance().getTrainerManager().removeBattle(jugador.getUuid());
         }
@@ -699,6 +701,7 @@ public final class Combate {
             //       jugador YA ESTÁ DENTRO DE LA ARENA, y de esa dimensión no se
             //       sale andando. Un reto que no empieza lo deja encerrado.
             if (Adaptador.pelear(jugador, mob, g)) {
+                registrarBatalla(jugador);
                 RCTMod.getInstance().getTrainerManager().addBattle(jugador, mob);
                 Lideres.quitarCartelDeRanura(Arenas.mundo(jugador.getServer(), g), g, mia);
                 return;
@@ -718,6 +721,7 @@ public final class Combate {
             // acabar. `setOpponent` es suyo y no se puede llamar desde fuera,
             // así que esto es lo que hay — y basta, porque la IA está apagada.
             RCTMod.getInstance().getTrainerManager().addBattle(jugador, mob);
+            registrarBatalla(jugador);
             Lideres.quitarCartelDeRanura(Arenas.mundo(jugador.getServer(), g), g, mia);
         } catch (Throwable t) {
             LunaEternal.LOG.error("No se pudo empezar el combate de {} contra {}",
@@ -754,7 +758,7 @@ public final class Combate {
                     }
                 }
                 for (ServerPlayerEntity p : evento.getBattle().getPlayers()) {
-                    terminar(p, ganadores.contains(p.getUuid()));
+                    terminar(p, evento.getBattle().getBattleId(), ganadores.contains(p.getUuid()));
                 }
             } catch (Throwable t) {
                 // Un fallo aquí no puede romper el final de un combate: el
@@ -770,7 +774,7 @@ public final class Combate {
                     SLOTS_DE_RESPALDO.remove(evento.getBattle().getBattleId());
                 }
                 for (ServerPlayerEntity p : evento.getBattle().getPlayers()) {
-                    terminar(p, false);
+                    terminar(p, evento.getBattle().getBattleId(), false);
                 }
             } catch (Throwable t) {
                 LunaEternal.LOG.error("Error gestionando huida de combate de gimnasio", t);
@@ -966,8 +970,15 @@ public final class Combate {
         });
     }
 
-    private static void terminar(ServerPlayerEntity jugador, boolean gano) {
+    private static void registrarBatalla(ServerPlayerEntity jugador) {
+        var battle = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(jugador.getUuid());
+        if (battle == null || battle.getEnded()) throw new IllegalStateException("Gym battle did not register");
+        BATALLAS.start(jugador.getUuid(), battle.getBattleId());
+    }
+
+    private static void terminar(ServerPlayerEntity jugador, UUID battleId, boolean gano) {
         UUID uuid = jugador.getUuid();
+        if (!BATALLAS.finish(uuid, battleId)) return;
         String cual = RETANDO.remove(uuid);
         boolean prueba = PRUEBAS.remove(uuid);
         if (cual == null) {
@@ -1073,12 +1084,15 @@ public final class Combate {
             return;
         }
         UUID uuid = jugador.getUuid();
+        var expectedAssignment = Ranuras.asignacionDe(uuid);
         Programador.en(ticks, () -> {
             // ⚠ Se vuelve a buscar al jugador: en cinco segundos le da tiempo a
             //   desconectarse, y teletransportar a una entidad que ya no está
             //   revienta el tick del servidor.
             var vivo = servidor.getPlayerManager().getPlayer(uuid);
-            if (vivo != null) {
+            if (vivo != null && Ranuras.asignacionDe(uuid) == expectedAssignment) {
+                var active = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(uuid);
+                if (active != null && !active.getEnded()) return;
                 devolver(vivo, cual);
             }
         });
@@ -1128,6 +1142,7 @@ public final class Combate {
     private static void soltar(ServerPlayerEntity jugador, String cual) {
         var servidor = jugador.getServer();
         RETANDO.remove(jugador.getUuid());
+        BATALLAS.remove(jugador.getUuid());
         PRUEBAS.remove(jugador.getUuid());
         // ⚠⚠⚠ Y AQUÍ SE BORRA EL ENTRENADOR FABRICADO. `Adaptador` registra uno
         //    por combate en el registro de rctapi, y ese registro es un mapa que

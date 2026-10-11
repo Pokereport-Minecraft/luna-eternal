@@ -565,13 +565,13 @@
           "value": 0
         },
         {
-          "item": "minecraft:oak_log",
-          "count": 64,
+          "item": "cobblemon:power_weight",
+          "count": 1,
           "value": 0
         },
         {
-          "item": "minecraft:grass_block",
-          "count": 64,
+          "item": "cobblemon:power_anklet",
+          "count": 1,
           "value": 0
         },
         {

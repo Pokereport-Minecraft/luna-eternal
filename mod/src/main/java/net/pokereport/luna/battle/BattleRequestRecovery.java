@@ -23,7 +23,7 @@ public final class BattleRequestRecovery {
         });
         int expected = Math.max(request.getActive() == null ? 0 : request.getActive().size(), request.getForceSwitch().size());
         if (choices == null || choices.size() != expected
-                || choices.isEmpty() || choices.contains(null)) {
+                || choices.isEmpty() || choices.stream().anyMatch(java.util.Objects::isNull)) {
             throw new IllegalStateException("Incomplete AI request response");
         }
         actor.setActionResponses(choices);
@@ -42,7 +42,14 @@ public final class BattleRequestRecovery {
                 if (assignment != null) {
                     player.sendMessage(net.minecraft.text.Text.literal("§cEl combate se cerró por un fallo técnico; no se otorga progreso."), false);
                     net.pokereport.luna.gym.Programador.en(20, () ->
-                            net.pokereport.luna.gym.Combate.devolver(player, assignment.gymId()));
+                    {
+                        if (net.pokereport.luna.gym.Ranuras.asignacionDe(player.getUuid()) != assignment) return;
+                        var active = com.cobblemon.mod.common.battles.BattleRegistry.getBattleByParticipatingPlayerId(player.getUuid());
+                        if (active == null || active.getEnded() || active.getBattleId().equals(battle.getBattleId())) {
+                            var connected = player.getServer().getPlayerManager().getPlayer(player.getUuid());
+                            if (connected != null) net.pokereport.luna.gym.Combate.devolver(connected, assignment.gymId());
+                        }
+                    });
                 }
             }
         } catch (RuntimeException | LinkageError | StackOverflowError cleanup) {

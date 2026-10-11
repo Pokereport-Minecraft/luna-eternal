@@ -18,6 +18,8 @@ Rama `codex/pokevoice`, base `a74d626d`. Simple Voice Chat Fabric 1.21.1 2.6.22,
 
 > **2026-10-10 — Cobblemon 1.8.1:** migración dirigida y probada con el Luna actual, sin promover el parche pendiente de batallas. Base cliente0.3.0/bundle0.1.4; Cobblemon/TMCraft/Tim Core/Capture XP alineados; Chat Heads/ChatAnimation solo cliente. Conserva todos los overrides del MRPACK, premios y Halloween. Ver [docs/COBBLEMON_181_MIGRATION.md](docs/COBBLEMON_181_MIGRATION.md) y [revisión de mods](docs/MOD_SECURITY_DIosesmon_2026-10-09.md).
 
+> **2026-10-10 — Candidato de turnos de entrenadores:** se retira la elección temprana desde RequestInstruction y se concentra el envío en solicitudes procesadas con animaciones terminadas. Resultado de gimnasio ligado a UUID de batalla y elecciones dobles atómicas. Mewtwo obligatorio en el equipo adaptativo de Giovanni; kit Campeón sustituye madera/césped por Pesa Recia y Franja Recia. **Aún no desplegado en producción.** Estado y límites de evidencia: [docs/TRAINER_BATTLE_AUDIT_2026-10-10.md](docs/TRAINER_BATTLE_AUDIT_2026-10-10.md).
+
 # CLAUDE.md — PokeReport: Luna Eternal
 
 > **2026-10-02 — Puertas y roles:** por petición del usuario, clic normal en puertas con bloques en mano conserva interacción nativa y protección de colocación. `/pradmin rol asignar <jugador conectado> <rol>` gestiona OP/grants y etiqueta operativa persistente, sin cambiar rango comercial. Detalles y validación en [docs/DOORS_AND_STAFF_ROLES.md](docs/DOORS_AND_STAFF_ROLES.md).
