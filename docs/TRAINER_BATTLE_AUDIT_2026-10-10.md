@@ -1,8 +1,10 @@
 # Auditoría de turnos de entrenadores — 2026-10-10
 
-Estado: candidato en validación aislada; **no desplegado en producción**. No se han sustituido mundos, datos, configuraciones privadas ni artefactos publicados. Rama `codex/production-gym-battle-hardening`, base `49acd508`.
+Estado: **desplegado en producción con autorización explícita del usuario**, 10 de octubre20:59 Bogotá (11 de octubre01:59 UTC). No se han sustituido mundos, datos ni configuraciones privadas. Rama `codex/production-gym-battle-hardening`, implementación `a2007876`.
 
 Entrega compilada y guardada: SHA-256 `d3e8407e38ea105e0ca07f4c5b98d3f9b05545d304561316359cf89d9775fc81`, local `build/trainer-audit-181/luna-trainer-release.jar`, VPS `/root/luna-trainer-release-d3e8407e.jar` (fuera de mods de producción). Build completo aprobado. Respecto al candidato42a8, el último cambio de fuente es la expectativa de autotest para Mewtwo.
+
+Producción: hash instalado verificado;71 JAR ajenos idénticos. Aviso60segundos, `save-all flush`, parada mediante Wings y cierre confirmado de dimensiones y base de datos. Arranque `Done (3.846s)` a01:59:54UTC. Copia del JAR previo y registro de hashes en `/root/backups_predeploy/trainer-release-20261011-015822`. No rollback, SIGKILL ni cambios de SQL. Distribución cliente todavía conserva el catálogo anterior; la entrega del kit depende del catálogo nuevo del servidor, pero la previsualización local requiere actualizar su JAR.
 
 ## Binarios examinados
 
@@ -62,4 +64,4 @@ Por petición posterior del usuario se cierra la ampliación de ensayos y se pre
 
 No basta copiar el JAR para activar mixins: necesitan un nuevo proceso Java. No usar `/reload` ni instrumentación en caliente para simular una actualización. Preparar hash, evidencia y comparación de recursos antes de una parada limpia de mantenimiento. No restaurar bases ni mundos. Conservar la revisión cliente publicada y las texturas Halloween al distribuir cualquier nuevo artefacto.
 
-Pendiente para activación: mantenimiento con parada limpia y nuevo proceso Java; posteriormente comprobar con jugador real el reemplazo tras KO antes de declarar resuelto el comportamiento de la interfaz en producción. No se amplían más baterías de prueba por petición del usuario.
+Activación completada. Pendiente comprobar con jugador real el reemplazo tras KO, incluido combate salvaje reportado durante el despliegue, antes de afirmar que todos los síntomas desaparecieron. No se amplían más baterías de prueba por petición del usuario. El nuevo coordinador se limita a RCT/TrainerBattleAI; se eliminaron los parches antiguos globales de RequestInstruction y setter de mustChoose y el watchdog que saltaba fases.
